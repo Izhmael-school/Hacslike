@@ -78,6 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -95,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,6 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,6 +132,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +146,7 @@
     <ClCompile Include="Scr\main.cpp" />
     <ClCompile Include="Scr\_sekino\Component\Animator.cpp" />
     <ClCompile Include="Scr\_sekino\Component\Collider.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Audio\Audio.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\Character\Character.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\GameObject.cpp" />
@@ -153,10 +158,13 @@
     <ClCompile Include="Scr\_sekino\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\_sekino\Manager\SceneManager.cpp" />
     <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scr\Definition.h" />
     <ClInclude Include="Scr\_sekino\Component\Animator.h" />
     <ClInclude Include="Scr\_sekino\Component\Collider.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Audio\Audio.h" />
     <ClInclude Include="Scr\_sekino\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\_sekino\GameObject\Character\Character.h" />
     <ClInclude Include="Scr\_sekino\GameObject\GameObject.h" />
@@ -169,6 +177,7 @@
     <ClInclude Include="Scr\_sekino\Manager\SceneManager.h" />
     <ClInclude Include="Scr\_sekino\Manager\TimeManager.h" />
     <ClInclude Include="Scr\_sekino\Scene\BaseScene.h" />
+    <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

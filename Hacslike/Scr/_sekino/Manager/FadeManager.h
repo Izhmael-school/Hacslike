@@ -1,5 +1,5 @@
 #pragma once
-#include "../Definition.h"
+#include "../../Definition.h"
 
 class FadeManager {
 #pragma region シングルトンのデータ構造

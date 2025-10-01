@@ -1,5 +1,5 @@
 #pragma once
-#include "../Definition.h"
+#include "../../Definition.h"
 class SceneManager {
 #pragma region シングルトンのデータ構造
 private:	// 静的メンバ変数

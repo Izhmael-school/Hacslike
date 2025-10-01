@@ -55,6 +55,10 @@ enum class SceneType {
 	Game,
 	Clear,
 	HowTo,
+
+	Sekino,
+	Saito,
+	Tanaka,
 };
 
 enum class FadeState {

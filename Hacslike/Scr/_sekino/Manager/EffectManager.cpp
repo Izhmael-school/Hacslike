@@ -1,6 +1,5 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
-#include "../GameObject/Effect/Effect.h"
 EffectManager* EffectManager::pInstance = nullptr;
 
 EffectManager::EffectManager()

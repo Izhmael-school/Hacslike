@@ -41,6 +41,12 @@
     <ClCompile Include="Scr\_sekino\Component\Collider.cpp">
       <Filter>Component</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\_sekino\GameObject\Audio\Audio.cpp">
+      <Filter>GameObject\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObject">
@@ -63,6 +69,9 @@
     </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{44278a7b-6bc0-4782-8503-60d1ad39e534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Audio">
+      <UniqueIdentifier>{9fb2723e-ea61-4d58-963c-e8f7d4247796}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +116,13 @@
     </ClInclude>
     <ClInclude Include="Scr\_sekino\Component\Collider.h">
       <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_sekino\GameObject\Audio\Audio.h">
+      <Filter>GameObject\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Definition.h" />
+    <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

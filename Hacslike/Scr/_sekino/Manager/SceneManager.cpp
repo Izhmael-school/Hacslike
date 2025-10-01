@@ -1,9 +1,6 @@
 #include "SceneManager.h"
-#include "../Scene/GameScene.h"
-#include "../Scene/TitleScene.h"
-#include "../Scene/ClearScene.h"
-#include "../Scene/HowToScene.h"
 #include "../Manager/FadeManager.h"
+#include "../Scene/SekinoScene.h"
 
 // Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
 SceneManager* SceneManager::pInstance = nullptr;
@@ -15,13 +12,15 @@ SceneManager::SceneManager()
 	,changed(false)
 {
 	switch (next) {
-	case SceneType::Title:
-		pCurrentScene = new TitleScene();
-		break;
+	//case SceneType::Title:
+	//	pCurrentScene = new TitleScene();
+	//	break;
 
-	case SceneType::Game:
-		pCurrentScene = new GameScene();
-		break;
+	//case SceneType::Game:
+	//	pCurrentScene = new GameScene();
+	//	break;
+	case SceneType::Sekino:
+		pCurrentScene = new SekinoScene();
 	default:
 		pCurrentScene = nullptr;
 		break;
@@ -88,7 +87,7 @@ void SceneManager::LoadScene() {
 	pCurrentScene = nullptr;
 
 	switch (next) {
-	case SceneType::Title:
+	/*case SceneType::Title:
 		pCurrentScene = new TitleScene();
 		break;
 
@@ -102,7 +101,10 @@ void SceneManager::LoadScene() {
 
 	case SceneType::HowTo:
 		pCurrentScene = new HowToScene();
-		break;
+		break;*/
+	case SceneType::Sekino:
+			pCurrentScene = new SekinoScene();
+			break;
 	default:
 		pCurrentScene = nullptr;
 		break;
