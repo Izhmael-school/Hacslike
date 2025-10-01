@@ -140,6 +140,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scr\main.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Camera\Camera.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Character\Character.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Component\Animator.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Component\Collider.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\GameObject.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Weapon\Weapon.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\AudioManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\CollisionManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\EffectManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\FadeManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\InputManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\SceneManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scr\_sekino\GameObject\Camera\Camera.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Character\Character.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Component\Animator.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Component\Collider.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\GameObject.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Weapon\Weapon.h" />
+    <ClInclude Include="Scr\_sekino\Manager\AudioManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\CollisionManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\EffectManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\FadeManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\InputManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\SceneManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\TimeManager.h" />
+    <ClInclude Include="Scr\_sekino\Scene\BaseScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
