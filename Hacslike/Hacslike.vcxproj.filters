@@ -8,12 +8,6 @@
     <ClCompile Include="Scr\_sekino\GameObject\Weapon\Weapon.cpp">
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Component\Animator.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Component\Collider.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\_sekino\GameObject\Character\Character.cpp">
       <Filter>GameObject\Character</Filter>
     </ClCompile>
@@ -41,6 +35,12 @@
     <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\_sekino\Component\Animator.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\_sekino\Component\Collider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObject">
@@ -58,11 +58,11 @@
     <Filter Include="GameObject\Character">
       <UniqueIdentifier>{9fb473f9-c817-4843-94d7-8c09163aeb8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Component">
-      <UniqueIdentifier>{44278a7b-6bc0-4782-8503-60d1ad39e534}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Weapon">
       <UniqueIdentifier>{7df2d772-3788-479a-a3d2-ff98609038e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{44278a7b-6bc0-4782-8503-60d1ad39e534}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -71,12 +71,6 @@
     </ClInclude>
     <ClInclude Include="Scr\_sekino\GameObject\Weapon\Weapon.h">
       <Filter>GameObject\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Component\Animator.h">
-      <Filter>GameObject\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Component\Collider.h">
-      <Filter>GameObject\Component</Filter>
     </ClInclude>
     <ClInclude Include="Scr\_sekino\GameObject\Character\Character.h">
       <Filter>GameObject\Character</Filter>
@@ -107,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="Scr\_sekino\Scene\BaseScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_sekino\Component\Animator.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_sekino\Component\Collider.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 #pragma once
 #include "../GameObject.h"
-#include "../Card/Info/CardList.h"
 
 class Weapon : public GameObject {
 private:	// メンバ変数
@@ -9,7 +8,6 @@ private:	// メンバ変数
 	int attachFrameIndex;	// 武器を持たせるフレーム番号
 	Character* User;
 
-	std::vector<CardList::cardInfo> cardinfo;
 
 public:
 	Weapon(std::string _tag = "");
@@ -48,10 +46,6 @@ public:// ゲッタ―セッター
 	void OnTriggerStay(Collider* _pOther) override;
 
 	void OnTriggerExit(Collider* _pOther) override;
-
-	inline std::vector<CardList::cardInfo> GetCardList() const { return cardinfo; }
-
-	inline void SetCardList(std::vector<CardList::cardInfo> _info) { cardinfo = _info; }
 
 #pragma region ModelHandle
 	/*

@@ -1,5 +1,5 @@
 #include "Animator.h"
-#include "../Definition.h"
+#include "../../Definition.h"
 
 Animator::Animator()
 	:animationModelHandle(INVALID)

@@ -140,10 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scr\main.cpp" />
+    <ClCompile Include="Scr\_sekino\Component\Animator.cpp" />
+    <ClCompile Include="Scr\_sekino\Component\Collider.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\Character\Character.cpp" />
-    <ClCompile Include="Scr\_sekino\GameObject\Component\Animator.cpp" />
-    <ClCompile Include="Scr\_sekino\GameObject\Component\Collider.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\GameObject.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\Weapon\Weapon.cpp" />
     <ClCompile Include="Scr\_sekino\Manager\AudioManager.cpp" />
@@ -155,10 +155,10 @@
     <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scr\_sekino\Component\Animator.h" />
+    <ClInclude Include="Scr\_sekino\Component\Collider.h" />
     <ClInclude Include="Scr\_sekino\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\_sekino\GameObject\Character\Character.h" />
-    <ClInclude Include="Scr\_sekino\GameObject\Component\Animator.h" />
-    <ClInclude Include="Scr\_sekino\GameObject\Component\Collider.h" />
     <ClInclude Include="Scr\_sekino\GameObject\GameObject.h" />
     <ClInclude Include="Scr\_sekino\GameObject\Weapon\Weapon.h" />
     <ClInclude Include="Scr\_sekino\Manager\AudioManager.h" />

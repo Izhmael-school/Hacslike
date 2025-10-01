@@ -1,8 +1,7 @@
 #pragma once
 #include "../GameObject.h"
 #include "../../Component/Animator.h"
-#include "../Card/Hand/Hand.h"
-#include "Buff/Buff.h"
+#include "../../../Definition.h"
 
 class Character : public GameObject {
 protected:	// メンバ変数
@@ -13,12 +12,6 @@ protected:	// メンバ変数
 	bool atking;			// 攻撃フラグ
 	int def = 0;				// 防御力
 	bool blocking;			// 防御フラグ
-
-	Hand* pHand = nullptr;
-
-	Cost* pCost = nullptr;
-
-	Buff* pBuff = new Buff();
 
 	int Lv;
 	int Exp;
@@ -87,21 +80,5 @@ public:	// ゲッターとセッター
 	inline void SetBlocking(bool _fact) { blocking = _fact; }
 #pragma endregion
 
-	inline void SetHand(Hand* _pHand) { pHand = _pHand; }
-	inline Hand* GetHand() const { if (pHand != nullptr) 
-		return pHand; 
-	else 
-		return nullptr; }
-
-	inline int GetHp()const { return hp; }
-	inline void SetHp(int _Hp) { hp = _Hp; }
-
-	inline void SetCost(Cost* _cost) { pCost = _cost; }
-	inline Cost* GetCost() const { return pCost; }
-
-	inline void SetpBuff(Buff* _pBuff) { pBuff = _pBuff; }
-	inline Buff* GetpBuff() { return pBuff; }
-	inline void AddExp(int _Exp) { Exp += _Exp; }
-	inline int GetExp() const { return Exp; }
 };
 

@@ -10,7 +10,6 @@ Weapon::Weapon(std::string _tag)
 	, modelHandle(INVALID)
 	, attachModelHandle(INVALID)
 	, attachFrameIndex(INVALID)
-	, cardinfo()
 {
 	Start();
 }
@@ -97,68 +96,7 @@ void Weapon::attachDup(int& _characterModel, int _weaponDup, std::string _framen
 	MV1SetMatrix(modelHandle, matrix);
 }
 
-void Weapon::OnTriggerEnter(Collider* _pCol) {
-	// ƒvƒŒƒCƒ„[‘¤
-	// “–‚½‚Á‚½‚Ì‚ªƒSƒuƒŠƒ“‚Å‚©‚ÂUŒ‚‚µ‚½‚â‚Â‚ÌUŒ‚ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚©‚ÂUŒ‚‚µ‚½‚â‚Â‚Æˆá‚¤‚â‚Â
-	if (_pCol->GetGameObject()->GetTag() == "Goblin" && this->GetUser()->isAttack() && this->GetLayer() != _pCol->GetGameObject()->GetLayer()) {
-
-		// –hŒäƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚©
-		if (_pCol->GetCharacter()->isBlocking()) {
-			AudioManager::GetInstance()->PlayOneShot("Guard");
-			_pCol->GetCharacter()->AddHp((this->GetUser()->GetAtk() + this->GetUser()->GetpBuff()->GetBuff(0)) - _pCol->GetCharacter()->GetDef());
-			EffectManager::GetInstance()->Instantiate("Guard", this->GetUser()->GetPosition());
-		}
-		else {
-			_pCol->GetCharacter()->AddHp((this->GetUser()->GetAtk() + this->GetUser()->GetpBuff()->GetBuff(0)));
-		}
-
-		if (this->GetUser()->GetHand() != nullptr && this != nullptr) {
-			this->GetUser()->GetHand()->Hit(this->GetUser(),this->GetUser()->GetHand()->GetNowUseCard());
-		}
-
-		if (_pCol->GetCharacter()->GetHp() <= 0) {
-			this->GetUser()->AddExp(_pCol->GetCharacter()->GetExp());
-		}
-		//if (_pCol->GetCharacter()->GetHand() != nullptr && this != nullptr) {
-		//	_pCol->GetCharacter()->GetHand()->Hit(_pCol->GetCharacter(), _pCol->GetCharacter()->GetHand()->GetNowUseCard()->GetAbirity());
-		//}
-
-		if (this->GetUser()->GetHand()->GetCardPool() == "Durandal") {
-			EffectManager::GetInstance()->Instantiate("sHit",_pCol->GetGameObject()->GetPosition());
-		}
-		else if (this->GetUser()->GetHand()->GetCardPool() == "Mase") {
-			EffectManager::GetInstance()->Instantiate("mHit", _pCol->GetGameObject()->GetPosition());
-		}
-	}
-
-	//@“G‘¤
-	// “–‚½‚Á‚½‚Ì‚ªƒvƒŒƒCƒ„[‚Å‚©‚ÂUŒ‚‚µ‚½‚â‚Â‚ÌUŒ‚ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚©‚ÂUŒ‚‚µ‚½‚â‚Â‚Æˆá‚¤‚â‚Â
-	if (_pCol->GetGameObject()->GetTag() == "Player" && this->GetUser()->isAttack() && this->GetLayer() != _pCol->GetGameObject()->GetLayer()) {
-
-		// –hŒäƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚©
-		if (_pCol->GetCharacter()->isBlocking()) {
-			AudioManager::GetInstance()->PlayOneShot("Guard");
-			_pCol->GetCharacter()->AddHp(this->GetUser()->GetAtk() - _pCol->GetCharacter()->GetDef());
-			EffectManager::GetInstance()->Instantiate("Guard", this->GetUser()->GetPosition());
-		}
-		else {
-			_pCol->GetCharacter()->AddHp(this->GetUser()->GetAtk());
-			AudioManager::GetInstance()->PlayOneShot("Damage");
-		}
-
-
-		/*if (this->GetUser()->GetHand() != nullptr && this != nullptr) {
-			this->GetUser()->GetHand()->Hit(this->GetUser(), this->GetUser()->GetHand()->GetNowUseCard()->GetAbirity());
-		}*/
-
-		if (_pCol->GetCharacter()->GetHand() != nullptr && this != nullptr && _pCol->GetCharacter()->isBlocking()) {
-			_pCol->GetCharacter()->GetHand()->Hit(_pCol->GetCharacter(), _pCol->GetCharacter()->GetHand()->GetNowUseCard());
-		}
-
-		EffectManager::GetInstance()->Instantiate("eHit", _pCol->GetGameObject()->GetPosition());
-		AudioManager::GetInstance()->PlayOneShot("GW");
-	}
-}
+void Weapon::OnTriggerEnter(Collider* _pCol) {}
 
 void Weapon::OnTriggerStay(Collider* _pCol) {}
 

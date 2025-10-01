@@ -1,5 +1,7 @@
 #pragma once
 #include "../GameObject.h"
+#include "../../../Definition.h"
+
 class Camera : public GameObject {
 private:
 	GameObject* pTarget;	// ’Ç]‚·‚é‘ÎÛ‚Æ‚Ìƒ|ƒCƒ“ƒ^
