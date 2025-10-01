@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Dxlib.h>
+#include <random>
 #include "Definition.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -55,6 +56,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 #pragma endregion
 
+	// 乱数調節(ガチ)
+	std::random_device rd;
+	std::mt19937_64 mt(rd());
+	SRand(mt());
+	SRand(mt());
 
 	// ゲームのメインループ
 	while (true) {
