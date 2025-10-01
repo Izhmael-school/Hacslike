@@ -1,5 +1,6 @@
 #include "Character.h"
 
+
 Character::Character(VECTOR _pos , std::string tag, int _Lv, int _Exp) 
 	:GameObject(_pos,tag)
 	,modelHandle(INVALID)
@@ -13,7 +14,6 @@ Character::Character(VECTOR _pos , std::string tag, int _Lv, int _Exp)
 {}
 
 Character::~Character() {
-	delete pBuff;
 	delete pAnimator;
 	MV1DeleteModel(modelHandle);
 }

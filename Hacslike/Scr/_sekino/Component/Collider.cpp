@@ -1,4 +1,5 @@
 #include "Collider.h"
+#include "../../Definition.h"
 
 #pragma region Collider
 // コンストラクタ
