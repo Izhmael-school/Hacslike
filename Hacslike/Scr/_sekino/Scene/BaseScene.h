@@ -3,9 +3,7 @@
 #include "../GameObject/GameObject.h"
 #include "../Manager/CollisionManager.h"
 #include "../Manager/EffectManager.h"
-#include "../GameObject/Character/Enemy/Goblin/Goblin.h"
 #include "../GameObject/Weapon/Weapon.h"
-#include "../GameObject/Stage/Stage.h"
 /*
  * @brief シーンクラス
  * @tips  全てのシーンの基底クラス
@@ -13,9 +11,9 @@
 class BaseScene {
 protected:	// メンバ変数
 	std::vector<GameObject*> pGameObjectArray;	// 一元管理配列
-	std::vector<Goblin*> pGoblinArray;
-	std::vector<Weapon*> pWeaponArray;
-	std::vector<Weapon*> pGoblinWeaponArray;
+	//std::vector<Goblin*> pGoblinArray;
+	//std::vector<Weapon*> pWeaponArray;
+	//std::vector<Weapon*> pGoblinWeaponArray;
 
 public:		// トラクタ
 	BaseScene() = default;
@@ -24,39 +22,40 @@ public:		// トラクタ
 		for (auto pObj : pGameObjectArray) {
 			if (pObj == nullptr)
 				return;
-
-			pObj = nullptr;
-			delete pObj;
 		}
 
-		for (auto pObj : pWeaponArray) {
-			if (pObj == nullptr)
-				return;
+		//	pObj = nullptr;
+		//	delete pObj;
+		//}
 
-			pObj = nullptr;
-			delete pObj;
-		}
+		//for (auto pObj : pWeaponArray) {
+		//	if (pObj == nullptr)
+		//		return;
 
-		for (auto pObj : pGoblinArray) {
-			if (pObj == nullptr)
-				return;
+		//	pObj = nullptr;
+		//	delete pObj;
+		//}
 
-			pObj = nullptr;
-			delete pObj;
-		}
+		//for (auto pObj : pGoblinArray) {
+		//	if (pObj == nullptr)
+		//		return;
 
-		for (auto pObj : pGoblinWeaponArray) {
-			if (pObj == nullptr)
-				return;
+		//	pObj = nullptr;
+		//	delete pObj;
+		//}
 
-			pObj = nullptr;
-			delete pObj;
-		}
+		//for (auto pObj : pGoblinWeaponArray) {
+		//	if (pObj == nullptr)
+		//		return;
+
+		//	pObj = nullptr;
+		//	delete pObj;
+		//}
 
 		// 当たり判定の登録も初期化
 		CollisionManager::DestroyInstance();
 		// 使用中のエフェクトも初期化
-		EffectManager::DestroyInstance();
+		//EffectManager::DestroyInstance();
 	}
 
 public:		// メンバ関数

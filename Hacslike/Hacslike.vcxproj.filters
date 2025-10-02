@@ -20,12 +20,6 @@
     <ClCompile Include="Scr\_sekino\Manager\CollisionManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\EffectManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\FadeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\_sekino\Manager\InputManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -46,6 +40,12 @@
     </ClCompile>
     <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\_sekino\Manager\FadeManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp">
+      <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +73,9 @@
     <Filter Include="GameObject\Audio">
       <UniqueIdentifier>{9fb2723e-ea61-4d58-963c-e8f7d4247796}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Character\Enemy">
+      <UniqueIdentifier>{1ca9f528-3251-4da3-bd38-53ff05cff333}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\_sekino\GameObject\GameObject.h">
@@ -91,9 +94,6 @@
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Scr\_sekino\Manager\CollisionManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\EffectManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Scr\_sekino\Manager\FadeManager.h">
@@ -123,6 +123,9 @@
     <ClInclude Include="Scr\Definition.h" />
     <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.h">
+      <Filter>GameObject\Character\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

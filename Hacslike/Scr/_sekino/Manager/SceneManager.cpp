@@ -7,7 +7,7 @@ SceneManager* SceneManager::pInstance = nullptr;
 
 SceneManager::SceneManager() 
 	:pCurrentScene(nullptr)
-	,next(SceneType::Title)
+	,next(SceneType::Sekino)
 	,Current((SceneType)INVALID)
 	,changed(false)
 {
@@ -21,6 +21,7 @@ SceneManager::SceneManager()
 	//	break;
 	case SceneType::Sekino:
 		pCurrentScene = new SekinoScene();
+		break;
 	default:
 		pCurrentScene = nullptr;
 		break;
@@ -70,8 +71,8 @@ void SceneManager::Update() {
 void SceneManager::Render() {
 	// フェード処理が終了してなければ更新しない
 	// ※Fade中にチラ見せさせる場合は記述しない
-	if (FadeManager::GetInstance()->GetFadeState() != FadeState::FadeEnd)
-		return;
+	/*if (FadeManager::GetInstance()->GetFadeState() != FadeState::FadeEnd)
+		return;*/
 
 	if (pCurrentScene == nullptr)
 		return;

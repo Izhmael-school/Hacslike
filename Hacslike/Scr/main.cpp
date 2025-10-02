@@ -2,6 +2,9 @@
 #include <Dxlib.h>
 #include <random>
 #include "Definition.h"
+#include "_Sekino/Manager/TimeManager.h"
+#include "_Sekino/Manager/InputManager.h"
+#include "_Sekino/Manager/SceneManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -16,7 +19,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 起動時のウィンドウのモードの設定
 	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
 	// 背景色の設定
-	SetBackgroundColor(196, 196, 196);
+	SetBackgroundColor(0, 0, 0);
 
 	// Dxlibの初期化
 	if (DxLib_Init() == -1)
@@ -65,7 +68,35 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ゲームのメインループ
 	while (true) {
 
-		break;
+
+
+
+
+		// 更新処理
+		SceneManager::GetInstance()->Update();
+
+
+
+		// 画面をクリアする
+		ClearDrawScreen();
+
+		// 描画処理
+		SceneManager::GetInstance()->Render();
+
+		// エスケープキーでウィンドウを閉じる
+		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
+			break;
+
+		// 裏画面と表画面を切り替える
+		ScreenFlip();
+
+		// 処理が速すぎたら待つ
+		while (1) {
+			if (GetNowCount() - TimeManager::GetInstance()->GetCurrent() >= 1000 / FPS)
+				break;
+		}
+
+
 	}
 
 	// DxLibの終了

@@ -26,16 +26,16 @@ void Camera::Update() {
 
 	GetJoypadXInputState(DX_INPUT_PAD1,&XY);
 
-	if (XY.ThumbRX >= 1000)
+	if (XY.ThumbRX >= 1000 || input->IsKeyDown(KEY_INPUT_LEFT))
 		inputVec = VAdd(inputVec, VScale(VLeft, 4.0f));
 
-	if (XY.ThumbRX <= -1000)
+	if (XY.ThumbRX <= -1000 || input->IsKeyDown(KEY_INPUT_RIGHT))
 		inputVec = VAdd(inputVec, VScale(VRight, 4.0f));
 
-	if (XY.ThumbRY <= -1000)
+	if (XY.ThumbRY <= -1000 || input->IsKeyDown(KEY_INPUT_UP))
 		inputVec = VAdd(inputVec, VScale(VUp, 4.0f));
 
-	if (XY.ThumbRY >= 1000)
+	if (XY.ThumbRY >= 1000 || input->IsKeyDown(KEY_INPUT_DOWN))
 		inputVec = VAdd(inputVec, VScale(VDown, 4.0f));
 
 	// “ü—ÍƒxƒNƒgƒ‹‚Ì³‹K‰»

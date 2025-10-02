@@ -1,6 +1,10 @@
 #pragma once
 #include "BaseScene.h"
+#include <List>
 class SekinoScene : public BaseScene {
+private:
+	int goblinModel;
+
 public:
 	 SekinoScene();
 	 ~SekinoScene();
