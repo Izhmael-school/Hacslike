@@ -17,7 +17,6 @@ protected:
 
 	int layer;
 
-	bool isKinema = false;
 
 public: // トラクタ
 	GameObject(VECTOR _pos = VZero, std::string _tag = "");
@@ -103,9 +102,6 @@ public:	// ゲッターとセッター
 	inline void SetCharacter(Character* _chara) { pCharacter = _chara; }
 #pragma endregion
 
-	inline bool GetKinema() const { return isKinema; }
-
-	inline void SetIsKinema(bool _fact) { isKinema = _fact; }
 
 
 public:	// 衝突検知

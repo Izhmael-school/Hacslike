@@ -47,9 +47,19 @@
     <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Scr\_tanaka\Player\Player.cpp">
       <Filter>GameObject\Character\Player</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Goblin\Goblin.cpp">
+      <Filter>GameObject\Character\Enemy\Goblin</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\_sekino\GameObject\Stage\StageCell.cpp">
+      <Filter>GameObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\_sekino\GameObject\Stage\StageGenerator.cpp" />
+>>>>>>> origin/Sekino
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObject">
@@ -79,8 +89,16 @@
     <Filter Include="GameObject\Character\Enemy">
       <UniqueIdentifier>{1ca9f528-3251-4da3-bd38-53ff05cff333}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="GameObject\Character\Player">
       <UniqueIdentifier>{8bf911fd-86cc-4945-913e-2f4d8629046a}</UniqueIdentifier>
+=======
+    <Filter Include="GameObject\Character\Enemy\Goblin">
+      <UniqueIdentifier>{8d32ab38-2365-4e8b-8ff0-c21dccbffdf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Stage">
+      <UniqueIdentifier>{e346e70a-9682-49b5-8bc4-cf690a07898d}</UniqueIdentifier>
+>>>>>>> origin/Sekino
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -133,8 +151,18 @@
     <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.h">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Scr\_tanaka\Player\Player.h">
       <Filter>GameObject\Character\Player</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Goblin\Goblin.h">
+      <Filter>GameObject\Character\Enemy\Goblin</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_sekino\GameObject\Stage\StageCell.h">
+      <Filter>GameObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_sekino\GameObject\Stage\StageGenerator.h" />
+>>>>>>> origin/Sekino
   </ItemGroup>
 </Project>

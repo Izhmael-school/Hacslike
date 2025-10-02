@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 起動時のウィンドウのモードの設定
 	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
 	// 背景色の設定
-	SetBackgroundColor(0, 0, 0);
+	SetBackgroundColor(196, 196, 196);
 
 	// Dxlibの初期化
 	if (DxLib_Init() == -1)
@@ -98,6 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	}
+
+	SceneManager::DestroyInstance();
 
 	// DxLibの終了
 	DxLib_End();

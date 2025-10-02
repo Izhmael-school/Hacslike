@@ -1,6 +1,6 @@
 #include "SekinoScene.h"
 #include "../GameObject/Camera/Camera.h"
-#include "../GameObject/Character/Enemy/Enemy.h"
+#include "../GameObject/Character/Enemy/Goblin/Goblin.h"
 
 SekinoScene::SekinoScene()
 	:goblinModel(-1)
@@ -20,8 +20,9 @@ void SekinoScene::Start() {
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
-	Enemy* enemy = new Enemy();
-	goblinModel = MV1LoadModel("Res/Model/goblin.mv1");
+	Goblin* enemy = new Goblin();
+	enemy->SetPosition(VGet(1000, 0, 1000));
+	goblinModel = MV1LoadModel("Res/Model/Goblin/goblin.mv1");
 	enemy->SetModelHandle(goblinModel);
 
 	pCamera->SetTarget(enemy);
@@ -35,7 +36,10 @@ void SekinoScene::Update() {
 }
 
 void SekinoScene::Render() {
-	MV1DrawModel(goblinModel);
+
+	for (auto pObj : pGameObjectArray) {
+		pObj->Render();
+	}
 
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する

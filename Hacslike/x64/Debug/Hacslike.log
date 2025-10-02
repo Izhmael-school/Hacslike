@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  main.cpp
 C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\Dxlib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\main.cpp(65,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
@@ -41,3 +42,8 @@ C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Scene\SekinoScene
 C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   コードを生成中...
 LINK : fatal error LNK1104: ファイル 'DxDrawFunc_vs2015_x64_MTd.lib' を開くことができません。
+=======
+﻿  Enemy.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Hacslike.vcxproj -> C:\Users\student2\Desktop\new\Hacslike\Hacslike\x64\Debug\Hacslike.exe
+>>>>>>> origin/Sekino
