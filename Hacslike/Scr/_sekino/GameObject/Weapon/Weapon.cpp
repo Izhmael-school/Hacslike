@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include "../../Component/Collider.h"
 #include "../Character/Character.h"
-#include "../../Manager/EffectManager.h"
+//#include "../../Manager/EffectManager.h"
 #include "../../Manager/AudioManager.h"
 
 

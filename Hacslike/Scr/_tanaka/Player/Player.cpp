@@ -4,7 +4,7 @@
 #include "../Hacslike/Scr/_sekino/Manager/FadeManager.h"
 #include "../Hacslike/Scr/_sekino/GameObject/Camera/Camera.h"
 #include "../Hacslike/Scr/_sekino/Component/Collider.h"
-#include "../Hacslike/Scr/_sekino/Manager/EffectManager.h"
+//#include "../Hacslike/Scr/_sekino/Manager/EffectManager.h"
 //#include "../Hacslike/Scr/_sekino/Manager/Effect/Effect.h"
 
 
@@ -205,7 +205,7 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
 		//	“–‚½‚Á‚½‘Šè‚ğ”ñ•\¦‚É‚·‚é
 		//_pCol->GetGameObject()->SetVisible(false);
-		EffectManager::GetInstance()->Load("Res/Effect/01.efk", "FireFlower", 50.0f);
+		//EffectManager::GetInstance()->Load("Res/Effect/01.efk", "FireFlower", 50.0f);
 		/*Effect* pEffe = EffectManager::GetInstance()->Instantiate("FireFlower", position);
 
 		Camera::main->Shake(2, 0.5f);

@@ -1,5 +1,43 @@
 ﻿  main.cpp
-C:\Users\student2\Desktop\new\Hacslike\DxLib\Dxlib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\main.cpp(65,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\main.cpp(66,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
-  Hacslike.vcxproj -> C:\Users\student2\Desktop\new\Hacslike\Hacslike\x64\Debug\Hacslike.exe
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\Dxlib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\main.cpp(65,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\main.cpp(66,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
+  Animator.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Collider.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Audio.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Camera.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\GameObject\Camera\Camera.cpp(48,17): warning C4804: '>': 演算中の 'bool' 型の使用方法が安全ではありません
+  Character.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Enemy.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  GameObject.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Weapon.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  AudioManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  CollisionManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  FadeManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  InputManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\Dxlib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  SceneManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  TimeManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Manager\TimeManager.cpp(46,22): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Manager\TimeManager.cpp(48,8): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Manager\TimeManager.cpp(59,8): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  SekinoScene.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Scene\SekinoScene.cpp(40,12): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  Player.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  コードを生成中...
+LINK : fatal error LNK1104: ファイル 'DxDrawFunc_vs2015_x64_MTd.lib' を開くことができません。
