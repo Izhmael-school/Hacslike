@@ -66,3 +66,9 @@ enum class FadeState {
 	FadeOut = 1,
 	FadeEnd,
 };
+
+enum class CellState {
+	INVAILD,
+	None,
+	Stair
+};
