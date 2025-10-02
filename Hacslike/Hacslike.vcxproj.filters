@@ -47,6 +47,9 @@
     <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\_tanaka\Player\Player.cpp">
+      <Filter>GameObject\Character\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObject">
@@ -72,6 +75,9 @@
     </Filter>
     <Filter Include="GameObject\Audio">
       <UniqueIdentifier>{9fb2723e-ea61-4d58-963c-e8f7d4247796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Player">
+      <UniqueIdentifier>{226da4a0-bd2f-48d2-b17f-41b22c6ce538}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +129,9 @@
     <ClInclude Include="Scr\Definition.h" />
     <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\_tanaka\Player\Player.h">
+      <Filter>GameObject\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

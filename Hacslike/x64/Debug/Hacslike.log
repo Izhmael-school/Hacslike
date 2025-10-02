@@ -1,1 +1,13 @@
-﻿  Hacslike.vcxproj -> C:\Users\student2\Desktop\new\Hacslike\Hacslike\x64\Debug\Hacslike.exe
+﻿  EffectManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Manager\EffectManager.cpp(19,4): warning C4150: 'Effect' 型を削除するため delete 演算子が呼び出されましたが、定義がありません。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Manager\EffectManager.h(55,18): message : 'Effect' の宣言を確認してください
+  SceneManager.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Scene\BaseScene.h(6,10): fatal  error C1083: include ファイルを開けません。'../GameObject/Character/Enemy/Goblin/Goblin.h':No such file or directory
+  SekinoScene.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Scr\_sekino\Scene\BaseScene.h(6,10): fatal  error C1083: include ファイルを開けません。'../GameObject/Character/Enemy/Goblin/Goblin.h':No such file or directory
+  Player.cpp
+C:\Users\student2\Desktop\LastBB\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  コードを生成中...
