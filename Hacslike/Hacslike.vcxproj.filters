@@ -2,167 +2,47 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Scr\main.cpp" />
-    <ClCompile Include="Scr\_sekino\GameObject\GameObject.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Weapon\Weapon.cpp">
-      <Filter>GameObject\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Character\Character.cpp">
-      <Filter>GameObject\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Camera\Camera.cpp">
-      <Filter>GameObject\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\AudioManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\CollisionManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\InputManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\SceneManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Component\Animator.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Component\Collider.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Audio\Audio.cpp">
-      <Filter>GameObject\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\Manager\FadeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Scr\_tanaka\Player\Player.cpp">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClCompile>
-=======
-    <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Goblin\Goblin.cpp">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\_sekino\GameObject\Stage\StageCell.cpp">
-      <Filter>GameObject\Stage</Filter>
-    </ClCompile>
+    <ClCompile Include="Scr\_sekino\Component\Animator.cpp" />
+    <ClCompile Include="Scr\_sekino\Component\Collider.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Audio\Audio.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Camera\Camera.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Character\Character.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Character\Enemy\Goblin\Goblin.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\GameObject.cpp" />
+    <ClCompile Include="Scr\_sekino\GameObject\Stage\StageCell.cpp" />
     <ClCompile Include="Scr\_sekino\GameObject\Stage\StageGenerator.cpp" />
->>>>>>> origin/Sekino
+    <ClCompile Include="Scr\_sekino\GameObject\Weapon\Weapon.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\AudioManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\CollisionManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\FadeManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\InputManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\SceneManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp" />
+    <ClCompile Include="Scr\_tanaka\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="GameObject">
-      <UniqueIdentifier>{111e629e-6c32-423e-a97f-900ea85b0c5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{a54fa90a-5633-4f3b-8cc9-e87998f9acea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{fe531dc0-101e-4570-b008-44ddac75d361}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Camera">
-      <UniqueIdentifier>{d786d992-4944-4443-b9f4-4a4f9100f6b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character">
-      <UniqueIdentifier>{9fb473f9-c817-4843-94d7-8c09163aeb8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Weapon">
-      <UniqueIdentifier>{7df2d772-3788-479a-a3d2-ff98609038e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component">
-      <UniqueIdentifier>{44278a7b-6bc0-4782-8503-60d1ad39e534}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Audio">
-      <UniqueIdentifier>{9fb2723e-ea61-4d58-963c-e8f7d4247796}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy">
-      <UniqueIdentifier>{1ca9f528-3251-4da3-bd38-53ff05cff333}</UniqueIdentifier>
-    </Filter>
-<<<<<<< HEAD
-    <Filter Include="GameObject\Character\Player">
-      <UniqueIdentifier>{8bf911fd-86cc-4945-913e-2f4d8629046a}</UniqueIdentifier>
-=======
-    <Filter Include="GameObject\Character\Enemy\Goblin">
-      <UniqueIdentifier>{8d32ab38-2365-4e8b-8ff0-c21dccbffdf1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Stage">
-      <UniqueIdentifier>{e346e70a-9682-49b5-8bc4-cf690a07898d}</UniqueIdentifier>
->>>>>>> origin/Sekino
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Scr\_sekino\GameObject\GameObject.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Weapon\Weapon.h">
-      <Filter>GameObject\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Character\Character.h">
-      <Filter>GameObject\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Camera\Camera.h">
-      <Filter>GameObject\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\AudioManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\CollisionManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\FadeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\InputManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\SceneManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Manager\TimeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Scene\BaseScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Component\Animator.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\Component\Collider.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Audio\Audio.h">
-      <Filter>GameObject\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\Definition.h" />
-    <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Scr\_tanaka\Player\Player.h">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClInclude>
-=======
-    <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Goblin\Goblin.h">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\_sekino\GameObject\Stage\StageCell.h">
-      <Filter>GameObject\Stage</Filter>
-    </ClInclude>
+    <ClInclude Include="Scr\_sekino\Component\Animator.h" />
+    <ClInclude Include="Scr\_sekino\Component\Collider.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Audio\Audio.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Camera\Camera.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Character\Character.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Enemy.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Character\Enemy\Goblin\Goblin.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\GameObject.h" />
+    <ClInclude Include="Scr\_sekino\GameObject\Stage\StageCell.h" />
     <ClInclude Include="Scr\_sekino\GameObject\Stage\StageGenerator.h" />
->>>>>>> origin/Sekino
+    <ClInclude Include="Scr\_sekino\GameObject\Weapon\Weapon.h" />
+    <ClInclude Include="Scr\_sekino\Manager\AudioManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\CollisionManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\FadeManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\InputManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\SceneManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\TimeManager.h" />
+    <ClInclude Include="Scr\_sekino\Scene\BaseScene.h" />
+    <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h" />
+    <ClInclude Include="Scr\_tanaka\Player\Player.h" />
   </ItemGroup>
 </Project>

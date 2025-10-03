@@ -2,7 +2,13 @@
 #include "../Character.h"
 
 class Enemy : public Character {
-private:
+protected:
+	// Ray系
+	float rayLenght;	// レイの長さ
+	float rayAngle;		// レイの角度
+	int rayCount;			// レイの数
+	float raySpan;		// レイが更新される間隔
+	float rayTime;			// レイが更新される時間
 
 public:
 	Enemy();

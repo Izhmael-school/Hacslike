@@ -21,9 +21,7 @@ void SekinoScene::Start() {
 	pGameObjectArray.push_back(pCamera);
 
 	Goblin* enemy = new Goblin();
-	enemy->SetPosition(VGet(1000, 0, 1000));
-	goblinModel = MV1LoadModel("Res/Model/Goblin/goblin.mv1");
-	enemy->SetModelHandle(goblinModel);
+	enemy->SetPosition(VGet(0, 0, 0));
 
 	pCamera->SetTarget(enemy);
 	pGameObjectArray.push_back(enemy);

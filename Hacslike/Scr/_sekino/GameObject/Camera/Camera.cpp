@@ -47,12 +47,12 @@ void Camera::Update() {
 	rotation.y += -inputVec.x;	// yŽ²‰ñ“]
 	if (rotation.x + inputVec.y > !91) {
 		rotation.x += inputVec.y;	// xŽ²‰ñ“]
-		if (rotation.x >= 91) {
-			rotation.x = 90;
-		}
-		if (rotation.x<= -1) {
-			rotation.x = 0;
-		}
+		//if (rotation.x >= 91) {
+		//	rotation.x = 90;
+		//}
+		//if (rotation.x<= -1) {
+		//	rotation.x = 0;
+		//}
 	}
 
 	//if (rotation.x + inputVec.x <! -91) {
