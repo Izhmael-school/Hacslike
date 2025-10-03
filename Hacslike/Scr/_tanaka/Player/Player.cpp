@@ -37,6 +37,16 @@ void Player::Start() {
 	if (!isVisible)
 		return;
 
+	modelHandle = MV1LoadModel("Res/PlayerModel/Neutral.mv1");
+
+	pAnimator->SetModelHandle(modelHandle);
+
+	pAnimator->Load("Res/PlayerModel/Neutral.mv1", true);
+	pAnimator->Load("Res/PlayerModel/Run.mv1", true);
+	pAnimator->Load("Res/PlayerModel/Attack1.mv1");
+
+	pAnimator->Play(0);
+
 	////	ZŽ²•ûŒü‚ð³–Ê‚ÉŒü‚©‚¹‚é
 	//rotation.y = 180;
 
@@ -59,13 +69,13 @@ void Player::Update() {
 
 	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
 
-	if (XY.ThumbLX >= 1000 || input->IsKey(KEY_INPUT_W))
+	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_W))
 		inputVec = VAdd(inputVec, VForward);
 	if (XY.ThumbLY <= -1000 || input->IsKey(KEY_INPUT_S))
 		inputVec = VAdd(inputVec, VBack);
-	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_D))
+	if (XY.ThumbLX >= 1000 || input->IsKey(KEY_INPUT_D))
 		inputVec = VAdd(inputVec, VRight);
-	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_A))
+	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
 	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
