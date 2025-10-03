@@ -18,4 +18,4 @@ Character::~Character() {
 	MV1DeleteModel(modelHandle);
 }
 
-
+Character* Character::player;

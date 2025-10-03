@@ -14,8 +14,8 @@
 #define FPS						(60)	//	FPS
 
 //	引数付きマクロ定義 変換マクロ
-#define Deg2Rad(x) ( x * DX_PI_F / 180.0f ) //　デグリー角→ラジアン角
-#define Rad2Deg(x) ( x * 180.0f / DX_PI_F ) //  ラジアン角→デグリー角
+#define Deg2Rad(x) ( x * (DX_PI_F / 180.0f )) //　デグリー角→ラジアン角
+#define Rad2Deg(x) ( x * (180.0f / DX_PI_F )) //  ラジアン角→デグリー角
 
 // ワールドベクトル
 #define VRight	 (VGet(1.0f,0,0))
@@ -34,8 +34,7 @@
 
 #define EnemyMax (10)
 
-#define DeckMax (9)
-#define HandMax (5)
+#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
 //	=================================================================
 //		定数を定義する場所
 //	=================================================================

@@ -19,18 +19,19 @@ SekinoScene::~SekinoScene() {
 
 void SekinoScene::Start() {
 	Player* pPlayer = new Player();
+	pGameObjectArray.push_back(pPlayer);
 
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
 	Goblin* enemy = new Goblin();
 
-	Goblin* e2 = new Goblin();
-	e2->SetPosition(VGet(0, 0, 200));
+	/*Goblin* e2 = new Goblin();
+	e2->SetPosition(VGet(0, 0, 200));*/
 
 	pCamera->SetTarget(pPlayer);
 	pGameObjectArray.push_back(enemy);
-	pGameObjectArray.push_back(e2);
+	//pGameObjectArray.push_back(e2);
 }
 
 void SekinoScene::Update() {

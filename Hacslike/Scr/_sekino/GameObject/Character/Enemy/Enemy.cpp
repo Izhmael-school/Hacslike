@@ -48,13 +48,17 @@ void Enemy::IsDead() {
 	isVisible = false;
 }
 
-void Enemy::Vision() {
+/// <summary>
+/// MV1CollCheck_Lineを用いたRay
+/// 結構重い
+/// </summary>
+bool Enemy::Vision_Ray() {
 	// レイの更新
 	if (rayTime >= raySpan)
 		rayTime = 0;
 	else {
 		rayTime += TimeManager::GetInstance()->deltaTime;
-		return;
+		return false;
 	}
 
 	float startAngle = -rayAngle / 2;
@@ -70,15 +74,94 @@ void Enemy::Vision() {
 		VECTOR dir = VGet(sinf(rad), 0, cosf(rad));
 		VECTOR end = VAdd(start, VScale(dir, rayLenght));
 
-		MV1_COLL_RESULT_POLY ray = MV1CollCheck_Line(-1, -1, start, end);
+		MV1_COLL_RESULT_POLY ray = MV1CollCheck_Line(PLAYER_MODEL_HANDLE, -1, start, end);
 
 		// ヒットした場合
 		if (ray.HitFlag == 1) {
 			end = ray.HitPosition;
+			return true;
 		}
 
 #if Debug
 		DrawLine3D(start, end, yellow);
 #endif
+		return false;
 	}	
+}
+
+/// <summary>
+/// MV1CollCheck_Sphereを用いたRay
+/// 1体なら重くないが重なると重いかも
+/// </summary>
+/// <param name="r">半径</param>
+bool Enemy::Vision_Circle(float r) {
+	// レイの更新
+	if (rayTime >= raySpan)
+		rayTime = 0;
+	else {
+		rayTime += TimeManager::GetInstance()->deltaTime;
+		return false;
+	}
+
+	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(PLAYER_MODEL_HANDLE, -1, position, r);
+
+	if (result.Dim == nullptr) return false;
+
+	if (result.Dim->HitFlag == 1) {
+		DrawString(0, 0, "視界に入っている", red);
+		return true;
+	}
+	return false;
+}
+
+bool Enemy::Vision_Fan() {
+	// レイの更新
+	if (rayTime >= raySpan)
+		rayTime = 0;
+	else {
+		rayTime += TimeManager::GetInstance()->deltaTime;
+		return false;
+	}
+
+	point.position = GetPlayer()->GetPosition();
+
+	fan.position = position;
+	fan.directionDegree = rotation.y;
+	fan.length = rayLenght;
+	fan.rangeDegree = rayAngle;
+
+	// 点と扇のベクトル
+	VECTOR vecFanToPoint = {
+		point.position.x - fan.position.x,
+		0,
+		point.position.z - fan.position.z,
+	};
+
+	// ベクトルの長さを算出
+	float vecLength = sqrtf(pow(vecFanToPoint.x, 2) + pow(vecFanToPoint.z, 2));
+
+	// ベクトルと扇の名側の比較
+	if (fan.length < vecLength) return false; // 当たってない
+
+	// 扇を２等分する線のベクトルを求める
+	float dirRad = Deg2Rad(fan.directionDegree);
+	VECTOR fanDir = VGet(sinf(dirRad), 0, cosf(dirRad));
+
+	// 扇と点のベクトルを単位ベクトルにする
+	VECTOR normalFanToPoint = {
+		vecFanToPoint.x / vecLength,
+		0,
+		vecFanToPoint.z / vecLength
+	};
+
+	// 内積計算
+	float dot = normalFanToPoint.x * fanDir.x + normalFanToPoint.z* fanDir.z;
+
+	// 扇の範囲をcosにする
+	float fanCos = -cosf(Deg2Rad(fan.rangeDegree / 2));
+
+	// 点が扇の範囲内にあるか比較
+	if (fanCos < dot) return false; // 当たってない
+
+	return true;
 }

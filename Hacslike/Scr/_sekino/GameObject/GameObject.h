@@ -43,7 +43,8 @@ public:	// ゲッターとセッター
 
 #pragma region Position
 	// 座標の取得
-	inline VECTOR GetPosition() { return position; }
+	inline VECTOR GetPosition() { 
+		return position; }
 	// VECTORによる座標変更
 	inline void SetPosition(VECTOR _v) { position = _v; }
 	// floatによる座標変更

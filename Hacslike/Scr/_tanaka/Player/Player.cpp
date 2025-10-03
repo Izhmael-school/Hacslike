@@ -26,6 +26,8 @@ Player::Player(VECTOR _pos)
 Player::~Player() {
 	delete pWeapon;
 	pWeapon = nullptr;
+
+	MV1DeleteModel(PLAYER_MODEL_HANDLE);
 }
 
 /*
@@ -37,9 +39,11 @@ void Player::Start() {
 	if (!isVisible)
 		return;
 
-	modelHandle = MV1LoadModel("Res/PlayerModel/Neutral.mv1");
+	modelHandle = PLAYER_MODEL_HANDLE;
 
 	pAnimator->SetModelHandle(modelHandle);
+
+	SetPlayer(this);
 
 	pAnimator->Load("Res/PlayerModel/Neutral.mv1", true);
 	pAnimator->Load("Res/PlayerModel/Run.mv1", true);
@@ -198,6 +202,8 @@ void Player::Render() {
 	//	”ñ•\Ž¦‚¾‚Á‚½‚ç•`‰æ‚µ‚È‚¢
 	if (!isVisible)
 		return;
+
+	DrawFormatString(100, 100, black, "x:%f,y:%f,z:%f", position.x, position.y, position.z);
 
 	//	ƒ‚ƒfƒ‹‚Ì•`‰æ
 	MV1DrawModel(modelHandle);

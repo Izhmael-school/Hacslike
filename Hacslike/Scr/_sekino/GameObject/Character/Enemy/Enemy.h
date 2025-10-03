@@ -10,6 +10,21 @@ protected:
 	float raySpan;		// レイが更新される間隔
 	float rayTime;			// レイが更新される時間
 
+protected:
+	struct Point {
+		VECTOR position;
+	};
+
+	struct Fan {
+		VECTOR position;		// 中心
+		float rangeDegree;		// 範囲
+		float length;			// 長さ
+		float directionDegree;	// 方向
+	};
+
+	Point point;
+	Fan fan;
+
 public:
 	Enemy();
 	~Enemy();
@@ -19,6 +34,8 @@ public:
 	virtual void Render() override;
 	
 	virtual void IsDead();
-	virtual void Vision();
+	virtual bool Vision_Ray();
+	virtual bool Vision_Circle(float r);
+	virtual bool Vision_Fan();
 };
 

@@ -15,7 +15,9 @@ protected:	// メンバ変数
 
 	int Lv;
 	int Exp;
-
+public:
+	static Character* player;
+	
 
 public:	// コンストラクタとデストラクタ
 
@@ -80,5 +82,9 @@ public:	// ゲッターとセッター
 	inline void SetBlocking(bool _fact) { blocking = _fact; }
 #pragma endregion
 
+	inline Character* GetPlayer() const { 
+		return Character::player; }
+
+	inline void SetPlayer(Character* _player) { Character::player = _player; }
 };
 

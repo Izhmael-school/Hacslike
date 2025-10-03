@@ -1,3 +1,5 @@
 ﻿  Enemy.cpp
 C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp(141,50): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp(90): warning C4715: 'Enemy::Vision_Ray': 値を返さないコントロール パスがあります。
   Hacslike.vcxproj -> C:\Users\student2\Desktop\new\Hacslike\Hacslike\x64\Debug\Hacslike.exe
