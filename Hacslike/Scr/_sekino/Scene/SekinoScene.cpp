@@ -1,6 +1,7 @@
 #include "SekinoScene.h"
 #include "../GameObject/Camera/Camera.h"
 #include "../GameObject/Character/Enemy/Goblin/Goblin.h"
+#include "../../_tanaka/Player/Player.h"
 
 SekinoScene::SekinoScene()
 	:goblinModel(-1)
@@ -17,6 +18,8 @@ SekinoScene::~SekinoScene() {
 }
 
 void SekinoScene::Start() {
+	Player* pPlayer = new Player();
+
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
@@ -25,7 +28,7 @@ void SekinoScene::Start() {
 	Goblin* e2 = new Goblin();
 	e2->SetPosition(VGet(0, 0, 200));
 
-	pCamera->SetTarget(enemy);
+	pCamera->SetTarget(pPlayer);
 	pGameObjectArray.push_back(enemy);
 	pGameObjectArray.push_back(e2);
 }
