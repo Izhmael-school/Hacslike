@@ -75,7 +75,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 更新処理
 		SceneManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
-
+		InputManager::GetInstance()->Update();
 
 		// 画面をクリアする
 		ClearDrawScreen();
