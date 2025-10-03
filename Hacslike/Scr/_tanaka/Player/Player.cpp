@@ -15,7 +15,8 @@
 Player::Player(VECTOR _pos)
 	: Character(_pos, "Player")
 	, isAttacking(false)
-	, pWeapon(nullptr) {
+	, pWeapon(nullptr)
+	, XY() {
 	Start();
 }
 
@@ -56,14 +57,15 @@ void Player::Update() {
 	//	入力ベクトル
 	VECTOR inputVec = VZero;
 
+	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
 
-	if (input->IsKey(KEY_INPUT_W))
+	if (XY.ThumbLX >= 1000 || input->IsKey(KEY_INPUT_W))
 		inputVec = VAdd(inputVec, VForward);
-	if (input->IsKey(KEY_INPUT_S))
+	if (XY.ThumbLY <= -1000 || input->IsKey(KEY_INPUT_S))
 		inputVec = VAdd(inputVec, VBack);
-	if (input->IsKey(KEY_INPUT_D))
+	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_D))
 		inputVec = VAdd(inputVec, VRight);
-	if (input->IsKey(KEY_INPUT_A))
+	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
 	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
@@ -72,7 +74,7 @@ void Player::Update() {
 
 	if (input->IsKeyDown(KEY_INPUT_SPACE)) {
 		isAttacking = true;
-		//pAnimator->Play(2);
+		pAnimator->Play(2);
 	}
 	if (pAnimator->GetCurrentAnimation() != 2) {
 		isAttacking = false;
@@ -205,13 +207,13 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
 		//	当たった相手を非表示にする
 		//_pCol->GetGameObject()->SetVisible(false);
-		//EffectManager::GetInstance()->Load("Res/Effect/01.efk", "FireFlower", 50.0f);
-		/*Effect* pEffe = EffectManager::GetInstance()->Instantiate("FireFlower", position);
+	/*	EffectManager::GetInstance()->Load("Res/Effect/01.efk", "FireFlower", 50.0f);
+		Effect* pEffe = EffectManager::GetInstance()->Instantiate("FireFlower", position);
 
-		Camera::main->Shake(2, 0.5f);
+		Camera::main->Shake(2, 0.5f);*/
 
-		SceneManager::GetInstance()->SetNext(SceneType::GameOver);
-		FadeManager::GetInstance()->FadeOut();*/
+		//SceneManager::GetInstance()->SetNext(SceneType::GameOver);
+		FadeManager::GetInstance()->FadeOut();
 	}
 }
 
