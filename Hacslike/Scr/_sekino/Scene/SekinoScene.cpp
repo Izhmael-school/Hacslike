@@ -21,10 +21,13 @@ void SekinoScene::Start() {
 	pGameObjectArray.push_back(pCamera);
 
 	Goblin* enemy = new Goblin();
-	enemy->SetPosition(VGet(0, 0, 0));
+
+	Goblin* e2 = new Goblin();
+	e2->SetPosition(VGet(0, 0, 200));
 
 	pCamera->SetTarget(enemy);
 	pGameObjectArray.push_back(enemy);
+	pGameObjectArray.push_back(e2);
 }
 
 void SekinoScene::Update() {

@@ -6,7 +6,7 @@
 Enemy::Enemy()
 	:rayAngle(45.0f)
 	,rayCount(15)
-	,rayLenght(300)
+	,rayLenght(1000)
 	,raySpan(0.5f)
 	,rayTime(raySpan)
 {
@@ -77,6 +77,8 @@ void Enemy::Vision() {
 			end = ray.HitPosition;
 		}
 
+#if Debug
 		DrawLine3D(start, end, yellow);
+#endif
 	}	
 }
