@@ -21,6 +21,9 @@
     <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp" />
     <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp" />
     <ClCompile Include="Scr\_tanaka\Player\Player.cpp" />
+    <ClCompile Include="Scr\_tanaka\Collider\CapsuleHitBox.cpp" />
+    <ClCompile Include="Scr\_tanaka\Collider\SphereHitBox.cpp" />
+    <ClCompile Include="Scr\_tanaka\Slash\Slash.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -44,5 +47,8 @@
     <ClInclude Include="Scr\_sekino\Scene\BaseScene.h" />
     <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h" />
     <ClInclude Include="Scr\_tanaka\Player\Player.h" />
+    <ClInclude Include="Scr\_tanaka\Collider\CapsuleHitBox.h" />
+    <ClInclude Include="Scr\_tanaka\Collider\SphereHitBox.h" />
+    <ClInclude Include="Scr\_tanaka\Slash\Slash.h" />
   </ItemGroup>
 </Project>

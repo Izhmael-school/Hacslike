@@ -4,9 +4,9 @@
 #include "../Hacslike/Scr/_sekino/Manager/FadeManager.h"
 #include "../Hacslike/Scr/_sekino/GameObject/Camera/Camera.h"
 #include "../Hacslike/Scr/_sekino/Component/Collider.h"
+#include "../Hacslike/Scr/Definition.h"
 //#include "../Hacslike/Scr/_sekino/Manager/EffectManager.h"
 //#include "../Hacslike/Scr/_sekino/Manager/Effect/Effect.h"
-
 
 /*
  *	@brief		コンストラクタ
@@ -16,7 +16,20 @@ Player::Player(VECTOR _pos)
 	: Character(_pos, "Player")
 	, isAttacking(false)
 	, pWeapon(nullptr)
-	, XY() {
+	, XY()
+	, slashes()						//	斬撃
+	, attackIndex(0)				//	コンボが何段目か
+	, attackTimer(0.0f)				//	クールタイム
+	, canNextAttack(false)			//	次の攻撃ができるか
+	, CapsuleHitboxes()				//	1,2段目のHitBox(Capsule)
+	, SphereHitboxes()				//	3段目のHitBox(Sphere)
+	, isBlinking(false)				//	回避の長押し防止
+	, blinkTimer(0.0f)				//	回避のクールダウン
+	, attackInputCooldown(0.0f)		//	
+	, attackButtonPressed(false)	//	
+	, evasionButtonPressed(false)	//	
+	, evasionCooldown(0.0f)
+	, evasionSpeed(1.0f) {
 	Start();
 }
 
@@ -45,11 +58,24 @@ void Player::Start() {
 
 	SetPlayer(this);
 
-	pAnimator->Load("Res/PlayerModel/Neutral.mv1", true);
-	pAnimator->Load("Res/PlayerModel/Run.mv1", true);
-	pAnimator->Load("Res/PlayerModel/Attack1.mv1");
+	//	アニメーションの読み込み
+	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", true);
+	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", true);
+	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1");
+	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1");
+	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1");
+	GetAnimator()->Load("Res/PlayerModel/Run.mv1", true);
 
 	pAnimator->Play(0);
+
+	// 残像データ初期化
+	for (int i = 0; i < AFTIMAGENUM; i++) {
+		afterImagePos[i] = position;
+		afterImageRotY[i] = rotation.y;
+	}
+
+	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
+
 
 	////	Z軸方向を正面に向かせる
 	//rotation.y = 180;
@@ -81,24 +107,112 @@ void Player::Update() {
 		inputVec = VAdd(inputVec, VRight);
 	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
-	if (input->IsKey(KEY_INPUT_Q))
+
+
+	/*if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
 	if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);
+		inputVec = VAdd(inputVec, VDown);*/
 
-	if (input->IsKeyDown(KEY_INPUT_SPACE)) {
-		isAttacking = true;
-		pAnimator->Play(2);
+		// ===== 攻撃入力 =====
+	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || XY.Buttons[14];
+
+	if (isButtonDown && !attackButtonPressed) {
+		// ボタンが押された瞬間だけ処理
+		attackButtonPressed = true;
+
+		if (!isAttacking && !isBlinking) {
+			// --- 1段目攻撃 ---
+			isAttacking = true;
+			attackIndex = 1;
+			attackTimer = 0.0f;
+			canNextAttack = false;
+			pAnimator->Play(2); // 攻撃1モーション
+		}
+		else if (canNextAttack && attackIndex < 3) {
+			// --- コンボ入力 ---
+			attackIndex++;
+			attackTimer = 0.0f;
+			canNextAttack = false;
+			pAnimator->Play(1 + attackIndex); // 攻撃2→3
+		}
 	}
-	if (pAnimator->GetCurrentAnimation() != 2) {
+	else if (!isButtonDown) {
+		// ボタンを離したらフラグリセット
+		attackButtonPressed = false;
+	}
+
+	// ===== 攻撃中のタイマー管理 =====
+	if (isAttacking) {
+		attackTimer += 1.0f / 60.0f;
+
+		if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
+
+		// 攻撃判定生成
+		if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f)
+			CreateAttackHitbox(30.0f, 80.0f);
+		if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f)
+			CreateAttackHitbox(40.0f, 110.0f);
+		if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f)
+			CreateAttackHitbox(0.0f, 150.0f); // 周囲攻撃
+
+		if (attackTimer > 0.8f) {
+			isAttacking = false;
+			canNextAttack = false;
+			attackIndex = 0;
+		}
+	}
+
+	// ヒットボックス更新
+	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
+		CapsuleHitBox* h = *it;
+		h->Update();
+		if (h->IsDead()) {
+			delete h;
+			it = CapsuleHitboxes.erase(it);
+		}
+		else ++it;
+	}
+
+	for (auto it = SphereHitboxes.begin(); it != SphereHitboxes.end();) {
+		SphereHitBox* h = *it;
+		h->Update();
+		if (h->IsDead()) {
+			delete h;
+			it = SphereHitboxes.erase(it);
+		}
+		else ++it;
+	}
+
+	// ===== 回避入力 =====
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || XY.Buttons[12];
+
+	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f) {
+		// 押した瞬間＆クールダウン終了時のみ回避
+		evasionButtonPressed = true;
+		evasionCooldown = EVASION_COOLDOWN_TIME; // クールダウン開始
+		Evasion();
+	}
+	else if (!isEvasionButtonDown) {
+		// ボタンを離したら押下フラグリセット
+		evasionButtonPressed = false;
+	}
+
+	// ===== 毎フレームクールダウン減算 =====
+	if (evasionCooldown > 0.0f)
+		evasionCooldown -= 1.0f / 60.0f; // 60fps前提、deltaTimeがあればそれでもOK
+
+	/*if (pAnimator->GetCurrentAnimation() != 2) {
 		isAttacking = false;
-	}
+	}*/
 
 	if (!isAttacking) {
 		//	入力があれば
 		if (VSquareSize(inputVec) >= 0.01f) {
 			//	入力ベクトルの正規化
 			inputVec = VNorm(inputVec);
+
+			inputVec = VScale(inputVec, evasionSpeed);
 
 			//	カメラからみた移動する方向ベクトル
 			VECTOR moveDirection = VZero;
@@ -171,7 +285,7 @@ void Player::Update() {
 			position = VAdd(position, VScale(moveDirection, 10.0f));
 
 			//	移動アニメーションを再生
-			pAnimator->Play(1, 0.2f);
+			pAnimator->Play(1, 1.3f);
 		}
 		else {
 			//	待機アニメーションを再生
@@ -179,8 +293,43 @@ void Player::Update() {
 		}
 	}
 
+	// --- ブリンク中の処理 ---
+	if (isBlinking && !isAttacking) {
+		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
+		if (blinkTimer <= 0.0f) {
+			isBlinking = false;
+			evasionSpeed = 1;
+			pCollider->SetEnable(true);
+		}
+
+		pAnimator->Play(5, 2);
+
+		// 先に最新位置を入れる
+		afterImagePos[0] = position;
+		afterImageRotY[0] = rotation.y;
+
+		// 古い残像を後ろにずらす
+		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
+			afterImagePos[i] = afterImagePos[i - 1];
+			afterImageRotY[i] = afterImageRotY[i - 1];
+		}
+	}
+
 	pAnimator->Update();
 	GameObject::Update();
+
+	for (auto it = slashes.begin(); it != slashes.end();) {
+		Slash* s = *it;
+		s->Update();
+
+		if (s->IsDead()) {
+			delete s;
+			it = slashes.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
 
 	////計算した座標、回転(オイラー角)、拡縮モデルに反映する
 	//MV1SetPosition(modelHandle, position);
@@ -203,15 +352,121 @@ void Player::Render() {
 	if (!isVisible)
 		return;
 
-	DrawFormatString(100, 100, black, "x:%f,y:%f,z:%f", position.x, position.y, position.z);
+	// --- 残像描画 ---
+	if (isBlinking && !isAttacking) {
+		for (int i = AFTIMAGENUM - 1; i >= 0; i -= 4) {
+			int alpha = 255 - 255 * i / AFTIMAGENUM;
 
-	//	モデルの描画
+			// モデルの座標・回転設定
+			MATRIX matRot = MGetRotY(Deg2Rad(afterImageRotY[i]));
+			MATRIX matTrans = MGetTranslate(afterImagePos[i]);
+			MATRIX mat = MMult(matRot, matTrans);
+
+			MV1SetMatrix(modelHandle, mat);
+
+			// 半透明描画
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+			MV1DrawModel(modelHandle);
+		}
+	}
+
+	// --- 通常モデル描画 ---
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
 
+	for (auto s : slashes) {
+		s->Render();
+	}
+
+	// ヒットボックス描画（デバッグ）
+	for (auto h : CapsuleHitboxes) {
+		h->Render();
+	}
+
+	// ヒットボックス描画（デバッグ）
+	for (auto h : SphereHitboxes) {
+		h->Render();
+	}
+
+
 	//	武器の描画
-	if (pCollider != nullptr)
+	if (pCollider != nullptr) {
 		pWeapon->Render();
+	}
+
+
+
 }
+
+void Player::AttackEnd() {
+	VECTOR forward = VNorm(VGet(
+		-sinf(Deg2Rad(rotation.y)),
+		0.0f,
+		-cosf(Deg2Rad(rotation.y))
+	));
+
+	// 最後の攻撃で斬撃発生
+	Slash* s = new Slash(position, forward);
+	slashes.push_back(s);
+}
+
+void Player::CreateAttackHitbox(float length, float radius) {
+	//Unity座標系の前方
+	VECTOR forward = VNorm(VGet(
+		-sinf(Deg2Rad(rotation.y)),
+		0.0f,
+		-cosf(Deg2Rad(rotation.y))
+	));
+
+	VECTOR start, end;
+	float life = 0.20f;
+
+	if (attackIndex < 3) {
+		// 1～2段目 前方カプセル
+		start = VAdd(position, VScale(forward, 20.0f));
+		end = VAdd(start, VScale(forward, length));
+		CapsuleHitBox* hit = new CapsuleHitBox(this, start, end, radius, life);
+		CapsuleHitboxes.push_back(hit);
+	}
+	else {
+		// 3段目 周囲攻撃（球状に近いカプセル）
+		life = 0.25f;
+		// プレイヤー中心 + 少し前方にオフセット
+		VECTOR center = VAdd(position, VScale(forward, 50.0f)); // 50.0f は前に出す距離
+		// 少し高さを上げたい場合は Y 成分を足す
+		center.y += 50.0f; // optional: 地面から少し上に
+
+		// SphereHitBox を生成
+		float life = 0.25f;
+		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
+
+		SphereHitBox* hit = new SphereHitBox(this, offset, radius, life);
+		SphereHitboxes.push_back(hit);
+	}
+
+}
+
+void Player::Evasion() {
+	pCollider->SetEnable(false);
+
+	// 瞬間移動
+	evasionSpeed = 5;
+
+
+
+	// 残像開始
+	isBlinking = true;
+	blinkTimer = 0.25f;
+
+
+	// --- 履歴をすべて現在位置にリセット ---
+	for (int i = 0; i < AFTIMAGENUM; i++) {
+		afterImagePos[i] = position;
+		afterImageRotY[i] = rotation.y;
+	}
+}
+
 
 /*
  *	@function	OnTriggerEnter
@@ -233,7 +488,7 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 	}
 }
 
-/*
+/*wsa
  *	@function	OnTriggerSaty
  *	@brief		当たっている間
  *	@param[in]	Collider* _pCol
