@@ -2,6 +2,7 @@
 #include "../GameObject.h"
 #include "../../Component/Animator.h"
 #include "../../../Definition.h"
+#include "../../Manager/StageManager.h"
 
 class Character : public GameObject {
 protected:	// メンバ変数
@@ -15,6 +16,9 @@ protected:	// メンバ変数
 
 	int Lv;
 	int Exp;
+
+	VECTOR prevPos;
+	VECTOR wallCheckPos;
 public:
 	static Character* player;
 	
@@ -86,5 +90,20 @@ public:	// ゲッターとセッター
 		return Character::player; }
 
 	inline void SetPlayer(Character* _player) { Character::player = _player; }
+
+	void CheckWall();
+
+	inline void SetPosition(VECTOR set) override {
+		position = set;
+		prevPos = set;
+		wallCheckPos = set;
+	}
+
+	inline void SetPosition(float x,float y,float z) override {
+		VECTOR set = VGet(x,y,z);
+		position = set;
+		prevPos = set;
+		wallCheckPos = set;
+	}
 };
 

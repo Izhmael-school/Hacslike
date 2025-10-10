@@ -10,11 +10,11 @@ GameObject::GameObject(VECTOR _pos,std::string _tag)
 	,matrix(MGetIdent())
 	,tag(_tag)
 	,layer(-1)
+	,pCollider(nullptr)
 {}
 
 // デストラクタ
 GameObject::~GameObject() {}
-
 
 void GameObject::Update() {
 	// 非表示なら表示しない

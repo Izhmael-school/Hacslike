@@ -94,6 +94,8 @@ void Player::Update() {
 		isAttacking = false;
 	}
 
+	CheckWall();
+
 	if (!isAttacking) {
 		//	“ü—Í‚ª‚ ‚ê‚Î
 		if (VSquareSize(inputVec) >= 0.01f) {

@@ -1,0 +1,351 @@
+﻿  main.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\Dxlib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_Sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\main.cpp(66,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\main.cpp(67,10): warning C4244: '引数': 'unsigned __int64' から 'int' への変換です。データが失われる可能性があります。
+  Animator.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Collider.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  Audio.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Camera.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Camera\Camera.cpp(48,17): warning C4804: '>': 演算中の 'bool' 型の使用方法が安全ではありません
+  Character.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  Enemy.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Character\Enemy\Enemy.cpp(141,50): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Goblin.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  GameObject.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  StageCell.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  StageGenerator.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(9,2): error C2653: 'StageGenerator': 識別子がクラス名でも名前空間名でもありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(9,29): error C3646: 'type': 不明なオーバーライド指定子です
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(9,33): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(12,30): error C2653: 'StageGenerator': 識別子がクラス名でも名前空間名でもありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(12,46): error C2061: 構文エラー: 識別子 'ObjectType'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(34,9): error C2653: 'StageGenerator': 識別子がクラス名でも名前空間名でもありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(34,36): error C3646: 'GetObjectType': 不明なオーバーライド指定子です
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(34,50): error C2059: 構文エラー: ')'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(34,58): error C2334: '{' の前に予期しないトークンがありました。関数の本体は無視されます
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(18,14): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(25,21): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(27,14): warning C4156: 'delete' の配列でない形式を使った配列の削除は、定義されていません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(27,14): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(39,12): error C2819: クラス 'std::vector<StageCell *,std::allocator<StageCell *>>' にはオーバーロードされたメンバー 'operator ->' がありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,7): message : 'std::vector<StageCell *,std::allocator<StageCell *>>' の宣言を確認してください
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(39,12): message : 代わりに '.' を使用しますか?
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(39,14): error C2039: 'Update': 'std::vector<StageCell *,std::allocator<StageCell *>>' のメンバーではありません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,7): message : 'std::vector<StageCell *,std::allocator<StageCell *>>' の宣言を確認してください
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(48,12): error C2819: クラス 'std::vector<StageCell *,std::allocator<StageCell *>>' にはオーバーロードされたメンバー 'operator ->' がありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,7): message : 'std::vector<StageCell *,std::allocator<StageCell *>>' の宣言を確認してください
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(48,12): message : 代わりに '.' を使用しますか?
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(48,14): error C2039: 'Render': 'std::vector<StageCell *,std::allocator<StageCell *>>' のメンバーではありません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,7): message : 'std::vector<StageCell *,std::allocator<StageCell *>>' の宣言を確認してください
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(56,18): error C2440: 'delete': 'std::vector<StageCell *,std::allocator<StageCell *>>' から 'void*' に変換できません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(56,18): message : この変換を実行可能なユーザー定義変換演算子がないか、または演算子を呼び出せません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(57,11): error C2679: 二項演算子 '=': 型 'nullptr' の右オペランドを扱う演算子が見つかりません (または変換できません)。
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\vector(1566,26): message : 'std::vector<StageCell *,std::allocator<StageCell *>> &std::vector<StageCell *,std::allocator<StageCell *>>::operator =(std::initializer_list<_Ty>)' の可能性があります
+          with
+          [
+              _Ty=StageCell *
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\vector(1545,26): message : または 'std::vector<StageCell *,std::allocator<StageCell *>> &std::vector<StageCell *,std::allocator<StageCell *>>::operator =(const std::vector<StageCell *,std::allocator<StageCell *>> &)'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\vector(798,26): message : または 'std::vector<StageCell *,std::allocator<StageCell *>> &std::vector<StageCell *,std::allocator<StageCell *>>::operator =(std::vector<StageCell *,std::allocator<StageCell *>> &&) noexcept(<expr>)'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(57,11): message : 引数リスト '(std::vector<StageCell *,std::allocator<StageCell *>>, nullptr)' を一致させようとしているとき
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(341,36): error C2661: 'StageCell::StageCell': 3 個の引数を伴うオーバーロードされた関数はありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(341,36): message : 引数リスト '(int, StageGenerator::ObjectType, DxLib::VECTOR)' を一致させようとしているとき
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(404,33): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(404,16): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(420,24): error C2661: 'StageCell::StageCell': 3 個の引数を伴うオーバーロードされた関数はありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(420,24): message : 引数リスト '(int, StageGenerator::ObjectType, DxLib::VECTOR)' を一致させようとしているとき
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(429,24): error C2661: 'StageCell::StageCell': 3 個の引数を伴うオーバーロードされた関数はありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(429,24): message : 引数リスト '(int, StageGenerator::ObjectType, DxLib::VECTOR)' を一致させようとしているとき
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(438,24): error C2661: 'StageCell::StageCell': 3 個の引数を伴うオーバーロードされた関数はありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(438,24): message : 引数リスト '(int, StageGenerator::ObjectType, DxLib::VECTOR)' を一致させようとしているとき
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(447,24): error C2661: 'StageCell::StageCell': 3 個の引数を伴うオーバーロードされた関数はありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(447,24): message : 引数リスト '(int, StageGenerator::ObjectType, DxLib::VECTOR)' を一致させようとしているとき
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.cpp(455,16): error C2039: 'GetObjectType': 'StageCell' のメンバーではありません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageCell.h(6,7): message : 'StageCell' の宣言を確認してください
+  Weapon.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  AudioManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  CollisionManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Manager\CollisionManager.cpp(217,20): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Manager\CollisionManager.cpp(218,25): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Manager\CollisionManager.cpp(299,20): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  FadeManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  InputManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\Dxlib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  SceneManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  StageManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  TimeManager.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Manager\TimeManager.cpp(46,22): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Manager\TimeManager.cpp(48,8): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Manager\TimeManager.cpp(59,8): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  SekinoScene.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\Scene\SekinoScene.cpp(53,12): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  コードを生成中...
+  コンパイル中...
+  Player.cpp
+C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(50,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(52,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(53,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,14): error C2065: 'StageCell': 定義されていない識別子です。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,24): error C2059: 構文エラー: '>'
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(54,26): error C2148: 配列サイズの合計は 0x7fffffff バイトを超えることはできません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(55,23): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C2143: 構文エラー: ';' が '*' の前にありません。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,11): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(71,39): error C2238: ';' の前に無効なトークンがあります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\_sekino\GameObject\Stage\StageGenerator.h(72,19): error C2061: 構文エラー: 識別子 'StageCell'
+  コードを生成中...

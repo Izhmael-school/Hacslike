@@ -1,14 +1,31 @@
 #include "StageCell.h"
 
-StageCell::StageCell(int _modelHandle,CellState _state) 
+StageCell::StageCell(int _modelHandle, ObjectType _type, VECTOR position)
 	:modelHandle(_modelHandle)
-	,state(_state)
-{}
+	,type(_type)
+	, GameObject(position,"Stage")
+{
+	Start();
+}
 
-StageCell::~StageCell() {}
+StageCell::~StageCell() {
+	MV1DeleteModel(modelHandle);
+}
 
-void StageCell::Start() {}
+void StageCell::Start() {
+	if (type != Stair) return;
 
-void StageCell::Update() {}
+	pCollider = nullptr;
+}
 
-void StageCell::Render() {}
+void StageCell::Update() {
+	GameObject::Update();
+
+	MV1SetMatrix(modelHandle, matrix);
+}
+
+void StageCell::Render() {
+	if (modelHandle == -1) return;
+
+	MV1DrawModel(modelHandle);
+}

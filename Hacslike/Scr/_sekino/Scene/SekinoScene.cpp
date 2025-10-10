@@ -2,6 +2,7 @@
 #include "../GameObject/Camera/Camera.h"
 #include "../GameObject/Character/Enemy/Goblin/Goblin.h"
 #include "../../_tanaka/Player/Player.h"
+#include "../Manager/StageManager.h"
 
 SekinoScene::SekinoScene()
 	:goblinModel(-1)
@@ -32,6 +33,9 @@ void SekinoScene::Start() {
 	pCamera->SetTarget(pPlayer);
 	pGameObjectArray.push_back(enemy);
 	//pGameObjectArray.push_back(e2);
+
+	StageManager::GetInstance()->generator->StageGenerate();
+	StageManager::GetInstance()->generator->SetGameObjectRandomPos(pPlayer);
 }
 
 void SekinoScene::Update() {

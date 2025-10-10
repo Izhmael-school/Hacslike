@@ -13,7 +13,6 @@ protected:
 	std::string tag;
 
 	class Collider* pCollider;
-	class Character* pCharacter;
 
 	int layer;
 
@@ -46,9 +45,9 @@ public:	// ゲッターとセッター
 	inline VECTOR GetPosition() { 
 		return position; }
 	// VECTORによる座標変更
-	inline void SetPosition(VECTOR _v) { position = _v; }
+	inline virtual void SetPosition(VECTOR _v) { position = _v; }
 	// floatによる座標変更
-	inline void SetPosition(float _x, float _y, float _z) { position = VGet(_x, _y, _z); }
+	inline virtual void SetPosition(float _x, float _y, float _z) { position = VGet(_x, _y, _z); }
 #pragma endregion
 
 #pragma region Rotation
@@ -94,16 +93,6 @@ public:	// ゲッターとセッター
 	// レイヤーの設定
 	inline void SetLayer(int _layer) { layer = _layer; }
 #pragma endregion
-
-	// ダウンキャストゆえに早めに別のやつを考える
-#pragma region Character
-	// キャラクターの取得
-	inline Character* GetCharacter() const { return pCharacter; }
-	// キャラクターの設定
-	inline void SetCharacter(Character* _chara) { pCharacter = _chara; }
-#pragma endregion
-
-
 
 public:	// 衝突検知
 	// 入ったとき
