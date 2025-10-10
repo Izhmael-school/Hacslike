@@ -2,10 +2,11 @@
 #include <Dxlib.h>
 #include <random>
 #include "Definition.h"
-#include "_Sekino/Manager/TimeManager.h"
-#include "_Sekino/Manager/InputManager.h"
-#include "_Sekino/Manager/SceneManager.h"
-#include "_Sekino/Manager/StageManager.h"
+#include "Manager/TimeManager.h"
+#include "Manager/InputManager.h"
+#include "Manager/SceneManager.h"
+#include "Manager/StageManager.h"
+#include "Manager/CollisionManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -87,6 +88,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 描画処理
 		SceneManager::GetInstance()->Render();
 		StageManager::GetInstance()->Render();
+		CollisionManager::GetInstance()->Render();
 
 		// エスケープキーでウィンドウを閉じる
 		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
