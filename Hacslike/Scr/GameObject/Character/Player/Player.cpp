@@ -51,6 +51,7 @@ void Player::Start() {
 	//	”ñ•\¦‚¾‚Á‚½‚ç‰Šú‰»‚µ‚È‚¢
 	if (!isVisible)
 		return;
+	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
 
 	modelHandle = PLAYER_MODEL_HANDLE;
 
@@ -74,7 +75,6 @@ void Player::Start() {
 		afterImageRotY[i] = rotation.y;
 	}
 
-	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
 
 
 	////	Z²•ûŒü‚ğ³–Ê‚ÉŒü‚©‚¹‚é
@@ -397,7 +397,9 @@ void Player::Render() {
 		pWeapon->Render();
 	}
 
-
+	if (pCollider != nullptr) {
+		pCollider->Render();
+	}
 
 }
 
