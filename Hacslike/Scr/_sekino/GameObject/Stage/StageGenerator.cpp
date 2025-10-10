@@ -243,7 +243,7 @@ void StageGenerator::StageGenerate() {
 		// 道をつなげる
 		for (int rootScan = 0; rootScan < roomStatus[(int)RoomStatus::w][nowRoom]; rootScan++) {
 			// 道を検索
-			if (map[rootScan + roomStatus[(int)RoomStatus::x][nowRoom]][roomStatus[(int)RoomStatus::y][nowRoom]] == 2) {
+			if (map[rootScan + roomStatus[(int)RoomStatus::x][nowRoom]][roomStatus[(int)RoomStatus::y][nowRoom]] == Road) {
 				if (roadVec1 == 0) {
 					// 始点セット
 					roadVec1 = rootScan + roomStatus[(int)RoomStatus::x][nowRoom];
@@ -267,7 +267,7 @@ void StageGenerator::StageGenerate() {
 		// 道をつなげる
 		for (int rootScan = 0; rootScan < roomStatus[(int)RoomStatus::h][nowRoom]; rootScan++) {
 			// 道を検索
-			if (map[roomStatus[(int)RoomStatus::x][nowRoom]][rootScan + roomStatus[(int)RoomStatus::y][nowRoom]] == 2) {
+			if (map[roomStatus[(int)RoomStatus::x][nowRoom]][rootScan + roomStatus[(int)RoomStatus::y][nowRoom]] == Road) {
 				if (roadVec1 == 0) {
 					// 始点セット
 					roadVec1 = rootScan + roomStatus[(int)RoomStatus::y][nowRoom];
@@ -282,7 +282,7 @@ void StageGenerator::StageGenerate() {
 		// 道を引く
 		for (int roadSet = roadVec1; roadSet < roadVec2; roadSet++) {
 			// 境界線を上書き
-			map[roomStatus[(int)RoomStatus::x][nowRoom]][roadSet] = 2;
+			map[roomStatus[(int)RoomStatus::x][nowRoom]][roadSet] = Road;
 		}
 
 	}
