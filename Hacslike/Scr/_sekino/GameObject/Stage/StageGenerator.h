@@ -1,9 +1,9 @@
 #pragma once
 #include "StageCell.h"
-#include "../../../Definition.h"
 #include <random>
 #include <list>
-#include "../Character/Character.h"
+
+class StageCell;
 
 class StageGenerator {
 private:

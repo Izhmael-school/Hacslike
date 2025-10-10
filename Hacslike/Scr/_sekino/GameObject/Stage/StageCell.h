@@ -1,6 +1,7 @@
 #pragma once
 #include "../GameObject.h"
 #include "../../../Definition.h"
+#include "../../Component/Collider.h"
 
 class StageCell : public GameObject {
 private:

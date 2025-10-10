@@ -9,7 +9,6 @@ protected:
 	bool isEnable;				// 当たり判定の有効無効
 	GameObject* pGameObject;	// 当たり判定を付けるオブジェクト
 	MATRIX matrix;				// 当たり判定を付けるオブジェクトの行列
-	Character* pCharacter;		// ダウンキャストしないための変数
 
 public:// トラクタ
 	// コンストラクタ
@@ -32,9 +31,6 @@ public:// Getter // Setter
 	inline void* SetGameObject(GameObject* _pObj) { pGameObject = _pObj; }
 	// matrix
 	inline void SetMatrix(MATRIX _mat) { matrix = _mat; }
-	// Character
-	inline Character* GetCharacter() const { return pCharacter; }
-	inline void SetCharacter(Character* _chara) { pCharacter = _chara; }
 
 };
 

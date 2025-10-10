@@ -15,17 +15,23 @@ StageCell::~StageCell() {
 void StageCell::Start() {
 	if (type != Stair) return;
 
-	pCollider = nullptr;
+	pCollider = new SphereCollider(this,VZero,100);
 }
 
 void StageCell::Update() {
 	GameObject::Update();
 
 	MV1SetMatrix(modelHandle, matrix);
+
+	if (pCollider != nullptr)
+		pCollider->Update();
 }
 
 void StageCell::Render() {
 	if (modelHandle == -1) return;
 
 	MV1DrawModel(modelHandle);
+
+	if (pCollider != nullptr)
+		pCollider->Render();
 }
