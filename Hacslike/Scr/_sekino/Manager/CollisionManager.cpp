@@ -95,6 +95,14 @@ bool CollisionManager::CheckHit(Collider* _pCol1, Collider* _pCol2) {
 					// pCol2‚ÍSphereCollider*
 
 					// “–‚½‚è”»’è‚ÌŒvZ
+					float distance = Segment_Point_MinLength(
+						tmp1->GetworldPoint1(),
+						tmp1->GetworldPoint2(),
+						tmp2->GetCenter()
+					);
+					if (distance <= tmp1->GetRadius() + tmp2->GetRadius()) {
+						return true;
+					}
 				}
 			}
 
@@ -164,6 +172,14 @@ bool CollisionManager::CheckHit(Collider* _pCol1, Collider* _pCol2) {
 					// pCol2‚ÍCapsuleCollider*
 
 					// “–‚½‚è”»’è‚ÌŒvZ
+					float distance = Segment_Point_MinLength(
+						tmp2->GetworldPoint1(),
+						tmp2->GetworldPoint2(),
+						tmp1->GetCenter()
+					);
+					if (distance <= tmp1->GetRadius() + tmp2->GetRadius()) {
+						return true;
+					}
 				}
 			}
 		}
