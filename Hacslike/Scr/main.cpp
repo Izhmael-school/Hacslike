@@ -5,6 +5,7 @@
 #include "_Sekino/Manager/TimeManager.h"
 #include "_Sekino/Manager/InputManager.h"
 #include "_Sekino/Manager/SceneManager.h"
+#include "_Sekino/Manager/StageManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -65,6 +66,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SRand(mt());
 	SRand(mt());
 
+	
+
 	// ゲームのメインループ
 	while (true) {
 
@@ -76,12 +79,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		SceneManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
 		InputManager::GetInstance()->Update();
+		StageManager::GetInstance()->Update();
 
 		// 画面をクリアする
 		ClearDrawScreen();
 
 		// 描画処理
 		SceneManager::GetInstance()->Render();
+		StageManager::GetInstance()->Render();
 
 		// エスケープキーでウィンドウを閉じる
 		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
@@ -100,6 +105,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	SceneManager::DestroyInstance();
+	TimeManager::DestroyInstance();
+	InputManager::DestroyInstance();
+	StageManager::DestroyInstance();
 
 	// DxLibの終了
 	DxLib_End();

@@ -1,5 +1,6 @@
 #pragma once
 #include "../GameObject.h"
+#include "../Character/Character.h"
 
 class Weapon : public GameObject {
 private:	// ƒƒ“ƒo•Ï”

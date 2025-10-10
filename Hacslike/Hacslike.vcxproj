@@ -160,6 +160,7 @@
     <ClCompile Include="Scr\_sekino\Manager\FadeManager.cpp" />
     <ClCompile Include="Scr\_sekino\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\_sekino\Manager\SceneManager.cpp" />
+    <ClCompile Include="Scr\_sekino\Manager\StageManager.cpp" />
     <ClCompile Include="Scr\_sekino\Manager\TimeManager.cpp" />
     <ClCompile Include="Scr\_sekino\Scene\SekinoScene.cpp" />
     <ClCompile Include="Scr\_tanaka\Player\Player.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Scr\_sekino\Manager\FadeManager.h" />
     <ClInclude Include="Scr\_sekino\Manager\InputManager.h" />
     <ClInclude Include="Scr\_sekino\Manager\SceneManager.h" />
+    <ClInclude Include="Scr\_sekino\Manager\StageManager.h" />
     <ClInclude Include="Scr\_sekino\Manager\TimeManager.h" />
     <ClInclude Include="Scr\_sekino\Scene\BaseScene.h" />
     <ClInclude Include="Scr\_sekino\Scene\SekinoScene.h" />

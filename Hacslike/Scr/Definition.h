@@ -35,6 +35,18 @@
 #define EnemyMax (10)
 
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
+
+// ステージ関連
+#define mapWidth (64)	// マップの横サイズ
+#define mapHeight (64)	// マップの縦サイズ
+#define mapMax (mapWidth * mapHeight) 
+#define offsetWall (2)	// 壁から離す距離 
+#define offsetS (1)		// 調節用
+#define CellSize (200)	// 1マスの大きさ 
+#define CellCorrection (CellSize / 2) // 壁判定用の補正値
+
+#define RoomMax (15)
+
 //	=================================================================
 //		定数を定義する場所
 //	=================================================================
@@ -66,8 +78,9 @@ enum class FadeState {
 	FadeEnd,
 };
 
-enum class CellState {
-	INVAILD,
-	None,
-	Stair
+enum ObjectType {
+	Room,
+	Wall,
+	Road,
+	Stair,
 };
