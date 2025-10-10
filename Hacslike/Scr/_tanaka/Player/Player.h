@@ -1,95 +1,133 @@
-#pragma once
+ï»¿#pragma once
 #include "../Hacslike/Scr/_sekino/GameObject/Character/Character.h"
 #include "../Hacslike/Scr/_sekino/GameObject/Weapon/Weapon.h"
+#include "../Hacslike/Scr/_tanaka/Slash/Slash.h"
+#include "../Collider/CapsuleHitBox.h"
+#include "../Collider/SphereHitBox.h"
 
 /*
- *	@brief	ƒvƒŒƒCƒ„[ƒNƒ‰ƒX
- *	@tips	CharacterƒNƒ‰ƒX‚Ì”h¶ƒNƒ‰ƒX
+ *	@brief	ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹
+ *	@tips	Characterã‚¯ãƒ©ã‚¹ã®æ´¾ç”Ÿã‚¯ãƒ©ã‚¹
  */
 class Player : public Character {
-#pragma region ƒƒ“ƒo•Ï”
-private:	//	ƒƒ“ƒo•Ï”
-	bool isAttacking;	//	UŒ‚’†
+#pragma region ãƒ¡ãƒ³ãƒå¤‰æ•°
+private:	//	ãƒ¡ãƒ³ãƒå¤‰æ•°
+	bool isAttacking;	//	æ”»æ’ƒä¸­
 
 	Weapon* pWeapon;
 
 	XINPUT_STATE XY;
 
+	std::vector<Slash*> slashes;
+
+	int attackIndex;       // ç¾åœ¨ã®æ”»æ’ƒæ®µéšï¼ˆ1ã€œ3ï¼‰
+	float attackTimer;     // çµŒéæ™‚é–“
+	bool canNextAttack;    // æ¬¡ã®å…¥åŠ›å—ä»˜å¯
+
+	std::vector<CapsuleHitBox*> CapsuleHitboxes;
+
+	std::vector<SphereHitBox*> SphereHitboxes;
+
+	static const int AFTIMAGENUM = 20;
+	VECTOR afterImagePos[AFTIMAGENUM];
+	float afterImageRotY[AFTIMAGENUM];
+
+	bool isBlinking;
+	float blinkTimer;
+
+	float attackInputCooldown;      // æ”»æ’ƒã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³
+	bool attackButtonPressed;
+	bool evasionButtonPressed;
+
+	float evasionCooldown;        // ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³ã‚¿ã‚¤ãƒãƒ¼
+	const float EVASION_COOLDOWN_TIME = 2.0f; // 2ç§’ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³
+
+	const float ATTACK_INPUT_COOLDOWN_TIME = 0.2f; // 0.2ç§’ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³
+
+	float evasionSpeed;
+
 
 #pragma endregion
 
-#pragma region ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
-public:		//	ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^
+#pragma region ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+public:		//	ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
 	/*
-	 *	@brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 *	@param[in]	VECTOR _pos		‰Šú‰»‚·‚éÀ•W
+	 *	@brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 *	@param[in]	VECTOR _pos		åˆæœŸåŒ–ã™ã‚‹åº§æ¨™
 	 */
 	Player(VECTOR _pos = VZero);
 
 	/*
-	 *	@breif		ƒfƒXƒgƒ‰ƒNƒ^
+	 *	@breif		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 */
 	~Player();
 #pragma endregion
 
-#pragma region	ƒI[ƒo[ƒ‰ƒCƒh‚µ‚½ƒƒ“ƒoŠÖ”
-public:		//	ƒI[ƒo[ƒ‰ƒCƒh‚µ‚½ƒƒ“ƒoŠÖ”
+#pragma region	ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ãŸãƒ¡ãƒ³ãƒé–¢æ•°
+public:		//	ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ãŸãƒ¡ãƒ³ãƒé–¢æ•°
 	/*
 	 *	@function	Start
-	 *	@breif		‰Šú‰»ˆ—
+	 *	@breif		åˆæœŸåŒ–å‡¦ç†
 	 */
 	virtual void Start() override;
 
 	/*
 	 *	@function	Update
-	 *	@breif		XVˆ—
+	 *	@breif		æ›´æ–°å‡¦ç†
 	 */
 	virtual void Update() override;
 
 	/*
 	 *	@function	Render
-	 *	@breif		•`‰æˆ—
+	 *	@breif		æç”»å‡¦ç†
 	 */
 	virtual void Render() override;
 
-public:		//	ƒI[ƒo[ƒ‰ƒCƒh‚µ‚½Õ“ËŒŸ’m
+public:		//	ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ãŸè¡çªæ¤œçŸ¥
 	/*
 	 *	@function	OnTriggerEnter
-	 *	@brief		“–‚½‚Á‚½uŠÔ
+	 *	@brief		å½“ãŸã£ãŸç¬é–“
 	 *	@param[in]	Collider* _pCol
 	 */
 	void OnTriggerEnter(Collider* _pCol) override;
 
 	/*
 	 *	@function	OnTriggerEnter
-	 *	@brief		“–‚½‚Á‚Ä‚¢‚éŠÔ
+	 *	@brief		å½“ãŸã£ã¦ã„ã‚‹é–“
 	 *	@param[in]	Collider* _pCol
 	 */
 	void OnTriggerStay(Collider* _pCol) override;
 
 	/*
 	 *	@function	OnTriggerEnter
-	 *	@brief		—£‚ê‚½uŠÔ
+	 *	@brief		é›¢ã‚ŒãŸç¬é–“
 	 *	@param[in]	Collider* _pCol
 	 */
 	void OnTriggerExit(Collider* _pCol) override;
 
 
-public:		//	ƒƒ“ƒoŠÖ”
+public:		//	ãƒ¡ãƒ³ãƒé–¢æ•°
+
+	void AttackEnd();
+
+	void CreateAttackHitbox(float length, float Capsuleadius);
+
+	void Evasion();
 
 
-public:		//	Getter ‚Æ Setter
+
+public:		//	Getter ã¨ Setter
 	/*
 	 *	@function	GetWeapon
-	 *	@brief		•Ší‚Ìæ“¾
+	 *	@brief		æ­¦å™¨ã®å–å¾—
 	 *	@return		Weapon*
 	 */
 	inline Weapon* GetWeapon() const { return pWeapon; }
 
 	/*
 	 *	@function	SetWeapon
-	 *	@brief		•Ší‚Ì•ÏX
+	 *	@brief		æ­¦å™¨ã®å¤‰æ›´
 	 *	@param[in]	Weapon* _pWeapon
 	 */
 	inline void SetWeapon(Weapon* _pWeapon) { pWeapon = _pWeapon; }
