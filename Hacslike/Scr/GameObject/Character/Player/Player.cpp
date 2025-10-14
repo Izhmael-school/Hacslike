@@ -118,7 +118,7 @@ void Player::Update() {
 
 #pragma region 攻撃入力処理
 		// ===== 攻撃入力 =====
-	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || XY.Buttons[14];
+	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
@@ -192,9 +192,9 @@ void Player::Update() {
 
 
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || XY.Buttons[12];
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A);
 
-	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f) {
+	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
 		// 押した瞬間＆クールダウン終了時のみ回避
 		evasionButtonPressed = true;
 		evasionCooldown = EVASION_COOLDOWN_TIME; // クールダウン開始
