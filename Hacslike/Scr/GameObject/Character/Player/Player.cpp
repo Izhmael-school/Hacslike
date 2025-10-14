@@ -93,6 +93,8 @@ void Player::Update() {
 
 	//	入力管理クラスの取得
 	InputManager* input = InputManager::GetInstance();
+#pragma region 移動入力処理
+
 
 	//	入力ベクトル
 	VECTOR inputVec = VZero;
@@ -108,12 +110,13 @@ void Player::Update() {
 	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
 
-
 	/*if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
 	if (input->IsKey(KEY_INPUT_E))
 		inputVec = VAdd(inputVec, VDown);*/
+#pragma endregion
 
+#pragma region 攻撃入力処理
 		// ===== 攻撃入力 =====
 	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || XY.Buttons[14];
 
@@ -183,6 +186,10 @@ void Player::Update() {
 		}
 		else ++it;
 	}
+#pragma endregion
+
+#pragma region 回避入力処理
+
 
 	// ===== 回避入力 =====
 	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || XY.Buttons[12];
@@ -205,6 +212,7 @@ void Player::Update() {
 	/*if (pAnimator->GetCurrentAnimation() != 2) {
 		isAttacking = false;
 	}*/
+#pragma endregion
 
 	CheckWall();
 
@@ -295,6 +303,8 @@ void Player::Update() {
 		}
 	}
 
+#pragma region 回避時処理
+
 	// --- ブリンク中の処理 ---
 	if (isBlinking && !isAttacking) {
 		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
@@ -316,9 +326,12 @@ void Player::Update() {
 			afterImageRotY[i] = afterImageRotY[i - 1];
 		}
 	}
+#pragma endregion
 
 	pAnimator->Update();
 	GameObject::Update();
+
+#pragma region Slash処理
 
 	for (auto it = slashes.begin(); it != slashes.end();) {
 		Slash* s = *it;
@@ -332,6 +345,7 @@ void Player::Update() {
 			++it;
 		}
 	}
+#pragma endregion
 
 	////計算した座標、回転(オイラー角)、拡縮モデルに反映する
 	//MV1SetPosition(modelHandle, position);
@@ -354,6 +368,8 @@ void Player::Render() {
 	if (!isVisible)
 		return;
 
+#pragma region 残像描画処理
+
 	// --- 残像描画 ---
 	if (isBlinking && !isAttacking) {
 		for (int i = AFTIMAGENUM - 1; i >= 0; i -= 4) {
@@ -371,6 +387,7 @@ void Player::Render() {
 			MV1DrawModel(modelHandle);
 		}
 	}
+#pragma endregion
 
 	// --- 通常モデル描画 ---
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -380,6 +397,9 @@ void Player::Render() {
 	for (auto s : slashes) {
 		s->Render();
 	}
+
+#pragma region 攻撃時の当たり判定描画処理
+
 
 	// ヒットボックス描画（デバッグ）
 	for (auto h : CapsuleHitboxes) {
@@ -391,6 +411,7 @@ void Player::Render() {
 		h->Render();
 	}
 
+#pragma endregion
 
 	//	武器の描画
 	if (pCollider != nullptr && pWeapon != nullptr) {
@@ -403,6 +424,9 @@ void Player::Render() {
 
 }
 
+/// <summary>
+/// 斬撃
+/// </summary>
 void Player::AttackEnd() {
 	VECTOR forward = VNorm(VGet(
 		-sinf(Deg2Rad(rotation.y)),
@@ -415,6 +439,11 @@ void Player::AttackEnd() {
 	slashes.push_back(s);
 }
 
+/// <summary>
+/// 攻撃時の当たり判定
+/// </summary>
+/// <param name="length"></param>
+/// <param name="radius"></param>
 void Player::CreateAttackHitbox(float length, float radius) {
 	//Unity座標系の前方
 	VECTOR forward = VNorm(VGet(
@@ -451,13 +480,14 @@ void Player::CreateAttackHitbox(float length, float radius) {
 
 }
 
+/// <summary>
+/// 回避
+/// </summary>
 void Player::Evasion() {
 	pCollider->SetEnable(false);
 
 	// 瞬間移動
 	evasionSpeed = 5;
-
-
 
 	// 残像開始
 	isBlinking = true;
