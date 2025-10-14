@@ -237,11 +237,16 @@ void Player::Update() {
 			position = VAdd(position, VScale(moveDirection, 10.0f));
 
 			//	移動アニメーションを再生
-			pAnimator->Play(1, 1.3f);
+			if (evasionSpeed >= 1.5f) {
+				pAnimator->Play(5, 0.5f);
+			}
+			else
+				pAnimator->Play(1, 1.3f);
 		}
 		else {
 			//	待機アニメーションを再生
 			pAnimator->Play(0);
+			evasionSpeed = 1;
 		}
 	}
 
@@ -252,7 +257,7 @@ void Player::Update() {
 		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
 		if (blinkTimer <= 0.0f) {
 			isBlinking = false;
-			evasionSpeed = 1;
+			Dash();
 			pCollider->SetEnable(true);
 		}
 
@@ -429,12 +434,11 @@ void Player::Evasion() {
 	pCollider->SetEnable(false);
 
 	// 瞬間移動
-	evasionSpeed = 5;
+	evasionSpeed = 10;
 
 	// 残像開始
 	isBlinking = true;
-	blinkTimer = 0.25f;
-
+	blinkTimer = 0.15f;
 
 	// --- 履歴をすべて現在位置にリセット ---
 	for (int i = 0; i < AFTIMAGENUM; i++) {
@@ -443,6 +447,9 @@ void Player::Evasion() {
 	}
 }
 
+void Player::Dash() {
+	evasionSpeed = 1.5f;
+}
 
 /*
  *	@function	OnTriggerEnter

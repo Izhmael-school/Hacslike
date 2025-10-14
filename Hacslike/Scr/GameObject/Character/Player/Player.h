@@ -116,7 +116,7 @@ public:		//	メンバ関数
 
 	void Evasion();
 
-
+	void Dash();
 
 public:		//	Getter と Setter
 	/*
