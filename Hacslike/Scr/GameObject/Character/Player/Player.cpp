@@ -227,69 +227,11 @@ void Player::Update() {
 			//	ƒJƒƒ‰‚©‚ç‚Ý‚½ˆÚ“®‚·‚é•ûŒüƒxƒNƒgƒ‹
 			VECTOR moveDirection = VZero;
 
-#if 0	//	ŽOŠpŠÖ”‚ÅŒvŽZ‚·‚éê‡
-
-			//	XZ•½–Ê‚Ì‰ñ“]‚Æ‚µ‚Äl‚¦‚é ->	2ŽŸŒ³‚Ì‰ñ“]‚Æ‚µ‚Äˆµ‚¦‚é
-			//	‰ñ“]Œã‚ÌÀ•W‚ð X, Z A‰ñ“]‘O‚ÌÀ•W‚ð x, z ‚Æ‚µ‚½‚Æ‚«
-			//	X = x * cosƒÆ - z * sinƒÆ
-			//	Z = x * sinƒÆ + z * cosƒÆ
-			//	ƒÆ = ƒJƒƒ‰‚ÌyŽ²‰ñ“] -> camera.rotation.y]
-
-			float theta = Deg2Rad(Camera::main->GetRotation().y);
-			//	À•WŒn‚Ìˆá‚¢‚©‚ç X, Z ‚Ì’l‚Í“ü‚ê‘Ö‚¦‚é
-			float Z = inputVec.z * cosf(theta) - inputVec.x * sinf(theta);
-			float X = inputVec.z * sinf(theta) + inputVec.x * cosf(theta);
-
-			//	ˆÚ“®•ûŒü‚ðŒvŽZŒ‹‰Ê‚Å‰Šú‰»
-			moveDirection = VGet(X, 0, Z);
-			{
-				//	XZ•½–Ê‚ÌŒ´“_‚©‚çŒ©‚½ŒX‚«(tanƒÆ)‚ð‹‚ß‚é
-				float tanTheta = X / Z;
-				//	tanƒÆ ‚©‚ç ƒÆ‚¾‚¯‚ð‹‚ß‚é -> ‹tŽOŠpŠÖ”‚ðŽg‚¤
-				atan(tanTheta);
-			}
-
-			//	tanƒÆ -> ƒÆ‚ðo‚·
-
-			//	Ž©g‚ÌyŽ²‰ñ“]‚ðŒvŽZ‚µ‚½’l‚É•ÏX‚·‚é
-			rotation.y = Rad2Deg(atan2f(X, Z)) + 180.0f;
-
-#else	//	s—ñ‚ÅŒvŽZ‚·‚éê‡
-
-			//	DxLib‚É‚¨‚¢‚Äs—ñ‚ÌŒ^‚ª MATRIXŒ^
-			//	‚Ss‚S—ñ ‚Å —v‘f‚Í floatŒ^
-			////	ƒJƒƒ‰‚Ì‰ñ“]s—ñ‚ðŽæ“¾‚·‚é
-			//float thetaY = Deg2Rad(Camera::main->GetRotation().y);
-			//float thetaX = Deg2Rad(Camera::main->GetRotation().x);
-			//float thetaZ = Deg2Rad(Camera::main->GetRotation().z);
-
-			//MATRIX mRotX = MGetRotX(thetaX);		//	ƒJƒƒ‰‚ÌXŽ²‰ñ“]s—ñ
-			//MATRIX mRotZ = MGetRotZ(thetaZ);		//	ƒJƒƒ‰‚ÌZŽ²‰ñ“]s—ñ
-
-			////	X->Y->Z ‚Ì‡‚Å‰ñ“]s—ñ‚ðì¬‚·‚é
-			//MATRIX mRotXYZ = MMult(MMult(mRotX, mRotY), mRotZ);
-
-			////	Šgks—ñ‚ðŽæ“¾‚·‚é
-			//MATRIX mScale = MGetScale(scale);
-
-			////	•½sˆÚ“®s—ñ‚ðŽæ“¾‚·‚é
-			//MATRIX mTranslate = MGetTranslate(position);
-
-			////	s—ñ‚ÌæŽZ‚Í‡¬
-			////	‰ñ“]s—ñ -> Šgks—ñ -> •½ss—ñ ‚Ì‡‚ÉŠ|‚¯‡‚í‚¹‚é
-			//MATRIX matrix = MMult(MMult(mRotXYZ, mScale), mTranslate);
-			//	‚±‚ê‚ª Unity, UnrealEngine, 3DƒQ[ƒ€ƒvƒƒOƒ‰ƒ~ƒ“ƒO‚Å—˜—p‚³‚ê‚é 4*4‚Ìs—ñ
 			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	ƒJƒƒ‰‚ÌYŽ²‰ñ“]s—ñ
 			moveDirection = VTransform(inputVec, mRotY);
 
-			//	ˆÚ“®•ûŒü‚ðŒvŽZŒ‹‰Ê‚Å‰Šú‰»
-
-
-
 			//	Ž©g‚ÌyŽ²‰ñ“]‚ðŒvŽZ‚µ‚½’l‚É•ÏX‚·‚é
 			rotation.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
-
-#endif
 
 			//	ŒvŽZ‚µ‚½“ü—ÍƒxƒNƒgƒ‹
 			position = VAdd(position, VScale(moveDirection, 10.0f));
@@ -325,7 +267,7 @@ void Player::Update() {
 			afterImagePos[i] = afterImagePos[i - 1];
 			afterImageRotY[i] = afterImageRotY[i - 1];
 		}
-	}
+		}
 #pragma endregion
 
 	pAnimator->Update();
@@ -357,7 +299,7 @@ void Player::Update() {
 	if (pCollider != nullptr && pWeapon != nullptr) {
 		pWeapon->Update();
 	}
-}
+	}
 
 /*
  *	@function	Render
