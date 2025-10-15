@@ -1,3 +1,8 @@
-﻿  Player.cpp
+﻿  StageGenerator.cpp
 C:\Users\student2\Desktop\new\Hacslike\DxLib\DxLib.h(3344,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\GameObject\Stage\StageGenerator.cpp(24,14): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\GameObject\Stage\StageGenerator.cpp(31,21): warning C4154: 配列の delete が定義されていません。配列は、ポインターに変換されます。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\GameObject\Stage\StageGenerator.cpp(420,33): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\GameObject\Stage\StageGenerator.cpp(420,16): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student2\Desktop\new\Hacslike\Hacslike\Scr\GameObject\Stage\StageGenerator.cpp(472): warning C4715: 'StageGenerator::UseObject': 値を返さないコントロール パスがあります。
   Hacslike.vcxproj -> C:\Users\student2\Desktop\new\Hacslike\Hacslike\x64\Debug\Hacslike.exe

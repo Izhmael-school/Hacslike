@@ -52,6 +52,7 @@ void Player::Start() {
 	if (!isVisible)
 		return;
 	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
+	CollisionManager::GetInstance()->Register(pCollider);
 
 	modelHandle = PLAYER_MODEL_HANDLE;
 
@@ -109,10 +110,10 @@ void Player::Update() {
 		inputVec = VAdd(inputVec, VLeft);
 
 
-	/*if (input->IsKey(KEY_INPUT_Q))
+	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
 	if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);*/
+		inputVec = VAdd(inputVec, VDown);
 
 		// ===== UŒ‚“ü—Í =====
 	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || XY.Buttons[14];
@@ -343,6 +344,11 @@ void Player::Update() {
 	if (pCollider != nullptr && pWeapon != nullptr) {
 		pWeapon->Update();
 	}
+
+	if (pCollider != nullptr) {
+		pCollider->Update();
+	}
+	
 }
 
 /*

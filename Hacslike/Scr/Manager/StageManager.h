@@ -2,6 +2,7 @@
 #include "../GameObject/Stage/StageCell.h"
 #include "../GameObject/Stage/StageGenerator.h"
 #include "../Definition.h"
+#include "../GameObject/Character/Character.h"
 
 class StageManager {
 #pragma region シングルトンのデータ構造
@@ -55,5 +56,8 @@ public:
 	void Render();
 
 	int GetMapData(int x,int y);
+	void GenerateStage();
+
+	void SetObject(GameObject* obj);
 };
 

@@ -10,9 +10,14 @@ StageGenerator::StageGenerator()
 	, line(0) {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
-	roadModel = MV1LoadModel("Res/Model/Stage/Road.mv1");
+	roadModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
+	int tex = MV1GetMaterialDifMapTexture(groundModel, 0);
+	int gr = LoadGraph("Res/Model/Stage/Texture/Bricks.png");
+	int i = MV1SetTextureGraphHandle(groundModel, tex, gr, false);
+
 	stairModel = MV1LoadModel("Res/Model/Stage/Stair.mv1");
 
+	DeleteGraph(gr);
 }
 
 StageGenerator::~StageGenerator() {
@@ -33,26 +38,26 @@ StageGenerator::~StageGenerator() {
 }
 
 void StageGenerator::Update() {
-	for (auto c: cells) {
+	int i = 0;
+	for (auto c : *cells) {
 		c->Update();
+		i++;
 	}
+	int j = i;
 }
 
 void StageGenerator::Render() {
-	for (auto c : cells) {
+	for (auto c : *cells) {
 		c->Render();
 	}
 }
 
 void StageGenerator::ClearStage() {
-	for (auto c : cells) {
+	for (auto c : *cells) {
 		UnuseObject(c);
 	}
-}
 
-void StageGenerator::StageGenerate() {
-	// 部屋数をランダムに決める
-	roomNum = Random(roomMinNum, RoomMax);
+	cells->clear();
 
 	// 初期化
 	for (int w = 0; w < mapWidth; w++) {
@@ -68,6 +73,17 @@ void StageGenerator::StageGenerate() {
 			mapObjects[w][h] = false;
 		}
 	}
+
+	roomNum = 0;
+	parentNum = 0;
+	maxArea = 0;
+	roomCount = 0;
+	line = 0;
+}
+
+void StageGenerator::StageGenerate() {
+	// 部屋数をランダムに決める
+	roomNum = Random(roomMinNum, RoomMax);
 
 	// 部屋を入れる
 	roomStatus[(int)RoomStatus::x][roomCount] = 0;
@@ -286,53 +302,62 @@ void StageGenerator::StageGenerate() {
 		}
 
 	}
-		// 階段の生成
-		while (1) {
+	// 階段の生成
+	while (1) {
 
-			int rand = GetRand(roomNum - 1);
-			int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rw][rand]);
-			int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::rh][rand]);
+		int rand = GetRand(roomNum - 1);
+		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rw][rand]);
+		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::rh][rand]);
 
-			if (mapObjects[x][y]) continue;
-			if (map[x][y] != ObjectType::Room) continue;
+		if (mapObjects[x][y]) continue;
+		if (map[x][y] != ObjectType::Room) continue;
 
-			mapObjects[x][y] = true;
-			map[x][y] = ObjectType::Stair;
-			break;
+		mapObjects[x][y] = true;
+		map[x][y] = ObjectType::Stair;
+		break;
+	}
+
+	for (int y = 0; y < mapHeight; y++) {
+		for (int x = 0; x < mapWidth; x++) {
+			if (map[x][y] == ObjectType::Stair)
+				continue;
 		}
+	}
 
-		// オブジェクトを生成する
-		for (int nowH = 0; nowH < mapHeight; nowH++) {
-			for (int nowW = 0; nowW < mapWidth; nowW++) {
-				int dupMHandle = -1;
+	// オブジェクトを生成する
+	for (int nowH = 0; nowH < mapHeight; nowH++) {
+		for (int nowW = 0; nowW < mapWidth; nowW++) {
+			int dupMHandle = -1;
 
-				if (!CheckEightDir(nowW, nowH)) continue;
+			if (!CheckEightDir(nowW, nowH)) continue;
 
-				// 複製したモデルハンドルが不正値ならやり直す
-				while (dupMHandle == -1) {
+			// 複製したモデルハンドルが不正値ならやり直す
+			while (dupMHandle == -1) {
 
-					switch ((ObjectType)map[nowW][nowH]) {
-					case ObjectType::Wall:
-						dupMHandle = MV1DuplicateModel(wallModel);
-						break;
-					case ObjectType::Room:
-						dupMHandle = MV1DuplicateModel(groundModel);
-						break;
-					case ObjectType::Road:
-						dupMHandle = MV1DuplicateModel(roadModel);
-						break;
-					case ObjectType::Stair:
-						dupMHandle = MV1DuplicateModel(stairModel);
-						break;
-					}
-
+				switch ((ObjectType)map[nowW][nowH]) {
+				case ObjectType::Wall:
+					dupMHandle = MV1DuplicateModel(wallModel);
+					break;
+				case ObjectType::Room:
+					dupMHandle = MV1DuplicateModel(groundModel);
+					break;
+				case ObjectType::Road:
+					dupMHandle = MV1DuplicateModel(roadModel);
+					break;
+				case ObjectType::Stair:
+					dupMHandle = MV1DuplicateModel(stairModel);
+					break;
 				}
-				// セルの生成
-				StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
-				c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
-				cells.push_back(c);
+
 			}
+			// セルの生成
+			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
+			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
+			cells->push_back(c);
 		}
+	}
+
+
 }
 
 int StageGenerator::Random(int min, int max) {
@@ -403,27 +428,30 @@ StageCell* StageGenerator::UseObject(ObjectType type) {
 	StageCell* cell;
 	switch (type) {
 	case Room:
-		if (unuseRoom.size() > 0) {
-			cell = unuseRoom.front();
-			unuseRoom.erase(unuseRoom.begin());
+		if (unuseRoom->size() > 0) {
+			cell = unuseRoom->front();
+			unuseRoom->erase(unuseRoom->begin());
+			cell->SetVisible(true);
 		}
 		else {
-			cell = new StageCell(MV1DuplicateModel(groundModel),ObjectType::Room,VZero);
+			cell = new StageCell(MV1DuplicateModel(groundModel), ObjectType::Room, VZero);
 		}
 		return cell;
 	case Wall:
-		if (unuseWall.size() > 0) {
-			cell = unuseWall.front();
-			unuseWall.erase(unuseWall.begin());
+		if (unuseWall->size() > 0) {
+			cell = unuseWall->front();
+			unuseWall->erase(unuseWall->begin());
+			cell->SetVisible(true);
 		}
 		else {
 			cell = new StageCell(MV1DuplicateModel(wallModel), ObjectType::Wall, VZero);
 		}
 		return cell;
 	case Road:
-		if (unuseRoad.size() > 0) {
-			cell = unuseRoad.front();
-			unuseRoad.erase(unuseRoad.begin());
+		if (unuseRoad->size() > 0) {
+			cell = unuseRoad->front();
+			unuseRoad->erase(unuseRoad->begin());
+			cell->SetVisible(true);
 		}
 		else {
 			cell = new StageCell(MV1DuplicateModel(roadModel), ObjectType::Road, VZero);
@@ -433,33 +461,35 @@ StageCell* StageGenerator::UseObject(ObjectType type) {
 		if (unuseStair != nullptr) {
 			cell = unuseStair;
 			unuseStair = nullptr;
+			cell->SetVisible(true);
 		}
 		else {
 			cell = new StageCell(MV1DuplicateModel(stairModel), ObjectType::Stair, VZero);
 		}
-		
+
 		return cell;
 	}
 }
 
 void StageGenerator::UnuseObject(StageCell*& cell) {
+	cell->SetVisible(false);
 	switch (cell->GetObjectType()) {
-		case Room:
-			unuseRoom.push_back(cell);
-			cell = nullptr;
-			break;
-		case Wall:
-			unuseWall.push_back(cell);
-			cell = nullptr;
-			break;
-		case Road:
-			unuseRoad.push_back(cell);
-			cell = nullptr;
-			break;
-		case Stair:
-			unuseStair = cell;
-			cell = nullptr;
-			break;
+	case Room:
+		unuseRoom->push_back(cell);
+		cell = nullptr;
+		break;
+	case Wall:
+		unuseWall->push_back(cell);
+		cell = nullptr;
+		break;
+	case Road:
+		unuseRoad->push_back(cell);
+		cell = nullptr;
+		break;
+	case Stair:
+		unuseStair = cell;
+		cell = nullptr;
+		break;
 	}
 }
 
