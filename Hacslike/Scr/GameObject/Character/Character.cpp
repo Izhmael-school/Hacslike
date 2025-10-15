@@ -1,7 +1,7 @@
 #include "Character.h"
 
 
-Character::Character(VECTOR _pos , std::string tag, int _Lv, int _Exp) 
+Character::Character(VECTOR _pos , std::string tag, int _Lv, int _Exp, int _speed) 
 	:GameObject(_pos,tag)
 	,modelHandle(INVALID)
 	, pAnimator(new Animator())
@@ -9,6 +9,7 @@ Character::Character(VECTOR _pos , std::string tag, int _Lv, int _Exp)
 	,atk(0)
 	,atking(false)
 	,blocking(false)
+	,speed(_speed)
 	,Lv(1)
 	,Exp(0)
 	,prevPos(VGet(position.x,position.z,0))

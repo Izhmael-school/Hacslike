@@ -12,6 +12,7 @@ protected:	// メンバ変数
 	bool atking;			// 攻撃フラグ
 	int def = 0;				// 防御力
 	bool blocking;			// 防御フラグ
+	int speed;
 
 	int Lv;
 	int Exp;
@@ -20,11 +21,11 @@ protected:	// メンバ変数
 	VECTOR wallCheckPos;
 public:
 	static Character* player;
-	
+
 
 public:	// コンストラクタとデストラクタ
 
-	Character(VECTOR _pos = VZero, std::string tag = "", int _Lv = 1,int _Exp = 5);
+	Character(VECTOR _pos = VZero, std::string tag = "", int _Lv = 1, int _Exp = 5, int _speed = 0);
 
 	virtual ~Character();
 public:	// オーバーライドしたメンバ関数
@@ -32,7 +33,7 @@ public:	// オーバーライドしたメンバ関数
 	// Characterクラスも抽象クラスとして扱う
 
 public:
-	int SetAnimation();
+	//int SetAnimation();
 
 
 public:	// ゲッターとセッター
@@ -56,11 +57,15 @@ public:	// ゲッターとセッター
 
 #pragma region Animator
 	inline Animator* GetAnimator() const {
-		return pAnimator; }
+		return pAnimator;
+	}
 #pragma endregion
 
 #pragma region Hp
-	inline void AddHp(int damage) { hp -= damage; }
+	inline void AddHp(int heal) { hp += heal; }
+	inline void SubHp(int damage) { hp -= damage; }
+	inline void SetHp(int _hp) { hp = _hp; }
+	inline int GetHp() const { return hp; }
 #pragma endregion
 
 #pragma region Attack
@@ -85,8 +90,16 @@ public:	// ゲッターとセッター
 	inline void SetBlocking(bool _fact) { blocking = _fact; }
 #pragma endregion
 
-	inline Character* GetPlayer() const { 
-		return Character::player; }
+#pragma region Speed
+	//	速度の取得
+	inline int GetSpeed() const { return speed; }
+	//	速度の設定
+	inline void SetSpeed(int _speed) { speed = _speed; }
+#pragma endregion
+
+	inline Character* GetPlayer() const {
+		return Character::player;
+	}
 
 	inline void SetPlayer(Character* _player) { Character::player = _player; }
 
@@ -98,8 +111,8 @@ public:	// ゲッターとセッター
 		wallCheckPos = set;
 	}
 
-	inline void SetPosition(float x,float y,float z) override {
-		VECTOR set = VGet(x,y,z);
+	inline void SetPosition(float x, float y, float z) override {
+		VECTOR set = VGet(x, y, z);
 		position = set;
 		prevPos = set;
 		wallCheckPos = set;

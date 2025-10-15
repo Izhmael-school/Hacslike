@@ -13,7 +13,7 @@
  *	@param[in]	VECTOR _pos		初期化する座標
  */
 Player::Player(VECTOR _pos)
-	: Character(_pos, "Player")
+	: Character(_pos, "Player", Lv, Exp, speed + 20)
 	, isAttacking(false)
 	, pWeapon(nullptr)
 	, XY()
@@ -29,7 +29,7 @@ Player::Player(VECTOR _pos)
 	, attackButtonPressed(false)	//	
 	, evasionButtonPressed(false)	//	
 	, evasionCooldown(0.0f)
-	, evasionSpeed(1.0f) {
+	, evasionSpeed(1.0f){
 	Start();
 }
 
@@ -101,7 +101,7 @@ void Player::Update() {
 	//	入力ベクトル
 	VECTOR inputVec = VZero;
 
-	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
+	GetJoypadXInputState(DX_INPUT_PAD1, &XY);	
 
 	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_W))
 		inputVec = VAdd(inputVec, VForward);
@@ -112,9 +112,9 @@ void Player::Update() {
 	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
 
-	/*if (input->IsKey(KEY_INPUT_Q))
+	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
-	if (input->IsKey(KEY_INPUT_E))
+	/*if (input->IsKey(KEY_INPUT_E))
 		inputVec = VAdd(inputVec, VDown);*/
 #pragma endregion
 
@@ -224,6 +224,8 @@ void Player::Update() {
 		if (VSquareSize(inputVec) >= 0.01f) {
 			//	入力ベクトルの正規化
 			inputVec = VNorm(inputVec);
+
+			inputVec = VScale(inputVec, speed);
 
 			inputVec = VScale(inputVec, evasionSpeed);
 
