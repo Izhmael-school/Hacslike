@@ -112,10 +112,10 @@ void Player::Update() {
 	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
 
-	/*if (input->IsKey(KEY_INPUT_Q))
+	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
 	if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);*/
+		inputVec = VAdd(inputVec, VDown);
 #pragma endregion
 
 #pragma region UŒ‚“ü—Íˆ—

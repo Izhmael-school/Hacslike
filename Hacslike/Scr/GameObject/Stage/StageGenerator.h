@@ -21,6 +21,7 @@ private:
 	int maxArea;		// 最大面積
 	int roomCount;	// 部屋カウント
 	int line;		// 分割点
+	int mapSize ;
 
 public:
 	enum RoomStatus {	// 部屋の配列ステータス
@@ -36,18 +37,17 @@ public:
 		Max,
 	};
 
-
-
 	int map[mapWidth][mapHeight];	// マップ管理配列
 	bool mapObjects[mapWidth][mapHeight];	// マップ上のオブジェクトの配置
 	int roomStatus[RoomStatus::Max][RoomMax];	// 部屋の配列ステータス
-
+	bool stageMap[mapWidth][mapHeight];
 
 	std::list<StageCell*> cells ;
 	std::list<StageCell*> unuseWall;
 	std::list<StageCell*> unuseRoad;
 	std::list<StageCell*> unuseRoom;
 	StageCell* unuseStair;
+	StageCell* useStair;
 
 public:
 	StageGenerator();

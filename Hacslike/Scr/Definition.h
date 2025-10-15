@@ -37,8 +37,8 @@
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
 
 // ステージ関連
-#define mapWidth (32)	// マップの横サイズ
-#define mapHeight (32)	// マップの縦サイズ
+#define mapWidth (64)	// マップの横サイズ
+#define mapHeight (64)	// マップの縦サイズ
 #define mapMax (mapWidth * mapHeight) 
 #define offsetWall (2)	// 壁から離す距離 
 #define offsetS (1)		// 調節用
