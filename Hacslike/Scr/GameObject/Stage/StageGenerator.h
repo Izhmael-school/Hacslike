@@ -43,10 +43,10 @@ public:
 	int roomStatus[RoomStatus::Max][RoomMax];	// 部屋の配列ステータス
 
 
-	std::list<StageCell*> cells;
-	std::list<StageCell*> unuseWall;
-	std::list<StageCell*> unuseRoad;
-	std::list<StageCell*> unuseRoom;
+	std::list<StageCell*>* cells = new std::list<StageCell*>();
+	std::list<StageCell*>* unuseWall = new std::list<StageCell*>();
+	std::list<StageCell*>* unuseRoad = new std::list<StageCell*>();
+	std::list<StageCell*>* unuseRoom = new std::list<StageCell*>();
 	StageCell* unuseStair;
 
 public:

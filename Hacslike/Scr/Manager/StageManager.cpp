@@ -32,8 +32,6 @@ void StageManager::DestroyInstance() {
 
 void StageManager::Update() {
 	generator->Update();
-	
-
 }
 
 void StageManager::Render() {
@@ -43,3 +41,15 @@ void StageManager::Render() {
 int StageManager::GetMapData(int x, int y) {
 	return generator->map[x][y];
 }
+
+void StageManager::GenerateStage() {
+	generator->ClearStage();
+	generator->StageGenerate();
+	SetObject(Character::player);
+}
+
+void StageManager::SetObject(GameObject* obj) {
+	generator->SetGameObjectRandomPos(obj);
+}
+
+

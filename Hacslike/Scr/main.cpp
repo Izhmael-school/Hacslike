@@ -81,6 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		TimeManager::GetInstance()->Update();
 		InputManager::GetInstance()->Update();
 		StageManager::GetInstance()->Update();
+		CollisionManager::GetInstance()->Update();
 
 		// ‰æ–Ê‚ğƒNƒŠƒA‚·‚é
 		ClearDrawScreen();
