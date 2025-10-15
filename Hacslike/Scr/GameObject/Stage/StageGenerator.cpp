@@ -11,13 +11,9 @@ StageGenerator::StageGenerator()
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	roadModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
-	int tex = MV1GetMaterialDifMapTexture(groundModel, 0);
-	int gr = LoadGraph("Res/Model/Stage/Texture/Bricks.png");
-	int i = MV1SetTextureGraphHandle(groundModel, tex, gr, false);
-
 	stairModel = MV1LoadModel("Res/Model/Stage/Stair.mv1");
 
-	DeleteGraph(gr);
+	unuseStair = nullptr;
 }
 
 StageGenerator::~StageGenerator() {
@@ -39,7 +35,7 @@ StageGenerator::~StageGenerator() {
 
 void StageGenerator::Update() {
 	int i = 0;
-	for (auto c : *cells) {
+	for (auto c : cells) {
 		c->Update();
 		i++;
 	}
@@ -47,17 +43,17 @@ void StageGenerator::Update() {
 }
 
 void StageGenerator::Render() {
-	for (auto c : *cells) {
+	for (auto c : cells) {
 		c->Render();
 	}
 }
 
 void StageGenerator::ClearStage() {
-	for (auto c : *cells) {
+	for (auto c : cells) {
 		UnuseObject(c);
 	}
 
-	cells->clear();
+	cells.clear();
 
 	// ‰Šú‰»
 	for (int w = 0; w < mapWidth; w++) {
@@ -82,6 +78,8 @@ void StageGenerator::ClearStage() {
 }
 
 void StageGenerator::StageGenerate() {
+
+	ClearStage();
 	// •”‰®”‚ğƒ‰ƒ“ƒ_ƒ€‚ÉŒˆ‚ß‚é
 	roomNum = Random(roomMinNum, RoomMax);
 
@@ -353,7 +351,7 @@ void StageGenerator::StageGenerate() {
 			// ƒZƒ‹‚Ì¶¬
 			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
 			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
-			cells->push_back(c);
+			cells.push_back(c);
 		}
 	}
 
@@ -428,9 +426,9 @@ StageCell* StageGenerator::UseObject(ObjectType type) {
 	StageCell* cell;
 	switch (type) {
 	case Room:
-		if (unuseRoom->size() > 0) {
-			cell = unuseRoom->front();
-			unuseRoom->erase(unuseRoom->begin());
+		if (unuseRoom.size() > 0) {
+			cell = unuseRoom.front();
+			unuseRoom.erase(unuseRoom.begin());
 			cell->SetVisible(true);
 		}
 		else {
@@ -438,9 +436,9 @@ StageCell* StageGenerator::UseObject(ObjectType type) {
 		}
 		return cell;
 	case Wall:
-		if (unuseWall->size() > 0) {
-			cell = unuseWall->front();
-			unuseWall->erase(unuseWall->begin());
+		if (unuseWall.size() > 0) {
+			cell = unuseWall.front();
+			unuseWall.erase(unuseWall.begin());
 			cell->SetVisible(true);
 		}
 		else {
@@ -448,9 +446,9 @@ StageCell* StageGenerator::UseObject(ObjectType type) {
 		}
 		return cell;
 	case Road:
-		if (unuseRoad->size() > 0) {
-			cell = unuseRoad->front();
-			unuseRoad->erase(unuseRoad->begin());
+		if (unuseRoad.size() > 0) {
+			cell = unuseRoad.front();
+			unuseRoad.erase(unuseRoad.begin());
 			cell->SetVisible(true);
 		}
 		else {
@@ -475,15 +473,15 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 	cell->SetVisible(false);
 	switch (cell->GetObjectType()) {
 	case Room:
-		unuseRoom->push_back(cell);
+		unuseRoom.push_back(cell);
 		cell = nullptr;
 		break;
 	case Wall:
-		unuseWall->push_back(cell);
+		unuseWall.push_back(cell);
 		cell = nullptr;
 		break;
 	case Road:
-		unuseRoad->push_back(cell);
+		unuseRoad.push_back(cell);
 		cell = nullptr;
 		break;
 	case Stair:

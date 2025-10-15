@@ -43,7 +43,6 @@ int StageManager::GetMapData(int x, int y) {
 }
 
 void StageManager::GenerateStage() {
-	generator->ClearStage();
 	generator->StageGenerate();
 	SetObject(Character::player);
 }
