@@ -95,6 +95,9 @@ void Player::Update() {
 	//	入力管理クラスの取得
 	InputManager* input = InputManager::GetInstance();
 
+#pragma region 移動入力処理
+
+
 	//	入力ベクトル
 	VECTOR inputVec = VZero;
 
@@ -109,14 +112,15 @@ void Player::Update() {
 	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
 		inputVec = VAdd(inputVec, VLeft);
 
-
-	if (input->IsKey(KEY_INPUT_Q))
+	/*if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
 	if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);
+		inputVec = VAdd(inputVec, VDown);*/
+#pragma endregion
 
-		// ===== 攻撃入力 =====
-	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || XY.Buttons[14];
+#pragma region 攻撃入力処理
+	// ===== 攻撃入力 =====
+	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
@@ -184,11 +188,15 @@ void Player::Update() {
 		}
 		else ++it;
 	}
+#pragma endregion
+
+#pragma region 回避入力処理
+
 
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || XY.Buttons[12];
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A);
 
-	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f) {
+	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
 		// 押した瞬間＆クールダウン終了時のみ回避
 		evasionButtonPressed = true;
 		evasionCooldown = EVASION_COOLDOWN_TIME; // クールダウン開始
@@ -206,6 +214,8 @@ void Player::Update() {
 	/*if (pAnimator->GetCurrentAnimation() != 2) {
 		isAttacking = false;
 	}*/
+#pragma endregion
+
 
 	CheckWall();
 
@@ -220,88 +230,38 @@ void Player::Update() {
 			//	カメラからみた移動する方向ベクトル
 			VECTOR moveDirection = VZero;
 
-#if 0	//	三角関数で計算する場合
-
-			//	XZ平面の回転として考える ->	2次元の回転として扱える
-			//	回転後の座標を X, Z 、回転前の座標を x, z としたとき
-			//	X = x * cosθ - z * sinθ
-			//	Z = x * sinθ + z * cosθ
-			//	θ = カメラのy軸回転 -> camera.rotation.y]
-
-			float theta = Deg2Rad(Camera::main->GetRotation().y);
-			//	座標系の違いから X, Z の値は入れ替える
-			float Z = inputVec.z * cosf(theta) - inputVec.x * sinf(theta);
-			float X = inputVec.z * sinf(theta) + inputVec.x * cosf(theta);
-
-			//	移動方向を計算結果で初期化
-			moveDirection = VGet(X, 0, Z);
-			{
-				//	XZ平面の原点から見た傾き(tanθ)を求める
-				float tanTheta = X / Z;
-				//	tanθ から θだけを求める -> 逆三角関数を使う
-				atan(tanTheta);
-			}
-
-			//	tanθ -> θを出す
-
-			//	自身のy軸回転を計算した値に変更する
-			rotation.y = Rad2Deg(atan2f(X, Z)) + 180.0f;
-
-#else	//	行列で計算する場合
-
-			//	DxLibにおいて行列の型が MATRIX型
-			//	４行４列 で 要素は float型
-			////	カメラの回転行列を取得する
-			//float thetaY = Deg2Rad(Camera::main->GetRotation().y);
-			//float thetaX = Deg2Rad(Camera::main->GetRotation().x);
-			//float thetaZ = Deg2Rad(Camera::main->GetRotation().z);
-
-			//MATRIX mRotX = MGetRotX(thetaX);		//	カメラのX軸回転行列
-			//MATRIX mRotZ = MGetRotZ(thetaZ);		//	カメラのZ軸回転行列
-
-			////	X->Y->Z の順で回転行列を作成する
-			//MATRIX mRotXYZ = MMult(MMult(mRotX, mRotY), mRotZ);
-
-			////	拡縮行列を取得する
-			//MATRIX mScale = MGetScale(scale);
-
-			////	平行移動行列を取得する
-			//MATRIX mTranslate = MGetTranslate(position);
-
-			////	行列の乗算は合成
-			////	回転行列 -> 拡縮行列 -> 平行行列 の順に掛け合わせる
-			//MATRIX matrix = MMult(MMult(mRotXYZ, mScale), mTranslate);
-			//	これが Unity, UnrealEngine, 3Dゲームプログラミングで利用される 4*4の行列
 			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	カメラのY軸回転行列
 			moveDirection = VTransform(inputVec, mRotY);
 
-			//	移動方向を計算結果で初期化
-
-
-
 			//	自身のy軸回転を計算した値に変更する
 			rotation.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
-
-#endif
 
 			//	計算した入力ベクトル
 			position = VAdd(position, VScale(moveDirection, 10.0f));
 
 			//	移動アニメーションを再生
-			pAnimator->Play(1, 1.3f);
+			if (evasionSpeed >= 1.5f) {
+				pAnimator->Play(5, 0.5f);
+			}
+			else
+				pAnimator->Play(1, 1.3f);
 		}
 		else {
 			//	待機アニメーションを再生
 			pAnimator->Play(0);
+			evasionSpeed = 1;
 		}
 	}
+
+
+#pragma region 回避時処理
 
 	// --- ブリンク中の処理 ---
 	if (isBlinking && !isAttacking) {
 		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
 		if (blinkTimer <= 0.0f) {
 			isBlinking = false;
-			evasionSpeed = 1;
+			Dash();
 			pCollider->SetEnable(true);
 		}
 
@@ -317,9 +277,13 @@ void Player::Update() {
 			afterImageRotY[i] = afterImageRotY[i - 1];
 		}
 	}
+#pragma endregion
 
 	pAnimator->Update();
 	GameObject::Update();
+
+
+#pragma region Slash処理
 
 	for (auto it = slashes.begin(); it != slashes.end();) {
 		Slash* s = *it;
@@ -333,11 +297,8 @@ void Player::Update() {
 			++it;
 		}
 	}
+#pragma endregion
 
-	////計算した座標、回転(オイラー角)、拡縮モデルに反映する
-	//MV1SetPosition(modelHandle, position);
-	//MV1SetRotationXYZ(modelHandle, VScale(rotation, DX_PI_F / 180.0f));
-	//MV1SetScale(modelHandle, scale);
 	MV1SetMatrix(modelHandle, matrix);
 
 	//	武器の更新
@@ -348,7 +309,7 @@ void Player::Update() {
 	if (pCollider != nullptr) {
 		pCollider->Update();
 	}
-	
+
 }
 
 /*
@@ -359,6 +320,9 @@ void Player::Render() {
 	//	非表示だったら描画しない
 	if (!isVisible)
 		return;
+
+
+#pragma region 残像描画処理
 
 	// --- 残像描画 ---
 	if (isBlinking && !isAttacking) {
@@ -377,6 +341,8 @@ void Player::Render() {
 			MV1DrawModel(modelHandle);
 		}
 	}
+#pragma endregion
+
 
 	// --- 通常モデル描画 ---
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -386,6 +352,8 @@ void Player::Render() {
 	for (auto s : slashes) {
 		s->Render();
 	}
+#pragma region 攻撃時の当たり判定描画処理
+
 
 	// ヒットボックス描画（デバッグ）
 	for (auto h : CapsuleHitboxes) {
@@ -396,6 +364,8 @@ void Player::Render() {
 	for (auto h : SphereHitboxes) {
 		h->Render();
 	}
+
+#pragma endregion
 
 
 	//	武器の描画
@@ -409,6 +379,9 @@ void Player::Render() {
 
 }
 
+/// <summary>
+/// 斬撃
+/// </summary>
 void Player::AttackEnd() {
 	VECTOR forward = VNorm(VGet(
 		-sinf(Deg2Rad(rotation.y)),
@@ -421,6 +394,12 @@ void Player::AttackEnd() {
 	slashes.push_back(s);
 }
 
+
+/// <summary>
+/// 攻撃時の当たり判定
+/// </summary>
+/// <param name="length"></param>
+/// <param name="radius"></param>
 void Player::CreateAttackHitbox(float length, float radius) {
 	//Unity座標系の前方
 	VECTOR forward = VNorm(VGet(
@@ -457,18 +436,18 @@ void Player::CreateAttackHitbox(float length, float radius) {
 
 }
 
+/// <summary>
+/// 回避
+/// </summary>
 void Player::Evasion() {
 	pCollider->SetEnable(false);
 
 	// 瞬間移動
-	evasionSpeed = 5;
-
-
+	evasionSpeed = 8;
 
 	// 残像開始
 	isBlinking = true;
-	blinkTimer = 0.25f;
-
+	blinkTimer = 0.15f;
 
 	// --- 履歴をすべて現在位置にリセット ---
 	for (int i = 0; i < AFTIMAGENUM; i++) {
@@ -476,6 +455,11 @@ void Player::Evasion() {
 		afterImageRotY[i] = rotation.y;
 	}
 }
+
+void Player::Dash() {
+	evasionSpeed = 1.5f;
+}
+
 
 
 /*
