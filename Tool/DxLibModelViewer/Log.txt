@@ -518,3 +518,5 @@
 21229162:																												Alloc memory dump
 21229163:																													Total size:0(0.000kb)  Alloc num:0
 21229163:																												
+4259229:	VMD Load Error : 対応していない VMD バージョンです
+
