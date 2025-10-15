@@ -47,7 +47,6 @@ private:	//	メンバ変数
 
 	float evasionSpeed;
 
-
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
