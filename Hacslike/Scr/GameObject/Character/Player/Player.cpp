@@ -13,7 +13,7 @@
  *	@param[in]	VECTOR _pos		初期化する座標
  */
 Player::Player(VECTOR _pos)
-	: Character(_pos, "Player", Lv, Exp, speed + 20)
+	: Character(_pos, "Player", Lv, Exp, speed)
 	, isAttacking(false)
 	, pWeapon(nullptr)
 	, XY()
@@ -76,7 +76,7 @@ void Player::Start() {
 		afterImageRotY[i] = rotation.y;
 	}
 
-
+	SetSpeed(2);
 
 	////	Z軸方向を正面に向かせる
 	//rotation.y = 180;
@@ -104,13 +104,13 @@ void Player::Update() {
 	GetJoypadXInputState(DX_INPUT_PAD1, &XY);	
 
 	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_W))
-		inputVec = VAdd(inputVec, VForward);
+		inputVec.z = inputVec.z + speed;
 	if (XY.ThumbLY <= -1000 || input->IsKey(KEY_INPUT_S))
-		inputVec = VAdd(inputVec, VBack);
+		inputVec.z = inputVec.z - speed;
 	if (XY.ThumbLX >= 1000 || input->IsKey(KEY_INPUT_D))
-		inputVec = VAdd(inputVec, VRight);
+		inputVec.x = inputVec.x + speed;
 	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
-		inputVec = VAdd(inputVec, VLeft);
+		inputVec.x = inputVec.x - speed;
 
 	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
@@ -258,27 +258,7 @@ void Player::Update() {
 
 #pragma region 回避時処理
 
-	// --- ブリンク中の処理 ---
-	if (isBlinking && !isAttacking) {
-		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
-		if (blinkTimer <= 0.0f) {
-			isBlinking = false;
-			Dash();
-			pCollider->SetEnable(true);
-		}
 
-		pAnimator->Play(5, 2);
-
-		// 先に最新位置を入れる
-		afterImagePos[0] = position;
-		afterImageRotY[0] = rotation.y;
-
-		// 古い残像を後ろにずらす
-		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
-			afterImagePos[i] = afterImagePos[i - 1];
-			afterImageRotY[i] = afterImageRotY[i - 1];
-		}
-	}
 #pragma endregion
 
 	pAnimator->Update();
@@ -445,11 +425,33 @@ void Player::Evasion() {
 	pCollider->SetEnable(false);
 
 	// 瞬間移動
-	evasionSpeed = 8;
+	evasionSpeed = 6;
 
 	// 残像開始
 	isBlinking = true;
 	blinkTimer = 0.15f;
+
+		// --- ブリンク中の処理 ---
+	if (isBlinking && !isAttacking) {
+		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
+		if (blinkTimer <= 0.0f) {
+			isBlinking = false;
+			Dash();
+			pCollider->SetEnable(true);
+		}
+
+		pAnimator->Play(5, 2);
+
+		// 先に最新位置を入れる
+		afterImagePos[0] = position;
+		afterImageRotY[0] = rotation.y;
+
+		// 古い残像を後ろにずらす
+		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
+			afterImagePos[i] = afterImagePos[i - 1];
+			afterImageRotY[i] = afterImageRotY[i - 1];
+		}
+	}
 
 	// --- 履歴をすべて現在位置にリセット ---
 	for (int i = 0; i < AFTIMAGENUM; i++) {
@@ -459,7 +461,7 @@ void Player::Evasion() {
 }
 
 void Player::Dash() {
-	evasionSpeed = 1.5f;
+	evasionSpeed = 1.2f;
 }
 
 
