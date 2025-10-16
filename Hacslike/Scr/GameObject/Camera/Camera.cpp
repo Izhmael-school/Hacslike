@@ -8,6 +8,8 @@ Camera::Camera(VECTOR _pos, float _length)
 	,pTarget(nullptr)
 	,armLenght(_length)
 	, XY()
+	, offSet(VGet(0.0f, 700.0f, -400.0f))
+	, rotation_X(70)
 {
 	Start();
 	main = this;
@@ -15,78 +17,47 @@ Camera::Camera(VECTOR _pos, float _length)
 
 Camera::~Camera() {}
 
-void Camera::Start() {}
+void Camera::Start() {
+	rotation.x += rotation_X;
+}
 
 void Camera::Update() {
-	// 入力管理クラスの取得
+
+	//インスタンス
 	InputManager* input = InputManager::GetInstance();
-
-	// 入力ベクトル
-	VECTOR inputVec = VZero;
-
-	GetJoypadXInputState(DX_INPUT_PAD1,&XY);
-
-	if (XY.ThumbRX >= 1000 || input->IsKey(KEY_INPUT_LEFT))
-		inputVec = VAdd(inputVec, VScale(VLeft, 4.0f));
-
-	if (XY.ThumbRX <= -1000 || input->IsKey(KEY_INPUT_RIGHT))
-		inputVec = VAdd(inputVec, VScale(VRight, 4.0f));
-
-	if (XY.ThumbRY <= -1000 || input->IsKey(KEY_INPUT_UP))
-		inputVec = VAdd(inputVec, VScale(VUp, 4.0f));
-
-	if (XY.ThumbRY >= 1000 || input->IsKey(KEY_INPUT_DOWN))
-		inputVec = VAdd(inputVec, VScale(VDown, 4.0f));
-
-	// 入力ベクトルの正規化
-	if (VSquareSize(inputVec) >= 0.01f) {
-		inputVec = VNorm(inputVec);
-	}
-
-	// 最終的な入力ベクトルを自身の回転（オイラー角）に加える
-	rotation.y += -inputVec.x;	// y軸回転
-	if (rotation.x + inputVec.y > !91) {
-		rotation.x += inputVec.y;	// x軸回転
-		//if (rotation.x >= 91) {
-		//	rotation.x = 90;
-		//}
-		//if (rotation.x<= -1) {
-		//	rotation.x = 0;
-		//}
-	}
-
-	//if (rotation.x + inputVec.x <! -91) {
-	//	rotation.x += inputVec.y;	// x軸回転
-	//}
-
 
 	
 
-	// 半径1の球面上の座標
-	VECTOR sphere = VGet(
-		sinf(Deg2Rad(rotation.x)) * sinf(Deg2Rad(rotation.y)),
-		cosf(Deg2Rad(rotation.x)),
-		sinf(Deg2Rad(rotation.x)) * cosf(Deg2Rad(rotation.y))
-	);
 
-	// 座標系や、回転、三角関数の相互の関係等を組み込んだ最終形態
+	//中心点が原点で半径1の球面上の座標
+	VECTOR sphere = VGet(
+		sinf(Deg2Rad(rotation.x - 90)) * sinf(Deg2Rad(rotation.y)),
+		cosf(Deg2Rad(rotation.x - 90)),
+		sinf(Deg2Rad(rotation.x - 90)) * cosf(Deg2Rad(rotation.y)));
+
+	//座標系や回転、三角関数の相互関係等を組み込んだ最終形態
 	sphere = VGet(
 		-cosf(Deg2Rad(rotation.x)) * sinf(Deg2Rad(rotation.y)),
 		sinf(Deg2Rad(rotation.x)),
-		-cosf(Deg2Rad(rotation.x)) * cosf(Deg2Rad(rotation.y))
-	);
+		-cosf(Deg2Rad(rotation.x)) * cosf(Deg2Rad(rotation.y)));
 
-	// 半径を armLenght倍する
+	//半径をarmLength倍
 	sphere = VScale(sphere, armLenght);
-
-	// 中心点を中心対象の座標分、平行移動
+	//中心点を追従対象の座標分平行移動
 	sphere = VAdd(sphere, pTarget->GetPosition());
 
 
+	//最終的な計算結果を自身の座標に適応する
 	position = sphere;
 
-	// カメラの位置と回転を設定する
-	SetCameraPositionAndAngle(position, Deg2Rad(rotation.x), Deg2Rad(rotation.y), Deg2Rad(rotation.z));
+
+
+	GameObject::Update();
+
+	//カメラの位置と回転を設定する
+	SetCameraPositionAndAngle(VAdd(position, offSet), Deg2Rad(rotation.x), Deg2Rad(rotation.y), Deg2Rad(rotation.z));
+	//リスナーの設定
+	Set3DSoundListenerPosAndFrontPos_UpVecY(position, VAdd(position, forward));
 }
 
 void Camera::Render() {}

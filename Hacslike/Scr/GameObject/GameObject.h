@@ -15,7 +15,7 @@ protected:
 	class Collider* pCollider;
 
 	int layer;
-
+	VECTOR forward, right, up; //ローカルのベクトル
 
 public: // トラクタ
 	GameObject(VECTOR _pos = VZero, std::string _tag = "");
