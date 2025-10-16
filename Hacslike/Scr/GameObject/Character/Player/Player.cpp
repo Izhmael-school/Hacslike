@@ -243,9 +243,15 @@ void Player::MoveInput() {
 
 	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
+<<<<<<< HEAD
 	/*if (input->IsKey(KEY_INPUT_E))
 		inputVec = VAdd(inputVec, VDown);*/
 }
+=======
+	if (input->IsKey(KEY_INPUT_E))
+		inputVec = VAdd(inputVec, VDown);
+#pragma endregion
+>>>>>>> Sekino
 
 /// <summary>
 /// UŒ‚‚Ì“–‚½‚è”»’è”­¶ˆ—

@@ -2,30 +2,77 @@
 #include <climits>
 
 StageGenerator::StageGenerator()
-	:roomMinNum(8)
+	:roomMinNum(3)
 	, roomNum(0)
 	, parentNum(0)
 	, maxArea(0)
 	, roomCount(0)
-	, line(0) {
+	, line(0)
+	, mapSize(4) 
+	,mapOffset(VGet(600,0,400))
+{
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	roadModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	stairModel = MV1LoadModel("Res/Model/Stage/Stair.mv1");
 
 	unuseStair = nullptr;
+	useStair = nullptr;
+
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			// 壁にする
+			map[w][h] = Wall;
+		}
+	}
+
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			mapObjects[w][h] = false;
+		}
+	}
+
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			stageMap[w][h] = false;
+		}
+	}
+
+	for (int w = 0; w < RoomStatus::Max; w++) {
+		for (int h = 0; h < RoomMax; h++) {
+			roomStatus[w][h] = false;
+		}
+	}
 }
 
 StageGenerator::~StageGenerator() {
 	delete[] map;
+	delete[] roomStatus;
+	delete[] mapObjects;
+	delete[] stageMap;
 
-	for (auto r : roomStatus) {
-		delete r;
-		r = nullptr;
+	delete unuseStair;
+	delete useStair;
+
+	for (auto c : cells) {
+		MV1DeleteModel(c->GetModelHandle());
+		delete c;
 	}
 
-	delete[] roomStatus;
+	for (auto c : unuseRoad) {
+		MV1DeleteModel(c->GetModelHandle());
+		delete c;
+	}
 
+	for (auto c : unuseRoom) {
+		MV1DeleteModel(c->GetModelHandle());
+		delete c;
+	}
+
+	for (auto c : unuseWall) {
+		MV1DeleteModel(c->GetModelHandle());
+		delete c;
+	}
 
 	MV1DeleteModel(wallModel);
 	MV1DeleteModel(groundModel);
@@ -34,18 +81,26 @@ StageGenerator::~StageGenerator() {
 }
 
 void StageGenerator::Update() {
-	int i = 0;
 	for (auto c : cells) {
+		if (useStair == nullptr) continue;
 		c->Update();
-		i++;
 	}
-	int j = i;
+
+	// 階層変化時階段オブジェクトで例外スローが起こるため、オブジェクトを分けておく
+	if (useStair != nullptr)
+		useStair->Update();
 }
 
 void StageGenerator::Render() {
 	for (auto c : cells) {
+		if (useStair == nullptr) continue;
 		c->Render();
 	}
+
+	if (useStair != nullptr)
+		useStair->Render();
+
+	DrawMap();
 }
 
 void StageGenerator::ClearStage() {
@@ -55,11 +110,13 @@ void StageGenerator::ClearStage() {
 
 	cells.clear();
 
+	UnuseObject(useStair);
+
 	// 初期化
 	for (int w = 0; w < mapWidth; w++) {
 		for (int h = 0; h < mapHeight; h++) {
 			// 壁にする
-			map[w][h] = 2;
+			map[w][h] = Wall;
 		}
 	}
 
@@ -67,6 +124,12 @@ void StageGenerator::ClearStage() {
 	for (int w = 0; w < mapWidth; w++) {
 		for (int h = 0; h < mapHeight; h++) {
 			mapObjects[w][h] = false;
+		}
+	}
+
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			stageMap[w][h] = false;
 		}
 	}
 
@@ -351,7 +414,12 @@ void StageGenerator::StageGenerate() {
 			// セルの生成
 			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
 			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
-			cells.push_back(c);
+			if (c->GetObjectType() == Stair) {
+				useStair = c;
+			}
+			else {
+				cells.push_back(c);
+			}
 		}
 	}
 
@@ -423,7 +491,7 @@ void StageGenerator::SetGameObjectRandomPos(GameObject* obj) {
 }
 
 StageCell* StageGenerator::UseObject(ObjectType type) {
-	StageCell* cell;
+	StageCell* cell = nullptr;
 	switch (type) {
 	case Room:
 		if (unuseRoom.size() > 0) {
@@ -470,6 +538,8 @@ StageCell* StageGenerator::UseObject(ObjectType type) {
 }
 
 void StageGenerator::UnuseObject(StageCell*& cell) {
+	if (cell == nullptr) return;
+
 	cell->SetVisible(false);
 	switch (cell->GetObjectType()) {
 	case Room:
@@ -485,10 +555,66 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 		cell = nullptr;
 		break;
 	case Stair:
-		unuseStair = cell;
+		unuseStair = useStair;
+		useStair = nullptr;
 		cell = nullptr;
 		break;
 	}
+}
+
+void StageGenerator::DrawMap() {
+	// プレイヤーのポジション取得
+	VECTOR playerPos = Character::player->GetPosition();
+	int x = (int)std::round(playerPos.x / CellSize);
+	int z = (int)std::round(playerPos.z / CellSize);
+
+	// マップの表示フラグ
+	if (map[x][z] == Room && !stageMap[x][z]) {
+		for (int i = 0; i < roomCount; i++) {
+			// 部屋のステータスを見て部屋番号i番目の部屋だったら
+			if (roomStatus[rx][i] <= x && roomStatus[rx][i] + roomStatus[rw][i] >= x &&
+				roomStatus[ry][i] <= z && roomStatus[ry][i] + roomStatus[rh][i] >= z) {
+
+				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i]; w < wMax; w++) {
+					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i]; h < hMax; h++) {
+						stageMap[w][h] = true;
+					}
+				}
+
+				break;
+			}
+		}
+	}
+	else if (map[x][z] != Wall && !stageMap[x][z]) {
+		stageMap[x][z] = true;
+	}
+
+	// 地図の描画
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			int color = 0;
+
+			if (!stageMap[w][h]) continue;
+
+			switch (map[w][h]) {
+			case Road:
+				color = white;
+				break;
+			case Room:
+				color = yellow;
+				break;
+			case Stair:
+				color = green;
+				break;
+			case Wall:
+				continue;
+			}
+			DrawBox((w * mapSize) + mapOffset.x, (h * mapSize) + mapOffset.z, (w * mapSize + mapSize) + mapOffset.x, (h * mapSize + mapSize) + mapOffset.z, color, true);
+		}
+	}
+
+	// プレイヤーの描画
+	DrawBox((x * mapSize) + mapOffset.x, (z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (z * mapSize + mapSize) + mapOffset.z, red, true);
 }
 
 
