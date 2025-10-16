@@ -1,12 +1,9 @@
 #include "Player.h"
-#include "../../../Manager/InputManager.h"
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/FadeManager.h"
 #include "../../Camera/Camera.h"
 #include "../../../Component/Collider/Collider.h"
 #include "../../../Definition.h"
-//#include "../Hacslike/Scr/_sekino/Manager/EffectManager.h"
-//#include "../Hacslike/Scr/_sekino/Manager/Effect/Effect.h"
 
 /*
  *	@brief		コンストラクタ
@@ -17,19 +14,21 @@ Player::Player(VECTOR _pos)
 	, isAttacking(false)
 	, pWeapon(nullptr)
 	, XY()
-	, slashes()						//	斬撃
-	, attackIndex(0)				//	コンボが何段目か
-	, attackTimer(0.0f)				//	クールタイム
-	, canNextAttack(false)			//	次の攻撃ができるか
-	, CapsuleHitboxes()				//	1,2段目のHitBox(Capsule)
-	, SphereHitboxes()				//	3段目のHitBox(Sphere)
-	, isBlinking(false)				//	回避の長押し防止
-	, blinkTimer(0.0f)				//	回避のクールダウン
-	, attackInputCooldown(0.0f)		//	
-	, attackButtonPressed(false)	//	
-	, evasionButtonPressed(false)	//	
+	, inputVec()
+	, input(InputManager::GetInstance())
+	, slashes()								//	斬撃
+	, attackIndex(0)						//	コンボが何段目か
+	, attackTimer(0.0f)						//	クールタイム
+	, canNextAttack(false)					//	次の攻撃ができるか
+	, CapsuleHitboxes()						//	1,2段目のHitBox(Capsule)
+	, SphereHitboxes()						//	3段目のHitBox(Sphere)
+	, isBlinking(false)						//	回避の長押し防止
+	, blinkTimer(0.0f)						//	回避のクールダウン
+	, attackInputCooldown(0.0f)				//	
+	, attackButtonPressed(false)			//	
+	, evasionButtonPressed(false)			//	
 	, evasionCooldown(0.0f)
-	, evasionSpeed(1.0f){
+	, evasionSpeed(1.0f) {
 	Start();
 }
 
@@ -76,11 +75,7 @@ void Player::Start() {
 		afterImageRotY[i] = rotation.y;
 	}
 
-	SetSpeed(2);
-
-	////	Z軸方向を正面に向かせる
-	//rotation.y = 180;
-
+	SetSpeed(1);
 }
 
 /*
@@ -91,17 +86,151 @@ void Player::Update() {
 	//	非表示だったら更新しない
 	if (!isVisible)
 		return;
+	inputVec = VZero;
 
-	//	入力管理クラスの取得
-	InputManager* input = InputManager::GetInstance();
+	MoveInput();
 
-#pragma region 移動入力処理
+	AttackInput();
+
+	EvasionInput();
+
+	UpdateBlink();
+
+	CheckWall();
+
+	UpdateMovement();
+
+	UpdateSlash();
+
+	MV1SetMatrix(modelHandle, matrix);
+
+	pAnimator->Update();
+	GameObject::Update();
+
+	//	武器の更新
+	if (pCollider != nullptr && pWeapon != nullptr) {
+		pWeapon->Update();
+	}
+
+	if (pCollider != nullptr) {
+		pCollider->Update();
+	}
+
+}
 
 
-	//	入力ベクトル
-	VECTOR inputVec = VZero;
+/*
+ *	@function	Render
+ *	@breif		描画処理
+ */
+void Player::Render() {
+	//	非表示だったら描画しない
+	if (!isVisible)
+		return;
 
-	GetJoypadXInputState(DX_INPUT_PAD1, &XY);	
+#pragma region 残像描画処理
+	// --- 残像描画 ---
+	if (isBlinking && !isAttacking) {
+		for (int i = AFTIMAGENUM - 1; i >= 0; i -= 4) {
+			int alpha = 255 - 255 * i / AFTIMAGENUM;
+
+			// モデルの座標・回転設定
+			MATRIX matRot = MGetRotY(Deg2Rad(afterImageRotY[i]));
+			MATRIX matTrans = MGetTranslate(afterImagePos[i]);
+			MATRIX mat = MMult(matRot, matTrans);
+
+			MV1SetMatrix(modelHandle, mat);
+
+			// 半透明描画
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+			MV1DrawModel(modelHandle);
+		}
+	}
+#pragma endregion
+
+#pragma region プレイヤーの描画
+	// --- 通常モデル描画 ---
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	MV1SetMatrix(modelHandle, matrix);
+	MV1DrawModel(modelHandle);
+#pragma endregion
+
+#pragma region Slash描画
+	for (auto s : slashes) {
+		s->Render();
+	}
+#pragma endregion
+
+#pragma region 攻撃時の当たり判定描画処理
+
+
+	// ヒットボックス描画（デバッグ）
+	for (auto h : CapsuleHitboxes) {
+		h->Render();
+	}
+
+	// ヒットボックス描画（デバッグ）
+	for (auto h : SphereHitboxes) {
+		h->Render();
+	}
+
+#pragma endregion
+
+#pragma region 武器の描画
+	//	武器の描画
+	if (pCollider != nullptr && pWeapon != nullptr) {
+		pWeapon->Render();
+	}
+#pragma endregion
+}
+
+/// <summary>
+/// 移動・アニメーション・回転処理
+/// </summary>
+void Player::UpdateMovement() {
+	if (!isAttacking) {
+		//	入力があれば
+		if (VSquareSize(inputVec) >= 0.01f) {
+			//	入力ベクトルの正規化
+			inputVec = VNorm(inputVec);
+
+			inputVec = VScale(inputVec, speed);
+
+			inputVec = VScale(inputVec, evasionSpeed);
+
+			//	カメラからみた移動する方向ベクトル
+			VECTOR moveDirection = VZero;
+
+			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	カメラのY軸回転行列
+			moveDirection = VTransform(inputVec, mRotY);
+
+			//	自身のy軸回転を計算した値に変更する
+			rotation.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
+
+			//	計算した入力ベクトル
+			position = VAdd(position, VScale(moveDirection, 10.0f));
+
+			//	移動アニメーションを再生
+			if (evasionSpeed >= 1.2f) {
+				pAnimator->Play(5, 0.5f);
+			}
+			else
+				pAnimator->Play(1, 1.3f);
+		}
+		else {
+			//	待機アニメーションを再生
+			pAnimator->Play(0);
+			evasionSpeed = 1;
+		}
+	}
+}
+
+
+/// <summary>
+/// 移動入力
+/// </summary>
+void Player::MoveInput() {
+	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
 
 	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_W))
 		inputVec.z = inputVec.z + speed;
@@ -114,11 +243,129 @@ void Player::Update() {
 
 	if (input->IsKey(KEY_INPUT_Q))
 		inputVec = VAdd(inputVec, VUp);
+<<<<<<< HEAD
 	/*if (input->IsKey(KEY_INPUT_E))
 		inputVec = VAdd(inputVec, VDown);*/
+}
+=======
+	if (input->IsKey(KEY_INPUT_E))
+		inputVec = VAdd(inputVec, VDown);
 #pragma endregion
+>>>>>>> Sekino
 
-#pragma region 攻撃入力処理
+/// <summary>
+/// 攻撃時の当たり判定発生処理
+/// </summary>
+/// <param name="length"></param>
+/// <param name="radius"></param>
+void Player::CreateAttackHitbox(float length, float radius) {
+	//Unity座標系の前方
+	VECTOR forward = VNorm(VGet(
+		-sinf(Deg2Rad(rotation.y)),
+		0.0f,
+		-cosf(Deg2Rad(rotation.y))
+	));
+
+	VECTOR start, end;
+	float life = 0.20f;
+
+	if (attackIndex < 3) {
+		// 1～2段目 前方カプセル
+		start = VAdd(position, VScale(forward, 20.0f));
+		end = VAdd(start, VScale(forward, length));
+		CapsuleHitBox* hit = new CapsuleHitBox(this, start, end, radius, life);
+		CapsuleHitboxes.push_back(hit);
+	}
+	else {
+		// 3段目 周囲攻撃（球状に近いカプセル）
+		life = 0.25f;
+		// プレイヤー中心 + 少し前方にオフセット
+		VECTOR center = VAdd(position, VScale(forward, 50.0f)); // 50.0f は前に出す距離
+		// 少し高さを上げたい場合は Y 成分を足す
+		center.y += 50.0f; // optional: 地面から少し上に
+
+		// SphereHitBox を生成
+		float life = 0.25f;
+		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
+
+		SphereHitBox* hit = new SphereHitBox(this, offset, radius, life);
+		SphereHitboxes.push_back(hit);
+	}
+
+}
+
+/// <summary>
+/// 回避入力
+/// </summary>
+void Player::EvasionInput() {
+	// ===== 回避入力 =====
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A);
+
+	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
+		// 押した瞬間＆クールダウン終了時のみ回避
+		evasionButtonPressed = true;
+		evasionCooldown = EVASION_COOLDOWN_TIME; // クールダウン開始
+		Evasion();
+	}
+	else if (!isEvasionButtonDown) {
+		// ボタンを離したら押下フラグリセット
+		evasionButtonPressed = false;
+	}
+
+	// ===== 毎フレームクールダウン減算 =====
+	if (evasionCooldown > 0.0f)
+		evasionCooldown -= 1.0f / 60.0f; // 60fps前提、deltaTimeがあればそれでもOK
+}
+
+/// <summary>
+/// 回避
+/// </summary>
+void Player::Evasion() {
+	pCollider->SetEnable(false);
+
+	// 瞬間移動
+	evasionSpeed = 6;
+
+	// 残像開始
+	isBlinking = true;
+	blinkTimer = 0.15f;
+
+	// --- 履歴をすべて現在位置にリセット ---
+	for (int i = 0; i < AFTIMAGENUM; i++) {
+		afterImagePos[i] = position;
+		afterImageRotY[i] = rotation.y;
+	}
+}
+
+/// <summary>
+/// BlinkのUpdate
+/// </summary>
+void Player::UpdateBlink() {
+	// --- ブリンク中の処理 ---
+	if (isBlinking && !isAttacking) {
+		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
+		if (blinkTimer <= 0.0f) {
+			isBlinking = false;
+			Dash();
+			pCollider->SetEnable(true);
+		}
+
+		// 先に最新位置を入れる
+		afterImagePos[0] = position;
+		afterImageRotY[0] = rotation.y;
+
+		// 古い残像を後ろにずらす
+		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
+			afterImagePos[i] = afterImagePos[i - 1];
+			afterImageRotY[i] = afterImageRotY[i - 1];
+		}
+	}
+}
+
+/// <summary>
+/// 攻撃入力・HitBox更新
+/// </summary>
+void Player::AttackInput() {
 	// ===== 攻撃入力 =====
 	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
 
@@ -188,85 +435,12 @@ void Player::Update() {
 		}
 		else ++it;
 	}
-#pragma endregion
+}
 
-#pragma region 回避入力処理
-
-
-	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_SPACE) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A);
-
-	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
-		// 押した瞬間＆クールダウン終了時のみ回避
-		evasionButtonPressed = true;
-		evasionCooldown = EVASION_COOLDOWN_TIME; // クールダウン開始
-		Evasion();
-	}
-	else if (!isEvasionButtonDown) {
-		// ボタンを離したら押下フラグリセット
-		evasionButtonPressed = false;
-	}
-
-	// ===== 毎フレームクールダウン減算 =====
-	if (evasionCooldown > 0.0f)
-		evasionCooldown -= 1.0f / 60.0f; // 60fps前提、deltaTimeがあればそれでもOK
-
-	/*if (pAnimator->GetCurrentAnimation() != 2) {
-		isAttacking = false;
-	}*/
-#pragma endregion
-
-
-	CheckWall();
-
-	if (!isAttacking) {
-		//	入力があれば
-		if (VSquareSize(inputVec) >= 0.01f) {
-			//	入力ベクトルの正規化
-			inputVec = VNorm(inputVec);
-
-			inputVec = VScale(inputVec, speed);
-
-			inputVec = VScale(inputVec, evasionSpeed);
-
-			//	カメラからみた移動する方向ベクトル
-			VECTOR moveDirection = VZero;
-
-			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	カメラのY軸回転行列
-			moveDirection = VTransform(inputVec, mRotY);
-
-			//	自身のy軸回転を計算した値に変更する
-			rotation.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
-
-			//	計算した入力ベクトル
-			position = VAdd(position, VScale(moveDirection, 10.0f));
-
-			//	移動アニメーションを再生
-			if (evasionSpeed >= 1.5f) {
-				pAnimator->Play(5, 0.5f);
-			}
-			else
-				pAnimator->Play(1, 1.3f);
-		}
-		else {
-			//	待機アニメーションを再生
-			pAnimator->Play(0);
-			evasionSpeed = 1;
-		}
-	}
-
-
-#pragma region 回避時処理
-
-
-#pragma endregion
-
-	pAnimator->Update();
-	GameObject::Update();
-
-
-#pragma region Slash処理
-
+/// <summary>
+/// 斬撃更新
+/// </summary>
+void Player::UpdateSlash() {
 	for (auto it = slashes.begin(); it != slashes.end();) {
 		Slash* s = *it;
 		s->Update();
@@ -279,192 +453,14 @@ void Player::Update() {
 			++it;
 		}
 	}
-#pragma endregion
-
-	MV1SetMatrix(modelHandle, matrix);
-
-	//	武器の更新
-	if (pCollider != nullptr && pWeapon != nullptr) {
-		pWeapon->Update();
-	}
-
-	if (pCollider != nullptr) {
-		pCollider->Update();
-	}
-
-}
-
-/*
- *	@function	Render
- *	@breif		描画処理
- */
-void Player::Render() {
-	//	非表示だったら描画しない
-	if (!isVisible)
-		return;
-
-
-#pragma region 残像描画処理
-
-	// --- 残像描画 ---
-	if (isBlinking && !isAttacking) {
-		for (int i = AFTIMAGENUM - 1; i >= 0; i -= 4) {
-			int alpha = 255 - 255 * i / AFTIMAGENUM;
-
-			// モデルの座標・回転設定
-			MATRIX matRot = MGetRotY(Deg2Rad(afterImageRotY[i]));
-			MATRIX matTrans = MGetTranslate(afterImagePos[i]);
-			MATRIX mat = MMult(matRot, matTrans);
-
-			MV1SetMatrix(modelHandle, mat);
-
-			// 半透明描画
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-			MV1DrawModel(modelHandle);
-		}
-	}
-#pragma endregion
-
-
-	// --- 通常モデル描画 ---
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	MV1SetMatrix(modelHandle, matrix);
-	MV1DrawModel(modelHandle);
-
-	for (auto s : slashes) {
-		s->Render();
-	}
-#pragma region 攻撃時の当たり判定描画処理
-
-
-	// ヒットボックス描画（デバッグ）
-	for (auto h : CapsuleHitboxes) {
-		h->Render();
-	}
-
-	// ヒットボックス描画（デバッグ）
-	for (auto h : SphereHitboxes) {
-		h->Render();
-	}
-
-#pragma endregion
-
-
-	//	武器の描画
-	if (pCollider != nullptr && pWeapon != nullptr) {
-		pWeapon->Render();
-	}
-
-	if (pCollider != nullptr) {
-		pCollider->Render();
-	}
-
 }
 
 /// <summary>
-/// 斬撃
+/// ダッシュ
 /// </summary>
-void Player::AttackEnd() {
-	VECTOR forward = VNorm(VGet(
-		-sinf(Deg2Rad(rotation.y)),
-		0.0f,
-		-cosf(Deg2Rad(rotation.y))
-	));
-
-	// 最後の攻撃で斬撃発生
-	Slash* s = new Slash(position, forward);
-	slashes.push_back(s);
-}
-
-
-/// <summary>
-/// 攻撃時の当たり判定
-/// </summary>
-/// <param name="length"></param>
-/// <param name="radius"></param>
-void Player::CreateAttackHitbox(float length, float radius) {
-	//Unity座標系の前方
-	VECTOR forward = VNorm(VGet(
-		-sinf(Deg2Rad(rotation.y)),
-		0.0f,
-		-cosf(Deg2Rad(rotation.y))
-	));
-
-	VECTOR start, end;
-	float life = 0.20f;
-
-	if (attackIndex < 3) {
-		// 1～2段目 前方カプセル
-		start = VAdd(position, VScale(forward, 20.0f));
-		end = VAdd(start, VScale(forward, length));
-		CapsuleHitBox* hit = new CapsuleHitBox(this, start, end, radius, life);
-		CapsuleHitboxes.push_back(hit);
-	}
-	else {
-		// 3段目 周囲攻撃（球状に近いカプセル）
-		life = 0.25f;
-		// プレイヤー中心 + 少し前方にオフセット
-		VECTOR center = VAdd(position, VScale(forward, 50.0f)); // 50.0f は前に出す距離
-		// 少し高さを上げたい場合は Y 成分を足す
-		center.y += 50.0f; // optional: 地面から少し上に
-
-		// SphereHitBox を生成
-		float life = 0.25f;
-		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
-
-		SphereHitBox* hit = new SphereHitBox(this, offset, radius, life);
-		SphereHitboxes.push_back(hit);
-	}
-
-}
-
-/// <summary>
-/// 回避
-/// </summary>
-void Player::Evasion() {
-	pCollider->SetEnable(false);
-
-	// 瞬間移動
-	evasionSpeed = 6;
-
-	// 残像開始
-	isBlinking = true;
-	blinkTimer = 0.15f;
-
-		// --- ブリンク中の処理 ---
-	if (isBlinking && !isAttacking) {
-		blinkTimer -= 1.0f / 60.0f;   // 1フレーム経過（60FPS想定）
-		if (blinkTimer <= 0.0f) {
-			isBlinking = false;
-			Dash();
-			pCollider->SetEnable(true);
-		}
-
-		pAnimator->Play(5, 2);
-
-		// 先に最新位置を入れる
-		afterImagePos[0] = position;
-		afterImageRotY[0] = rotation.y;
-
-		// 古い残像を後ろにずらす
-		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
-			afterImagePos[i] = afterImagePos[i - 1];
-			afterImageRotY[i] = afterImageRotY[i - 1];
-		}
-	}
-
-	// --- 履歴をすべて現在位置にリセット ---
-	for (int i = 0; i < AFTIMAGENUM; i++) {
-		afterImagePos[i] = position;
-		afterImageRotY[i] = rotation.y;
-	}
-}
-
 void Player::Dash() {
 	evasionSpeed = 1.2f;
 }
-
-
 
 /*
  *	@function	OnTriggerEnter

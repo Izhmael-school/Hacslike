@@ -4,6 +4,7 @@
 #include "../../Slash/Slash.h"
 #include "../../../Component/Collider/SphereHitBox.h"
 #include "../../../Component/Collider/CapsuleHitBox.h"
+#include "../../../Manager/InputManager.h"
 
 
 /*
@@ -16,6 +17,10 @@ private:	//	メンバ変数
 	bool isAttacking;	//	攻撃中
 
 	Weapon* pWeapon;
+
+	VECTOR inputVec;
+
+	InputManager* input;
 
 	XINPUT_STATE XY;
 
@@ -109,11 +114,23 @@ public:		//	オーバーライドした衝突検知
 
 public:		//	メンバ関数
 
+	void UpdateMovement();
+
+	void MoveInput();
+
+	void EvasionInput();
+
+	void AttackInput();
+
+	void UpdateSlash();
+
 	void AttackEnd();
 
 	void CreateAttackHitbox(float length, float Capsuleadius);
 
 	void Evasion();
+
+	void UpdateBlink();
 
 	void Dash();
 

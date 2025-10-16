@@ -64,7 +64,7 @@ public:
 
 	void Load(std::string _filePath, bool _isLoop = false, int _transition = 0);
 
-	void Play(int _index, float _speed = 1.0f);
+	void Play(int _index, float _speed = 0.3f);
 
 	inline void Reset() {
 		pAnimations.erase(pAnimations.begin(), pAnimations.begin() + pAnimations.size());
