@@ -22,6 +22,7 @@ private:
 	int roomCount;	// 部屋カウント
 	int line;		// 分割点
 	int mapSize ;
+	VECTOR mapOffset;
 
 public:
 	enum RoomStatus {	// 部屋の配列ステータス
@@ -65,5 +66,7 @@ public:
 
 	StageCell* UseObject(ObjectType type);
 	void UnuseObject(StageCell*& cell);
+
+	void DrawMap();
 };
 

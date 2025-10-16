@@ -7,8 +7,9 @@ StageGenerator::StageGenerator()
 	, parentNum(0)
 	, maxArea(0)
 	, roomCount(0)
-	, line(0) 
-	, mapSize(3)
+	, line(0)
+	, mapSize(4) 
+	,mapOffset(VGet(600,0,400))
 {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
@@ -98,23 +99,8 @@ void StageGenerator::Render() {
 
 	if (useStair != nullptr)
 		useStair->Render();
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
-			int color = 0;
-			switch (map[w][h]) {
-			case Road:
-			case Room:
-				color = yellow;
-				break;
-			case Stair:
-				color = green;
-				break;
-			case Wall:
-				continue;
-			}
-			DrawBox(w * mapSize, h * mapSize, w * mapSize + mapSize, h * mapSize + mapSize, color, true);
-		}
-	}
+
+	DrawMap();
 }
 
 void StageGenerator::ClearStage() {
@@ -138,6 +124,12 @@ void StageGenerator::ClearStage() {
 	for (int w = 0; w < mapWidth; w++) {
 		for (int h = 0; h < mapHeight; h++) {
 			mapObjects[w][h] = false;
+		}
+	}
+
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			stageMap[w][h] = false;
 		}
 	}
 
@@ -568,6 +560,61 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 		cell = nullptr;
 		break;
 	}
+}
+
+void StageGenerator::DrawMap() {
+	// プレイヤーのポジション取得
+	VECTOR playerPos = Character::player->GetPosition();
+	int x = (int)std::round(playerPos.x / CellSize);
+	int z = (int)std::round(playerPos.z / CellSize);
+
+	// マップの表示フラグ
+	if (map[x][z] == Room && !stageMap[x][z]) {
+		for (int i = 0; i < roomCount; i++) {
+			// 部屋のステータスを見て部屋番号i番目の部屋だったら
+			if (roomStatus[rx][i] <= x && roomStatus[rx][i] + roomStatus[rw][i] >= x &&
+				roomStatus[ry][i] <= z && roomStatus[ry][i] + roomStatus[rh][i] >= z) {
+
+				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i]; w < wMax; w++) {
+					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i]; h < hMax; h++) {
+						stageMap[w][h] = true;
+					}
+				}
+
+				break;
+			}
+		}
+	}
+	else if (map[x][z] != Wall && !stageMap[x][z]) {
+		stageMap[x][z] = true;
+	}
+
+	// 地図の描画
+	for (int w = 0; w < mapWidth; w++) {
+		for (int h = 0; h < mapHeight; h++) {
+			int color = 0;
+
+			if (!stageMap[w][h]) continue;
+
+			switch (map[w][h]) {
+			case Road:
+				color = white;
+				break;
+			case Room:
+				color = yellow;
+				break;
+			case Stair:
+				color = green;
+				break;
+			case Wall:
+				continue;
+			}
+			DrawBox((w * mapSize) + mapOffset.x, (h * mapSize) + mapOffset.z, (w * mapSize + mapSize) + mapOffset.x, (h * mapSize + mapSize) + mapOffset.z, color, true);
+		}
+	}
+
+	// プレイヤーの描画
+	DrawBox((x * mapSize) + mapOffset.x, (z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (z * mapSize + mapSize) + mapOffset.z, red, true);
 }
 
 
