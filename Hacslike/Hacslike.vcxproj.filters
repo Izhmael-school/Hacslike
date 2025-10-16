@@ -74,6 +74,15 @@
     <ClCompile Include="Scr\Scene\SekinoScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Skill\Skill.cpp">
+      <Filter>Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Skill\SkillSelectUI.cpp">
+      <Filter>Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\SkillManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -152,6 +161,15 @@
     <ClInclude Include="Scr\Scene\SekinoScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\Skill\Skill.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Skill\SkillSelectUI.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\SkillManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -195,6 +213,9 @@
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{470cd129-c04c-40d3-8364-e8a365e66f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{38886fd7-c0df-4d54-a41a-acfb02702d27}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

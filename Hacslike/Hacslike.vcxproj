@@ -41,9 +41,12 @@
     <ClCompile Include="Scr\Manager\FadeManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\Manager\SceneManager.cpp" />
+    <ClCompile Include="Scr\Manager\SkillManager.cpp" />
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
     <ClCompile Include="Scr\Manager\TimeManager.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
+    <ClCompile Include="Scr\Skill\Skill.cpp" />
+    <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Component\Animator.h" />
@@ -68,10 +71,13 @@
     <ClInclude Include="Scr\Manager\FadeManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
     <ClInclude Include="Scr\Manager\SceneManager.h" />
+    <ClInclude Include="Scr\Manager\SkillManager.h" />
     <ClInclude Include="Scr\Manager\StageManager.h" />
     <ClInclude Include="Scr\Manager\TimeManager.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
+    <ClInclude Include="Scr\Skill\Skill.h" />
+    <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
