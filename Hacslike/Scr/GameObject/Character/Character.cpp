@@ -10,6 +10,8 @@ Character::Character(VECTOR _pos , std::string tag, int _Lv, int _Exp, int _spee
 	,atking(false)
 	,blocking(false)
 	,speed(_speed)
+	,criticalHitRate(1.0f)
+	,criticalDamage(1.0f)
 	,Lv(1)
 	,Exp(0)
 	,prevPos(VGet(position.x,position.z,0))
