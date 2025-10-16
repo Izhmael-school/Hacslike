@@ -14,6 +14,9 @@ protected:	// ƒƒ“ƒo•Ï”
 	bool blocking;			// –hŒäƒtƒ‰ƒO
 	int speed;
 
+	int criticalHitRate;
+	float criticalDamage;
+
 	int Lv;
 	int Exp;
 
