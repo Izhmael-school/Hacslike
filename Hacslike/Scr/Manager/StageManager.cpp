@@ -10,6 +10,14 @@ StageManager::~StageManager()
 {
 	delete generator;
 	generator = nullptr;
+
+	for (auto t : floorDifTexture) {
+		DeleteGraph(t);
+	}
+
+	for (auto t : floorNormalTexture) {
+		DeleteGraph(t);
+	}
 }
 
 void StageManager::CreateInstance() {
@@ -43,12 +51,22 @@ int StageManager::GetMapData(int x, int y) {
 }
 
 void StageManager::GenerateStage() {
+	generator->ClearStage();
+
+	floorCount++;
+	
+	ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
+
 	generator->StageGenerate();
 	SetObject(Character::player);
 }
 
 void StageManager::SetObject(GameObject* obj) {
 	generator->SetGameObjectRandomPos(obj);
+}
+
+void StageManager::ChangeTexture(int textureHandle, ObjectType changeObject) {
+	generator->ChangeObjectTexture(textureHandle, changeObject);
 }
 
 

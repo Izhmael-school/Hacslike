@@ -8,16 +8,21 @@ StageGenerator::StageGenerator()
 	, maxArea(0)
 	, roomCount(0)
 	, line(0)
-	, mapSize(4) 
-	,mapOffset(VGet(600,0,400))
-{
+	, mapSize(4)
+	, mapOffset(VGet(600, 0, 400)) {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	roadModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	stairModel = MV1LoadModel("Res/Model/Stage/Stair.mv1");
 
+	gr = LoadGraph("Res/Model/Stage/Texture/Wood_A.png");
+	int tex = MV1GetMaterialDifMapTexture(groundModel, 0);
+	int i = MV1SetTextureGraphHandle(groundModel, tex, gr, false);
+
 	unuseStair = nullptr;
 	useStair = nullptr;
+
+	test = new StageCell(groundModel, Room, VZero);
 
 	for (int w = 0; w < mapWidth; w++) {
 		for (int h = 0; h < mapHeight; h++) {
@@ -54,6 +59,10 @@ StageGenerator::~StageGenerator() {
 	delete unuseStair;
 	delete useStair;
 
+	DeleteGraph(gr);
+
+	delete test;
+
 	for (auto c : cells) {
 		MV1DeleteModel(c->GetModelHandle());
 		delete c;
@@ -89,6 +98,8 @@ void StageGenerator::Update() {
 	// 階層変化時階段オブジェクトで例外スローが起こるため、オブジェクトを分けておく
 	if (useStair != nullptr)
 		useStair->Update();
+
+	test->Update();
 }
 
 void StageGenerator::Render() {
@@ -101,6 +112,8 @@ void StageGenerator::Render() {
 		useStair->Render();
 
 	DrawMap();
+
+	test->Render();
 }
 
 void StageGenerator::ClearStage() {
@@ -142,7 +155,6 @@ void StageGenerator::ClearStage() {
 
 void StageGenerator::StageGenerate() {
 
-	ClearStage();
 	// 部屋数をランダムに決める
 	roomNum = Random(roomMinNum, RoomMax);
 
@@ -615,6 +627,46 @@ void StageGenerator::DrawMap() {
 
 	// プレイヤーの描画
 	DrawBox((x * mapSize) + mapOffset.x, (z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (z * mapSize + mapSize) + mapOffset.z, red, true);
+}
+
+void StageGenerator::ChangeObjectTexture(int textureHandle, ObjectType changeObject) {
+	int mHandle;
+	int texNum;
+	int correct;
+	switch (changeObject) {
+	case Room:
+		for (auto c : unuseRoom) {
+			mHandle = c->GetModelHandle();
+			texNum = MV1GetMaterialDifMapTexture(mHandle, 0);
+			correct = MV1SetTextureGraphHandle(mHandle, texNum, textureHandle, false);
+		}
+
+		texNum = MV1GetMaterialDifMapTexture(groundModel, 0);
+		correct = MV1SetTextureGraphHandle(groundModel, texNum, textureHandle, false);
+		break;
+	case Road:
+		for (auto c : unuseRoad) {
+			mHandle = c->GetModelHandle();
+			texNum = MV1GetMaterialDifMapTexture(mHandle, 0);
+			correct = MV1SetTextureGraphHandle(mHandle, texNum, textureHandle, false);
+		}
+
+		texNum = MV1GetMaterialDifMapTexture(roadModel, 0);
+		correct = MV1SetTextureGraphHandle(roadModel, texNum, textureHandle, false);
+		break;
+	case Wall:
+		for (auto c : unuseWall) {
+			mHandle = c->GetModelHandle();
+			texNum = MV1GetMaterialDifMapTexture(wallModel, 0);
+			correct = MV1SetTextureGraphHandle(wallModel, texNum, textureHandle, false);
+		}
+
+		texNum = MV1GetMaterialDifMapTexture(groundModel, 0);
+		correct = MV1SetTextureGraphHandle(groundModel, texNum, textureHandle, false);
+		break;
+	case Stair:
+		break;
+	}
 }
 
 

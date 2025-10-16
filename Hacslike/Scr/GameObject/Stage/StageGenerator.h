@@ -49,6 +49,9 @@ public:
 	std::list<StageCell*> unuseRoom;
 	StageCell* unuseStair;
 	StageCell* useStair;
+	int gr;
+
+	StageCell* test;
 
 public:
 	StageGenerator();
@@ -68,5 +71,7 @@ public:
 	void UnuseObject(StageCell*& cell);
 
 	void DrawMap();
+
+	void ChangeObjectTexture(int textureHandle,ObjectType changeObject);
 };
 

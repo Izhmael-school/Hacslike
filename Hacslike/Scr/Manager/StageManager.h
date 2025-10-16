@@ -3,6 +3,7 @@
 #include "../GameObject/Stage/StageGenerator.h"
 #include "../Definition.h"
 #include "../GameObject/Character/Character.h"
+#include <vector>
 
 class StageManager {
 #pragma region シングルトンのデータ構造
@@ -51,6 +52,10 @@ public:	// 静的メンバ関数
 
 public:
 	class StageGenerator* generator;
+	int floorCount = 0;
+	std::vector<int> floorDifTexture;
+	std::vector<int> floorNormalTexture;
+	int textureChangeFloor = 10;
 
 	void Update();
 	void Render();
@@ -59,5 +64,6 @@ public:
 	void GenerateStage();
 
 	void SetObject(GameObject* obj);
+	void ChangeTexture(int textureHandle, ObjectType changeObject);
 };
 

@@ -36,8 +36,7 @@ void SekinoScene::Start() {
 	pGameObjectArray.push_back(enemy);
 	//pGameObjectArray.push_back(e2);
 
-	StageManager::GetInstance()->generator->StageGenerate();
-	StageManager::GetInstance()->generator->SetGameObjectRandomPos(pPlayer);
+	StageManager::GetInstance()->GenerateStage();
 }
 
 void SekinoScene::Update() {
