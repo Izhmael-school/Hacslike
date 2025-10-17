@@ -37,6 +37,8 @@ public:
 	void attach(int& _characterModel, int& _weapon, std::string _framename, Character* _User);
 	void attachDup(int& _characterModel, int _weaponDup, std::string _framename, Character* _User);
 
+	void attach(int& _characterModel, int& _weaponModel, std::string _frameName);
+
 public:// ゲッタ―セッター
 	inline int GetWeaponHandle() const { return modelHandle; }
 
