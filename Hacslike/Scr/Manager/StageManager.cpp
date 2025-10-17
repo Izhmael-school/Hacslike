@@ -55,7 +55,7 @@ void StageManager::GenerateStage() {
 
 	floorCount++;
 	
-	ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
+	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
 
 	generator->StageGenerate();
 	SetObject(Character::player);

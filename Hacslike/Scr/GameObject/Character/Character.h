@@ -12,7 +12,7 @@ protected:	// メンバ変数
 	bool atking;			// 攻撃フラグ
 	int def = 0;				// 防御力
 	bool blocking;			// 防御フラグ
-	int speed;
+	float speed;
 
 	int criticalHitRate;
 	float criticalDamage;
@@ -95,9 +95,9 @@ public:	// ゲッターとセッター
 
 #pragma region Speed
 	//	速度の取得
-	inline int GetSpeed() const { return speed; }
+	inline float GetSpeed() const { return speed; }
 	//	速度の設定
-	inline void SetSpeed(int _speed) { speed = _speed; }
+	inline void SetSpeed(float _speed) { speed = _speed; }
 #pragma endregion
 
 	inline Character* GetPlayer() const {
