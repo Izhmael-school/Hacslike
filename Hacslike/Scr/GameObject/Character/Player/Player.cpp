@@ -75,6 +75,14 @@ void Player::Start() {
 		afterImageRotY[i] = rotation.y;
 	}
 
+	Weapon* pSabel = new Weapon("Sabel");
+
+	int sabelHandle = pSabel->GetWeaponHandle();
+
+	SetWeapon(pSabel);
+	GetWeapon()->attach(modelHandle, sabelHandle, "wp");
+	GetWeapon()->SetCollider(new CapsuleCollider(GetWeapon(), VZero, VScale(VDown, 0), 8.0f));
+
 	SetSpeed(1);
 }
 
@@ -88,18 +96,24 @@ void Player::Update() {
 		return;
 	inputVec = VZero;
 
+	//	移動入力
 	MoveInput();
 
+	//	攻撃入力・HitBox更新
 	AttackInput();
 
+	//	回避入力
 	EvasionInput();
 
+	//	BlinkのUpdate
 	UpdateBlink();
 
 	CheckWall();
 
+	//	移動・アニメーション・回転処理
 	UpdateMovement();
 
+	//	斬撃更新
 	UpdateSlash();
 
 	MV1SetMatrix(modelHandle, matrix);
@@ -295,7 +309,7 @@ void Player::CreateAttackHitbox(float length, float radius) {
 /// </summary>
 void Player::EvasionInput() {
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A);
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsKeyDown(KEY_INPUT_LCONTROL);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
 		// 押した瞬間＆クールダウン終了時のみ回避
@@ -363,7 +377,7 @@ void Player::UpdateBlink() {
 /// </summary>
 void Player::AttackInput() {
 	// ===== 攻撃入力 =====
-	bool isButtonDown = input->IsKeyDown(KEY_INPUT_E) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
+	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理

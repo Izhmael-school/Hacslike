@@ -54,6 +54,9 @@ private:
 	XINPUT_STATE padState;
 	XINPUT_STATE padPrevState;
 
+	int prevMouse;
+	int mouse = GetMouseInput();
+
 	bool isPadActive;
 public:	// メンバ変数
 	// 更新処理
@@ -79,6 +82,17 @@ public:	// キーボード入力用
 
 	// キーが離されたか
 	inline bool IsButtonUp(int _key) { return padPrevState.Buttons[_key] && !padState.Buttons[_key]; }
+#pragma endregion
+
+#pragma region マウス用
+	// クリックされたか
+	inline bool IsMouseDown(int _mouse) const { return !(prevMouse & _mouse) && (mouse & _mouse); }
+
+	// クリックされているか
+	inline bool IsMouse(int _mouse) const { return (mouse & _mouse); }
+
+	// クリックが離されたか
+	inline bool IsMouseUp(int _mouse) const { return (prevMouse & _mouse) && !(mouse & _mouse); }
 #pragma endregion
 
 };

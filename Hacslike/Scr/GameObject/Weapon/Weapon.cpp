@@ -98,6 +98,23 @@ void Weapon::attachDup(int& _characterModel, int _weaponDup, std::string _framen
 	MV1SetMatrix(modelHandle, matrix);
 }
 
+void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _frameName) {
+	//	サンプルでは武器の持ち替え等は行わないので、
+	//	関数内でメンバ変数の初期化も行う
+
+	//	持たせるキャラクターのモデルハンドルを初期化
+	attachModelHandle = _characterModel;
+	//	武器のモデルハンドルの初期化
+	modelHandle = _weaponModel;
+
+	//	持たせるキャラクターの持たせるフレーム番号を検索する
+	attachFrameIndex = MV1SearchFrame(attachModelHandle, _frameName.c_str());
+	//	検索したフレームの情報 (座標、回転、拡縮 の行列) を取得する
+	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
+	//	自身の情報 (座標、回転、拡縮 の行列) を更新する
+	MV1SetMatrix(modelHandle, matrix);
+}
+
 void Weapon::OnTriggerEnter(Collider* _pCol) {}
 
 void Weapon::OnTriggerStay(Collider* _pCol) {}

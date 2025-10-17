@@ -56,4 +56,7 @@ void InputManager::Update() {
 	// ¡‚ÌƒtƒŒ[ƒ€‚Ìó‘Ô‚ğ•Û‘¶
 	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
 
+	prevMouse = mouse;
+	mouse = GetMouseInput();
+
 }
