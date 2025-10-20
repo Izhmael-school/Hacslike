@@ -2,7 +2,7 @@
 #include <vector>
 #include "../GameObject/GameObject.h"
 #include "../Manager/CollisionManager.h"
-//#include "../Manager/EffectManager.h"
+#include "../Manager/EffectManager.h"
 #include "../GameObject/Weapon/Weapon.h"
 /*
  * @brief シーンクラス

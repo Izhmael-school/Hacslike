@@ -1,4 +1,6 @@
 #include "StageCell.h"
+#include "../../Manager/CollisionManager.h"
+
 
 StageCell::StageCell(int _modelHandle, ObjectType _type, VECTOR position)
 	:modelHandle(_modelHandle)

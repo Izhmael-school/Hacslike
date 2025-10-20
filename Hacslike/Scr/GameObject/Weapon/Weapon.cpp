@@ -1,16 +1,23 @@
 #include "Weapon.h"
 #include "../../Component/Collider/Collider.h"
-#include "../Character/Character.h"
 //#include "../../Manager/EffectManager.h"
-#include "../../Manager/AudioManager.h"
+//#include "../../Manager/AudioManager.h"
 
 
 Weapon::Weapon(std::string _tag)
-	:GameObject({},_tag)
+	:GameObject({}, _tag)
 	, modelHandle(INVALID)
+	, sabelModelHandle(INVALID)
+	, allasModelHandle(INVALID)
+	, axeModelHandle(INVALID)
+	, crystalModelHandle(INVALID)
+	, durandalModelHandle(INVALID)
+	, maseModelHandle(INVALID)
+	, mookModelHandle(INVALID)
+	, oldBoysModelHandle(INVALID)
+	, wheelsModelHandle(INVALID)
 	, attachModelHandle(INVALID)
-	, attachFrameIndex(INVALID)
-{
+	, attachFrameIndex(INVALID) {
 	Start();
 }
 
@@ -20,6 +27,15 @@ Weapon::~Weapon() {
 
 void Weapon::Start() {
 	modelHandle = MV1LoadModel("Res/Weapon/Sabel/sabel.mv1");
+	sabelModelHandle = MV1LoadModel("Res/Weapon/Sabel/sabel.mv1");
+	allasModelHandle = MV1LoadModel("Res/Weapon/Allas.mv1");
+	axeModelHandle = MV1LoadModel("Res/Weapon/Axe/Axe.mv1");
+	crystalModelHandle = MV1LoadModel("Res/Weapon/Crystal.mv1");
+	durandalModelHandle = MV1LoadModel("Res/Weapon/Durandal.mv1");
+	maseModelHandle = MV1LoadModel("Res/Weapon/mase.mv1");
+	mookModelHandle = MV1LoadModel("Res/Weapon/Mook.mv1");
+	oldBoysModelHandle = MV1LoadModel("Res/Weapon/OldBoys.mv1");
+	wheelsModelHandle = MV1LoadModel("Res/Weapon/Wheels.mv1");
 }
 
 void Weapon::Update() {
@@ -59,7 +75,7 @@ void Weapon::Render() {
 }
 
 
-void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _framename , Character* _User) {
+void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _framename, Character* _User) {
 	// サンプルでは武器の持ち替えはしないので、
 	// 関数内でメンバ変数の初期化も行う
 	if (User != _User) {

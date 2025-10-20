@@ -3,7 +3,6 @@
 #include "../../Definition.h"
 #include "../../Component/Collider/Collider.h"
 #include "../../Manager/InputManager.h"
-#include "../../Manager/CollisionManager.h"
 #include "../../Manager/StageManager.h"
 
 class StageCell : public GameObject {

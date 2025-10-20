@@ -4,7 +4,16 @@
 
 class Weapon : public GameObject {
 private:	// メンバ変数
-	int modelHandle;	// 武器のモデルハンドル
+	int modelHandle;
+	int sabelModelHandle;	// 武器のモデルハンドル
+	int allasModelHandle;
+	int axeModelHandle;
+	int crystalModelHandle;
+	int durandalModelHandle;
+	int maseModelHandle;
+	int mookModelHandle;
+	int oldBoysModelHandle;
+	int wheelsModelHandle;
 	int attachModelHandle;	// 武器を持たせるモデルハンドル
 	int attachFrameIndex;	// 武器を持たせるフレーム番号
 	Character* User;
@@ -41,6 +50,24 @@ public:
 
 public:// ゲッタ―セッター
 	inline int GetWeaponHandle() const { return modelHandle; }
+
+	inline int GetSabelHandle() const { return sabelModelHandle; }
+
+	inline int GetAllasHandle() const { return allasModelHandle; }
+
+	inline int GetAxeHandle() const { return axeModelHandle; }
+
+	inline int GetCrystalHandle() const { return crystalModelHandle; }
+
+	inline int GetDurandalHandle()const { return durandalModelHandle; }
+
+	inline int GetMaseHandle() const { return maseModelHandle; }
+
+	inline int GetMookHandle() const { return mookModelHandle; }
+
+	inline int GetOldBoysHandle() const { return oldBoysModelHandle; }
+
+	inline int GetWheelsHandle() const { return wheelsModelHandle; }
 
 	inline Character* GetUser() const { return User; }
 

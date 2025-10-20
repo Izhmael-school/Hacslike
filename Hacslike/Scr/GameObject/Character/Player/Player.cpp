@@ -1,9 +1,10 @@
 #include "Player.h"
-#include "../../../Manager/SceneManager.h"
+//#include "../../../Manager/SceneManager.h"
 #include "../../../Manager/FadeManager.h"
 #include "../../Camera/Camera.h"
 #include "../../../Component/Collider/Collider.h"
 #include "../../../Definition.h"
+#include "../Hacslike/Scr/Manager/CollisionManager.h"
 
 /*
  *	@brief		コンストラクタ
@@ -76,11 +77,27 @@ void Player::Start() {
 	}
 
 	Weapon* pSabel = new Weapon("Sabel");
+	Weapon* pAllas = new Weapon("Allas");
+	Weapon* pAxe = new Weapon("Axe");
+	Weapon* pCrystal = new Weapon("Crystal");
+	Weapon* pDurandal = new Weapon("Durandal");
+	Weapon* pMase = new Weapon("Mase");
+	Weapon* pMook = new Weapon("Mook");
+	Weapon* pOldBoys = new Weapon("OldBoys");
+	Weapon* pWheels = new Weapon("Wheels");
 
-	int sabelHandle = pSabel->GetWeaponHandle();
+	int sabelHandle = pSabel->GetSabelHandle();
+	int allasHandle = pAllas->GetAllasHandle();
+	int axeHandle = pAxe->GetAxeHandle();
+	int crystalHandle = pCrystal->GetCrystalHandle();
+	int durandalHandle = pDurandal->GetDurandalHandle();
+	int maseHandle = pMase->GetMaseHandle();
+	int mookHandle = pMook->GetModelHandle();
+	int oldBoysHandle = pOldBoys->GetOldBoysHandle();
+	int wheelsHandle = pWheels->GetWheelsHandle();
 
-	SetWeapon(pSabel);
-	GetWeapon()->attach(modelHandle, sabelHandle, "wp");
+	SetWeapon(pMase);
+	GetWeapon()->attach(modelHandle, maseHandle, "wp");
 	GetWeapon()->SetCollider(new CapsuleCollider(GetWeapon(), VZero, VScale(VDown, 0), 8.0f));
 
 	SetSpeed(1);
@@ -309,7 +326,7 @@ void Player::CreateAttackHitbox(float length, float radius) {
 /// </summary>
 void Player::EvasionInput() {
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsKeyDown(KEY_INPUT_LCONTROL);
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
 		// 押した瞬間＆クールダウン終了時のみ回避
@@ -377,7 +394,7 @@ void Player::UpdateBlink() {
 /// </summary>
 void Player::AttackInput() {
 	// ===== 攻撃入力 =====
-	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
+	bool isButtonDown = input->IsKey(KEY_INPUT_LCONTROL) && input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
