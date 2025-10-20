@@ -84,3 +84,9 @@ enum ObjectType {
 	Road,
 	Stair,
 };
+
+enum WeaponType {
+	Sward,
+	Big,
+	Blunt,
+};

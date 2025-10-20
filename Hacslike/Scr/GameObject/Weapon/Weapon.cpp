@@ -1,135 +1,125 @@
 #include "Weapon.h"
 #include "../../Component/Collider/Collider.h"
-//#include "../../Manager/EffectManager.h"
-//#include "../../Manager/AudioManager.h"
+#include "../Character/Character.h"
+#include <DxLib.h>
+#include <iostream>
 
-
-Weapon::Weapon(std::string _tag)
-	:GameObject({}, _tag)
-	, modelHandle(INVALID)
-	, sabelModelHandle(INVALID)
-	, allasModelHandle(INVALID)
-	, axeModelHandle(INVALID)
-	, crystalModelHandle(INVALID)
-	, durandalModelHandle(INVALID)
-	, maseModelHandle(INVALID)
-	, mookModelHandle(INVALID)
-	, oldBoysModelHandle(INVALID)
-	, wheelsModelHandle(INVALID)
-	, attachModelHandle(INVALID)
-	, attachFrameIndex(INVALID) {
-	Start();
+// コンストラクタ
+Weapon::Weapon(const std::string& _tag, int handle)
+    : GameObject({}, _tag), modelHandle(handle), attachModelHandle(-1), attachFrameIndex(-1), User(nullptr) {
 }
 
+// デストラクタ
 Weapon::~Weapon() {
-	MV1DeleteModel(modelHandle);
+    if (pCollider) {
+        delete pCollider;
+        pCollider = nullptr;
+    }
 }
 
 void Weapon::Start() {
-	modelHandle = MV1LoadModel("Res/Weapon/Sabel/sabel.mv1");
-	sabelModelHandle = MV1LoadModel("Res/Weapon/Sabel/sabel.mv1");
-	allasModelHandle = MV1LoadModel("Res/Weapon/Allas.mv1");
-	axeModelHandle = MV1LoadModel("Res/Weapon/Axe/Axe.mv1");
-	crystalModelHandle = MV1LoadModel("Res/Weapon/Crystal.mv1");
-	durandalModelHandle = MV1LoadModel("Res/Weapon/Durandal.mv1");
-	maseModelHandle = MV1LoadModel("Res/Weapon/mase.mv1");
-	mookModelHandle = MV1LoadModel("Res/Weapon/Mook.mv1");
-	oldBoysModelHandle = MV1LoadModel("Res/Weapon/OldBoys.mv1");
-	wheelsModelHandle = MV1LoadModel("Res/Weapon/Wheels.mv1");
+
 }
 
+// 武器をキャラクターに装備する
+void Weapon::attach(int& characterModel, int weaponModelHandle, const std::string& frameName, Character* user) {
+    User = user;
+    attachModelHandle = characterModel;
+    modelHandle = weaponModelHandle;
+    attachFrameIndex = MV1SearchFrame(attachModelHandle, frameName.c_str());
+
+    if (attachFrameIndex == -1) {
+        return;
+    }
+
+    // 初期位置合わせ
+    auto matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
+    MV1SetMatrix(modelHandle, matrix);
+}
+
+// 更新処理
 void Weapon::Update() {
-	// 非表示なら
-	if (!isVisible || this == nullptr)
-		return;
+    if (!isVisible || modelHandle == -1 || User == nullptr)
+        return;
 
+    // フレーム行列を取得してモデルに適用
+    auto matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
+    MV1SetMatrix(modelHandle, matrix);
 
-	//　検索したフレームの情報(座標、回転、拡縮の行列)を取得する
-	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
-	//　自身の情報(座標、回転、拡縮の行列)を更新する
-	MV1SetMatrix(modelHandle, matrix);
-
-	if (!GetCollider()->IsEnable()) {
-		GetCollider()->SetEnable(true);
-	}
-
-	// 当たり判定の更新
-	if (pCollider != nullptr) {
-		pCollider->SetMatrix(matrix);
-		pCollider->Update();
-	}
-
+    // コライダー更新
+    if (pCollider != nullptr) {
+        pCollider->SetMatrix(matrix);
+        pCollider->Update();
+    }
 }
 
+// 描画処理
 void Weapon::Render() {
-	// 非表示なら
-	if (!isVisible)
-		return;
+    if (!isVisible || modelHandle == -1)
+        return;
 
-	MV1DrawModel(modelHandle);
+    MV1DrawModel(modelHandle);
 
-	// 当たり判定の描画
-	//if (pCollider != nullptr)
-	//	pCollider->Render();
-
+    // デバッグ用：コライダー描画
+     if (pCollider != nullptr) pCollider->Render();
 }
 
-
-void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _framename, Character* _User) {
-	// サンプルでは武器の持ち替えはしないので、
-	// 関数内でメンバ変数の初期化も行う
-	if (User != _User) {
-		User = _User;
-	}
-	// 持たせるキャラクターのモデルハンドルを初期化
-	attachModelHandle = _characterModel;
-	// 武器のモデルハンドルを初期化
-	modelHandle = _weaponModel;
-
-	// 持たせるキャラクターの持たせるフレーム番号を検索する 
-	attachFrameIndex = MV1SearchFrame(attachModelHandle, _framename.c_str());
-	//　検索したフレームの情報(座標、回転、拡縮の行列)を取得する
-	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
-	//　自身の情報(座標、回転、拡縮の行列)を更新する
-	MV1SetMatrix(modelHandle, matrix);
-
-}
-
-void Weapon::attachDup(int& _characterModel, int _weaponDup, std::string _framename, Character* _User) {
-	// サンプルでは武器の持ち替えはしないので、
-	// 関数内でメンバ変数の初期化も行う
-	if (User != _User) {
-		User = _User;
-	}
-	// 持たせるキャラクターのモデルハンドルを初期化
-	attachModelHandle = _characterModel;
-	// 武器のモデルハンドルを初期化
-	modelHandle = _weaponDup;
-
-	// 持たせるキャラクターの持たせるフレーム番号を検索する 
-	attachFrameIndex = MV1SearchFrame(attachModelHandle, _framename.c_str());
-	//　検索したフレームの情報(座標、回転、拡縮の行列)を取得する
-	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
-	//　自身の情報(座標、回転、拡縮の行列)を更新する
-	MV1SetMatrix(modelHandle, matrix);
-}
-
-void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _frameName) {
-	//	サンプルでは武器の持ち替え等は行わないので、
-	//	関数内でメンバ変数の初期化も行う
-
-	//	持たせるキャラクターのモデルハンドルを初期化
-	attachModelHandle = _characterModel;
-	//	武器のモデルハンドルの初期化
-	modelHandle = _weaponModel;
-
-	//	持たせるキャラクターの持たせるフレーム番号を検索する
-	attachFrameIndex = MV1SearchFrame(attachModelHandle, _frameName.c_str());
-	//	検索したフレームの情報 (座標、回転、拡縮 の行列) を取得する
-	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
-	//	自身の情報 (座標、回転、拡縮 の行列) を更新する
-	MV1SetMatrix(modelHandle, matrix);
-}
+//
+//void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _framename, Character* _User) {
+//	// サンプルでは武器の持ち替えはしないので、
+//	// 関数内でメンバ変数の初期化も行う
+//	if (User != _User) {
+//		User = _User;
+//	}
+//	// 持たせるキャラクターのモデルハンドルを初期化
+//	attachModelHandle = _characterModel;
+//	// 武器のモデルハンドルを初期化
+//	modelHandle = _weaponModel;
+//
+//	// 持たせるキャラクターの持たせるフレーム番号を検索する 
+//	attachFrameIndex = MV1SearchFrame(attachModelHandle, _framename.c_str());
+//	//　検索したフレームの情報(座標、回転、拡縮の行列)を取得する
+//	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
+//	//　自身の情報(座標、回転、拡縮の行列)を更新する
+//	MV1SetMatrix(modelHandle, matrix);
+//
+//}
+//
+//void Weapon::attachDup(int& _characterModel, int _weaponDup, std::string _framename, Character* _User) {
+//	// サンプルでは武器の持ち替えはしないので、
+//	// 関数内でメンバ変数の初期化も行う
+//	if (User != _User) {
+//		User = _User;
+//	}
+//	// 持たせるキャラクターのモデルハンドルを初期化
+//	attachModelHandle = _characterModel;
+//	// 武器のモデルハンドルを初期化
+//	modelHandle = _weaponDup;
+//
+//	// 持たせるキャラクターの持たせるフレーム番号を検索する 
+//	attachFrameIndex = MV1SearchFrame(attachModelHandle, _framename.c_str());
+//	//　検索したフレームの情報(座標、回転、拡縮の行列)を取得する
+//	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
+//	//　自身の情報(座標、回転、拡縮の行列)を更新する
+//	MV1SetMatrix(modelHandle, matrix);
+//}
+//
+//void Weapon::attach(int& _characterModel, int& _weaponModel, std::string _frameName) {
+//	//	サンプルでは武器の持ち替え等は行わないので、
+//	//	関数内でメンバ変数の初期化も行う
+//
+//	//	持たせるキャラクターのモデルハンドルを初期化
+//	attachModelHandle = _characterModel;
+//	//	武器のモデルハンドルの初期化
+//	modelHandle = _weaponModel;
+//
+//	//	持たせるキャラクターの持たせるフレーム番号を検索する
+//	attachFrameIndex = MV1SearchFrame(attachModelHandle, _frameName.c_str());
+//	//	検索したフレームの情報 (座標、回転、拡縮 の行列) を取得する
+//	matrix = MV1GetFrameLocalWorldMatrix(attachModelHandle, attachFrameIndex);
+//	//	自身の情報 (座標、回転、拡縮 の行列) を更新する
+//	MV1SetMatrix(modelHandle, matrix);
+//}
 
 void Weapon::OnTriggerEnter(Collider* _pCol) {}
 

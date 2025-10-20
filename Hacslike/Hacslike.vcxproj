@@ -44,6 +44,7 @@
     <ClCompile Include="Scr\Manager\SkillManager.cpp" />
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
     <ClCompile Include="Scr\Manager\TimeManager.cpp" />
+    <ClCompile Include="Scr\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
     <ClCompile Include="Scr\Skill\Skill.cpp" />
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
@@ -74,10 +75,14 @@
     <ClInclude Include="Scr\Manager\SkillManager.h" />
     <ClInclude Include="Scr\Manager\StageManager.h" />
     <ClInclude Include="Scr\Manager\TimeManager.h" />
+    <ClInclude Include="Scr\Manager\WeaponManager.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
     <ClInclude Include="Scr\Skill\Skill.h" />
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scr\Data\WeaponsData.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
