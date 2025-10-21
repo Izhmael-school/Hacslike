@@ -1,6 +1,6 @@
-#include "CapsuleHitbox.h"
+#include "CapsuleHitBox.h"
 
-CapsuleHitBox::CapsuleHitBox(GameObject* owner, VECTOR p1, VECTOR p2, float radius, float life)
+CapsuleHitBox::CapsuleHitBox(GameObject* owner, const VECTOR& p1, const VECTOR& p2, float radius, float life)
     : pCollider(nullptr)
     , timer(0.0f)
     , lifeTime(life) {

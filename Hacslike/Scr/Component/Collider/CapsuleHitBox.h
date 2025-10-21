@@ -10,11 +10,10 @@ private:
     float lifeTime;
 
 public:
-    CapsuleHitBox(GameObject* owner, VECTOR p1, VECTOR p2, float radius, float lifeTime);
+    CapsuleHitBox(GameObject* owner, const VECTOR& p1, const VECTOR& p2, float radius, float lifeTime);
     ~CapsuleHitBox();
 
     void Update();
     void Render();
     bool IsDead() const;
-
 };
