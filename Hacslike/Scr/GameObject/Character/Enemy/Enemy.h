@@ -1,5 +1,6 @@
 #pragma once
 #include "../Character.h"
+#include "../../../Manager/CollisionManager.h"
 
 class Enemy : public Character {
 protected:
