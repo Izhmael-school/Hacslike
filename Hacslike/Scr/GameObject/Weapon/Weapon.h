@@ -12,6 +12,8 @@ private:
 
 	WeaponType type;
 	std::array<float, 3> animationSpeed; // 各段のスピード
+	std::array<float, 3> colLength;
+	std::array<float, 3> colRadius;
 
 public:
 	Weapon(const std::string& _tag = "", int handle = -1);
@@ -37,6 +39,18 @@ public:
 	}
 	inline void SetAnimationSpeed(const std::array<float, 3>& speeds) {
 		animationSpeed = speeds;
+	}
+	inline float GetColLength(int index) const {
+		return (index >= 0 && index < 3) ? colLength[index] : 1.0f;
+	}
+	inline void SetColLength(const std::array<float, 3>& _colLength) {
+		colLength = _colLength;
+	}
+	inline float GetColRadius(int index) const {
+		return (index >= 0 && index < 3) ? colRadius[index] : 1.0f;
+	}
+	inline void SetColRadius(const std::array<float, 3>& _colRadius) {
+		colRadius = _colRadius;
 	}
 
 	void OnTriggerEnter(Collider* _pCol) override;

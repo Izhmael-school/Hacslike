@@ -90,10 +90,12 @@ void Player::Start() {
 	WeaponManager::GetInstance()->LoadWeapons("Scr/Data/WeaponsData.json");
 	maxWeaponId = WeaponManager::GetInstance()->GetMaxWeaponId();
 	changeWeaponButtonPressed = false;
-	currentWeaponId = 1;
+	currentWeaponId = 10;
 	WeaponData* weaponData = WeaponManager::GetInstance()->GetWeapon(currentWeaponId);
 	if (weaponData) {
 		pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
+		pWeapon->SetColLength(weaponData->colLength);
+		pWeapon->SetColRadius(weaponData->colRadius);
 		pWeapon->SetType((WeaponType)weaponData->type);
 		pWeapon->SetAnimationSpeed(weaponData->attackSpeed);
 		pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
@@ -471,11 +473,11 @@ void Player::AttackInput() {
 
 			// UŒ‚”»’è¶¬
 			if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f)
-				CreateAttackHitbox(30.0f, 80.0f);
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f)
-				CreateAttackHitbox(40.0f, 110.0f);
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f)
-				CreateAttackHitbox(0.0f, 150.0f); // ŽüˆÍUŒ‚
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // ŽüˆÍUŒ‚
 
 			if (attackTimer > 0.8f) {
 				isAttacking = false;
@@ -490,11 +492,11 @@ void Player::AttackInput() {
 
 			// UŒ‚”»’è¶¬
 			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.3f)
-				CreateAttackHitbox(30.0f, 80.0f);
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f)
-				CreateAttackHitbox(40.0f, 110.0f);
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f)
-				CreateAttackHitbox(0.0f, 200.0f); // ŽüˆÍUŒ‚
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // ŽüˆÍUŒ‚
 
 			if (attackIndex == 3) {
 				if (attackTimer > 2.78f) {
@@ -518,11 +520,11 @@ void Player::AttackInput() {
 
 			// UŒ‚”»’è¶¬
 			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f)
-				CreateAttackHitbox(30.0f, 80.0f);
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1) , pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f)
-				CreateAttackHitbox(40.0f, 110.0f);
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f)
-				CreateAttackHitbox(0.0f, 150.0f); // ŽüˆÍUŒ‚
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // ŽüˆÍUŒ‚
 
 			if (attackTimer > 1.2f) {
 				isAttacking = false;
@@ -591,6 +593,8 @@ void Player::ChangeWeapon(int weaponId) {
 
 	// V‚µ‚¢ Weapon ‚ð¶¬•‘•”õ
 	pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
+	pWeapon->SetColLength(weaponData->colLength);
+	pWeapon->SetColRadius(weaponData->colRadius);
 	pWeapon->SetType((WeaponType)weaponData->type);
 	pWeapon->SetAnimationSpeed(weaponData->attackSpeed);
 	pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);

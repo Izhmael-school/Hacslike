@@ -10,6 +10,8 @@ struct WeaponData {
     std::string modelPath;   // JSONのパス
     int type;
     std::array<float, 3> attackSpeed;
+    std::array<float, 3> colLength;
+    std::array<float, 3> colRadius;
     int modelHandle = -1;    // DxLibのモデルハンドル
 };
 
