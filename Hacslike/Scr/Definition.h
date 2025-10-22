@@ -90,3 +90,7 @@ enum WeaponType {
 	Big,
 	Blunt,
 };
+
+enum EnemyType {
+	Goblin,
+};
