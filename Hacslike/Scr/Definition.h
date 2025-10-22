@@ -84,3 +84,7 @@ enum ObjectType {
 	Road,
 	Stair,
 };
+
+enum EnemyType {
+	Goblin,
+};

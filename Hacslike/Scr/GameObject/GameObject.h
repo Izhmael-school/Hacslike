@@ -85,6 +85,8 @@ public:	// ゲッターとセッター
 	inline std::string GetTag() const { return tag; }
 	// タグの設定
 	inline void SetTag(std::string _tag) { tag = _tag; }
+
+	bool CompareTag(std::string _tagName);
 #pragma endregion
 
 #pragma region Layer

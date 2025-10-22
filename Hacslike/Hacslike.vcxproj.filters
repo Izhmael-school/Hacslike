@@ -29,9 +29,6 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\Goblin.cpp">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp">
       <Filter>GameObject\Character\Player</Filter>
     </ClCompile>
@@ -83,6 +80,12 @@
     <ClCompile Include="Scr\Manager\SkillManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp">
+      <Filter>GameObject\Character\Enemy\Goblin</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\EnemyManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -112,9 +115,6 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h">
       <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\Goblin.h">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Player\Player.h">
       <Filter>GameObject\Character\Player</Filter>
@@ -169,6 +169,15 @@
     </ClInclude>
     <ClInclude Include="Scr\Manager\SkillManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h">
+      <Filter>GameObject\Character\Enemy\Goblin</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\EnemyManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Component\Singleton.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

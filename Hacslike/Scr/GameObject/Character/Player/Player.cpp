@@ -60,12 +60,12 @@ void Player::Start() {
 	SetPlayer(this);
 
 	//	アニメーションの読み込み
-	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", true);
-	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", true);
-	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1");
-	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1");
-	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1");
-	GetAnimator()->Load("Res/PlayerModel/Run.mv1", true);
+	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1","idle", true);
+	GetAnimator()->Load("Res/PlayerModel/Walking.mv1","walk", true);
+	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1","attack01");
+	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1","attack01");
+	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1", "attack01");
+	GetAnimator()->Load("Res/PlayerModel/Run.mv1","run", true);
 
 	pAnimator->Play(0);
 
@@ -96,7 +96,7 @@ void Player::Update() {
 
 	UpdateBlink();
 
-	CheckWall();
+	//CheckWall();
 
 	UpdateMovement();
 

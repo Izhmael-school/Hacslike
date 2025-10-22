@@ -45,6 +45,11 @@ void GameObject::Update() {
 	}
 }
 
+bool GameObject::CompareTag(std::string _tagName) {
+	if (tag == _tagName) return true;
+	return false;
+}
+
 void GameObject::OnTriggerEnter(Collider* _pOther) {
 
 }

@@ -3,7 +3,6 @@
 #include <List>
 class SekinoScene : public BaseScene {
 private:
-	int goblinModel;
 
 public:
 	 SekinoScene();
