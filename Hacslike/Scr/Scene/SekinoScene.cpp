@@ -1,11 +1,10 @@
 #include "SekinoScene.h"
 #include "../GameObject/Camera/Camera.h"
-#include "../GameObject/Character/Enemy/Goblin/Goblin.h"
+#include "../GameObject/Character/Enemy/Goblin/EnemyGoblin.h"
 #include "../GameObject/Character/Player/Player.h"
 #include "../Manager/StageManager.h"
 
 SekinoScene::SekinoScene()
-	:goblinModel(-1)
 {
 	Start();
 }
@@ -22,19 +21,11 @@ void SekinoScene::Start() {
 	Player* pPlayer = new Player();
 	pGameObjectArray.push_back(pPlayer);
 	Weapon* pWeapon = new Weapon("sabel");
-	//pGameObjectArray.push_back(pWeapon);
 
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
-	Goblin* enemy = new Goblin();
-
-	/*Goblin* e2 = new Goblin();
-	e2->SetPosition(VGet(0, 0, 200));*/
-
 	pCamera->SetTarget(pPlayer);
-	pGameObjectArray.push_back(enemy);
-	//pGameObjectArray.push_back(e2);
 
 	StageManager::GetInstance()->GenerateStage();
 }

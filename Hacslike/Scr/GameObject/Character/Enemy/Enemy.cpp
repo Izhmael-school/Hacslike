@@ -3,23 +3,31 @@
 
 Enemy::Enemy()
 	:rayAngle(45.0f)
-	,rayCount(15)
-	,rayLenght(1000)
-	,raySpan(0.5f)
-	,rayTime(raySpan)
-{
+	, rayCount(15)
+	, rayLenght(1000)
+	, raySpan(0.5f)
+	, rayTime(raySpan) {
 	Start();
 }
 
 Enemy::~Enemy() {}
 
-void Enemy::Start() {}
+void Enemy::Start() {
+	// タグの設定
+	SetTag("Enemy");
+
+	
+}
 
 void Enemy::Update() {
 	if (!isVisible) return;
 
+	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
 
+	if (pAnimator != nullptr) {
+		pAnimator->Update();
+	}
 	// 当たり判定の更新
 	if (pCollider != nullptr) {
 		pCollider->SetMatrix(matrix);
@@ -33,6 +41,7 @@ void Enemy::Render() {
 	// アニメーターの更新
 	pAnimator->Update();
 
+	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
 
 	if (pCollider != nullptr)
@@ -43,7 +52,8 @@ void Enemy::IsDead() {
 	if (hp > 0) return;
 
 	hp = 0;
-	isVisible = false;
+
+	pAnimator->Play("dead");
 }
 
 /// <summary>
@@ -84,7 +94,7 @@ bool Enemy::Vision_Ray() {
 		DrawLine3D(start, end, yellow);
 #endif
 		return false;
-	}	
+	}
 }
 
 /// <summary>
@@ -153,7 +163,7 @@ bool Enemy::Vision_Fan() {
 	};
 
 	// 内積計算
-	float dot = normalFanToPoint.x * fanDir.x + normalFanToPoint.z* fanDir.z;
+	float dot = normalFanToPoint.x * fanDir.x + normalFanToPoint.z * fanDir.z;
 
 	// 扇の範囲をcosにする
 	float fanCos = -cosf(Deg2Rad(fan.rangeDegree / 2));

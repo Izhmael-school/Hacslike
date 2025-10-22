@@ -19,13 +19,21 @@ void Animator::Update() {
 		return;
 
 	// 現在のアニメーションを進める
-	AnimationClip* pCurrentAnim = GetAnimation(currentAnimation);
+	AnimationClip<void, void>* pCurrentAnim = GetAnimation(currentAnimation);
 
 	if (pCurrentAnim == nullptr)
 		return;
 
 	// アニメーションを進める
 	pCurrentAnim->playTime += pCurrentAnim->playSpeed;
+
+	// イベントの処理
+	if (pCurrentAnim->event != nullptr) {
+		if (pCurrentAnim->playTime >= pCurrentAnim->eventTime && !pCurrentAnim->isAction) {
+			pCurrentAnim->isAction = true;
+			pCurrentAnim->event();
+		}
+	}
 
 	// 終了時間を超えたら
 	if (pCurrentAnim->playTime > pCurrentAnim->totalTime) {
@@ -46,9 +54,9 @@ void Animator::Update() {
 	MV1SetAttachAnimTime(animationModelHandle, 0, pCurrentAnim->playTime);
 }
 
-void Animator::Load(std::string _filePath, bool _isLoop, int _transition) {
+void Animator::Load(std::string _filePath, std::string _name, bool _isLoop, int _transition) {
 	// アニメーションの動的確保 + 読み込み
-	AnimationClip* pAnimClip = new AnimationClip(MV1LoadModel(_filePath.c_str()), _isLoop, _transition);
+	AnimationClip<>* pAnimClip = new AnimationClip<>(MV1LoadModel(_filePath.c_str()), _name, _isLoop, _transition);
 	// アニメーション群に追加
 	pAnimations.push_back(pAnimClip);
 
@@ -74,4 +82,36 @@ void Animator::Play(int _index, float _speed) {
 	pAnimations[_index]->totalTime = MV1GetAttachAnimTotalTime(animationModelHandle, attachIndex);
 	// 再生フラグを建てる
 	isPlaying = true;
+	// イベントフラグの初期化
+	pAnimations[_index]->isAction = false;
 }
+
+void Animator::Play(std::string _name, float _speed) {
+	for (int i = 0, max = pAnimations.size(); i < max; i++) {
+		if (pAnimations[i]->name != _name) continue;
+
+		Play(i, _speed);
+	}
+	return;
+}
+
+AnimationClip<>* Animator::GetAnimation(std::string _name) const {
+	for (int i = 0, max = pAnimations.size(); i < max; i++) {
+		if (pAnimations[i]->name != _name) continue;
+		return pAnimations[i];
+	}
+}
+
+float Animator::GetTotalTime(std::string animName) {
+	int handle = GetAnimation(animName)->animationHandle;
+	int t = MV1GetAnimTotalTime(handle, 0);
+	return t;
+}
+
+int Animator::GetAnimationIndex(std::string animName) {
+	for (int i = 0, max = pAnimations.size(); i < max; i++) {
+		if (pAnimations[i]->name != animName) continue;
+		return i;
+	}
+}
+

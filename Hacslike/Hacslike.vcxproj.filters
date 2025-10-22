@@ -29,9 +29,6 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\Goblin.cpp">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp">
       <Filter>GameObject\Character\Player</Filter>
     </ClCompile>
@@ -83,7 +80,10 @@
     <ClCompile Include="Scr\Manager\SkillManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Manager\WeaponManager.cpp">
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp">
+      <Filter>GameObject\Character\Enemy\Goblin</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\EnemyManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,9 +115,6 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h">
       <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\Goblin.h">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Player\Player.h">
       <Filter>GameObject\Character\Player</Filter>
@@ -173,8 +170,14 @@
     <ClInclude Include="Scr\Manager\SkillManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Manager\WeaponManager.h">
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h">
+      <Filter>GameObject\Character\Enemy\Goblin</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\EnemyManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Component\Singleton.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,13 +226,5 @@
     <Filter Include="Skill">
       <UniqueIdentifier>{38886fd7-c0df-4d54-a41a-acfb02702d27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{5e1be86a-d473-4973-9542-0d0591e15e29}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scr\Data\WeaponsData.json">
-      <Filter>Data</Filter>
-    </None>
   </ItemGroup>
 </Project>

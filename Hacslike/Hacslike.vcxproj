@@ -27,7 +27,7 @@
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp" />
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\Goblin.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp" />
     <ClCompile Include="Scr\GameObject\GameObject.cpp" />
     <ClCompile Include="Scr\GameObject\Slash\Slash.cpp" />
@@ -38,6 +38,7 @@
     <ClCompile Include="Scr\Manager\AudioManager.cpp" />
     <ClCompile Include="Scr\Manager\CollisionManager.cpp" />
     <ClCompile Include="Scr\Manager\EffectManager.cpp" />
+    <ClCompile Include="Scr\Manager\EnemyManager.cpp" />
     <ClCompile Include="Scr\Manager\FadeManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\Manager\SceneManager.cpp" />
@@ -54,12 +55,13 @@
     <ClInclude Include="Scr\Component\Collider\CapsuleHitBox.h" />
     <ClInclude Include="Scr\Component\Collider\Collider.h" />
     <ClInclude Include="Scr\Component\Collider\SphereHitBox.h" />
+    <ClInclude Include="Scr\Component\Singleton.h" />
     <ClInclude Include="Scr\Definition.h" />
     <ClInclude Include="Scr\GameObject\Audio\Audio.h" />
     <ClInclude Include="Scr\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h" />
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\Goblin.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Player\Player.h" />
     <ClInclude Include="Scr\GameObject\GameObject.h" />
     <ClInclude Include="Scr\GameObject\Slash\Slash.h" />
@@ -69,6 +71,7 @@
     <ClInclude Include="Scr\Manager\AudioManager.h" />
     <ClInclude Include="Scr\Manager\CollisionManager.h" />
     <ClInclude Include="Scr\Manager\EffectManager.h" />
+    <ClInclude Include="Scr\Manager\EnemyManager.h" />
     <ClInclude Include="Scr\Manager\FadeManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
     <ClInclude Include="Scr\Manager\SceneManager.h" />

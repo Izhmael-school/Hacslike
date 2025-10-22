@@ -379,8 +379,8 @@ void StageGenerator::StageGenerate() {
 	while (1) {
 
 		int rand = GetRand(roomNum - 1);
-		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rw][rand]);
-		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::rh][rand]);
+		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
+		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
 
 		if (mapObjects[x][y]) continue;
 		if (map[x][y] != ObjectType::Room) continue;
@@ -488,8 +488,8 @@ void StageGenerator::SetGameObjectRandomPos(GameObject* obj) {
 	while (1) {
 
 		int rand = GetRand(roomNum - 1);
-		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rw][rand]);
-		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::rh][rand]);
+		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
+		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
 
 		if (mapObjects[x][y]) continue;
 
@@ -575,6 +575,8 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 }
 
 void StageGenerator::DrawMap() {
+	if (Character::player == nullptr) return;
+
 	// プレイヤーのポジション取得
 	VECTOR playerPos = Character::player->GetPosition();
 	int x = (int)std::round(playerPos.x / CellSize);
@@ -587,8 +589,8 @@ void StageGenerator::DrawMap() {
 			if (roomStatus[rx][i] <= x && roomStatus[rx][i] + roomStatus[rw][i] >= x &&
 				roomStatus[ry][i] <= z && roomStatus[ry][i] + roomStatus[rh][i] >= z) {
 
-				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i]; w < wMax; w++) {
-					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i]; h < hMax; h++) {
+				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i] ; w < wMax; w++) {
+					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i] ; h < hMax; h++) {
 						stageMap[w][h] = true;
 					}
 				}
@@ -667,6 +669,27 @@ void StageGenerator::ChangeObjectTexture(int textureHandle, ObjectType changeObj
 	case Stair:
 		break;
 	}
+}
+
+int StageGenerator::GetNowRoomNum(VECTOR pos) {
+	for (int i = 0; i < roomCount; i++) {
+		// 部屋のステータスを見て部屋番号i番目の部屋だったら
+		if (roomStatus[rx][i] <= pos.x && roomStatus[rx][i] + roomStatus[rw][i] - 1 >= pos.x &&
+			roomStatus[ry][i] <= pos.z && roomStatus[ry][i] + roomStatus[rh][i] - 1 >= pos.z) {
+
+			// 部屋番号を返す
+			return i;
+		}
+	}
+}
+
+VECTOR StageGenerator::GetRandomRoomRandomPos() {
+	int rand = Random(0,roomCount - 1);
+
+	int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
+	int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
+
+	return VGet(defaultPos.x + x * CellSize,0, defaultPos.z + y * CellSize);
 }
 
 

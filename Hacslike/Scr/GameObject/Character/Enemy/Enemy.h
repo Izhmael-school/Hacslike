@@ -25,6 +25,11 @@ protected:
 	Point point;
 	Fan fan;
 
+	enum HostileState {
+		Unaware,	// –³Œx‰ú
+		Hostile		// “G‘Î
+	};
+
 public:
 	Enemy();
 	~Enemy();

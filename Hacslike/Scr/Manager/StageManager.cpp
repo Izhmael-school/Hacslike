@@ -10,7 +10,6 @@ StageManager::~StageManager()
 {
 	delete generator;
 	generator = nullptr;
-
 	for (auto t : floorDifTexture) {
 		DeleteGraph(t);
 	}
@@ -59,6 +58,8 @@ void StageManager::GenerateStage() {
 
 	generator->StageGenerate();
 	SetObject(Character::player);
+
+	EnemyManager::GetInstance().SpawnEnemy(Goblin, GetRandomRoomRandomPos());
 }
 
 void StageManager::SetObject(GameObject* obj) {
@@ -67,6 +68,14 @@ void StageManager::SetObject(GameObject* obj) {
 
 void StageManager::ChangeTexture(int textureHandle, ObjectType changeObject) {
 	generator->ChangeObjectTexture(textureHandle, changeObject);
+}
+
+int StageManager::GetNowRoomNum(VECTOR pos) {
+	return generator->GetNowRoomNum(pos);
+}
+
+VECTOR StageManager::GetRandomRoomRandomPos() {
+	return generator->GetRandomRoomRandomPos();
 }
 
 

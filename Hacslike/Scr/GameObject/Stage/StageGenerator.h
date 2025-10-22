@@ -73,5 +73,8 @@ public:
 	void DrawMap();
 
 	void ChangeObjectTexture(int textureHandle,ObjectType changeObject);
+	int GetNowRoomNum(VECTOR pos);
+
+	VECTOR GetRandomRoomRandomPos();
 };
 

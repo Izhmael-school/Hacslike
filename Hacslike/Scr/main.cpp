@@ -7,6 +7,7 @@
 #include "Manager/SceneManager.h"
 #include "Manager/StageManager.h"
 #include "Manager/CollisionManager.h"
+#include "Manager/EnemyManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -81,6 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		TimeManager::GetInstance()->Update();
 		InputManager::GetInstance()->Update();
 		StageManager::GetInstance()->Update();
+		EnemyManager::GetInstance().Update();
 		CollisionManager::GetInstance()->Update();
 
 		// 画面をクリアする
@@ -90,6 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		SceneManager::GetInstance()->Render();
 		StageManager::GetInstance()->Render();
 		CollisionManager::GetInstance()->Render();
+		EnemyManager::GetInstance().Render();
 
 		// エスケープキーでウィンドウを閉じる
 		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))

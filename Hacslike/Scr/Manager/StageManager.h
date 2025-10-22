@@ -3,6 +3,7 @@
 #include "../GameObject/Stage/StageGenerator.h"
 #include "../Definition.h"
 #include "../GameObject/Character/Character.h"
+#include "EnemyManager.h"
 #include <vector>
 
 class StageManager {
@@ -65,5 +66,8 @@ public:
 
 	void SetObject(GameObject* obj);
 	void ChangeTexture(int textureHandle, ObjectType changeObject);
+	int GetNowRoomNum(VECTOR pos);
+
+	VECTOR GetRandomRoomRandomPos();
 };
 
