@@ -71,6 +71,12 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1");
 	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1");
 	GetAnimator()->Load("Res/PlayerModel/Run.mv1", true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1");
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1");
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1");
 
 	pAnimator->Play(0);
 
@@ -89,6 +95,7 @@ void Player::Start() {
 	if (weaponData) {
 		pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
 		pWeapon->SetType((WeaponType)weaponData->type);
+		pWeapon->SetAnimationSpeed(weaponData->attackSpeed);
 		pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
 	}
 
@@ -393,23 +400,61 @@ void Player::AttackInput() {
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
 		attackButtonPressed = true;
-
-		if (!isAttacking && !isBlinking) {
-			// --- 1段目攻撃 ---
-			isAttacking = true;
-			attackIndex = 1;
-			attackTimer = 0.0f;
-			canNextAttack = false;
-			pAnimator->Play(2); // 攻撃1モーション
+		if (pWeapon->GetType() == 0) {
+			if (!isAttacking && !isBlinking) {
+				// --- 1段目攻撃 ---
+				isAttacking = true;
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+				pAnimator->Play(2, pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
+			}
+			else if (canNextAttack && attackIndex < 3) {
+				// --- コンボ入力 ---
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+				pAnimator->Play(2 + attackIndex - 1, pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃2→3
+			}
 		}
-		else if (canNextAttack && attackIndex < 3) {
-			// --- コンボ入力 ---
-			attackIndex++;
-			attackTimer = 0.0f;
-			canNextAttack = false;
-			pAnimator->Play(1 + attackIndex); // 攻撃2→3
+
+		else if (pWeapon->GetType() == 1) {
+			if (!isAttacking && !isBlinking) {
+				// --- 1段目攻撃 ---
+				isAttacking = true;
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+				pAnimator->Play(9, pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
+			}
+			else if (canNextAttack && attackIndex < 3) {
+				// --- コンボ入力 ---
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+				pAnimator->Play(9 + attackIndex - 1, pWeapon->GetAnimationSpeed(attackIndex - 1));
+			}
+		}
+
+		else if (pWeapon->GetType() == 2) {
+			if (!isAttacking && !isBlinking) {
+				// --- 1段目攻撃 ---
+				isAttacking = true;
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+				pAnimator->Play(6, pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
+			}
+			else if (canNextAttack && attackIndex < 3) {
+				// --- コンボ入力 ---
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+				pAnimator->Play(6 + attackIndex - 1, pWeapon->GetAnimationSpeed(attackIndex - 1));
+			}
 		}
 	}
+
 	else if (!isButtonDown) {
 		// ボタンを離したらフラグリセット
 		attackButtonPressed = false;
@@ -419,20 +464,71 @@ void Player::AttackInput() {
 	if (isAttacking) {
 		attackTimer += TimeManager::GetInstance()->deltaTime;
 
-		if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
 
-		// 攻撃判定生成
-		if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f)
-			CreateAttackHitbox(30.0f, 80.0f);
-		if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f)
-			CreateAttackHitbox(40.0f, 110.0f);
-		if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f)
-			CreateAttackHitbox(0.0f, 150.0f); // 周囲攻撃
+		if (pWeapon->GetType() == 0) {
 
-		if (attackTimer > 0.8f) {
-			isAttacking = false;
-			canNextAttack = false;
-			attackIndex = 0;
+			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
+
+			// 攻撃判定生成
+			if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f)
+				CreateAttackHitbox(30.0f, 80.0f);
+			if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f)
+				CreateAttackHitbox(40.0f, 110.0f);
+			if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f)
+				CreateAttackHitbox(0.0f, 150.0f); // 周囲攻撃
+
+			if (attackTimer > 0.8f) {
+				isAttacking = false;
+				canNextAttack = false;
+				attackIndex = 0;
+			}
+		}
+
+		else if (pWeapon->GetType() == 1) {
+
+			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
+
+			// 攻撃判定生成
+			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.3f)
+				CreateAttackHitbox(30.0f, 80.0f);
+			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f)
+				CreateAttackHitbox(40.0f, 110.0f);
+			if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f)
+				CreateAttackHitbox(0.0f, 200.0f); // 周囲攻撃
+
+			if (attackIndex == 3) {
+				if (attackTimer > 2.78f) {
+					isAttacking = false;
+					canNextAttack = false;
+					attackIndex = 0;
+				}
+			}
+			else {
+				if (attackTimer > 1) {
+					isAttacking = false;
+					canNextAttack = false;
+					attackIndex = 0;
+				}
+			}
+		}
+
+		else if (pWeapon->GetType() == 2) {
+
+			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
+
+			// 攻撃判定生成
+			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f)
+				CreateAttackHitbox(30.0f, 80.0f);
+			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f)
+				CreateAttackHitbox(40.0f, 110.0f);
+			if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f)
+				CreateAttackHitbox(0.0f, 150.0f); // 周囲攻撃
+
+			if (attackTimer > 1.2f) {
+				isAttacking = false;
+				canNextAttack = false;
+				attackIndex = 0;
+			}
 		}
 	}
 
@@ -495,6 +591,8 @@ void Player::ChangeWeapon(int weaponId) {
 
 	// 新しい Weapon を生成＆装備
 	pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
+	pWeapon->SetType((WeaponType)weaponData->type);
+	pWeapon->SetAnimationSpeed(weaponData->attackSpeed);
 	pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
 
 	// 必要なら Weapon Collider もセット

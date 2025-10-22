@@ -9,6 +9,7 @@ struct WeaponData {
     std::string name;
     std::string modelPath;   // JSONのパス
     int type;
+    std::array<float, 3> attackSpeed;
     int modelHandle = -1;    // DxLibのモデルハンドル
 };
 
@@ -43,6 +44,8 @@ public:
     WeaponData* GetWeapon(int id);                   // IDで取得
     void UnloadAllWeapons();                         // モデル解放
     WeaponData* GetWeaponByName(const std::string& name);
+
+    
 
     int GetMaxWeaponId() const;
 };

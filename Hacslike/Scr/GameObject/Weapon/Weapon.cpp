@@ -6,7 +6,7 @@
 
 // コンストラクタ
 Weapon::Weapon(const std::string& _tag, int handle)
-    : GameObject({}, _tag), modelHandle(handle), attachModelHandle(-1), attachFrameIndex(-1), User(nullptr) {
+    : GameObject({}, _tag), modelHandle(handle), attachModelHandle(-1), attachFrameIndex(-1), User(nullptr), type() {
 }
 
 // デストラクタ

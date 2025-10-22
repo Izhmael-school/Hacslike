@@ -1,4 +1,5 @@
 #include "CapsuleHitBox.h"
+#include "../Hacslike/Scr/Manager/TimeManager.h"
 
 CapsuleHitBox::CapsuleHitBox(GameObject* owner, const VECTOR& p1, const VECTOR& p2, float radius, float life)
     : pCollider(nullptr)
@@ -16,7 +17,7 @@ CapsuleHitBox::~CapsuleHitBox() {
 }
 
 void CapsuleHitBox::Update() {
-    timer += 1.0f / 60.0f;
+    timer += TimeManager::GetInstance()->deltaTime;
     if (pCollider && pCollider->IsEnable()) {
         pCollider->Update();
     }

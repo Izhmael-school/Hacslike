@@ -39,6 +39,15 @@ void WeaponManager::LoadWeapons(const std::string& path) {
         weapon.name = w["name"];
         weapon.modelPath = w["modelPath"];
         weapon.type = w["type"];
+        // attackSpeed は配列想定（3要素）
+        if (w.contains("attackSpeed") && w["attackSpeed"].is_array()) {
+            for (int i = 0; i < 3; i++) {
+                weapon.attackSpeed[i] = (i < w["attackSpeed"].size()) ? w["attackSpeed"][i].get<float>() : 1.0f;
+            }
+        }
+        else {
+            weapon.attackSpeed = { 1.0f, 1.0f, 1.0f };
+        }
         weapon.modelHandle = MV1LoadModel(weapon.modelPath.c_str());
         if (weapon.modelHandle == -1)
             std::cerr << "Failed to load model: " << weapon.modelPath << std::endl;

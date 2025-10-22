@@ -1,4 +1,5 @@
 #include "SphereHitBox.h"
+#include "../Hacslike/Scr/Manager/TimeManager.h"
 
 SphereHitBox::SphereHitBox(GameObject* ownwr, VECTOR _offset, float _radius, float _lifeTime)
 	: pCollider(nullptr)
@@ -16,7 +17,7 @@ SphereHitBox::~SphereHitBox() {
 }
 
 void SphereHitBox::Update() {
-	timer += 1.0f / 60.0f;
+	timer += TimeManager::GetInstance()->deltaTime;
 	if (pCollider && pCollider->IsEnable()) {
 		pCollider->Update();
 	}
