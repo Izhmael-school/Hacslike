@@ -4,7 +4,7 @@
     "name": "Sabel",
     "modelPath": "Res/Weapon/Sabel/sabel.mv1",
     "type": 0,
-    "attackSpeed": [ 0.3, 0.3, 0.3 ],
+    "attackSpeed": [ 0.32, 0.32, 0.32 ],
     "colLength": [ 30.0, 40.0, 0.0],
     "colRadius": [ 80.0, 110.0, 150.0 ]
   },

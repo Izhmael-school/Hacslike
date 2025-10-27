@@ -86,6 +86,9 @@
     <ClCompile Include="Scr\Manager\EnemyManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Manager\WeaponManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -179,6 +182,9 @@
     <ClInclude Include="Scr\Component\Singleton.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\Manager\WeaponManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -226,5 +232,13 @@
     <Filter Include="Skill">
       <UniqueIdentifier>{38886fd7-c0df-4d54-a41a-acfb02702d27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{9c22449c-8c5f-4dc8-b792-756948c57e06}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scr\Data\WeaponsData.json">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

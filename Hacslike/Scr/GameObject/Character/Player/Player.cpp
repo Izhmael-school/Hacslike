@@ -65,18 +65,18 @@ void Player::Start() {
 	SetPlayer(this);
 
 	//	アニメーションの読み込み
-	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", true);
-	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", true);
-	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1");
-	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1");
-	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1");
-	GetAnimator()->Load("Res/PlayerModel/Run.mv1", true);
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1");
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1");
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1");
+	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle", true);
+	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", "Walk", true);
+	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1", "Atk1");
+	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1", "Atk2");
+	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1", "Atk3");
+	GetAnimator()->Load("Res/PlayerModel/Run.mv1", "Run", true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1", "AxeAtk1");
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1", "AxeAtk2");
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1", "AxeAtk3");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1", "GreatAtk1");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3");
 
 	pAnimator->Play(0);
 
@@ -304,6 +304,7 @@ void Player::CreateAttackHitbox(float length, float radius) {
 		start = VAdd(position, VScale(forward, 20.0f));
 		end = VAdd(start, VScale(forward, length));
 		CapsuleHitBox* hit = new CapsuleHitBox(this, start, end, radius, life);
+		//CollisionManager::GetInstance()->Register()
 		CapsuleHitboxes.push_back(hit);
 	}
 	else {
@@ -397,7 +398,7 @@ void Player::UpdateBlink() {
 /// </summary>
 void Player::AttackInput() {
 	// ===== 攻撃入力 =====
-	bool isButtonDown = input->IsKey(KEY_INPUT_LCONTROL) && input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
+	bool isButtonDown = /*input->IsKey(KEY_INPUT_LCONTROL) && */input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
@@ -581,6 +582,10 @@ void Player::Dash() {
 	evasionSpeed = 1.2f;
 }
 
+/// <summary>
+/// 武器の設定
+/// </summary>
+/// <param name="weaponId"></param>
 void Player::ChangeWeapon(int weaponId) {
 	// Weapon オブジェクトだけ削除
 	if (pWeapon) {
@@ -603,6 +608,7 @@ void Player::ChangeWeapon(int weaponId) {
 	pWeapon->SetCollider(new CapsuleCollider(pWeapon, VZero, VScale(VDown, 0), 8.0f));
 }
 
+//	武器切り替え
 void Player::WeaponInput() {
 	if (input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed) {
 		changeWeaponButtonPressed = true;
