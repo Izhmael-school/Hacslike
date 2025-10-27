@@ -19,7 +19,7 @@ SkillManager::SkillManager()
         std::make_shared<AttackUpSkill>(),
         std::make_shared<HPUpSkill>(),
         std::make_shared<SpeedUpSkill>(),
-
+        std::make_shared<DefenseUpSkill>(),
     };
 }
 

@@ -128,7 +128,7 @@ void Inventory::Update()
     GetHitKeyStateAll(keyState);
     InputManager* input = InputManager::GetInstance();
     // 上
-    if (input->IsKeyDown(KEY_INPUT_UP)) {
+    if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_BUTTON_DPAD_UP)) {
         if (!menuActive) {
             if (!items.empty()) {
                 currentIndex = (std::max)(0, currentIndex - 1);
@@ -143,7 +143,7 @@ void Inventory::Update()
     }
 
     // 下
-    if (input->IsKeyDown(KEY_INPUT_DOWN)) {
+    if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_BUTTON_DPAD_DOWN)) {
         if (!menuActive) {
             if (!items.empty()) {
                 currentIndex = (std::min)((int)items.size() - 1, currentIndex + 1);
@@ -161,7 +161,7 @@ void Inventory::Update()
     }
 
     // Enter
-    if (input->IsKeyDown(KEY_INPUT_RETURN)) {
+    if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_BUTTON_B)) {
         if (!menuActive) {
             // メニューを開く（アイテムが存在するとき）
             if (!items.empty()) {
@@ -188,7 +188,7 @@ void Inventory::Update()
     }
 
     // Escape キャンセル
-    if (input->IsKeyDown(KEY_INPUT_ESCAPE)) {
+    if (input->IsKeyDown(KEY_INPUT_ESCAPE) || input->IsButtonDown(XINPUT_BUTTON_A)) {
         if (menuActive) {
             menuActive = false;
         }
@@ -196,10 +196,10 @@ void Inventory::Update()
 
     // 左右でメニューの切替（EnterでOKする方式の場合は不要だが、対応）
     if (menuActive) {
-        if (input->IsKeyDown(KEY_INPUT_LEFT)) {
+        if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_LEFT)) {
             menuChoice = (std::max)(0, menuChoice - 1);
         }
-        if (input->IsKeyDown(KEY_INPUT_RIGHT)) {
+        if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_RIGHT)) {
             menuChoice = (std::min)(1, menuChoice + 1);
         }
     }

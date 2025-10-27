@@ -75,3 +75,22 @@ void SpeedUpSkill::Remove(Player* player){
     player->SetSpeed(player->GetSpeed() / speedBoost);
 }
 #pragma endregion
+
+#pragma region –hŒä—Íã¸
+DefenseUpSkill::DefenseUpSkill(int boost)
+    :Skill("–hŒä—ÍƒAƒbƒv", "–hŒä—Í‚ªã¸‚·‚é", "Res/SkillIcon/Defense_up.png")
+    , defenseBoost(boost) {
+}
+
+void DefenseUpSkill::Apply(Player* player)
+{
+    if (!player) return;
+    player->SetDef(player->GetDef() + defenseBoost);
+}
+
+void DefenseUpSkill::Remove(Player* player)
+{
+    if (!player) return;
+    player->SetDef(player->GetDef() / defenseBoost);
+}
+#pragma endregion

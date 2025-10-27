@@ -77,4 +77,15 @@ public:
     void Remove(Player* player) override;
 };
 
+/// <summary>
+/// –hŒä—Í‘‰ÁƒXƒLƒ‹
+/// </summary>
+class DefenseUpSkill : public Skill {
+    int defenseBoost;
+public:
+    DefenseUpSkill(int boost = 5);
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+
+};
 

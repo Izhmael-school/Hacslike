@@ -1,6 +1,8 @@
 #include "SkillSelectUI.h"
 #include"DxLib.h"
 #include"../Definition.h"
+#include"../Manager/InputManager.h"
+
 
 void SkillSelectUI::StartSelection()
 {
@@ -10,21 +12,22 @@ void SkillSelectUI::StartSelection()
 
 int SkillSelectUI::UpdateSelection()
 {
+    InputManager* input = InputManager::GetInstance();
     if (!isActive) return -1;
 
-    if (CheckHitKey(KEY_INPUT_LEFT))
+    if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_LEFT))
     {
         selectedIndex--;
         if (selectedIndex < 0) selectedIndex = 2;
         WaitTimer(150);
     }
-    else if (CheckHitKey(KEY_INPUT_RIGHT))
+    else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_RIGHT))
     {
         selectedIndex++;
         if (selectedIndex > 2) selectedIndex = 0;
         WaitTimer(150);
     }
-    else if (CheckHitKey(KEY_INPUT_RETURN))
+    else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_BUTTON_B))
     {
         isActive = false;
         return selectedIndex;
@@ -66,7 +69,6 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
         DeleteGraph(iconHandle);
 
         // テキスト
-        DrawFormatString(0, 10, red, "テストシーン");
         DrawFormatString(x + 20, y + 20, white, skills[i]->GetName().c_str());
         DrawFormatString(x + 20, y + 240, white, skills[i]->GetDescription().c_str());
     }
