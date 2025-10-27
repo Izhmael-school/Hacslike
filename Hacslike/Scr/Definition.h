@@ -60,6 +60,9 @@ const unsigned int yellow = GetColor(255, 255, 0);
 const unsigned int white = GetColor(255, 255, 255);
 const unsigned int gray = GetColor(120, 120, 120);
 const unsigned int black = GetColor(0, 0, 0);
+const unsigned int darkGray = GetColor(24, 24, 24);//•‚æ‚è‚ÌƒOƒŒ[
+const unsigned int skyblue = GetColor(144, 196, 255); // ”–‚¢Â
+const unsigned int palegreen = GetColor(144, 238, 144); // ”–‚¢—Î
 
 enum class SceneType {
 	Title,

@@ -301,27 +301,42 @@ void CollisionManager::Register(Collider* _pCol) {
 void CollisionManager::UnRegister(Collider* _pCol) {
 	//2種類の考え方を記載
 
-	// イテレータ
+	//イテレータの考え方
+	//Vrctorの先頭から末尾までの中に_pColがあるかどうか調べる
 	auto itr = std::find(pColliderArray.begin(), pColliderArray.end(), _pCol);
 
-	// イテレータが末尾まで進んだ場合が_pColがなかった時
-	if (itr == pColliderArray.end())
+	//イテレータが末尾まで進んだ場合
+	if (itr == pColliderArray.end()) {
 		return;
+	}
 
-	// 配列
-	int index = -1;
 
-	// 配列の中に検索する要素があるかどうか
+	//配列の要素の考え
+	int Index = -1;
+
+	//配列の中に検索する要素があるかどうか
 	for (int i = 0; i < pColliderArray.size(); i++) {
-		if (*itr == _pCol) {
-			// あったら保存
-			index = i;
+		if (*itr == pColliderArray[i]) {
+			Index = i; //あったら要素番号に保存
 			break;
 		}
 	}
 
-	// 指定された要素を削除する
+	//指定された要素の削除
 	pColliderArray.erase(itr);
-	// 衝突結果配列の要素も削除する
-	prevs.erase(prevs.begin() + index);
+	prevs.erase(prevs.begin() + Index);
+	currents.erase(currents.begin() + Index);
+
+	//衝突結果配列の要素も削除
+	for (auto& p : prevs) {
+		p.erase(p.begin() + Index);
+		index = p.size();
+
+		//prevs.erase(prevs.begin() + index);
+	}
+	for (auto& p : currents) {
+		p.erase(p.begin() + Index);
+		//currents.erase(currents.begin() + index);
+		index = p.size();
+	}
 }

@@ -89,6 +89,24 @@
     <ClCompile Include="Scr\Manager\WeaponManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Item\ItemBase.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Item\ItemFactory.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Item\ItemEntity.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Item\Inventory.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\ItemDropManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Effect\Effect.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -185,6 +203,24 @@
     <ClInclude Include="Scr\Manager\WeaponManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Item\ItemBase.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Item\ItemFactory.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Item\ItemEntity.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Item\Inventory.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\ItemDropManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Effect\Effect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -234,6 +270,12 @@
     </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{9c22449c-8c5f-4dc8-b792-756948c57e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{2eb2c29e-f13e-484a-b51c-e22f01bb7234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{9ab45e6a-3322-40a3-a312-d90d1376f920}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

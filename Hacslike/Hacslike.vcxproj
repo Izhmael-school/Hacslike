@@ -29,7 +29,12 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp" />
+    <ClCompile Include="Scr\GameObject\Effect\Effect.cpp" />
     <ClCompile Include="Scr\GameObject\GameObject.cpp" />
+    <ClCompile Include="Scr\GameObject\Item\Inventory.cpp" />
+    <ClCompile Include="Scr\GameObject\Item\ItemBase.cpp" />
+    <ClCompile Include="Scr\GameObject\Item\ItemEntity.cpp" />
+    <ClCompile Include="Scr\GameObject\Item\ItemFactory.cpp" />
     <ClCompile Include="Scr\GameObject\Slash\Slash.cpp" />
     <ClCompile Include="Scr\GameObject\Stage\StageCell.cpp" />
     <ClCompile Include="Scr\GameObject\Stage\StageGenerator.cpp" />
@@ -41,6 +46,7 @@
     <ClCompile Include="Scr\Manager\EnemyManager.cpp" />
     <ClCompile Include="Scr\Manager\FadeManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
+    <ClCompile Include="Scr\Manager\ItemDropManager.cpp" />
     <ClCompile Include="Scr\Manager\SceneManager.cpp" />
     <ClCompile Include="Scr\Manager\SkillManager.cpp" />
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
@@ -63,7 +69,12 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Player\Player.h" />
+    <ClInclude Include="Scr\GameObject\Effect\Effect.h" />
     <ClInclude Include="Scr\GameObject\GameObject.h" />
+    <ClInclude Include="Scr\GameObject\Item\Inventory.h" />
+    <ClInclude Include="Scr\GameObject\Item\ItemBase.h" />
+    <ClInclude Include="Scr\GameObject\Item\ItemEntity.h" />
+    <ClInclude Include="Scr\GameObject\Item\ItemFactory.h" />
     <ClInclude Include="Scr\GameObject\Slash\Slash.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageCell.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageGenerator.h" />
@@ -74,6 +85,7 @@
     <ClInclude Include="Scr\Manager\EnemyManager.h" />
     <ClInclude Include="Scr\Manager\FadeManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
+    <ClInclude Include="Scr\Manager\ItemDropManager.h" />
     <ClInclude Include="Scr\Manager\SceneManager.h" />
     <ClInclude Include="Scr\Manager\SkillManager.h" />
     <ClInclude Include="Scr\Manager\StageManager.h" />
