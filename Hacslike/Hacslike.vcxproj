@@ -46,6 +46,7 @@
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
     <ClCompile Include="Scr\Manager\TimeManager.cpp" />
     <ClCompile Include="Scr\Manager\WeaponManager.cpp" />
+    <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
     <ClCompile Include="Scr\Skill\Skill.cpp" />
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Scr\Manager\TimeManager.h" />
     <ClInclude Include="Scr\Manager\WeaponManager.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
+    <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
     <ClInclude Include="Scr\Skill\Skill.h" />
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />

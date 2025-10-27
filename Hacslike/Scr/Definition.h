@@ -37,15 +37,20 @@
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
 
 // ステージ関連
-#define mapWidth (64)	// マップの横サイズ
-#define mapHeight (64)	// マップの縦サイズ
-#define mapMax (mapWidth * mapHeight) 
+#define mapWidth_Large (64)	// マップの横サイズ
+#define mapHeight_Large (64)	// マップの縦サイズ
+#define mapWidth_Middle (48)	// マップの横サイズ
+#define mapHeight_Middle (48)	// マップの縦サイズ
+#define mapWidth_Small (32)	// マップの横サイズ
+#define mapHeight_Small (32)	// マップの縦サイズ
 #define offsetWall (2)	// 壁から離す距離 
 #define offsetS (1)		// 調節用
 #define CellSize (200)	// 1マスの大きさ 
 #define CellCorrection (CellSize / 2) // 壁判定用の補正値
 
-#define RoomMax (6)
+#define RoomMax_Small (6)
+#define RoomMax_Middle (10)
+#define RoomMax_Large (12)
 
 //	=================================================================
 //		定数を定義する場所

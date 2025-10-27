@@ -24,27 +24,27 @@ StageGenerator::StageGenerator()
 
 	test = new StageCell(groundModel, Room, VZero);
 
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			// 壁にする
 			map[w][h] = Wall;
 		}
 	}
 
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			mapObjects[w][h] = false;
 		}
 	}
 
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			stageMap[w][h] = false;
 		}
 	}
 
 	for (int w = 0; w < RoomStatus::Max; w++) {
-		for (int h = 0; h < RoomMax; h++) {
+		for (int h = 0; h < RoomMax_Large; h++) {
 			roomStatus[w][h] = false;
 		}
 	}
@@ -126,25 +126,27 @@ void StageGenerator::ClearStage() {
 	UnuseObject(useStair);
 
 	// 初期化
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			// 壁にする
 			map[w][h] = Wall;
 		}
 	}
 
 	// 初期化
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			mapObjects[w][h] = false;
 		}
 	}
 
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			stageMap[w][h] = false;
 		}
 	}
+
+	EnemyManager::GetInstance().UnuseAllEnemy();
 
 	roomNum = 0;
 	parentNum = 0;
@@ -155,8 +157,31 @@ void StageGenerator::ClearStage() {
 
 void StageGenerator::StageGenerate() {
 
+	int mapWidth = 0;
+	int mapHeight = 0;
+	int roomMax = 0;
+
+	// フロアの大きさを決める
+	switch (GetRand(2)) {
+	case 0:
+		mapWidth = mapWidth_Small;
+		mapHeight = mapHeight_Small;
+		roomMax = RoomMax_Small;
+		break;
+	case 1:
+		mapWidth = mapWidth_Middle;
+		mapHeight = mapHeight_Middle;
+		roomMax = RoomMax_Middle;
+		break;
+	case 2:
+		mapWidth = mapWidth_Large;
+		mapHeight = mapHeight_Large;
+		roomMax = RoomMax_Large;
+		break;
+	}
+
 	// 部屋数をランダムに決める
-	roomNum = Random(roomMinNum, RoomMax);
+	roomNum = Random(roomMinNum, roomMax);
 
 	// 部屋を入れる
 	roomStatus[(int)RoomStatus::x][roomCount] = 0;
@@ -589,8 +614,8 @@ void StageGenerator::DrawMap() {
 			if (roomStatus[rx][i] <= x && roomStatus[rx][i] + roomStatus[rw][i] >= x &&
 				roomStatus[ry][i] <= z && roomStatus[ry][i] + roomStatus[rh][i] >= z) {
 
-				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i] ; w < wMax; w++) {
-					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i] ; h < hMax; h++) {
+				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i]; w < wMax; w++) {
+					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i]; h < hMax; h++) {
 						stageMap[w][h] = true;
 					}
 				}
@@ -604,8 +629,8 @@ void StageGenerator::DrawMap() {
 	}
 
 	// 地図の描画
-	for (int w = 0; w < mapWidth; w++) {
-		for (int h = 0; h < mapHeight; h++) {
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = mapHeight_Large; h > 0; h--) {
 			int color = 0;
 
 			if (!stageMap[w][h]) continue;
@@ -684,12 +709,12 @@ int StageGenerator::GetNowRoomNum(VECTOR pos) {
 }
 
 VECTOR StageGenerator::GetRandomRoomRandomPos() {
-	int rand = Random(0,roomCount - 1);
+	int rand = Random(0, roomCount - 1);
 
 	int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
 	int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
 
-	return VGet(defaultPos.x + x * CellSize,0, defaultPos.z + y * CellSize);
+	return VGet(defaultPos.x + x * CellSize, 0, defaultPos.z + y * CellSize);
 }
 
 
@@ -700,10 +725,10 @@ VECTOR StageGenerator::GetRandomRoomRandomPos() {
 /// <param name="y"></param>
 /// <returns></returns>
 bool StageGenerator::CheckEightDir(int x, int y) {
-	// 安全第一：範囲外なら false（更新/描画不要）
-	if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return false;
+	// 範囲外なら false
+	if (x < 0 || x >= mapWidth_Large || y < 0 || y >= mapHeight_Large) return false;
 
-	// タイルが壁でないなら処理対象にしたい（元コードの意図に合わせ "true" を返す）
+	// タイルが壁でないならtrueで返す
 	if (map[x][y] != (int)ObjectType::Wall) return true;
 
 	// 8方向をチェックして、どれかが壁でなければ true（周囲が全部壁なら false）
@@ -712,12 +737,12 @@ bool StageGenerator::CheckEightDir(int x, int y) {
 
 	for (int i = 0; i < 8; ++i) {
 		int nx = x + dx[i], ny = y + dy[i];
-		if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight) {
-			// 範囲外は壁と見なす（または必要に応じて無視）
+		if (nx < 0 || nx >= mapWidth_Large || ny < 0 || ny >= mapHeight_Large) {
+			// 範囲外は壁と見なす
 			continue;
 		}
 		if (map[nx][ny] != (int)ObjectType::Wall) {
-			return true; // 周囲に壁以外があれば処理対象
+			return true; // 周囲に壁以外があればtrueで返す
 		}
 	}
 

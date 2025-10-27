@@ -59,7 +59,10 @@ void StageManager::GenerateStage() {
 	generator->StageGenerate();
 	SetObject(Character::player);
 
+	for (int i = 0; i < 10; i++) {
+
 	EnemyManager::GetInstance().SpawnEnemy(Goblin, GetRandomRoomRandomPos());
+	}
 }
 
 void StageManager::SetObject(GameObject* obj) {

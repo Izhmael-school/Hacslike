@@ -89,6 +89,9 @@
     <ClCompile Include="Scr\Manager\WeaponManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Scene\GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Scr\Manager\WeaponManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Scene\GameScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

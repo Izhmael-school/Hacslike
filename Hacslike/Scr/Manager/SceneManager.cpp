@@ -1,13 +1,14 @@
 #include "SceneManager.h"
 #include "../Manager/FadeManager.h"
 #include "../Scene/SekinoScene.h"
+#include "../Scene/GameScene.h"
 
 // Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
 SceneManager* SceneManager::pInstance = nullptr;
 
 SceneManager::SceneManager() 
 	:pCurrentScene(nullptr)
-	,next(SceneType::Sekino)
+	,next(SceneType::Game)
 	,Current((SceneType)INVALID)
 	,changed(false)
 {
@@ -16,9 +17,9 @@ SceneManager::SceneManager()
 	//	pCurrentScene = new TitleScene();
 	//	break;
 
-	//case SceneType::Game:
-	//	pCurrentScene = new GameScene();
-	//	break;
+	case SceneType::Game:
+		pCurrentScene = new GameScene();
+		break;
 	case SceneType::Sekino:
 		pCurrentScene = new SekinoScene();
 		break;
