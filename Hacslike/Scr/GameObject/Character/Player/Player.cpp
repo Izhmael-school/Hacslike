@@ -303,24 +303,21 @@ void Player::CreateAttackHitbox(float length, float radius) {
 		// 1～2段目 前方カプセル
 		start = VAdd(position, VScale(forward, 20.0f));
 		end = VAdd(start, VScale(forward, length));
-		CapsuleHitBox* hit = new CapsuleHitBox(this, start, end, radius, life);
-		//CollisionManager::GetInstance()->Register()
-		CapsuleHitboxes.push_back(hit);
+		CapsuleHitBox* CapHit = new CapsuleHitBox(this, start, end, radius, life);
+		CapHit->CreateCollider();
+		CapsuleHitboxes.push_back(CapHit);
 	}
 	else {
 		// 3段目 周囲攻撃（球状に近いカプセル）
 		life = 0.25f;
-		// プレイヤー中心 + 少し前方にオフセット
-		VECTOR center = VAdd(position, VScale(forward, 50.0f)); // 50.0f は前に出す距離
-		// 少し高さを上げたい場合は Y 成分を足す
-		center.y += 50.0f; // optional: 地面から少し上に
 
 		// SphereHitBox を生成
 		float life = 0.25f;
 		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
 
-		SphereHitBox* hit = new SphereHitBox(this, offset, radius, life);
-		SphereHitboxes.push_back(hit);
+		SphereHitBox* Shit = new SphereHitBox(this, offset, radius, life);
+		Shit->CreateCollider();
+		SphereHitboxes.push_back(Shit);
 	}
 
 }
@@ -583,7 +580,7 @@ void Player::Dash() {
 }
 
 /// <summary>
-/// 武器の設定
+/// 武器切り替え
 /// </summary>
 /// <param name="weaponId"></param>
 void Player::ChangeWeapon(int weaponId) {
@@ -608,7 +605,9 @@ void Player::ChangeWeapon(int weaponId) {
 	pWeapon->SetCollider(new CapsuleCollider(pWeapon, VZero, VScale(VDown, 0), 8.0f));
 }
 
-//	武器切り替え
+/// <summary>
+/// 武器切り替え入力
+/// </summary>
 void Player::WeaponInput() {
 	if (input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed) {
 		changeWeaponButtonPressed = true;
