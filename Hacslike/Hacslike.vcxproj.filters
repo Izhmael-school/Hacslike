@@ -107,6 +107,12 @@
     <ClCompile Include="Scr\GameObject\Effect\Effect.cpp">
       <Filter>GameObject\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Item\ItemHeal\ItemHeal.cpp">
+      <Filter>GameObject\Item\ItemHeal</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp">
+      <Filter>GameObject\Item\ItemEquip</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -221,6 +227,12 @@
     <ClInclude Include="Scr\GameObject\Effect\Effect.h">
       <Filter>GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Item\ItemHeal\ItemHeal.h">
+      <Filter>GameObject\Item\ItemHeal</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h">
+      <Filter>GameObject\Item\ItemEquip</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -276,6 +288,12 @@
     </Filter>
     <Filter Include="GameObject\Effect">
       <UniqueIdentifier>{9ab45e6a-3322-40a3-a312-d90d1376f920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item\ItemHeal">
+      <UniqueIdentifier>{ba176c99-efdb-40cb-94e8-eb1b478aebda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item\ItemEquip">
+      <UniqueIdentifier>{002c9761-79d1-48b7-bd8d-8ba2eb7205cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
