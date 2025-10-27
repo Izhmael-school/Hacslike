@@ -118,30 +118,64 @@ public:		//	オーバーライドした衝突検知
 
 public:		//	メンバ関数
 
-
-
+	/// <summary>
+	/// 移動・アニメーション・回転処理
+	/// </summary>
 	void UpdateMovement();
-
+	
+	/// <summary>
+	/// 移動入力
+	/// </summary>
 	void MoveInput();
 
+	/// <summary>
+	/// 回避入力
+	/// </summary>
 	void EvasionInput();
 
+	/// <summary>
+	/// 攻撃入力・HitBox更新
+	/// </summary>
 	void AttackInput();
 
+	/// <summary>
+	/// 斬撃更新
+	/// </summary>
 	void UpdateSlash();
 
 	//void AttackEnd();
 
-	void CreateAttackHitbox(float length, float Capsuleadius);
+	/// <summary>
+	/// 攻撃時の当たり判定発生処理
+	/// </summary>
+	/// <param name="length"></param>
+	/// <param name="radius"></param>
+	void CreateAttackHitbox(float length, float radius);
 
+	/// <summary>
+	/// 回避
+	/// </summary>
 	void Evasion();
 
+	/// <summary>
+	/// BlinkのUpdate
+	/// </summary>
 	void UpdateBlink();
 
+	/// <summary>
+	/// ダッシュ
+	/// </summary>
 	void Dash();
 
+	/// <summary>
+	/// 武器切り替え
+	/// </summary>
+	/// <param name="weaponId"></param>
 	void ChangeWeapon(int weaponId);
 
+	/// <summary>
+	/// 武器切り替え
+	/// </summary>
 	void WeaponInput();
 
 public:		//	Getter と Setter

@@ -271,57 +271,89 @@ void CollisionManager::Render() {
 }
 
 void CollisionManager::Register(Collider* _pCol) {
+	//pColliderArray.push_back(_pCol);
+
+	//// 衝突結果配列にも追加
+	////prevs.push_back(false);
+	////currents.push_back(false);
+
+	//prevs.push_back(std::vector<bool>());
+	//currents.push_back(std::vector<bool>());
+
+	//index++;
+
+	//int i = 0;
+	//while(1){
+	//	if (i == index)
+	//		break;
+
+	//	while (1) {
+	//		if (prevs[i].size() == index)
+	//			break;
+
+	//		prevs[i].push_back(false);
+	//		currents[i].push_back(false);
+	//	}
+	//		i++;
+	//}
 	pColliderArray.push_back(_pCol);
 
-	// 衝突結果配列にも追加
-	//prevs.push_back(false);
-	//currents.push_back(false);
-
-	prevs.push_back(std::vector<bool>());
-	currents.push_back(std::vector<bool>());
-
-	index++;
-
-	int i = 0;
-	while(1){
-		if (i == index)
-			break;
-
-		while (1) {
-			if (prevs[i].size() == index)
-				break;
-
-			prevs[i].push_back(false);
-			currents[i].push_back(false);
-		}
-			i++;
+	// 既存の行すべてに新しい列を追加
+	for (auto& row : prevs) {
+		row.push_back(false);
 	}
+	for (auto& row : currents) {
+		row.push_back(false);
+	}
+
+	// 新しい行を追加
+	prevs.push_back(std::vector<bool>(pColliderArray.size(), false));
+	currents.push_back(std::vector<bool>(pColliderArray.size(), false));
 }
 
 void CollisionManager::UnRegister(Collider* _pCol) {
-	//2種類の考え方を記載
+	////2種類の考え方を記載
 
-	// イテレータ
+	//// イテレータ
+	//auto itr = std::find(pColliderArray.begin(), pColliderArray.end(), _pCol);
+
+	//// イテレータが末尾まで進んだ場合が_pColがなかった時
+	//if (itr == pColliderArray.end())
+	//	return;
+
+	//// 配列
+	//int index = -1;
+
+	//// 配列の中に検索する要素があるかどうか
+	//for (int i = 0; i < pColliderArray.size(); i++) {
+	//	if (*itr == _pCol) {
+	//		// あったら保存
+	//		index = i;
+	//		break;
+	//	}
+	//}
+
+	//// 指定された要素を削除する
+	//pColliderArray.erase(itr);
+	//// 衝突結果配列の要素も削除する
+	//prevs.erase(prevs.begin() + index);
 	auto itr = std::find(pColliderArray.begin(), pColliderArray.end(), _pCol);
+	if (itr == pColliderArray.end()) return;
 
-	// イテレータが末尾まで進んだ場合が_pColがなかった時
-	if (itr == pColliderArray.end())
-		return;
+	int index = std::distance(pColliderArray.begin(), itr);
 
-	// 配列
-	int index = -1;
-
-	// 配列の中に検索する要素があるかどうか
-	for (int i = 0; i < pColliderArray.size(); i++) {
-		if (*itr == _pCol) {
-			// あったら保存
-			index = i;
-			break;
-		}
+	// 各行から該当列を削除（行ごとの削除）
+	for (auto& row : prevs) {
+		if (index < row.size()) row.erase(row.begin() + index);
+	}
+	for (auto& row : currents) {
+		if (index < row.size()) row.erase(row.begin() + index);
 	}
 
-	// 指定された要素を削除する
+	// 行も削除
+	if (index < prevs.size()) prevs.erase(prevs.begin() + index);
+	if (index < currents.size()) currents.erase(currents.begin() + index);
+
+	// コライダー配列から削除
 	pColliderArray.erase(itr);
-	// 衝突結果配列の要素も削除する
-	prevs.erase(prevs.begin() + index);
 }
