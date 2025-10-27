@@ -10,7 +10,7 @@ private:
 
 	// “G‚ÌˆêŒ³ŠÇ—
 	std::vector<Enemy*> pEnemyArray;
-
+	std::vector<Enemy*> unuseGoblinArray;
 	
 public:
 	int originGoblinMHandle;
@@ -23,6 +23,9 @@ public:
 	void Render();
 
 	void SpawnEnemy(EnemyType type, VECTOR pos);
+	Enemy* UseEnemy(EnemyType type);
+	void UnuseEnemy(Enemy* enemy);
+	void UnuseAllEnemy();
 
 	void DeleteEnemy(Enemy* enemy);
 	void DeleteAllEnemy();

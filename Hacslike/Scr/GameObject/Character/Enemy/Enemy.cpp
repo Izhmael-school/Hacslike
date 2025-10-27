@@ -15,8 +15,6 @@ Enemy::~Enemy() {}
 void Enemy::Start() {
 	// ƒ^ƒO‚Ìİ’è
 	SetTag("Enemy");
-
-	
 }
 
 void Enemy::Update() {

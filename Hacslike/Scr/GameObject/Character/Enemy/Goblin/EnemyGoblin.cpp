@@ -7,10 +7,11 @@ EnemyGoblin::EnemyGoblin() {
 EnemyGoblin::~EnemyGoblin() {}
 
 void EnemyGoblin::Start() {
-	// モデルの複製
-	modelHandle = MV1DuplicateModel(EnemyManager::GetInstance().originGoblinMHandle);
 	// 当たり判定の設定
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 150, 0), 30);
+	SetScale(VGet(0.1f, 0.1f, 0.1f));
+	type = Goblin;
+
 	CollisionManager::GetInstance()->Register(pCollider);
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);
@@ -40,8 +41,5 @@ void EnemyGoblin::Render() {
 }
 
 void EnemyGoblin::OnTriggerEnter(Collider* _pOther) {
-	if (_pOther->GetGameObject()->CompareTag("Player")) {
-		hp = 0;
-		IsDead();
-	}
+	
 }

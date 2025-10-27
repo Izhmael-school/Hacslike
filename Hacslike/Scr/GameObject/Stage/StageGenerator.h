@@ -38,10 +38,10 @@ public:
 		Max,
 	};
 
-	int map[mapWidth][mapHeight];	// マップ管理配列
-	bool mapObjects[mapWidth][mapHeight];	// マップ上のオブジェクトの配置
-	int roomStatus[RoomStatus::Max][RoomMax];	// 部屋の配列ステータス
-	bool stageMap[mapWidth][mapHeight];
+	int map[mapWidth_Large][mapHeight_Large];	// マップ管理配列
+	bool mapObjects[mapWidth_Large][mapHeight_Large];	// マップ上のオブジェクトの配置
+	int roomStatus[RoomStatus::Max][RoomMax_Large];	// 部屋の配列ステータス
+	bool stageMap[mapWidth_Large][mapHeight_Large];
 
 	std::list<StageCell*> cells ;
 	std::list<StageCell*> unuseWall;

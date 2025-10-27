@@ -66,23 +66,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	std::random_device rd;
 	std::mt19937_64 mt(rd());
 	SRand(mt());
-	SRand(mt());
-
-	
 
 	// ゲームのメインループ
 	while (true) {
-
-
-
-
 
 		// 更新処理
 		SceneManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
 		InputManager::GetInstance()->Update();
-		StageManager::GetInstance()->Update();
-		EnemyManager::GetInstance().Update();
 		CollisionManager::GetInstance()->Update();
 
 		// 画面をクリアする
@@ -90,9 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 描画処理
 		SceneManager::GetInstance()->Render();
-		StageManager::GetInstance()->Render();
 		CollisionManager::GetInstance()->Render();
-		EnemyManager::GetInstance().Render();
 
 		// エスケープキーでウィンドウを閉じる
 		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
@@ -106,7 +95,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (GetNowCount() - TimeManager::GetInstance()->GetCurrent() >= 1000 / FPS)
 				break;
 		}
-
 
 	}
 

@@ -30,6 +30,8 @@ protected:
 		Unaware,	// –³Œx‰ú
 		Hostile		// “G‘Î
 	};
+public:
+	EnemyType type;
 
 public:
 	Enemy();
@@ -43,5 +45,7 @@ public:
 	virtual bool Vision_Ray();
 	virtual bool Vision_Circle(float r);
 	virtual bool Vision_Fan();
+
+	inline EnemyType GetType() const { return type; }
 };
 
