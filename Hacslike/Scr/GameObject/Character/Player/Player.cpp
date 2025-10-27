@@ -33,7 +33,9 @@ Player::Player(VECTOR _pos)
 	, evasionCooldown(0.0f)
 	, evasionSpeed(1.0f)
 	, currentWeaponId()
-	, changeWeaponButtonPressed(false) {
+	, changeWeaponButtonPressed(false)
+	,hitItem(false)
+	,isItemUI(false){
 	Start();
 }
 
@@ -138,6 +140,16 @@ void Player::Update() {
 
 	WeaponInput();
 
+	//アイテムの取得
+	AddItem();
+	//アイテムのインベントリ表示非表示
+	OpenInventory();
+
+	//アイテムインベントリの更新
+	if (isItemUI) {
+		inventory.Update();
+	}
+
 	pAnimator->Update();
 	GameObject::Update();
 
@@ -161,6 +173,11 @@ void Player::Render() {
 	//	非表示だったら描画しない
 	if (!isVisible)
 		return;
+#pragma region アイテムのインベントリ表示
+	if (isItemUI) {
+		inventory.Render();
+	}
+#pragma endregion
 
 #pragma region 残像描画処理
 	// --- 残像描画 ---
@@ -279,8 +296,8 @@ void Player::MoveInput() {
 		inputVec = VAdd(inputVec, VUp);
 	/*if (input->IsKey(KEY_INPUT_E))
 		inputVec = VAdd(inputVec, VDown);*/
-	if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);
+	/*if (input->IsKey(KEY_INPUT_E))
+		inputVec = VAdd(inputVec, VDown);*/
 }
 
 /// <summary>
@@ -623,6 +640,43 @@ void Player::WeaponInput() {
 	}
 }
 
+/// <summary>
+/// アイテムの取得
+/// </summary>
+void Player::AddItem()
+{
+	auto& items = ItemDropManager::Instance().GetActiveItems();
+
+	for (auto& item : items) {
+		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_BUTTON_B))) {
+			item->SetVisible(false);
+			std::string itemName = item->GetItem()->GetName();
+
+			// インベントリへ追加
+			GetInventory()->AddItem(std::move(item->TakeItem()));
+
+
+			ItemDropManager::Instance().RemoveItem(item.get());
+			break; // erase後にvectorを操作しないようにbreak
+		}
+	}
+}
+
+/// <summary>
+/// アイテムのインベントリを開く
+/// </summary>
+void Player::OpenInventory()
+{
+	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && !isItemUI) {
+		isItemUI = true;
+
+	}
+	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && isItemUI) {
+		isItemUI = false;
+
+	}
+}
+
 /*
  *	@function	OnTriggerEnter
  *	@brief		当たった瞬間
@@ -649,6 +703,9 @@ void Player::OnTriggerEnter(Collider* _pCol) {
  *	@param[in]	Collider* _pCol
  */
 void Player::OnTriggerStay(Collider* _pCol) {
+	if (_pCol->GetGameObject()->GetTag() == "item") {
+		hitItem = true;
+	}
 }
 
 /*
@@ -657,4 +714,8 @@ void Player::OnTriggerStay(Collider* _pCol) {
  *	@param[in]	Collider* _pCol
  */
 void Player::OnTriggerExit(Collider* _pCol) {
+	if (_pCol->GetGameObject()->GetTag() == "item") {
+		hitItem = false;
+
+	}
 }

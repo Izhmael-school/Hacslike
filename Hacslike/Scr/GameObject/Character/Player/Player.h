@@ -4,6 +4,10 @@
 #include "../../Slash/Slash.h"
 #include "../../../Component/Collider/SphereHitBox.h"
 #include "../../../Component/Collider/CapsuleHitBox.h"
+#include"../../Item/Inventory.h"
+#include"../../Item/ItemBase.h"
+#include"../../../Manager/ItemDropManager.h"
+
 //#include "../../../Manager/InputManager.h"
 
 
@@ -56,6 +60,9 @@ private:	//	メンバ変数
 	bool changeWeaponButtonPressed; // ボタン押下フラグ
 	int maxWeaponId;                // 武器の最大ID（JSONの数に合わせる）
 
+	Inventory inventory; //アイテムインベントリ
+	bool hitItem;		 //アイテムに当たっているかどうか
+	bool isItemUI;		 //アイテムのUIを開いているかどうか
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
@@ -178,6 +185,15 @@ public:		//	メンバ関数
 	/// </summary>
 	void WeaponInput();
 
+	/// <summary>
+	/// アイテムの取得
+	/// </summary>
+	void AddItem();
+
+	/// <summary>
+	/// アイテムのインベントリを開く
+	/// </summary>
+	void OpenInventory();
 public:		//	Getter と Setter
 	/*
 	 *	@function	GetWeapon
@@ -193,4 +209,9 @@ public:		//	Getter と Setter
 	 */
 	inline void SetWeapon(Weapon* _pWeapon) { pWeapon = _pWeapon; }
 
+	/// <summary>
+	/// インベントリの取得
+	/// </summary>
+	/// <returns></returns>
+	inline Inventory* GetInventory() { return &inventory; }
 };
