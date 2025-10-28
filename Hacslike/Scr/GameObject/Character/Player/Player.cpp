@@ -645,7 +645,7 @@ void Player::WeaponInput() {
 /// </summary>
 void Player::AddItem()
 {
-	auto& items = ItemDropManager::Instance().GetActiveItems();
+	auto& items = ItemDropManager::GetInstance()->GetActiveItems();
 
 	for (auto& item : items) {
 		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_BUTTON_B))) {
@@ -656,7 +656,7 @@ void Player::AddItem()
 			GetInventory()->AddItem(std::move(item->TakeItem()));
 
 
-			ItemDropManager::Instance().RemoveItem(item.get());
+			ItemDropManager::GetInstance()->RemoveItem(item.get());
 			break; // eraseŒã‚Évector‚ğ‘€ì‚µ‚È‚¢‚æ‚¤‚Ébreak
 		}
 	}

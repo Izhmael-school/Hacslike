@@ -8,6 +8,8 @@
 #include "Manager/StageManager.h"
 #include "Manager/CollisionManager.h"
 #include "Manager/EnemyManager.h"
+#include"Manager/SkillManager.h"
+#include"Manager/ItemDropManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -102,6 +104,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
 	StageManager::DestroyInstance();
+	SkillManager::DestroyInstance();
+	ItemDropManager::DestroyInstance();
 
 	// DxLibÇÃèIóπ
 	DxLib_End();

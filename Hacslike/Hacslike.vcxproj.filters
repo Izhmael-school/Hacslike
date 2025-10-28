@@ -113,6 +113,7 @@
     <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Scene\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\Scene\GameScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

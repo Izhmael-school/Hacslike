@@ -3,13 +3,47 @@
 #include "../Manager/EffectManager.h"
 #include <iostream>
 
-ItemDropManager& ItemDropManager::Instance()
+// ------------------------
+// 静的メンバ初期化
+// ------------------------
+ItemDropManager* ItemDropManager::pInstance = nullptr;
+
+
+
+// ------------------------
+// インスタンス生成
+// ------------------------
+void ItemDropManager::CreateInstance()
 {
-    static ItemDropManager instance;
-    return instance;
-    // TODO: return ステートメントをここに挿入します
+    if (!pInstance)
+    {
+        pInstance = new ItemDropManager();
+    }
 }
 
+// ------------------------
+// インスタンス取得
+// ------------------------
+ItemDropManager* ItemDropManager::GetInstance()
+{
+    if (!pInstance)
+    {
+        CreateInstance();
+    }
+    return pInstance;
+}
+
+// ------------------------
+// インスタンス破棄
+// ------------------------
+void ItemDropManager::DestroyInstance()
+{
+    if (pInstance)
+    {
+        delete pInstance;
+        pInstance = nullptr;
+    }
+}
 void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
 {
     if (!RandomChance(_dropRate)) return;
@@ -87,4 +121,12 @@ void ItemDropManager::PlayDropEffect(VECTOR _pos)
 {
     // 生成エフェクトなど
     //pEffe = EffectManager::GetInstance()->Instantiate("Item", _pos);
+}
+
+ItemDropManager::ItemDropManager()
+{
+}
+
+ItemDropManager::~ItemDropManager()
+{
 }

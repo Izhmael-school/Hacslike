@@ -5,6 +5,7 @@
 #include "../Manager/StageManager.h"
 #include"../GameObject/Item/ItemEquip/ItemEquip.h"
 #include"../GameObject/Item/ItemHeal/ItemHeal.h"
+#include"../Manager/ItemDropManager.h"
 
 
 GameScene::GameScene() {
@@ -52,7 +53,7 @@ void GameScene::Update() {
 		InputManager* input = InputManager::GetInstance();
 
 	
-		ItemDropManager::Instance().Update();
+		ItemDropManager::GetInstance()->Update();
 
 		// --- Hキーでスキル選択画面を開く ---
 		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER))
@@ -66,7 +67,7 @@ void GameScene::Update() {
 		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_BUTTON_LEFT_SHOULDER))
 		{
 			VECTOR spawnPos = Character::player->GetPosition();
-			ItemDropManager::Instance().TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
+			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
 	}
 	else
