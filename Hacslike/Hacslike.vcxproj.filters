@@ -235,6 +235,9 @@
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClInclude>
     <ClInclude Include="Scr\Scene\GameScene.h" />
+    <ClInclude Include="Scr\CommonModule.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -300,6 +303,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scr\Data\WeaponsData.json">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="Scr\Data\StageData.json">
       <Filter>Data</Filter>
     </None>
   </ItemGroup>

@@ -91,7 +91,6 @@ StageGenerator::~StageGenerator() {
 
 void StageGenerator::Update() {
 	for (auto c : cells) {
-		if (useStair == nullptr) continue;
 		c->Update();
 	}
 
@@ -104,7 +103,6 @@ void StageGenerator::Update() {
 
 void StageGenerator::Render() {
 	for (auto c : cells) {
-		if (useStair == nullptr) continue;
 		c->Render();
 	}
 
@@ -155,10 +153,102 @@ void StageGenerator::ClearStage() {
 	line = 0;
 }
 
-void StageGenerator::StageGenerate() {
+void StageGenerator::GenerateStageObject() {
 
-	int mapWidth = 0;
-	int mapHeight = 0;
+	// オブジェクトを生成する
+	for (int nowH = 0; nowH < mapHeight; nowH++) {
+		for (int nowW = 0; nowW < mapWidth; nowW++) {
+			int dupMHandle = -1;
+
+			if (!CheckEightDir(nowW, nowH)) continue;
+
+			// 複製したモデルハンドルが不正値ならやり直す
+			while (dupMHandle == -1) {
+
+				switch ((ObjectType)map[nowW][nowH]) {
+				case ObjectType::Wall:
+					dupMHandle = MV1DuplicateModel(wallModel);
+					break;
+				case ObjectType::Room:
+					dupMHandle = MV1DuplicateModel(groundModel);
+					break;
+				case ObjectType::Road:
+					dupMHandle = MV1DuplicateModel(roadModel);
+					break;
+				case ObjectType::Stair:
+					dupMHandle = MV1DuplicateModel(stairModel);
+					break;
+				}
+
+			}
+			// セルの生成
+			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
+			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
+			if (c->GetObjectType() == Stair) {
+				useStair = c;
+			}
+			else {
+				cells.push_back(c);
+			}
+		}
+	}
+}
+
+/// <summary>
+/// 分割点2点のうち大きいほうを分割する
+/// </summary>
+/// <param name="x"></param>
+/// <param name="y"></param>
+/// <returns></returns>
+bool StageGenerator::SplitPoint(int _x, int _y) {
+	// 最小分割可能サイズチェック（十分な余裕が無ければ分割不可）
+	int minNeeded = roomMinNum * 2 + (offsetWall * 4);
+	if (_x < minNeeded && _y < minNeeded) {
+		return false;
+	}
+
+	if (_x > _y) {
+		int min = roomMinNum + (offsetWall * 2);
+		int max = _x - (offsetWall * 2 + roomMinNum);
+		if (max <= min) return false; // 範囲不備 -> 分割不能
+		line = Random(min, max);
+		return true;
+	}
+	else {
+		int min = roomMinNum + (offsetWall * 2);
+		int max = _y - (offsetWall * 2 + roomMinNum);
+		if (max <= min) return false; // 範囲不備 -> 分割不能
+		line = Random(min, max);
+		return false;
+	}
+}
+
+void StageGenerator::SetGameObjectRandomPos(GameObject* obj) {
+	VECTOR pos;
+	while (1) {
+
+		int rand = GetRand(roomNum - 1);
+		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
+		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
+
+		if (mapObjects[x][y]) continue;
+
+		mapObjects[x][y] = true;
+
+		pos = VGet(x * CellSize, 0, y * CellSize);
+		if (map[x][y] == 0) break;
+	}
+
+	obj->SetPosition(pos);
+}
+
+void StageGenerator::SetGameObject(GameObject* _obj, VECTOR _pos) {
+	VECTOR pos = VGet(_pos.x * CellSize, 0, _pos.z * CellSize);
+
+	_obj->SetPosition(pos);
+}
+
+void StageGenerator::GenerateStageData() {
 	int roomMax = 0;
 
 	// フロアの大きさを決める
@@ -296,49 +386,48 @@ void StageGenerator::StageGenerate() {
 
 		// マックスじゃないものだけ先に
 		for (int j = 0, maxLength = sizeof(splitLength) / sizeof(splitLength[0]); j < maxLength; j++) {
-			if (splitLength[j] != INT_MAX) {
-				// 上下左右判定
-				if (j < 2) {
-					// 道を引く場所を決定
-					rootPoint = Random(roomStatus[(int)RoomStatus::ry][nowRoom] + offsetS, roomStatus[(int)RoomStatus::ry][nowRoom] + roomStatus[(int)RoomStatus::rh][nowRoom] - offsetS);
+			if (splitLength[j] == INT_MAX) continue;
+			// 上下左右判定
+			if (j < 2) {
+				// 道を引く場所を決定
+				rootPoint = Random(roomStatus[(int)RoomStatus::ry][nowRoom] + offsetS, roomStatus[(int)RoomStatus::ry][nowRoom] + roomStatus[(int)RoomStatus::rh][nowRoom] - offsetS);
 
-					// マップに書き込む
-					for (int w = 1; w <= splitLength[j]; w++) {
-						if (j == 0) {
-							// 左
-							map[(-w) + roomStatus[(int)RoomStatus::rx][nowRoom]][rootPoint] = 2;
-						}
-						else {
-							// 右
-							map[w + roomStatus[(int)RoomStatus::rx][nowRoom] + roomStatus[(int)RoomStatus::rw][nowRoom] - offsetS][rootPoint] = 2;
+				// マップに書き込む
+				for (int w = 1; w <= splitLength[j]; w++) {
+					if (j == 0) {
+						// 左
+						map[(-w) + roomStatus[(int)RoomStatus::rx][nowRoom]][rootPoint] = 2;
+					}
+					else {
+						// 右
+						map[w + roomStatus[(int)RoomStatus::rx][nowRoom] + roomStatus[(int)RoomStatus::rw][nowRoom] - offsetS][rootPoint] = 2;
 
-							// 最後
-							if (w == splitLength[j]) {
-								// 一つ多く作る
-								map[w + offsetS + roomStatus[(int)RoomStatus::rx][nowRoom] + roomStatus[(int)RoomStatus::rw][nowRoom] - offsetS][rootPoint] = 2;
-							}
+						// 最後
+						if (w == splitLength[j]) {
+							// 一つ多く作る
+							map[w + offsetS + roomStatus[(int)RoomStatus::rx][nowRoom] + roomStatus[(int)RoomStatus::rw][nowRoom] - offsetS][rootPoint] = 2;
 						}
 					}
 				}
-				else {
-					// 道を引く場所を決定
-					rootPoint = Random(roomStatus[(int)RoomStatus::rx][nowRoom] + offsetS, roomStatus[(int)RoomStatus::rx][nowRoom] + roomStatus[(int)RoomStatus::rw][nowRoom] - offsetS);
+			}
+			else {
+				// 道を引く場所を決定
+				rootPoint = Random(roomStatus[(int)RoomStatus::rx][nowRoom] + offsetS, roomStatus[(int)RoomStatus::rx][nowRoom] + roomStatus[(int)RoomStatus::rw][nowRoom] - offsetS);
 
-					// マップに書き込む
-					for (int h = 1; h <= splitLength[j]; h++) {
-						// 上下判定
-						if (j == 2) {
-							// 下
-							map[rootPoint][(-h) + roomStatus[(int)RoomStatus::ry][nowRoom]] = 2;
-						}
-						else {
-							// 上
-							map[rootPoint][h + roomStatus[(int)RoomStatus::ry][nowRoom] + roomStatus[(int)RoomStatus::rh][nowRoom] - offsetS] = 2;
+				// マップに書き込む
+				for (int h = 1; h <= splitLength[j]; h++) {
+					// 上下判定
+					if (j == 2) {
+						// 下
+						map[rootPoint][(-h) + roomStatus[(int)RoomStatus::ry][nowRoom]] = 2;
+					}
+					else {
+						// 上
+						map[rootPoint][h + roomStatus[(int)RoomStatus::ry][nowRoom] + roomStatus[(int)RoomStatus::rh][nowRoom] - offsetS] = 2;
 
-							if (h == splitLength[j]) {
-								// 一つ多く作る
-								map[rootPoint][h + offsetS + roomStatus[(int)RoomStatus::ry][nowRoom] + roomStatus[(int)RoomStatus::rh][nowRoom] - offsetS] = 2;
-							}
+						if (h == splitLength[j]) {
+							// 一つ多く作る
+							map[rootPoint][h + offsetS + roomStatus[(int)RoomStatus::ry][nowRoom] + roomStatus[(int)RoomStatus::rh][nowRoom] - offsetS] = 2;
 						}
 					}
 				}
@@ -421,110 +510,62 @@ void StageGenerator::StageGenerate() {
 				continue;
 		}
 	}
-
-	// オブジェクトを生成する
-	for (int nowH = 0; nowH < mapHeight; nowH++) {
-		for (int nowW = 0; nowW < mapWidth; nowW++) {
-			int dupMHandle = -1;
-
-			if (!CheckEightDir(nowW, nowH)) continue;
-
-			// 複製したモデルハンドルが不正値ならやり直す
-			while (dupMHandle == -1) {
-
-				switch ((ObjectType)map[nowW][nowH]) {
-				case ObjectType::Wall:
-					dupMHandle = MV1DuplicateModel(wallModel);
-					break;
-				case ObjectType::Room:
-					dupMHandle = MV1DuplicateModel(groundModel);
-					break;
-				case ObjectType::Road:
-					dupMHandle = MV1DuplicateModel(roadModel);
-					break;
-				case ObjectType::Stair:
-					dupMHandle = MV1DuplicateModel(stairModel);
-					break;
-				}
-
-			}
-			// セルの生成
-			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
-			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
-			if (c->GetObjectType() == Stair) {
-				useStair = c;
-			}
-			else {
-				cells.push_back(c);
-			}
-		}
-	}
-
-
-}
-
-int StageGenerator::Random(int min, int max) {
-	return (min)+GetRand(max - min);
 }
 
 /// <summary>
-/// 分割点2点のうち大きいほうを分割する
+/// ロードしたステージをint型多次元配列mapに入れる
 /// </summary>
-/// <param name="x"></param>
-/// <param name="y"></param>
-/// <returns></returns>
-bool StageGenerator::SplitPoint(int _x, int _y) {
-	//// 分割位置の決定
-	//if (_x > _y) {
-	//	// 縦を割る
-	//	line = Random(roomMinNum + (offsetWall * 2), _x - (offsetWall * 2 + roomMinNum));
-	//	return true;
-	//}
-	//else {
-	//	// 横に割る
-	//	line = Random(roomMinNum + (offsetWall * 2), _y - (offsetWall * 2 + roomMinNum));
-	//	return false;
-	//}
+/// <param name="stageID"></param>
+void StageGenerator::LoadStageData(int stageID) {
+	// ステージのデータを読み込む
+	auto data = LoadJsonFile("Scr/Data/StageData.json");
+	for (auto s : data) {
+		// 指定のステージIDと同じステージを探す
+		if (s["id"] != stageID) continue;
 
-	   // 最小分割可能サイズチェック（十分な余裕が無ければ分割不可）
-	int minNeeded = roomMinNum * 2 + (offsetWall * 4);
-	if (_x < minNeeded && _y < minNeeded) {
-		return false;
+		stage.id = stageID;
+		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
+		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
+
+		for (int i = 0; i < mapWidth_Large; i++) {
+			for (int j = 0; j < mapHeight_Large; j++) {
+				if (s["stageData"][i][j] == nullptr) continue;
+
+				// ステージのデータを入れる
+				map[i][j] = s["stageData"][i][j];
+			}
+		}
 	}
+	mapWidth = mapWidth_Small;
+	mapHeight = mapHeight_Small;
 
-	if (_x > _y) {
-		int min = roomMinNum + (offsetWall * 2);
-		int max = _x - (offsetWall * 2 + roomMinNum);
-		if (max <= min) return false; // 範囲不備 -> 分割不能
-		line = Random(min, max);
-		return true;
+	for (int x = 0; x < mapWidth; x++) {
+		for (int z = 0; z < mapHeight; z++) {
+			// オブジェクトタイプがRoomじゃないならコンテニュー
+			if (map[x][z] != (ObjectType)Room) continue;
+			// roomStatusにあればコンテニュー
+			if (GetNowRoomNum(VGet(x, 0, z)) != -1) continue;
+			// 部屋の生成位置を入れる
+			roomStatus[rx][roomCount] = x;
+			roomStatus[ry][roomCount] = z;
+
+			for (int w = x; w < mapWidth; w++) {
+				if (map[w][z] == (ObjectType)Room) continue;
+				// 部屋の幅を入れる
+				roomStatus[rw][roomCount] = w - x;
+				break;
+			}
+
+			for (int h = z; h < mapHeight; h++) {
+				if (map[x][h] == (ObjectType)Room) continue;
+				// 部屋の高さを入れる
+				roomStatus[rh][roomCount] = h - z;
+				break;
+			}
+
+			roomCount++;
+		}
 	}
-	else {
-		int min = roomMinNum + (offsetWall * 2);
-		int max = _y - (offsetWall * 2 + roomMinNum);
-		if (max <= min) return false; // 範囲不備 -> 分割不能
-		line = Random(min, max);
-		return false;
-	}
-}
-
-void StageGenerator::SetGameObjectRandomPos(GameObject* obj) {
-	VECTOR pos;
-	while (1) {
-
-		int rand = GetRand(roomNum - 1);
-		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
-		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
-
-		if (mapObjects[x][y]) continue;
-
-		mapObjects[x][y] = true;
-
-		pos = VGet(x * CellSize, 0, y * CellSize);
-		if (map[x][y] == 0) break;
-	}
-
-	obj->SetPosition(pos);
 }
 
 StageCell* StageGenerator::UseObject(ObjectType type) {
@@ -706,6 +747,8 @@ int StageGenerator::GetNowRoomNum(VECTOR pos) {
 			return i;
 		}
 	}
+	// 無かったら-1で返す
+	return -1;
 }
 
 VECTOR StageGenerator::GetRandomRoomRandomPos() {

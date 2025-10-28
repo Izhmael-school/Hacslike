@@ -24,7 +24,7 @@ Character::~Character() {
 }
 
 void Character::CheckWall() {
-	if (StageManager::GetInstance()->GetMapData((int)((int)(position.x + CellCorrection) / CellSize), (int)((int)(position.z + CellCorrection) / CellSize)) != ObjectType::Wall) {
+	if (StageManager::GetInstance().GetMapData((int)((int)(position.x + CellCorrection) / CellSize), (int)((int)(position.z + CellCorrection) / CellSize)) != ObjectType::Wall) {
 		prevPos = VGet(position.x,0, position.z);
 		if (wallCheckPos.x != (int)prevPos.x || wallCheckPos.y != (int)prevPos.z)
 			wallCheckPos = prevPos;

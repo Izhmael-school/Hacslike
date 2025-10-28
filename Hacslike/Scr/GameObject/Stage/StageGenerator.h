@@ -1,9 +1,18 @@
 #pragma once
 #include "StageCell.h"
+#include "../json.hpp"
 #include <random>
 #include <list>
+#include "../../CommonModule.h"
 
 class StageCell;
+
+struct StageData {
+	int id;
+	int stageData[mapWidth_Large][mapHeight_Large];
+	VECTOR playerSpawnPos;
+	VECTOR bossSpawnPos;
+};
 
 class StageGenerator {
 private:
@@ -14,7 +23,8 @@ private:
 
 	VECTOR defaultPos = VGet(0, 0, 0);
 
-
+	int mapWidth = 0;
+	int mapHeight = 0;
 	int roomMinNum = 3;	// 部屋の最小数
 	int roomNum;	// 部屋の数
 	int parentNum;	// 分割する部屋番号
@@ -24,6 +34,7 @@ private:
 	int mapSize ;
 	VECTOR mapOffset;
 
+	StageData stage;
 public:
 	enum RoomStatus {	// 部屋の配列ステータス
 		x,	// マップX座標
@@ -60,21 +71,37 @@ public:
 	void Update();
 	void Render();
 
+	// ステージの初期化
 	void ClearStage();
-	void StageGenerate();
-	int Random(int min, int max);
+	// ステージデータのランダム生成
+	void GenerateStageData();
+	// ステージデータの読み込み生成
+	void LoadStageData(int stageID);
+	// ステージのオブジェクト生成
+	void GenerateStageObject();
+	// 分割点2点のうち大きいほうを分割する
 	bool SplitPoint(int x, int y);
+	// 八方向チェック
 	bool CheckEightDir(int x, int y);
+	// オブジェクトのランダム設置
 	void SetGameObjectRandomPos(GameObject* obj);
+	// オブジェクトの設置
+	void SetGameObject(GameObject* _obj, VECTOR _pos);
 
+	// ステージオブジェクトのプーリング
 	StageCell* UseObject(ObjectType type);
 	void UnuseObject(StageCell*& cell);
 
+	// マップの描画
 	void DrawMap();
 
+	// ステージオブジェクトのテクスチャ張替
 	void ChangeObjectTexture(int textureHandle,ObjectType changeObject);
+	// 座標から今いる部屋番号を返す
 	int GetNowRoomNum(VECTOR pos);
-
+	// ランダムな部屋のランダムな座標を返す
 	VECTOR GetRandomRoomRandomPos();
+	// 読み込んだステージデータの取得
+	inline StageData GetStageData() { return stage; }
 };
 
