@@ -22,13 +22,16 @@ CapsuleHitBox::~CapsuleHitBox() {
 
 void CapsuleHitBox::CreateCollider() {
 	if (!pCollider) {
-		pCollider = new CapsuleCollider(owner, startPos, endPos, radius);
+		SetPosition(owner->GetPosition());
+		pCollider = new CapsuleCollider(this, startPos, endPos, radius);
 		pCollider->SetEnable(true);
 		CollisionManager::GetInstance()->Register(pCollider);
 	}
 }
 
 
+
+void CapsuleHitBox::Start() {}
 
 void CapsuleHitBox::Update() {
 	timer += TimeManager::GetInstance()->deltaTime;
@@ -49,7 +52,7 @@ bool CapsuleHitBox::IsDead() const {
 
 void CapsuleHitBox::OnTriggerEnter(Collider* _pCol) {
 	//	“–‚½‚Á‚½‘ŠŽè‚Ìƒ^ƒO‚ª "Goblin" ‚¾‚Á‚½‚ç
-	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
+	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
 		//	“–‚½‚Á‚½‘ŠŽè‚ð”ñ•\Ž¦‚É‚·‚é
 		_pCol->GetGameObject()->SetVisible(false);
 	}

@@ -32,10 +32,12 @@ void ItemEntity::Update()
 
 void ItemEntity::Render()
 {
+#if _DEBUG
 	//“–‚½‚è”»’è‚Ì•`‰æ
 	if (pCollider != nullptr) {
 		pCollider->Render();
 	}
+#endif
 }
 
 void ItemEntity::Use()

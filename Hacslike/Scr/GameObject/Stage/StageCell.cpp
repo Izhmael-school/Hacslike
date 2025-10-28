@@ -44,8 +44,10 @@ void StageCell::Render() {
 
 	MV1DrawModel(modelHandle);
 
+#if _DEBUG
 	if (pCollider != nullptr)
 		pCollider->Render();
+#endif
 }
 
 void StageCell::OnTriggerEnter(Collider* _pOther) {

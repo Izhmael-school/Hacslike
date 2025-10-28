@@ -42,8 +42,10 @@ void Enemy::Render() {
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
 
+#if _DEBUG
 	if (pCollider != nullptr)
 		pCollider->Render();
+#endif
 }
 
 void Enemy::IsDead() {

@@ -630,7 +630,7 @@ void StageGenerator::DrawMap() {
 
 	// ’n}‚Ì•`‰æ
 	for (int w = 0; w < mapWidth_Large; w++) {
-		for (int h = mapHeight_Large; h > 0; h--) {
+		for (int h = mapHeight_Large; h < 0; h--) {
 			int color = 0;
 
 			if (!stageMap[w][h]) continue;

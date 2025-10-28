@@ -21,6 +21,8 @@ SphereHitBox::~SphereHitBox() {
 	}
 }
 
+void SphereHitBox::Start() {}
+
 void SphereHitBox::Update() {
 	timer += TimeManager::GetInstance()->deltaTime;
 	if (pCollider && pCollider->IsEnable()) {
@@ -40,7 +42,8 @@ bool SphereHitBox::IsDead() const {
 
 void SphereHitBox::CreateCollider() {
 	if (!pCollider) {
-		pCollider = new SphereCollider(owner, offset, radius);
+		SetPosition(owner->GetPosition());
+		pCollider = new SphereCollider(this, offset, radius);
 		pCollider->SetEnable(true);
 		CollisionManager::GetInstance()->Register(pCollider);
 	}
@@ -48,7 +51,7 @@ void SphereHitBox::CreateCollider() {
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	//	“–‚½‚Á‚½‘ŠŽè‚Ìƒ^ƒO‚ª "Goblin" ‚¾‚Á‚½‚ç
-	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
+	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
 		//	“–‚½‚Á‚½‘ŠŽè‚ð”ñ•\Ž¦‚É‚·‚é
 		_pCol->GetGameObject()->SetVisible(false);
 	}

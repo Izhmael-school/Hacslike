@@ -57,6 +57,7 @@ Enemy* EnemyManager::UseEnemy(EnemyType type) {
 	switch (type) {
 	case Goblin:
 		Enemy* g = unuseGoblinArray[0];
+		g->SetVisible(true);
 		unuseGoblinArray.erase(unuseGoblinArray.begin());
 		return g;
 	}

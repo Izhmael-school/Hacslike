@@ -239,6 +239,8 @@ void CollisionManager::Update() {
 			// “–‚½‚Á‚½uŠÔ
 			if (!prevs[i][j] && currents[i][j]) {
 
+				if (pColliderArray[i]->GetGameObject()->GetTag() == pColliderArray[j]->GetGameObject()->GetTag()) continue;
+
 				pColliderArray[i]->GetGameObject()->OnTriggerEnter(pColliderArray[j]);
 				pColliderArray[j]->GetGameObject()->OnTriggerEnter(pColliderArray[i]);
 
@@ -246,11 +248,15 @@ void CollisionManager::Update() {
 			// ‚ ‚½‚Á‚Ä‚¢‚éŠÔ
 			else if (currents[i][j]) {
 
+				if (pColliderArray[i]->GetGameObject()->GetTag() == pColliderArray[j]->GetGameObject()->GetTag()) continue;
+
 				pColliderArray[i]->GetGameObject()->OnTriggerStay(pColliderArray[j]);
 				pColliderArray[j]->GetGameObject()->OnTriggerStay(pColliderArray[i]);
 			}
 			// —£‚ê‚½uŠÔ
 			else if (prevs[i][j] && !currents[i][j]) {
+
+				if (pColliderArray[i]->GetGameObject()->GetTag() == pColliderArray[j]->GetGameObject()->GetTag()) continue;
 
 				pColliderArray[i]->GetGameObject()->OnTriggerExit(pColliderArray[j]);
 				pColliderArray[j]->GetGameObject()->OnTriggerExit(pColliderArray[i]);

@@ -3,7 +3,7 @@
 #include <vector>
 #include <DxLib.h>
 
-class CapsuleHitBox {
+class CapsuleHitBox :public GameObject{
 private:
     GameObject* owner;
     VECTOR startPos;
@@ -18,8 +18,9 @@ public:
     CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR& p2, float _radius, float _lifeTime);
     ~CapsuleHitBox();
 
-    void Update();
-    void Render();
+	void Start() override;
+    void Update() override;
+    void Render() override;
     bool IsDead() const;
 
     void CreateCollider();

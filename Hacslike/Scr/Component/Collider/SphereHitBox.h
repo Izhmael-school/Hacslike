@@ -4,7 +4,7 @@
 #include <vector>
 #include <DxLib.h>
 
-class SphereHitBox {
+class SphereHitBox : public GameObject{
 private:
 	GameObject* owner;
 	VECTOR offset;
@@ -18,8 +18,9 @@ public:
 	SphereHitBox(GameObject* _ownwr, VECTOR _offset,float _radius, float _lifeTime);
 	~SphereHitBox();
 
-	void Update();
-	void Render();
+	void Start() override;
+	void Update()override;
+	void Render()override;
 	bool IsDead() const;
 
 	void CreateCollider();
@@ -32,21 +33,21 @@ public:		//	オーバーライドした衝突検知
 	 *	@brief		当たった瞬間
 	 *	@param[in]	Collider* _pCol
 	 */
-	void OnTriggerEnter(Collider* _pCol);
+	void OnTriggerEnter(Collider* _pCol) override;
 
 	/*
 	 *	@function	OnTriggerEnter
 	 *	@brief		当たっている間
 	 *	@param[in]	Collider* _pCol
 	 */
-	void OnTriggerStay(Collider* _pCol);
+	void OnTriggerStay(Collider* _pCol) override;
 
 	/*
 	 *	@function	OnTriggerEnter
 	 *	@brief		離れた瞬間
 	 *	@param[in]	Collider* _pCol
 	 */
-	void OnTriggerExit(Collider* _pCol);
+	void OnTriggerExit(Collider* _pCol) override;
 
 };
 
