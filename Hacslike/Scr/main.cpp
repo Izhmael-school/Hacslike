@@ -10,6 +10,8 @@
 #include "Manager/EnemyManager.h"
 #include"Manager/SkillManager.h"
 #include"Manager/ItemDropManager.h"
+#include"Manager/EffectManager.h"
+#include <EffekseerForDXLib.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -31,10 +33,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 0;
 
 	// Effekseerの初期化
-	/*if (Effekseer_Init(8000) == -1) {
+	if (Effekseer_Init(8000) == -1) {
 		DxLib_End();
 		return 0;
-	}*/
+	}
 
 	// 描画する先を設定する 裏画面に変更する
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -71,12 +73,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// ゲームのメインループ
 	while (true) {
-
+		//DxLibのカメラとEffekseerのカメラを同期する
+		Effekseer_Sync3DSetting();
 		// 更新処理
 		SceneManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
 		InputManager::GetInstance()->Update();
 		CollisionManager::GetInstance()->Update();
+		
 
 		// 画面をクリアする
 		ClearDrawScreen();
@@ -107,7 +111,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	StageManager::DestroyInstance();
 	SkillManager::DestroyInstance();
 	ItemDropManager::DestroyInstance();
-
+	EffectManager::DestroyInstance();
+	Effkseer_End();
 	// DxLibの終了
 	DxLib_End();
 

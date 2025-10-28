@@ -30,7 +30,8 @@ void GameScene::Start() {
 
 	pCamera->SetTarget(pPlayer);
 
-	
+	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
+
 	//アイテムのセット
 	auto& factory = ItemFactory::Instance(); {
 		factory.RegisterItem("Potion_Small", []() {
@@ -41,7 +42,6 @@ void GameScene::Start() {
 		factory.RegisterItem("Axe", []() {
 			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "斧", "普通の斧", 200, 30); });
 	}
-	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 	StageManager::GetInstance()->GenerateStage();
 }
 
@@ -52,7 +52,7 @@ void GameScene::Update() {
 	{
 		InputManager* input = InputManager::GetInstance();
 
-	
+		EffectManager::GetInstance()->Update();
 		ItemDropManager::GetInstance()->Update();
 
 		// --- Hキーでスキル選択画面を開く ---
@@ -117,6 +117,8 @@ void GameScene::Render() {
 	{
 		skillUI.Render(skillChoices);
 	}
+	// エフェクトの描画
+	EffectManager::GetInstance()->Render();
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
 	{

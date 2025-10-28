@@ -120,7 +120,7 @@ bool ItemDropManager::RandomChance(float _rate)
 void ItemDropManager::PlayDropEffect(VECTOR _pos)
 {
     // 生成エフェクトなど
-    //pEffe = EffectManager::GetInstance()->Instantiate("Item", _pos);
+    pEffe = EffectManager::GetInstance()->Instantiate("Item", _pos);
 }
 
 ItemDropManager::ItemDropManager()

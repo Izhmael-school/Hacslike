@@ -1,5 +1,6 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
+#include"../GameObject/Effect/Effect.h"
 EffectManager* EffectManager::pInstance = nullptr;
 
 EffectManager::EffectManager()
@@ -72,38 +73,38 @@ void EffectManager::Load(std::string _filePath, std::string _name, float _magnif
  * @param[in]	VECTOR _pos
  * @return		Effect*
  */
-//Effect* EffectManager::Instantiate(std::string _name, VECTOR _pos) {
-//	Effect* pEffect = new Effect(effectResourceMap[_name]);
-//	pEffect->SetPosition(_pos);
-//	pEffectList.push_back(pEffect);
-//	return pEffect;
-//
-//	return pEffect;
-//}
-//
-//void EffectManager::Update() {
-//	for (auto pEffe : pEffectList) {
-//		if (pEffe == nullptr || !pEffe->IsVisible())
-//			continue;
-//
-//		pEffe->Update();
-//	}
-//
-//	// STLの要素を削除
-//	// std::erase_if( コンテナ, ラムダ)	C++20～ ここじゃ使えん
-//	// isVisible = false のものを消す
-//	std::erase_if(pEffectList, [](Effect* _pE) {return !_pE->IsVisible(); });
-//
-//	UpdateEffekseer3D();
-//}
-//
-//void EffectManager::Render() {
-//	for (auto pEffe : pEffectList) {
-//		if (pEffe == nullptr || !pEffe->IsVisible())
-//			continue;
-//
-//		pEffe->Render();
-//	}
-//	DrawEffekseer3D();
-//}
+Effect* EffectManager::Instantiate(std::string _name, VECTOR _pos) {
+	Effect* pEffect = new Effect(effectResourceMap[_name]);
+	pEffect->SetPosition(_pos);
+	pEffectList.push_back(pEffect);
+	return pEffect;
+
+	return pEffect;
+}
+
+void EffectManager::Update() {
+	for (auto pEffe : pEffectList) {
+		if (pEffe == nullptr || !pEffe->IsVisible())
+			continue;
+
+		pEffe->Update();
+	}
+
+	// STLの要素を削除
+	// std::erase_if( コンテナ, ラムダ)	C++20～ ここじゃ使えん
+	// isVisible = false のものを消す
+	std::erase_if(pEffectList, [](Effect* _pE) {return !_pE->IsVisible(); });
+
+	UpdateEffekseer3D();
+}
+
+void EffectManager::Render() {
+	for (auto pEffe : pEffectList) {
+		if (pEffe == nullptr || !pEffe->IsVisible())
+			continue;
+
+		pEffe->Render();
+	}
+	DrawEffekseer3D();
+}
 
