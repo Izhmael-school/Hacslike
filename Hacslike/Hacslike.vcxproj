@@ -60,6 +60,7 @@
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scr\CommonModule.h" />
     <ClInclude Include="Scr\Component\Animator.h" />
     <ClInclude Include="Scr\Component\Collider\CapsuleHitBox.h" />
     <ClInclude Include="Scr\Component\Collider\Collider.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Scr\Data\StageData.json" />
     <None Include="Scr\Data\WeaponsData.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
