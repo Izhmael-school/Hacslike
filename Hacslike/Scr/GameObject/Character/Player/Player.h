@@ -63,6 +63,11 @@ private:	//	メンバ変数
 	Inventory inventory; //アイテムインベントリ
 	bool hitItem;		 //アイテムに当たっているかどうか
 	bool isItemUI;		 //アイテムのUIを開いているかどうか
+
+	int coinValue;
+
+	int expValue;
+
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
@@ -129,7 +134,7 @@ public:		//	メンバ関数
 	/// 移動・アニメーション・回転処理
 	/// </summary>
 	void UpdateMovement();
-	
+
 	/// <summary>
 	/// 移動入力
 	/// </summary>
@@ -214,4 +219,28 @@ public:		//	Getter と Setter
 	/// </summary>
 	/// <returns></returns>
 	inline Inventory* GetInventory() { return &inventory; }
+
+	/// <summary>
+	/// コインの取得
+	/// </summary>
+	/// <returns></returns>
+	inline int GetCoinValue() const { return coinValue; }
+
+	/// <summary>
+	/// コインの変更
+	/// </summary>
+	/// <param name="_coin"></param>
+	inline void SetCoinValue(int _coin) { coinValue = _coin; }
+
+	/// <summary>
+	/// 経験値に取得
+	/// </summary>
+	/// <returns></returns>
+	inline int GetExpValue() const { return expValue; }
+
+	/// <summary>
+	/// 経験値の変更
+	/// </summary>
+	/// <param name="_exp"></param>
+	inline void SetExpValue(int _exp) { expValue = _exp; }
 };

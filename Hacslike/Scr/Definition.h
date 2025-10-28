@@ -34,7 +34,7 @@
 
 #define EnemyMax (10)
 
-#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
+#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/maya_Player.mv1"))
 
 // ステージ関連
 #define mapWidth_Large (64)	// マップの横サイズ

@@ -2,24 +2,10 @@
 #include <fstream>
 #include <iostream>
 
-// Ã“Iƒƒ“ƒo
-WeaponManager* WeaponManager::pInstance = nullptr;
-
-void WeaponManager::CreateInstance() {
-    if (!pInstance) pInstance = new WeaponManager();
+WeaponManager::WeaponManager() {
 }
 
-WeaponManager* WeaponManager::GetInstance() {
-    if (!pInstance) CreateInstance();
-    return pInstance;
-}
-
-void WeaponManager::DestroyInstance() {
-    if (pInstance) {
-        pInstance->UnloadAllWeapons(); // ƒ‚ƒfƒ‹‰ð•ú
-        delete pInstance;
-        pInstance = nullptr;
-    }
+WeaponManager::~WeaponManager() {
 }
 
 void WeaponManager::LoadWeapons(const std::string& path) {
