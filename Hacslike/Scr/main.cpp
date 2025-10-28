@@ -83,8 +83,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 描画処理
 		SceneManager::GetInstance()->Render();
+#if _DEBUG
 		CollisionManager::GetInstance()->Render();
-
+#endif
 		// エスケープキーでウィンドウを閉じる
 		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
 			break;

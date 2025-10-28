@@ -630,7 +630,7 @@ void StageGenerator::DrawMap() {
 
 	// ’n}‚Ì•`‰æ
 	for (int w = 0; w < mapWidth_Large; w++) {
-		for (int h = mapHeight_Large; h < 0; h--) {
+		for (int h = 0; h < mapHeight_Large; h++) {
 			int color = 0;
 
 			if (!stageMap[w][h]) continue;
@@ -648,12 +648,12 @@ void StageGenerator::DrawMap() {
 			case Wall:
 				continue;
 			}
-			DrawBox((w * mapSize) + mapOffset.x, (h * mapSize) + mapOffset.z, (w * mapSize + mapSize) + mapOffset.x, (h * mapSize + mapSize) + mapOffset.z, color, true);
+			DrawBox((w * mapSize) + mapOffset.x, (-h * mapSize) + mapOffset.z, (w * mapSize + mapSize) + mapOffset.x, (-h * mapSize + mapSize) + mapOffset.z, color, true);
 		}
 	}
 
 	// ƒvƒŒƒCƒ„[‚Ì•`‰æ
-	DrawBox((x * mapSize) + mapOffset.x, (z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (z * mapSize + mapSize) + mapOffset.z, red, true);
+	DrawBox((x * mapSize) + mapOffset.x, (-z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (-z * mapSize + mapSize) + mapOffset.z, red, true);
 }
 
 void StageGenerator::ChangeObjectTexture(int textureHandle, ObjectType changeObject) {
