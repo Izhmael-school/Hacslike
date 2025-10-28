@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "../json.hpp"
+#include "../Component/Singleton.h"
 #include <DxLib.h> // DxLibのヘッダ
 
 struct WeaponData {
@@ -15,27 +16,11 @@ struct WeaponData {
     int modelHandle = -1;    // DxLibのモデルハンドル
 };
 
-class WeaponManager {
+class WeaponManager : public Singleton<WeaponManager>  {
 #pragma region シングルトン
-private:
-    static WeaponManager* pInstance;
-
-private:
-    WeaponManager() = default;
-    ~WeaponManager() = default;
-
 public:
-    WeaponManager(const WeaponManager&) = delete;
-    WeaponManager& operator=(const WeaponManager&) = delete;
-    WeaponManager(WeaponManager&&) = delete;
-    WeaponManager& operator=(WeaponManager&&) = delete;
-
-private:
-    static void CreateInstance();
-
-public:
-    static WeaponManager* GetInstance();
-    static void DestroyInstance();
+    WeaponManager();
+    ~WeaponManager();
 #pragma endregion
 
 private:

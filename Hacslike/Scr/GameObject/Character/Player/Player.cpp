@@ -34,8 +34,10 @@ Player::Player(VECTOR _pos)
 	, evasionSpeed(1.0f)
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
-	,hitItem(false)
-	,isItemUI(false){
+	, hitItem(false)
+	, isItemUI(false)
+	, coinValue()
+	, expValue() {
 	Start();
 }
 
@@ -89,11 +91,11 @@ void Player::Start() {
 	}
 
 
-	WeaponManager::GetInstance()->LoadWeapons("Scr/Data/WeaponsData.json");
-	maxWeaponId = WeaponManager::GetInstance()->GetMaxWeaponId();
+	WeaponManager::GetInstance().LoadWeapons("Scr/Data/WeaponsData.json");
+	maxWeaponId = WeaponManager::GetInstance().GetMaxWeaponId();
 	changeWeaponButtonPressed = false;
 	currentWeaponId = 10;
-	WeaponData* weaponData = WeaponManager::GetInstance()->GetWeapon(currentWeaponId);
+	WeaponData* weaponData = WeaponManager::GetInstance().GetWeapon(currentWeaponId);
 	if (weaponData) {
 		pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
 		pWeapon->SetColLength(weaponData->colLength);
@@ -296,8 +298,8 @@ void Player::MoveInput() {
 		inputVec = VAdd(inputVec, VUp);
 	/*if (input->IsKey(KEY_INPUT_E))
 		inputVec = VAdd(inputVec, VDown);*/
-	/*if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);*/
+		/*if (input->IsKey(KEY_INPUT_E))
+			inputVec = VAdd(inputVec, VDown);*/
 }
 
 /// <summary>
@@ -535,7 +537,7 @@ void Player::AttackInput() {
 
 			// 攻撃判定生成
 			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1) , pWeapon->GetColRadius(attackIndex - 1));
+				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f)
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f)
@@ -607,7 +609,7 @@ void Player::ChangeWeapon(int weaponId) {
 		pWeapon = nullptr;
 	}
 
-	WeaponData* weaponData = WeaponManager::GetInstance()->GetWeapon(weaponId);
+	WeaponData* weaponData = WeaponManager::GetInstance().GetWeapon(weaponId);
 	if (!weaponData) return;
 
 	// 新しい Weapon を生成＆装備
@@ -643,8 +645,7 @@ void Player::WeaponInput() {
 /// <summary>
 /// アイテムの取得
 /// </summary>
-void Player::AddItem()
-{
+void Player::AddItem() {
 	auto& items = ItemDropManager::GetInstance()->GetActiveItems();
 
 	for (auto& item : items) {
@@ -665,8 +666,7 @@ void Player::AddItem()
 /// <summary>
 /// アイテムのインベントリを開く
 /// </summary>
-void Player::OpenInventory()
-{
+void Player::OpenInventory() {
 	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && !isItemUI) {
 		isItemUI = true;
 
