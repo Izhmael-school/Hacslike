@@ -49,13 +49,13 @@ HPUpSkill::HPUpSkill(int hp)
 void HPUpSkill::Apply(Player* player)
 {
     if (!player) return;
-    player->SetHp(player->GetHp() * hpIncrease);
+    player->SetMaxHp(player->GetMaxHp() * hpIncrease);
 }
 
 void HPUpSkill::Remove(Player* player)
 {
     if (!player) return;
-    player->SetHp(player->GetHp() / hpIncrease);
+    player->SetMaxHp(player->GetMaxHp() / hpIncrease);
 }
 #pragma endregion
 

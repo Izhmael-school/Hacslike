@@ -38,7 +38,11 @@ Player::Player(VECTOR _pos)
 	, isItemUI(false)
 	, coinValue()
 	, expValue() {
+	maxHp = 100;
+	hp = maxHp;
+	atk = 5;
 	Start();
+
 }
 
 /*
@@ -152,6 +156,10 @@ void Player::Update() {
 		inventory.Update();
 	}
 
+	if (input->IsButtonDown(XINPUT_BUTTON_Y)) {
+		SubHp(10);
+	}
+
 	pAnimator->Update();
 	GameObject::Update();
 
@@ -178,6 +186,7 @@ void Player::Render() {
 #pragma region アイテムのインベントリ表示
 	if (isItemUI) {
 		inventory.Render();
+		PlayerStatusRender();
 	}
 #pragma endregion
 
@@ -684,6 +693,13 @@ void Player::OpenInventory() {
 		isItemUI = false;
 
 	}
+}
+
+void Player::PlayerStatusRender() {
+	DrawFormatString(1000, 20, red, "HP  : %d / %d", hp, maxHp);
+	DrawFormatString(1000, 40, red, "ATK : %d", atk);
+	DrawFormatString(1000, 60, red, "LV  : %d", Lv);
+	DrawFormatString(1000, 80, red, "EXP : %d", Exp);
 }
 
 /*

@@ -68,6 +68,8 @@ private:	//	メンバ変数
 
 	int expValue;
 
+	int atk;
+
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
@@ -199,6 +201,12 @@ public:		//	メンバ関数
 	/// アイテムのインベントリを開く
 	/// </summary>
 	void OpenInventory();
+
+	/// <summary>
+	/// プレイヤーステータスの描画
+	/// </summary>
+	void PlayerStatusRender();
+
 public:		//	Getter と Setter
 	/*
 	 *	@function	GetWeapon
@@ -243,5 +251,4 @@ public:		//	Getter と Setter
 	/// </summary>
 	/// <param name="_exp"></param>
 	inline void SetExpValue(int _exp) { expValue = _exp; }
-
 };

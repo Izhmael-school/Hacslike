@@ -7,6 +7,7 @@ class Character : public GameObject {
 protected:	// メンバ変数
 	int modelHandle;		// モデルハンドル
 	Animator* pAnimator;	// アニメーター
+	int maxHp;
 	int hp;					// 体力
 	int atk;				// 攻撃力
 	bool atking;			// 攻撃フラグ
@@ -67,6 +68,9 @@ public:	// ゲッターとセッター
 #pragma region Hp
 	inline void AddHp(int heal) { hp += heal; }
 	inline void SubHp(int damage) { hp -= damage; }
+	inline void AddMaxHp(int max) { maxHp += max; }
+	inline void SetMaxHp(int _maxHp) { maxHp = _maxHp; }
+	inline int GetMaxHp() const { return maxHp; }
 	inline void SetHp(int _hp) { hp = _hp; }
 	inline int GetHp() const { return hp; }
 #pragma endregion
