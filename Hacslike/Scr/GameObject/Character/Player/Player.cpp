@@ -637,7 +637,7 @@ void Player::ChangeWeapon(int weaponId) {
 /// •ŠíØ‚è‘Ö‚¦“ü—Í
 /// </summary>
 void Player::WeaponInput() {
-	if (input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed) {
+	if (input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed || input->IsButtonDown(XINPUT_BUTTON_BACK)) {
 		changeWeaponButtonPressed = true;
 
 		currentWeaponId++;

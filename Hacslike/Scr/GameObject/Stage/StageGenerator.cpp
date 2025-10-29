@@ -102,6 +102,7 @@ void StageGenerator::Update() {
 }
 
 void StageGenerator::Render() {
+
 	for (auto c : cells) {
 		c->Render();
 	}
@@ -158,29 +159,9 @@ void StageGenerator::GenerateStageObject() {
 	// オブジェクトを生成する
 	for (int nowH = 0; nowH < mapHeight; nowH++) {
 		for (int nowW = 0; nowW < mapWidth; nowW++) {
-			int dupMHandle = -1;
 
 			if (!CheckEightDir(nowW, nowH)) continue;
 
-			// 複製したモデルハンドルが不正値ならやり直す
-			while (dupMHandle == -1) {
-
-				switch ((ObjectType)map[nowW][nowH]) {
-				case ObjectType::Wall:
-					dupMHandle = MV1DuplicateModel(wallModel);
-					break;
-				case ObjectType::Room:
-					dupMHandle = MV1DuplicateModel(groundModel);
-					break;
-				case ObjectType::Road:
-					dupMHandle = MV1DuplicateModel(roadModel);
-					break;
-				case ObjectType::Stair:
-					dupMHandle = MV1DuplicateModel(stairModel);
-					break;
-				}
-
-			}
 			// セルの生成
 			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
 			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
@@ -673,9 +654,9 @@ void StageGenerator::DrawMap() {
 	for (int w = 0; w < mapWidth_Large; w++) {
 		for (int h = 0; h < mapHeight_Large; h++) {
 			int color = 0;
-
+#if _RELEASE
 			if (!stageMap[w][h]) continue;
-
+#endif
 			switch (map[w][h]) {
 			case Road:
 				color = white;

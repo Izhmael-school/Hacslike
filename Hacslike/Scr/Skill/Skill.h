@@ -72,7 +72,7 @@ class SpeedUpSkill : public Skill
 {
     float speedBoost;
 public:
-    SpeedUpSkill(float boost = 1.3f);
+    SpeedUpSkill(float boost = 0.3f);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
 };

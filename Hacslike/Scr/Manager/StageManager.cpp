@@ -18,10 +18,14 @@ StageManager::~StageManager() {
 
 void StageManager::Update() {
 	generator->Update();
+
+	if (InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_DPAD_DOWN))
+		GenerateStage();
 }
 
 void StageManager::Render() {
 	generator->Render();
+	DrawFormatString(100, 100, red, "ŠK‘w %d ŠK", floorCount);
 }
 
 int StageManager::GetMapData(int x, int y) {
