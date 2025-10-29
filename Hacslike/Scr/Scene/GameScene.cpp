@@ -42,7 +42,7 @@ void GameScene::Start() {
 		factory.RegisterItem("Axe", []() {
 			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "•€", "•’Ê‚Ì•€", 200, 30); });
 	}
-	StageManager::GetInstance()->GenerateStage();
+	StageManager::GetInstance().GenerateStage();
 }
 
 void GameScene::Update() {
@@ -96,7 +96,7 @@ void GameScene::Update() {
 	
 	
 
-	StageManager::GetInstance()->Update();
+	StageManager::GetInstance().Update();
 	for (auto pObj : pGameObjectArray) {
 		pObj->Update();
 	}
@@ -106,7 +106,7 @@ void GameScene::Update() {
 void GameScene::Render() {
 
 
-	StageManager::GetInstance()->Render();
+	StageManager::GetInstance().Render();
 	for (auto pObj : pGameObjectArray) {
 		pObj->Render();
 	}

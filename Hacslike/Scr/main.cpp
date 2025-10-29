@@ -108,7 +108,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager::DestroyInstance();
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
-	StageManager::DestroyInstance();
+	//StageManager::DestroyInstance();
 	SkillManager::DestroyInstance();
 	ItemDropManager::DestroyInstance();
 	EffectManager::DestroyInstance();

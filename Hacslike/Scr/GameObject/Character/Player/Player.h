@@ -243,4 +243,5 @@ public:		//	Getter と Setter
 	/// </summary>
 	/// <param name="_exp"></param>
 	inline void SetExpValue(int _exp) { expValue = _exp; }
+
 };

@@ -34,7 +34,7 @@ void StageManager::GenerateStage() {
 	floorCount++;
 
 	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
-
+	generator->GenerateStageData();
 	generator->GenerateStageObject();
 	SetGameObjectRandomPos(Character::player);
 

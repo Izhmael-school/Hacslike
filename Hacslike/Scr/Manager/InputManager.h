@@ -1,5 +1,8 @@
 #pragma once
 #include <Dxlib.h>
+#include <cmath>
+#include <string>
+
 
 class InputManager {
 #pragma region シングルトンのデータ構造
@@ -51,8 +54,10 @@ private:
 	char keyState[256];
 	char prevkeyState[256];
 
-	XINPUT_STATE padState;
-	XINPUT_STATE padPrevState;
+	XINPUT_STATE padState;		  //現在
+	XINPUT_STATE padPrevState;    //1フレーム前のキーの状態
+	XINPUT_STATE sthickState;     //スティックの状態
+	float rangeOfMotion;          //スティック可動範囲
 
 	int prevMouse;
 	int mouse = GetMouseInput();
@@ -94,6 +99,45 @@ public:	// キーボード入力用
 	// クリックが離されたか
 	inline bool IsMouseUp(int _mouse) const { return (prevMouse & _mouse) && !(mouse & _mouse); }
 #pragma endregion
+
+public: //左右のスティック入力用
+	//左
+	inline float IsJoypadSthick(std::string _SthickName) {
+		//入力値
+		float tmp = 0.0f;
+		if (_SthickName == "L_Vertical") {
+			tmp += sthickState.ThumbLY / rangeOfMotion;
+			if (sthickState.ThumbLY > rangeOfMotion) {
+				sthickState.ThumbLY = rangeOfMotion;
+			}
+		}
+		else if (_SthickName == "L_Horizontal") {
+			if (sthickState.ThumbLX > rangeOfMotion) {
+				sthickState.ThumbLX = rangeOfMotion;
+			}
+			tmp += sthickState.ThumbLX / rangeOfMotion;
+
+		}
+		else if (_SthickName == "R_Vertical") {
+			if (sthickState.ThumbRY > rangeOfMotion) {
+				sthickState.ThumbRY = rangeOfMotion;
+			}
+			tmp += sthickState.ThumbRY / rangeOfMotion;
+
+		}
+		else if (_SthickName == "R_Horizontal") {
+			if (sthickState.ThumbRX > rangeOfMotion) {
+				sthickState.ThumbRX = rangeOfMotion;
+			}
+			tmp += sthickState.ThumbRX / rangeOfMotion;
+
+		}
+
+		if (abs(tmp) <= 0.05f)
+			tmp = 0.0f;
+
+		return tmp;
+	}
 
 };
 

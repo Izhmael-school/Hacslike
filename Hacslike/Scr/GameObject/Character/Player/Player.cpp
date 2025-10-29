@@ -285,13 +285,22 @@ void Player::UpdateMovement() {
 void Player::MoveInput() {
 	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
 
-	if (XY.ThumbLY >= 1000 || input->IsKey(KEY_INPUT_W))
+	//“ü—Íˆ—
+	//inputVec = VZero;
+	inputVec = VGet(input->IsJoypadSthick("L_Horizontal"),
+		0.0f,
+		input->IsJoypadSthick("L_Vertical"));
+
+	
+	
+
+	if (input->IsKey(KEY_INPUT_W))
 		inputVec.z = inputVec.z + speed;
-	if (XY.ThumbLY <= -1000 || input->IsKey(KEY_INPUT_S))
+	if (input->IsKey(KEY_INPUT_S))
 		inputVec.z = inputVec.z - speed;
-	if (XY.ThumbLX >= 1000 || input->IsKey(KEY_INPUT_D))
+	if (input->IsKey(KEY_INPUT_D))
 		inputVec.x = inputVec.x + speed;
-	if (XY.ThumbLX <= -1000 || input->IsKey(KEY_INPUT_A))
+	if (input->IsKey(KEY_INPUT_A))
 		inputVec.x = inputVec.x - speed;
 
 	if (input->IsKey(KEY_INPUT_Q))

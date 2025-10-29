@@ -7,7 +7,11 @@ InputManager* InputManager::pInstance = nullptr;
 InputManager::InputManager()
 	:keyState()
 	,prevkeyState() 
-{}
+	, sthickState()
+	, rangeOfMotion(32767.0f)
+{
+	GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
+}
 
 /*
  * @function	CreateInstance
@@ -55,6 +59,9 @@ void InputManager::Update() {
 	padPrevState = padState;
 	// 今のフレームの状態を保存
 	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
+
+	//スティックの取得
+	GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
 
 	prevMouse = mouse;
 	mouse = GetMouseInput();
