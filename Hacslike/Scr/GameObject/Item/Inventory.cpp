@@ -268,27 +268,31 @@ void Inventory::Render()
             desPosY = infoY + 10;
             itemName = ""; // デフォルト
             itemDes = "";
+            itemEffect = "";
             if (curName == "ポーション(小)") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
+                itemEffect = "回復量";
             }
             else if (curName == "剣") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
+                itemEffect = "攻撃力";
             }
             else if (curName == "斧") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
+                itemEffect = "攻撃力";
             }
             DrawString(desPosX, desPosY, itemName.c_str(), white);
             DrawString(desPosX, desPosY + 20, itemDes.c_str(), white);
-            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "効果 : %d  価値 : %d", itemEffectValue, itemValue);
+            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "%s : %d  価値 : %d", itemEffect,itemEffectValue, itemValue);
         }
 
         // アイコンをテキスト高さに合わせて描画するループ内

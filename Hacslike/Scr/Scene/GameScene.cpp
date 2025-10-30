@@ -38,9 +38,9 @@ void GameScene::Start() {
 			return std::make_unique<ItemHeal>(VGet(0, 0, 0), "ƒ|[ƒVƒ‡ƒ“(¬)", "‘Ì—Í‚ğ­‚µ‰ñ•œ‚·‚é", 50, 20); });
 
 		factory.RegisterItem("Sword_Iron", []() {
-			return std::make_unique<ItemSword>(VGet(0, 0, 0), "Œ•", "•’Ê‚ÌŒ•", 150, 10); });
+			return std::make_unique<ItemSword>(VGet(0, 0, 0), "Œ•", "•’Ê‚ÌŒ•", 150, GetRand(20) + 10); });
 		factory.RegisterItem("Axe", []() {
-			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "•€", "•’Ê‚Ì•€", 200, 30); });
+			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "•€", "•’Ê‚Ì•€", 200, GetRand(30) + 10); });
 	}
 	StageManager::GetInstance().GenerateStage();
 }
@@ -69,6 +69,11 @@ void GameScene::Update() {
 			VECTOR spawnPos = Character::player->GetPosition();
 			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
+		StageManager::GetInstance().Update();
+		for (auto pObj : pGameObjectArray) {
+			pObj->Update();
+		}
+		EnemyManager::GetInstance().Update();
 	}
 	else
 	{
@@ -96,11 +101,7 @@ void GameScene::Update() {
 	
 	
 
-	StageManager::GetInstance().Update();
-	for (auto pObj : pGameObjectArray) {
-		pObj->Update();
-	}
-	EnemyManager::GetInstance().Update();
+	
 }
 
 void GameScene::Render() {

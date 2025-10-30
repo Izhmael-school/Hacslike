@@ -38,6 +38,7 @@ private:
     int desPosY;
     std::string itemName;
     std::string itemDes;
+    std::string itemEffect;
     int itemEffectValue;
     int itemValue;
 
