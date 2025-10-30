@@ -6,6 +6,7 @@
 #include"../GameObject/Item/ItemEquip/ItemEquip.h"
 #include"../GameObject/Item/ItemHeal/ItemHeal.h"
 #include"../Manager/ItemDropManager.h"
+#include"../GameObject/Coin/Coin.h"
 
 
 GameScene::GameScene() {
@@ -69,6 +70,15 @@ void GameScene::Update() {
 			VECTOR spawnPos = Character::player->GetPosition();
 			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
+		// --- アイテムドロップテスト ---
+		if (input->IsKeyDown(KEY_INPUT_G))
+		{
+			VECTOR spawnPos = Character::player->GetPosition();
+
+			// コインを生成
+			Coin::GetInstance()->SpawnCoin(VGet(spawnPos.x + 70, 5.0f, spawnPos.z + 70));
+
+		}
 		StageManager::GetInstance().Update();
 		for (auto pObj : pGameObjectArray) {
 			pObj->Update();
@@ -99,7 +109,7 @@ void GameScene::Update() {
 	}
 #pragma endregion
 	
-	
+	Coin::GetInstance()->UpdateAll();
 
 	
 }
@@ -113,6 +123,7 @@ void GameScene::Render() {
 	}
 	EnemyManager::GetInstance().Render();
 
+	Coin::GetInstance()->RenderAll();
 	// ★スキル選択画面の描画
 	if (isSelectingSkill)
 	{

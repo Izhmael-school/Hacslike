@@ -12,6 +12,7 @@
 #include"Manager/ItemDropManager.h"
 #include"Manager/EffectManager.h"
 #include <EffekseerForDXLib.h>
+#include "GameObject/Coin/Coin.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -112,6 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SkillManager::DestroyInstance();
 	ItemDropManager::DestroyInstance();
 	EffectManager::DestroyInstance();
+	Coin::DestroyInstance();
 	Effkseer_End();
 	// DxLibÇÃèIóπ
 	DxLib_End();

@@ -114,6 +114,9 @@
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClCompile>
     <ClCompile Include="Scr\Scene\GameScene.cpp" />
+    <ClCompile Include="Scr\GameObject\Coin\Coin.cpp">
+      <Filter>GameObject\Coin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -238,6 +241,9 @@
     <ClInclude Include="Scr\CommonModule.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Coin\Coin.h">
+      <Filter>GameObject\Coin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -299,6 +305,9 @@
     </Filter>
     <Filter Include="GameObject\Item\ItemEquip">
       <UniqueIdentifier>{002c9761-79d1-48b7-bd8d-8ba2eb7205cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Coin">
+      <UniqueIdentifier>{cf11c74b-37cd-459d-beb5-37616f7d275f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

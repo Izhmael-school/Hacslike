@@ -7,6 +7,7 @@
 #include "../Hacslike/Scr/Manager/WeaponManager.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
+#include "../../Coin/Coin.h"
 
 /*
  *	@brief		コンストラクタ
@@ -719,6 +720,21 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 
 		//SceneManager::GetInstance()->SetNext(SceneType::GameOver);
 		FadeManager::GetInstance()->FadeOut();
+	}
+	if (_pCol->GetGameObject()->GetTag() == "Coin") {
+
+
+		auto& coins = Coin::GetInstance()->GetCoin();
+
+		for (auto& coin : coins) {
+			// 衝突したコインオブジェクトと一致した場合のみ処理
+			if (coin.get() == _pCol->GetGameObject()) {
+				coin->SetVisible(false);
+				coin->ApplyCoin(this);
+				Coin::GetInstance()->RemoveCoin(coin.get());
+				break; // 削除したのでループを抜ける
+			}
+		}
 	}
 }
 
