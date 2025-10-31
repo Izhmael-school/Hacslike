@@ -69,5 +69,7 @@ public:
 	int GetNowRoomNum(VECTOR pos);
 
 	VECTOR GetRandomRoomRandomPos();
+
+	void AppearHiddenStair();
 };
 

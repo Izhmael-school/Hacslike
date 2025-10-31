@@ -22,13 +22,6 @@ void Camera::Start() {
 }
 
 void Camera::Update() {
-
-	//インスタンス
-	InputManager* input = InputManager::GetInstance();
-
-	
-
-
 	//中心点が原点で半径1の球面上の座標
 	VECTOR sphere = VGet(
 		sinf(Deg2Rad(rotation.x - 90)) * sinf(Deg2Rad(rotation.y)),

@@ -10,6 +10,10 @@ void SkillSelectUI::StartSelection()
 
 int SkillSelectUI::UpdateSelection()
 {
+<<<<<<< Updated upstream
+=======
+    InputManager* input = &InputManager::GetInstance();
+>>>>>>> Stashed changes
     if (!isActive) return -1;
 
     if (CheckHitKey(KEY_INPUT_LEFT))

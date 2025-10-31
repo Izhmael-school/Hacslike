@@ -18,7 +18,7 @@ Player::Player(VECTOR _pos)
 	, pWeapon(nullptr)
 	, XY()
 	, inputVec()
-	, input(InputManager::GetInstance())
+	, input(&InputManager::GetInstance())
 	, slashes()								//	斬撃
 	, attackIndex(0)						//	コンボが何段目か
 	, attackTimer(0.0f)						//	クールタイム
@@ -158,6 +158,8 @@ void Player::Update() {
  *	@breif		描画処理
  */
 void Player::Render() {
+	DrawFormatString(100, 100, red, "x:%d z:%d", (int)position.x, (int)position.z);
+
 	//	非表示だったら描画しない
 	if (!isVisible)
 		return;
@@ -330,7 +332,7 @@ void Player::CreateAttackHitbox(float length, float radius) {
 /// </summary>
 void Player::EvasionInput() {
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || input->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
 		// 押した瞬間＆クールダウン終了時のみ回避
@@ -345,7 +347,7 @@ void Player::EvasionInput() {
 
 	// ===== 毎フレームクールダウン減算 =====
 	if (evasionCooldown > 0.0f)
-		evasionCooldown -= TimeManager::GetInstance()->deltaTime;
+		evasionCooldown -= TimeManager::GetInstance().deltaTime;
 }
 
 /// <summary>
@@ -374,7 +376,7 @@ void Player::Evasion() {
 void Player::UpdateBlink() {
 	// --- ブリンク中の処理 ---
 	if (isBlinking && !isAttacking) {
-		blinkTimer -= TimeManager::GetInstance()->deltaTime;   // 1フレーム経過（60FPS想定）
+		blinkTimer -= TimeManager::GetInstance().deltaTime;   // 1フレーム経過（60FPS想定）
 		if (blinkTimer <= 0.0f) {
 			isBlinking = false;
 			Dash();
@@ -398,7 +400,7 @@ void Player::UpdateBlink() {
 /// </summary>
 void Player::AttackInput() {
 	// ===== 攻撃入力 =====
-	bool isButtonDown = /*input->IsKey(KEY_INPUT_LCONTROL) && */input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
+	bool isButtonDown = /*input->IsKey(KEY_INPUT_LCONTROL) && */input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_BUTTON_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
@@ -465,7 +467,7 @@ void Player::AttackInput() {
 
 	// ===== 攻撃中のタイマー管理 =====
 	if (isAttacking) {
-		attackTimer += TimeManager::GetInstance()->deltaTime;
+		attackTimer += TimeManager::GetInstance().deltaTime;
 
 
 		if (pWeapon->GetType() == 0) {

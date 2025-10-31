@@ -6,7 +6,9 @@ Enemy::Enemy()
 	, rayCount(15)
 	, rayLenght(1000)
 	, raySpan(0.5f)
-	, rayTime(raySpan) {
+	, rayTime(raySpan) 
+	, moveSpeed(1)
+{
 	Start();
 }
 
@@ -19,6 +21,8 @@ void Enemy::Start() {
 
 void Enemy::Update() {
 	if (!isVisible) return;
+
+	IsDead();
 
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
@@ -52,6 +56,13 @@ void Enemy::IsDead() {
 	hp = 0;
 
 	pAnimator->Play("dead");
+
+	SetVisible(false);
+
+	if (!isBoss) return;
+	StageManager::GetInstance().AppearHiddenStair();
+
+
 }
 
 /// <summary>
@@ -60,12 +71,12 @@ void Enemy::IsDead() {
 /// </summary>
 bool Enemy::Vision_Ray() {
 	// レイの更新
-	if (rayTime >= raySpan)
-		rayTime = 0;
-	else {
-		rayTime += TimeManager::GetInstance()->deltaTime;
-		return false;
-	}
+	//if (rayTime >= raySpan)
+	//	rayTime = 0;
+	//else {
+	//	rayTime += TimeManager::GetInstance()->deltaTime;
+	//	return false;
+	//}
 
 	float startAngle = -rayAngle / 2;
 	float angleStep = rayAngle / (rayCount - 1);
@@ -105,7 +116,7 @@ bool Enemy::Vision_Circle(float r) {
 	if (rayTime >= raySpan)
 		rayTime = 0;
 	else {
-		rayTime += TimeManager::GetInstance()->deltaTime;
+		rayTime += TimeManager::GetInstance().deltaTime;
 		return false;
 	}
 
@@ -120,16 +131,20 @@ bool Enemy::Vision_Circle(float r) {
 	return false;
 }
 
-bool Enemy::Vision_Fan() {
+/// <summary>
+/// 計算を用いた扇型判定
+/// </summary>
+/// <returns></returns>
+bool Enemy::Vision_Fan(VECTOR targetPos) {
 	// レイの更新
-	if (rayTime >= raySpan)
-		rayTime = 0;
-	else {
-		rayTime += TimeManager::GetInstance()->deltaTime;
-		return false;
-	}
+	//if (rayTime >= raySpan)
+	//	rayTime = 0;
+	//else {
+	//	rayTime += TimeManager::GetInstance()->deltaTime;
+	//	return false;
+	//}
 
-	point.position = GetPlayer()->GetPosition();
+	point.position = targetPos;
 
 	fan.position = position;
 	fan.directionDegree = rotation.y;
@@ -151,7 +166,7 @@ bool Enemy::Vision_Fan() {
 
 	// 扇を２等分する線のベクトルを求める
 	float dirRad = Deg2Rad(fan.directionDegree);
-	VECTOR fanDir = VGet(sinf(dirRad), 0, cosf(dirRad));
+	VECTOR fanDir = VGet(cosf(dirRad), 0, sinf(dirRad));
 
 	// 扇と点のベクトルを単位ベクトルにする
 	VECTOR normalFanToPoint = {
@@ -164,10 +179,44 @@ bool Enemy::Vision_Fan() {
 	float dot = normalFanToPoint.x * fanDir.x + normalFanToPoint.z * fanDir.z;
 
 	// 扇の範囲をcosにする
-	float fanCos = -cosf(Deg2Rad(fan.rangeDegree / 2));
+	float fanCos = cosf(Deg2Rad(fan.rangeDegree / 2));
 
 	// 点が扇の範囲内にあるか比較
 	if (fanCos < dot) return false; // 当たってない
 
 	return true;
+}
+
+void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
+	VECTOR dir = VSub(targetPos, position);
+
+	rotation.y = Rad2Deg(atan2f(dir.x, dir.z));
+
+	return;
+
+	float dot = Dot(axis, dir);
+	float theta = acosf(dot);
+	VECTOR cross = Cross(axis, targetPos);
+	cross = Normalize(cross);
+	theta = theta / 2;
+}
+
+/// <summary>
+/// 追跡
+/// </summary>
+void Enemy::Tracking() {
+	VECTOR targetPos = GetPlayer()->GetPosition();
+	if (!Vision_Fan(targetPos)) return;
+
+	LookTarget(targetPos);
+
+	Move(targetPos);
+}
+
+void Enemy::Move(VECTOR targetPos) {
+	pAnimator->Play("walk");
+	VECTOR dir = VSub(targetPos, position);
+	float d = TimeManager::GetInstance().deltaTime;
+	VECTOR pos = VAdd(position, VGet(dir.x * d * moveSpeed,0,dir.z * d * moveSpeed));
+	SetPosition(pos);
 }

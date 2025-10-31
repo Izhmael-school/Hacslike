@@ -1,26 +1,6 @@
 #include "TimeManager.h"
 #include <DxLib.h>
 #include "../Definition.h"
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
-TimeManager* TimeManager::pInstance = nullptr;
-
-void TimeManager::CreateInstance() {
-	pInstance = new TimeManager();
-}
-
-TimeManager* TimeManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void TimeManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
-}
 
 TimeManager::TimeManager() 
 	:prev()

@@ -91,6 +91,7 @@ void Animator::Play(std::string _name, float _speed) {
 		if (pAnimations[i]->name != _name) continue;
 
 		Play(i, _speed);
+		break;
 	}
 	return;
 }

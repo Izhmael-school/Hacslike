@@ -72,8 +72,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 更新処理
 		SceneManager::GetInstance()->Update();
-		TimeManager::GetInstance()->Update();
-		InputManager::GetInstance()->Update();
+		TimeManager::GetInstance().Update();
+		InputManager::GetInstance().Update();
 		CollisionManager::GetInstance()->Update();
 
 		// 画面をクリアする
@@ -84,7 +84,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		CollisionManager::GetInstance()->Render();
 
 		// エスケープキーでウィンドウを閉じる
-		if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
+		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE))
 			break;
 
 		// 裏画面と表画面を切り替える
@@ -92,17 +92,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 処理が速すぎたら待つ
 		while (1) {
-			if (GetNowCount() - TimeManager::GetInstance()->GetCurrent() >= 1000 / FPS)
+			if (GetNowCount() - TimeManager::GetInstance().GetCurrent() >= 1000 / FPS)
 				break;
 		}
 
 	}
 
 	SceneManager::DestroyInstance();
+<<<<<<< Updated upstream
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
 	StageManager::DestroyInstance();
 
+=======
+	SkillManager::DestroyInstance();
+	ItemDropManager::DestroyInstance();
+	EffectManager::DestroyInstance();
+	Effkseer_End();
+>>>>>>> Stashed changes
 	// DxLibの終了
 	DxLib_End();
 

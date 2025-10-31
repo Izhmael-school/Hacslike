@@ -5,6 +5,17 @@
 
 class StageCell;
 
+<<<<<<< Updated upstream
+=======
+struct StageData {
+	int id;
+	int stageData[mapWidth_Large][mapHeight_Large];
+	VECTOR playerSpawnPos;
+	VECTOR bossSpawnPos;
+	VECTOR stairSpawnPos;
+};
+
+>>>>>>> Stashed changes
 class StageGenerator {
 private:
 	int groundModel = -1;
@@ -76,5 +87,12 @@ public:
 	int GetNowRoomNum(VECTOR pos);
 
 	VECTOR GetRandomRoomRandomPos();
+<<<<<<< Updated upstream
+=======
+	// 読み込んだステージデータの取得
+	inline StageData GetStageData() { return stage; }
+	// 隠し階段の出現
+	void AppearHiddenStair();
+>>>>>>> Stashed changes
 };
 

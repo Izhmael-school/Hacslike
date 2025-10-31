@@ -22,7 +22,7 @@ public:
 	void Update();
 	void Render();
 
-	void SpawnEnemy(EnemyType type, VECTOR pos);
+	void SpawnEnemy(EnemyType type, VECTOR pos,bool _isBoss = false);
 	Enemy* UseEnemy(EnemyType type);
 	void UnuseEnemy(Enemy* enemy);
 	void UnuseAllEnemy();

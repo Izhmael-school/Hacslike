@@ -11,6 +11,7 @@ protected:
 	float raySpan;		// レイが更新される間隔
 	float rayTime;			// レイが更新される時間
 
+	float moveSpeed;
 protected:
 	struct Point {
 		VECTOR position;
@@ -32,6 +33,7 @@ protected:
 	};
 public:
 	EnemyType type;
+	bool isBoss;
 
 public:
 	Enemy();
@@ -44,8 +46,15 @@ public:
 	virtual void IsDead();
 	virtual bool Vision_Ray();
 	virtual bool Vision_Circle(float r);
-	virtual bool Vision_Fan();
+	virtual bool Vision_Fan(VECTOR targetPos);
+
+	void LookTarget(VECTOR targetPos , VECTOR axis = VUp);
+	virtual void Tracking();
+	virtual void Move(VECTOR targetPos);
 
 	inline EnemyType GetType() const { return type; }
+
+	inline void SetBoss(bool _isBoss) { isBoss = _isBoss; }
+	inline bool IsBoss() const { return isBoss; }
 };
 

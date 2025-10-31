@@ -25,6 +25,7 @@ void GameScene::Start() {
 	pGameObjectArray.push_back(pCamera);
 
 	pCamera->SetTarget(pPlayer);
+<<<<<<< Updated upstream
 	StageManager::GetInstance()->GenerateStage();
 }
 
@@ -35,16 +36,99 @@ void GameScene::Update() {
 
 	StageManager::GetInstance()->Update();
 	EnemyManager::GetInstance().Update();
+=======
+
+	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
+
+	//アイテムのセット
+	auto& factory = ItemFactory::Instance(); {
+		factory.RegisterItem("Potion_Small", []() {
+			return std::make_unique<ItemHeal>(VGet(0, 0, 0), "ポーション(小)", "体力を少し回復する", 50, 20); });
+
+		factory.RegisterItem("Sword_Iron", []() {
+			return std::make_unique<ItemSword>(VGet(0, 0, 0), "剣", "普通の剣", 150, 10); });
+		factory.RegisterItem("Axe", []() {
+			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "斧", "普通の斧", 200, 30); });
+	}
+	StageManager::GetInstance().GenerateStage(0);
+}
+
+void GameScene::Update() {
+#pragma region プロト用スキルとアイテム
+	// ★スキル選択中でなければ通常処理を行う
+	if (!isSelectingSkill)
+	{
+		InputManager* input = &InputManager::GetInstance();
+
+		EffectManager::GetInstance()->Update();
+		ItemDropManager::GetInstance()->Update();
+
+		// --- Hキーでスキル選択画面を開く ---
+		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER))
+		{
+			skillChoices = SkillManager::GetInstance()->GenerateSkillChoices();
+			skillUI.StartSelection();
+			isSelectingSkill = true;
+		}
+
+		// --- アイテムドロップテスト ---
+		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_BUTTON_LEFT_SHOULDER))
+		{
+			VECTOR spawnPos = Character::player->GetPosition();
+			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
+		}
+	}
+	else
+	{
+		// ★スキル選択中の処理
+		int selected = skillUI.UpdateSelection();
+		if (selected != -1)
+		{
+			// プレイヤー取得
+			Player* player = nullptr;
+			for (auto p : pGameObjectArray)
+			{
+				player = dynamic_cast<Player*>(p);
+				if (player) break;
+			}
+
+			if (player && selected >= 0 && selected < (int)skillChoices.size())
+			{
+				SkillManager::GetInstance()->ApplySelectedSkill(player, skillChoices[selected]);
+			}
+
+			isSelectingSkill = false;
+		}
+	}
+#pragma endregion
+	
+	
+
+	StageManager::GetInstance().Update();
+	EnemyManager::GetInstance().Update();
+	for (auto pObj : pGameObjectArray) {
+		pObj->Update();
+	}
+>>>>>>> Stashed changes
 }
 
 void GameScene::Render() {
 
+<<<<<<< Updated upstream
 	for (auto pObj : pGameObjectArray) {
 		pObj->Render();
 	}
 
 	StageManager::GetInstance()->Render();
 	EnemyManager::GetInstance().Render();
+=======
+
+	StageManager::GetInstance().Render();
+	EnemyManager::GetInstance().Render();
+	for (auto pObj : pGameObjectArray) {
+		pObj->Render();
+	}
+>>>>>>> Stashed changes
 
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する

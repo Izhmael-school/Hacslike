@@ -55,9 +55,15 @@ void StageManager::GenerateStage() {
 	floorCount++;
 	
 	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
+<<<<<<< Updated upstream
 
 	generator->StageGenerate();
 	SetObject(Character::player);
+=======
+	generator->GenerateStageData();
+	generator->GenerateStageObject();
+	SetGameObjectRandomPos(Character::player);
+>>>>>>> Stashed changes
 
 	for (int i = 0; i < 10; i++) {
 
@@ -65,7 +71,27 @@ void StageManager::GenerateStage() {
 	}
 }
 
+<<<<<<< Updated upstream
 void StageManager::SetObject(GameObject* obj) {
+=======
+void StageManager::GenerateStage(int stageID) {
+	// ステージの初期化
+	generator->ClearStage();
+	// フロアの加算
+	floorCount++;
+	// フロアデータの読み込み
+	generator->LoadStageData(stageID);
+	// フロアの生成
+	generator->GenerateStageObject();
+	// プレイヤーの配置
+	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
+	// ボスの配置
+	VECTOR pos = generator->GetStageData().bossSpawnPos;
+	EnemyManager::GetInstance().SpawnEnemy(Goblin, VGet(pos.x * CellSize, 0, pos.z * CellSize),true);
+}
+
+void StageManager::SetGameObjectRandomPos(GameObject* obj) {
+>>>>>>> Stashed changes
 	generator->SetGameObjectRandomPos(obj);
 }
 
@@ -79,6 +105,10 @@ int StageManager::GetNowRoomNum(VECTOR pos) {
 
 VECTOR StageManager::GetRandomRoomRandomPos() {
 	return generator->GetRandomRoomRandomPos();
+}
+
+void StageManager::AppearHiddenStair() {
+	generator->AppearHiddenStair();
 }
 
 

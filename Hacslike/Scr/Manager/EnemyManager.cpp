@@ -34,7 +34,7 @@ void EnemyManager::Render() {
 	}
 }
 
-void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
+void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos,bool _isBoss) {
 	switch (type) {
 	case Goblin:
 		if (unuseGoblinArray.size() > 0) {
@@ -51,6 +51,7 @@ void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 	}
 
 	pEnemyArray[pEnemyArray.size() - 1]->SetPosition(pos);
+	pEnemyArray[pEnemyArray.size() - 1]->SetBoss(_isBoss);
 }
 
 Enemy* EnemyManager::UseEnemy(EnemyType type) {

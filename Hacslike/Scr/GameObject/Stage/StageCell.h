@@ -37,5 +37,6 @@ public:
 	inline ObjectType GetObjectType() const { return type; }
 	void OnTriggerEnter(Collider* _pOther) override;
 	void OnTriggerExit(Collider* _pOther) override;
+
 };
 

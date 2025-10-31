@@ -103,6 +103,5 @@ public:	// Õ“ËŒŸ’m
 	virtual void OnTriggerStay(Collider* _pOther);
 	// o‚½‚Æ‚«
 	virtual void OnTriggerExit(Collider* _pOther);
-
 };
 

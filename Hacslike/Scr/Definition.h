@@ -34,7 +34,12 @@
 
 #define EnemyMax (10)
 
+<<<<<<< Updated upstream
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
+=======
+#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/maya_Player.mv1"))
+#define PAD_PORT_MAX (4)
+>>>>>>> Stashed changes
 
 // ステージ関連
 #define mapWidth_Large (64)	// マップの横サイズ
@@ -88,6 +93,7 @@ enum ObjectType {
 	Wall,
 	Road,
 	Stair,
+	HiddenStair	// ボスを倒した後に出てくる階段
 };
 
 enum WeaponType {

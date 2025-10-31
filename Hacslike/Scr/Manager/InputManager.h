@@ -1,64 +1,25 @@
 #pragma once
+#include <windows.h>
+#define DX_NON_USING_NAMESPACE_DXLIB
+#define DX_NON_NAMESPACE
+#include <XInput.h>
 #include <Dxlib.h>
+#include "../Component/Singleton.h"
 
-class InputManager {
-#pragma region シングルトンのデータ構造
-private:	// 静的メンバ変数
-	static InputManager* pInstance;	// 自身のインスタンスのアドレスを格納
-
-
-private:	// コンストラクタとデストラクタ
-	/*
-	 * @brief	コンストラクタ
-	 * @tip		外部で生成されないようにアクセス指定子をprivateにする
-	 */
-	InputManager();
-
-	/*
-	 * @brief	デストラクタ
-	 */
-	~InputManager() = default;
-
-public:	//コピーと譲渡禁止
-	InputManager(const InputManager&) = delete;
-	InputManager& operator = (const InputManager&) = delete;
-	InputManager(InputManager&&) = delete;
-	InputManager& operator = (InputManager&&) = delete;
-
-private:	// 静的メンバ関数
-	/*
-	 * @function	CreateInstance
-	 * @brief		自信のインスタンスを生成する
-	 */
-	static void CreateInstance();
-
-public:	// 静的メンバ関数
-	/*
-	 * @function	GetInstance
-	 * @brief		自信のインスタンスを取得する唯一の手段
-	 * @return		InputManager*	自身のインスタンスのアドレス
-	 */
-	static InputManager* GetInstance();
-
-	/*
-	 * @function	DestroyInstance
-	 * @brief		自信のインスタンスを破棄する唯一の手段
-	 */
-	static void DestroyInstance();
-#pragma endregion
-
+class InputManager : public Singleton<InputManager> {
 private:
 	char keyState[256];
 	char prevkeyState[256];
 
-	XINPUT_STATE padState;
-	XINPUT_STATE padPrevState;
+	::XINPUT_STATE padState;
+	::XINPUT_STATE prevPadState;
 
-	int prevMouse;
-	int mouse = GetMouseInput();
+	int prevMouseInput;
+	int mouseInput;
+public:	// メンバ変数	
 
-	bool isPadActive;
-public:	// メンバ変数
+	InputManager();
+	~InputManager() = default;
 	// 更新処理
 	void Update();
 
@@ -75,24 +36,24 @@ public:	// キーボード入力用
 
 #pragma region パッド用
 	// キーが押されたか
-	inline bool IsButtonDown(int _key) { return !padPrevState.Buttons[_key] && padState.Buttons[_key]; }
+	inline bool IsButtonDown(int _key) { return !(prevPadState.Gamepad.wButtons & _key) && (padState.Gamepad.wButtons & _key); }
 
 	// キーが押されているか
-	inline bool IsButton(int _key) { return padState.Buttons[_key]; }
+	inline bool IsButton(int _key) { return padState.Gamepad.wButtons & _key; }
 
 	// キーが離されたか
-	inline bool IsButtonUp(int _key) { return padPrevState.Buttons[_key] && !padState.Buttons[_key]; }
+	inline bool IsButtonUp(int _key) { return (prevPadState.Gamepad.wButtons & _key) && !(padState.Gamepad.wButtons & _key); }
 #pragma endregion
 
 #pragma region マウス用
 	// クリックされたか
-	inline bool IsMouseDown(int _mouse) const { return !(prevMouse & _mouse) && (mouse & _mouse); }
+	inline bool IsMouseDown(int _mouse) const { return !(prevMouseInput & _mouse) && (mouseInput & _mouse); }
 
 	// クリックされているか
-	inline bool IsMouse(int _mouse) const { return (mouse & _mouse); }
+	inline bool IsMouse(int _mouse) const { return (mouseInput & _mouse); }
 
 	// クリックが離されたか
-	inline bool IsMouseUp(int _mouse) const { return (prevMouse & _mouse) && !(mouse & _mouse); }
+	inline bool IsMouseUp(int _mouse) const { return (prevMouseInput & _mouse) && !(mouseInput & _mouse); }
 #pragma endregion
 
 };

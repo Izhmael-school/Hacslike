@@ -103,8 +103,23 @@ void StageGenerator::Update() {
 }
 
 void StageGenerator::Render() {
+	VECTOR p = Character::player->GetPosition();
+
 	for (auto c : cells) {
+<<<<<<< Updated upstream
 		if (useStair == nullptr) continue;
+=======
+
+		if (c->GetObjectType() == Wall) {
+			int x = c->GetPosition().x;
+			int z = c->GetPosition().z + CellSize;
+			if (p.x >= x - CellSize / 2 && p.x < x + CellSize / 2 &&
+				p.z >= z - CellSize / 2 && p.z < z + CellSize / 2) 
+				return;
+		}
+
+
+>>>>>>> Stashed changes
 		c->Render();
 	}
 
@@ -157,8 +172,86 @@ void StageGenerator::ClearStage() {
 
 void StageGenerator::StageGenerate() {
 
+<<<<<<< Updated upstream
 	int mapWidth = 0;
 	int mapHeight = 0;
+=======
+	// オブジェクトを生成する
+	for (int nowH = 0; nowH < mapHeight; nowH++) {
+		for (int nowW = 0; nowW < mapWidth; nowW++) {
+			int dupMHandle = -1;
+
+			if (!CheckEightDir(nowW, nowH)) continue;
+
+			// セルの生成
+			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
+			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
+			if (c->GetObjectType() == Stair) {
+				useStair = c;
+			}
+			else {
+				cells.push_back(c);
+			}
+		}
+	}
+}
+
+/// <summary>
+/// 分割点2点のうち大きいほうを分割する
+/// </summary>
+/// <param name="x"></param>
+/// <param name="y"></param>
+/// <returns></returns>
+bool StageGenerator::SplitPoint(int _x, int _y) {
+	// 最小分割可能サイズチェック（十分な余裕が無ければ分割不可）
+	int minNeeded = roomMinNum * 2 + (offsetWall * 4);
+	if (_x < minNeeded && _y < minNeeded) {
+		return false;
+	}
+
+	if (_x > _y) {
+		int min = roomMinNum + (offsetWall * 2);
+		int max = _x - (offsetWall * 2 + roomMinNum);
+		if (max <= min) return false; // 範囲不備 -> 分割不能
+		line = Random(min, max);
+		return true;
+	}
+	else {
+		int min = roomMinNum + (offsetWall * 2);
+		int max = _y - (offsetWall * 2 + roomMinNum);
+		if (max <= min) return false; // 範囲不備 -> 分割不能
+		line = Random(min, max);
+		return false;
+	}
+}
+
+void StageGenerator::SetGameObjectRandomPos(GameObject* obj) {
+	VECTOR pos;
+	while (1) {
+
+		int rand = GetRand(roomNum - 1);
+		int x = Random(roomStatus[RoomStatus::rx][rand], roomStatus[RoomStatus::rx][rand] + roomStatus[RoomStatus::rw][rand] - 1);
+		int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
+
+		if (mapObjects[x][y]) continue;
+
+		mapObjects[x][y] = true;
+
+		pos = VGet(x * CellSize, 0, y * CellSize);
+		if (map[x][y] == 0) break;
+	}
+
+	obj->SetPosition(pos);
+}
+
+void StageGenerator::SetGameObject(GameObject* _obj, VECTOR _pos) {
+	VECTOR pos = VGet(_pos.x * CellSize, 0, _pos.z * CellSize);
+
+	_obj->SetPosition(pos);
+}
+
+void StageGenerator::GenerateStageData() {
+>>>>>>> Stashed changes
 	int roomMax = 0;
 
 	// フロアの大きさを決める
@@ -486,10 +579,26 @@ bool StageGenerator::SplitPoint(int _x, int _y) {
 	//	return false;
 	//}
 
+<<<<<<< Updated upstream
 	   // 最小分割可能サイズチェック（十分な余裕が無ければ分割不可）
 	int minNeeded = roomMinNum * 2 + (offsetWall * 4);
 	if (_x < minNeeded && _y < minNeeded) {
 		return false;
+=======
+		stage.id = stageID;
+		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
+		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
+		stage.stairSpawnPos = VGet(s["stairSpawnPos"][0], 0, s["stairSpawnPos"][1]);
+
+		for (int i = 0; i < mapWidth_Large; i++) {
+			for (int j = 0; j < mapHeight_Large; j++) {
+				if (s["stageData"][i][j] == nullptr) continue;
+
+				// ステージのデータを入れる
+				map[i][j] = s["stageData"][i][j];
+			}
+		}
+>>>>>>> Stashed changes
 	}
 
 	if (_x > _y) {
@@ -715,6 +824,17 @@ VECTOR StageGenerator::GetRandomRoomRandomPos() {
 	int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
 
 	return VGet(defaultPos.x + x * CellSize, 0, defaultPos.z + y * CellSize);
+}
+
+void StageGenerator::AppearHiddenStair() {
+	for (auto c : cells) {
+		if (c->GetPosition().x != stage.stairSpawnPos.x * CellSize || c->GetPosition().z != stage.stairSpawnPos.z * CellSize) continue;
+		UnuseObject(c);
+		StageCell* s = StageManager::GetInstance().generator->UseObject(Stair);
+		s->SetPosition(VGet(stage.stairSpawnPos.x * CellSize, 0, stage.stairSpawnPos.z * CellSize));
+		StageManager::GetInstance().generator->useStair = s;
+		break;
+	}
 }
 
 

@@ -27,14 +27,19 @@ void StageCell::Update() {
 
 	MV1SetMatrix(modelHandle, matrix);
 
+<<<<<<< Updated upstream
 	if (isTouch && (InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X) || InputManager::GetInstance()->IsKeyDown(KEY_INPUT_X))) {
 		StageManager::GetInstance()->GenerateStage();
+=======
+	if (type != Stair) return;
+
+	if (isTouch && (InputManager::GetInstance().IsButtonDown(XINPUT_BUTTON_X) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_X))) {
+		StageManager::GetInstance().GenerateStage();
+>>>>>>> Stashed changes
 		isTouch = false;
 		return;
 	}
-
 	
-
 	if (pCollider != nullptr)
 		pCollider->Update();
 }
