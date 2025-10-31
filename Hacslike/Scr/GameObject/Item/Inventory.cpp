@@ -54,12 +54,17 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
         if (it != items.end()) {
             it->quantity++;
             printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
+            
+            OnItemGained(it->item.get(), it->quantity);
             return;
         }
     }
 
     // 新規登録（装備系や初取得の消費系）
     items.emplace_back(std::move(newItem), 1);
+    
+    InventoryItem& addedItem = items.back();
+    OnItemGained(addedItem.item.get(), addedItem.quantity);
 #if _DEBUG
     printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
     printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());
@@ -435,4 +440,95 @@ void Inventory::Render()
         // ヒント
         DrawString(px + 8, py + popupH - 18, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180));
     }
+}
+
+/// <summary>
+/// 入手したアイテムの取得
+/// </summary>
+/// <param name="item"></param>
+/// <param name="qty"></param>
+void Inventory::OnItemGained(const ItemBase* item, int qty)
+{
+    GainedItemInfo info;
+    info.name = item->GetName();
+    info.iconPath = item->GetItemIcon();
+    info.quantity = qty;
+    info.timer = 180;  // 約3秒
+    info.alpha = 255;
+
+    gainedItems.push_back(info);
+}
+
+/// <summary>
+/// アイテムの取得時のUI表示
+/// </summary>
+void Inventory::AddItemRender()
+{
+    if (gainedItems.empty()) return;
+
+    const int baseX = WINDOW_WIDTH - 350;
+    const int baseY = WINDOW_HEIGHT - 100; // 下部寄せ表示
+    const int iconSize = 28;
+    const int lineH = 36;
+    const int padding = 6;
+    const int boxW = 320;
+
+    int y = baseY;
+
+    for (auto& g : gainedItems)
+    {
+        // タイマー減少・フェード
+        g.timer--;
+        if (g.timer < 60) {
+            g.alpha = static_cast<int>(255.0f * (g.timer / 60.0f));
+            if (g.alpha < 0) g.alpha = 0;
+        }
+
+        // 背景と枠
+        int bgCol = GetColor(30, 30, 30);
+        int frameCol = GetColor(180, 180, 180);
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, g.alpha);
+        DrawBox(baseX, y, baseX + boxW, y + lineH, bgCol, TRUE);
+        DrawBox(baseX, y, baseX + boxW, y + lineH, frameCol, FALSE);
+
+        // アイコン描画
+        int iconHandle = -1;
+        auto itc = iconCache.find(g.iconPath);
+        if (itc != iconCache.end()) {
+            iconHandle = itc->second;
+        }
+        else {
+            int h = LoadGraph(g.iconPath.c_str());
+            if (h >= 0) {
+                iconCache.emplace(g.iconPath, h);
+                iconHandle = h;
+            }
+            else {
+                iconCache.emplace(g.iconPath, -1);
+                iconHandle = -1;
+            }
+        }
+
+        if (iconHandle >= 0) {
+            DrawExtendGraph(baseX + padding, y + 4, baseX + padding + iconSize, y + 4 + iconSize, iconHandle, TRUE);
+        }
+        else {
+            // アイコンなし時の代替
+            DrawBox(baseX + padding, y + 4, baseX + padding + iconSize, y + 4 + iconSize, GetColor(100, 100, 100), TRUE);
+        }
+
+        // 名前＋数量を描画
+        char buf[128];
+        snprintf(buf, sizeof(buf), "%s", g.name.c_str());
+        DrawString(baseX + padding + iconSize + 8, y + 8, buf, GetColor(255, 255, 255));
+
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+        y -= (lineH + 4); // 上方向に積み上げていく
+    }
+
+    // タイマー切れで削除
+    gainedItems.erase(
+        std::remove_if(gainedItems.begin(), gainedItems.end(),
+            [](const GainedItemInfo& g) { return g.timer <= 0; }),
+        gainedItems.end());
 }

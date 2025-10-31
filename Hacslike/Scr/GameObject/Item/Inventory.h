@@ -16,6 +16,17 @@ public:
 
         InventoryItem(std::unique_ptr<ItemBase> _item, int _quantity = 1);
     };
+/// <summary>
+/// アイテム取得表示用構造体
+/// </summary>
+    struct GainedItemInfo {
+        std::string name;
+        std::string iconPath;
+        int quantity;
+        int timer;    // 残り表示時間
+        int alpha;    // 透明度
+    };
+    std::vector<GainedItemInfo> gainedItems; // 取得リスト
 
 private:
     std::vector<InventoryItem> items;
@@ -77,6 +88,17 @@ public:
 
     void Update();
     void Render();
+    /// <summary>
+    /// 入手したアイテムの取得
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="qty"></param>
+    void OnItemGained(const ItemBase* item, int qty);
+
+    /// <summary>
+    /// アイテムの取得時のUI表示
+    /// </summary>
+    void AddItemRender();
 
 public:
     inline const std::vector<InventoryItem>& GetItems() const { return items; }
