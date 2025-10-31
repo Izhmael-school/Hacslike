@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "../../../Manager/FadeManager.h"
 #include "../../Camera/Camera.h"
 #include "../../../Component/Collider/Collider.h"
@@ -7,29 +7,20 @@
 #include "../Hacslike/Scr/Manager/WeaponManager.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
-#include "../../Coin/Coin.h"
 
 /*
- *	@brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
- *	@param[in]	VECTOR _pos		‰Šú‰»‚·‚éÀ•W
+ *	@brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+ *	@param[in]	VECTOR _pos		åˆæœŸåŒ–ã™ã‚‹åº§æ¨™
  */
 Player::Player(VECTOR _pos)
 	: Character(_pos, "Player", Lv, Exp, speed)
-	, isAttacking(false)
 	, pWeapon(nullptr)
 	, XY()
 	, inputVec()
 	, input(InputManager::GetInstance())
-	, slashes()								//	aŒ‚
-	, attackIndex(0)						//	ƒRƒ“ƒ{‚ª‰½’i–Ú‚©
-	, attackTimer(0.0f)						//	ƒN[ƒ‹ƒ^ƒCƒ€
-	, canNextAttack(false)					//	Ÿ‚ÌUŒ‚‚ª‚Å‚«‚é‚©
-	, CapsuleHitboxes()						//	1,2’i–Ú‚ÌHitBox(Capsule)
-	, SphereHitboxes()						//	3’i–Ú‚ÌHitBox(Sphere)
-	, isBlinking(false)						//	‰ñ”ğ‚Ì’·‰Ÿ‚µ–h~
-	, blinkTimer(0.0f)						//	‰ñ”ğ‚ÌƒN[ƒ‹ƒ_ƒEƒ“
-	, attackInputCooldown(0.0f)				//	
-	, attackButtonPressed(false)			//	
+	//, slashes()								//	æ–¬æ’ƒ
+	, isBlinking(false)						//	å›é¿ã®é•·æŠ¼ã—é˜²æ­¢
+	, blinkTimer(0.0f)						//	å›é¿ã®ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³
 	, evasionButtonPressed(false)			//	
 	, evasionCooldown(0.0f)
 	, evasionSpeed(1.0f)
@@ -38,16 +29,22 @@ Player::Player(VECTOR _pos)
 	, hitItem(false)
 	, isItemUI(false)
 	, coinValue()
-	, expValue() {
+	, expValue()
+	, criticalHitRate()
+	, criticalDamage() {
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
+	def = 2;
+	Exp = 0;
+	criticalHitRate = 10;
+	criticalDamage = 100;
 	Start();
 
 }
 
 /*
- *	@breif		ƒfƒXƒgƒ‰ƒNƒ^
+ *	@breif		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 Player::~Player() {
 	delete pWeapon;
@@ -58,10 +55,10 @@ Player::~Player() {
 
 /*
  *	@function	Start
- *	@breif		‰Šú‰»ˆ—
+ *	@breif		åˆæœŸåŒ–å‡¦ç†
  */
 void Player::Start() {
-	//	”ñ•\¦‚¾‚Á‚½‚ç‰Šú‰»‚µ‚È‚¢
+	//	éè¡¨ç¤ºã ã£ãŸã‚‰åˆæœŸåŒ–ã—ãªã„
 	if (!isVisible)
 		return;
 	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
@@ -73,7 +70,8 @@ void Player::Start() {
 
 	SetPlayer(this);
 
-	//	ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì“Ç‚İ‚İ
+
+	//	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®èª­ã¿è¾¼ã¿
 	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle", true);
 	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", "Walk", true);
 	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1", "Atk1");
@@ -89,12 +87,11 @@ void Player::Start() {
 
 	pAnimator->Play(0);
 
-	// c‘œƒf[ƒ^‰Šú‰»
+	// æ®‹åƒãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ–
 	for (int i = 0; i < AFTIMAGENUM; i++) {
 		afterImagePos[i] = position;
 		afterImageRotY[i] = rotation.y;
 	}
-
 
 	WeaponManager::GetInstance().LoadWeapons("Scr/Data/WeaponsData.json");
 	maxWeaponId = WeaponManager::GetInstance().GetMaxWeaponId();
@@ -110,49 +107,53 @@ void Player::Start() {
 		pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
 	}
 
+	playerAttack = new PlayerAttack(this, pWeapon);
+	
 	SetSpeed(1);
 }
 
 /*
  *	@function	Update
- *	@breif		XVˆ—
+ *	@breif		æ›´æ–°å‡¦ç†
  */
 void Player::Update() {
-	//	”ñ•\¦‚¾‚Á‚½‚çXV‚µ‚È‚¢
+	//	éè¡¨ç¤ºã ã£ãŸã‚‰æ›´æ–°ã—ãªã„
 	if (!isVisible)
 		return;
 	inputVec = VZero;
 
-	//	ˆÚ“®“ü—Í
+	//	ç§»å‹•å…¥åŠ›
 	MoveInput();
 
-	//	UŒ‚“ü—ÍEHitBoxXV
-	AttackInput();
+	////	æ”»æ’ƒå…¥åŠ›ãƒ»HitBoxæ›´æ–°
+	//AttackInput();
 
-	//	‰ñ”ğ“ü—Í
+	playerAttack->Update();
+
+	//	å›é¿å…¥åŠ›
 	EvasionInput();
 
-	//	Blink‚ÌUpdate
+	//	Blinkã®Update
 	UpdateBlink();
 
 	CheckWall();
 
-	//	ˆÚ“®EƒAƒjƒ[ƒVƒ‡ƒ“E‰ñ“]ˆ—
+	//	ç§»å‹•ãƒ»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ»å›è»¢å‡¦ç†
 	UpdateMovement();
 
-	//	aŒ‚XV
-	UpdateSlash();
+	//	æ–¬æ’ƒæ›´æ–°
+	//UpdateSlash();
 
 	MV1SetMatrix(modelHandle, matrix);
 
 	WeaponInput();
 
-	//ƒAƒCƒeƒ€‚Ìæ“¾
+	//ã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾—
 	AddItem();
-	//ƒAƒCƒeƒ€‚ÌƒCƒ“ƒxƒ“ƒgƒŠ•\¦”ñ•\¦
+	//ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªè¡¨ç¤ºéè¡¨ç¤º
 	OpenInventory();
 
-	//ƒAƒCƒeƒ€ƒCƒ“ƒxƒ“ƒgƒŠ‚ÌXV
+	//ã‚¢ã‚¤ãƒ†ãƒ ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã®æ›´æ–°
 	if (isItemUI) {
 		inventory.Update();
 	}
@@ -164,13 +165,12 @@ void Player::Update() {
 	pAnimator->Update();
 	GameObject::Update();
 
-	//	•Ší‚ÌXV
+	//	æ­¦å™¨ã®æ›´æ–°
 	if (pCollider != nullptr && pWeapon != nullptr) {
 		pWeapon->Update();
 	}
 
-	if (pCollider != nullptr) {
-		pCollider->Update();
+	if (pCollider != nullptr) {		pCollider->Update();
 	}
 
 }
@@ -178,71 +178,56 @@ void Player::Update() {
 
 /*
  *	@function	Render
- *	@breif		•`‰æˆ—
+ *	@breif		æç”»å‡¦ç†
  */
 void Player::Render() {
-	//	”ñ•\¦‚¾‚Á‚½‚ç•`‰æ‚µ‚È‚¢
+	//	éè¡¨ç¤ºã ã£ãŸã‚‰æç”»ã—ãªã„
 	if (!isVisible)
 		return;
-#pragma region ƒAƒCƒeƒ€‚ÌƒCƒ“ƒxƒ“ƒgƒŠ•\¦
-	inventory.AddItemRender();
-	
+#pragma region ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªè¡¨ç¤º
 	if (isItemUI) {
 		inventory.Render();
 		PlayerStatusRender();
 	}
 #pragma endregion
 
-#pragma region c‘œ•`‰æˆ—
-	// --- c‘œ•`‰æ ---
-	if (isBlinking && !isAttacking) {
+#pragma region æ®‹åƒæç”»å‡¦ç†
+	// --- æ®‹åƒæç”» ---
+	if (isBlinking && !playerAttack->IsAttacking()) {
 		for (int i = AFTIMAGENUM - 1; i >= 0; i -= 4) {
 			int alpha = 255 - 255 * i / AFTIMAGENUM;
 
-			// ƒ‚ƒfƒ‹‚ÌÀ•WE‰ñ“]İ’è
+			// ãƒ¢ãƒ‡ãƒ«ã®åº§æ¨™ãƒ»å›è»¢è¨­å®š
 			MATRIX matRot = MGetRotY(Deg2Rad(afterImageRotY[i]));
 			MATRIX matTrans = MGetTranslate(afterImagePos[i]);
 			MATRIX mat = MMult(matRot, matTrans);
 
 			MV1SetMatrix(modelHandle, mat);
 
-			// ”¼“§–¾•`‰æ
+			// åŠé€æ˜æç”»
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 			MV1DrawModel(modelHandle);
 		}
 	}
 #pragma endregion
 
-#pragma region ƒvƒŒƒCƒ„[‚Ì•`‰æ
-	// --- ’Êíƒ‚ƒfƒ‹•`‰æ ---
+#pragma region ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æç”»
+	// --- é€šå¸¸ãƒ¢ãƒ‡ãƒ«æç”» ---
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
 #pragma endregion
 
-#pragma region Slash•`‰æ
-	for (auto s : slashes) {
-		s->Render();
-	}
-#pragma endregion
+//#pragma region Slashæç”»
+//	for (auto s : slashes) {
+//		s->Render();
+//	}
+//#pragma endregion
+//
+//#pragma endregion
 
-#pragma region UŒ‚‚Ì“–‚½‚è”»’è•`‰æˆ—
-
-
-	// ƒqƒbƒgƒ{ƒbƒNƒX•`‰æiƒfƒoƒbƒOj
-	for (auto h : CapsuleHitboxes) {
-		h->Render();
-	}
-
-	// ƒqƒbƒgƒ{ƒbƒNƒX•`‰æiƒfƒoƒbƒOj
-	for (auto h : SphereHitboxes) {
-		h->Render();
-	}
-
-#pragma endregion
-
-#pragma region •Ší‚Ì•`‰æ
-	//	•Ší‚Ì•`‰æ
+#pragma region æ­¦å™¨ã®æç”»
+	//	æ­¦å™¨ã®æç”»
 	if (pCollider != nullptr && pWeapon != nullptr) {
 		pWeapon->Render();
 	}
@@ -250,32 +235,32 @@ void Player::Render() {
 }
 
 /// <summary>
-/// ˆÚ“®EƒAƒjƒ[ƒVƒ‡ƒ“E‰ñ“]ˆ—
+/// ç§»å‹•ãƒ»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ»å›è»¢å‡¦ç†
 /// </summary>
 void Player::UpdateMovement() {
-	if (!isAttacking) {
-		//	“ü—Í‚ª‚ ‚ê‚Î
+	if (!playerAttack->IsAttacking()) {
+		//	å…¥åŠ›ãŒã‚ã‚Œã°
 		if (VSquareSize(inputVec) >= 0.01f) {
-			//	“ü—ÍƒxƒNƒgƒ‹‚Ì³‹K‰»
+			//	å…¥åŠ›ãƒ™ã‚¯ãƒˆãƒ«ã®æ­£è¦åŒ–
 			inputVec = VNorm(inputVec);
 
 			inputVec = VScale(inputVec, speed);
 
 			inputVec = VScale(inputVec, evasionSpeed);
 
-			//	ƒJƒƒ‰‚©‚ç‚İ‚½ˆÚ“®‚·‚é•ûŒüƒxƒNƒgƒ‹
+			//	ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã¿ãŸç§»å‹•ã™ã‚‹æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 			VECTOR moveDirection = VZero;
 
-			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	ƒJƒƒ‰‚ÌY²‰ñ“]s—ñ
+			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	ã‚«ãƒ¡ãƒ©ã®Yè»¸å›è»¢è¡Œåˆ—
 			moveDirection = VTransform(inputVec, mRotY);
 
-			//	©g‚Ìy²‰ñ“]‚ğŒvZ‚µ‚½’l‚É•ÏX‚·‚é
+			//	è‡ªèº«ã®yè»¸å›è»¢ã‚’è¨ˆç®—ã—ãŸå€¤ã«å¤‰æ›´ã™ã‚‹
 			rotation.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
 
-			//	ŒvZ‚µ‚½“ü—ÍƒxƒNƒgƒ‹
+			//	è¨ˆç®—ã—ãŸå…¥åŠ›ãƒ™ã‚¯ãƒˆãƒ«
 			position = VAdd(position, VScale(moveDirection, 10.0f));
 
-			//	ˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶
+			//	ç§»å‹•ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿ
 			if (evasionSpeed >= 1.2f) {
 				pAnimator->Play(5, 0.5f);
 			}
@@ -283,7 +268,7 @@ void Player::UpdateMovement() {
 				pAnimator->Play(1, 1.3f);
 		}
 		else {
-			//	‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶
+			//	å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿ
 			pAnimator->Play(0);
 			evasionSpeed = 1;
 		}
@@ -292,19 +277,19 @@ void Player::UpdateMovement() {
 
 
 /// <summary>
-/// ˆÚ“®“ü—Í
+/// ç§»å‹•å…¥åŠ›
 /// </summary>
 void Player::MoveInput() {
 	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
 
-	//“ü—Íˆ—
+	//å…¥åŠ›å‡¦ç†
 	//inputVec = VZero;
 	inputVec = VGet(input->IsJoypadSthick("L_Horizontal"),
 		0.0f,
 		input->IsJoypadSthick("L_Vertical"));
 
-	
-	
+
+
 
 	if (input->IsKey(KEY_INPUT_W))
 		inputVec.z = inputVec.z + speed;
@@ -324,81 +309,42 @@ void Player::MoveInput() {
 }
 
 /// <summary>
-/// UŒ‚‚Ì“–‚½‚è”»’è”­¶ˆ—
-/// </summary>
-/// <param name="length"></param>
-/// <param name="radius"></param>
-void Player::CreateAttackHitbox(float length, float radius) {
-	//UnityÀ•WŒn‚Ì‘O•û
-	VECTOR forward = VNorm(VGet(
-		-sinf(Deg2Rad(rotation.y)),
-		0.0f,
-		-cosf(Deg2Rad(rotation.y))
-	));
-
-	VECTOR start, end;
-	float life = 0.20f;
-
-	if (attackIndex < 3) {
-		// 1`2’i–Ú ‘O•ûƒJƒvƒZƒ‹
-		start = VAdd(position, VScale(forward, 20.0f));
-		end = VAdd(start, VScale(forward, length));
-		CapsuleHitBox* CapHit = new CapsuleHitBox(this, start, end, radius, life);
-		CapHit->CreateCollider();
-		CapsuleHitboxes.push_back(CapHit);
-	}
-	else {
-		// 3’i–Ú üˆÍUŒ‚i‹…ó‚É‹ß‚¢ƒJƒvƒZƒ‹j
-		life = 0.25f;
-
-		// SphereHitBox ‚ğ¶¬
-		float life = 0.25f;
-		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
-
-		SphereHitBox* Shit = new SphereHitBox(this, offset, radius, life);
-		Shit->CreateCollider();
-		SphereHitboxes.push_back(Shit);
-	}
-
-}
-
-/// <summary>
-/// ‰ñ”ğ“ü—Í
+/// å›é¿å…¥åŠ›
 /// </summary>
 void Player::EvasionInput() {
-	// ===== ‰ñ”ğ“ü—Í =====
+	// ===== å›é¿å…¥åŠ› =====
 	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
-		// ‰Ÿ‚µ‚½uŠÔ•ƒN[ƒ‹ƒ_ƒEƒ“I—¹‚Ì‚İ‰ñ”ğ
+		// æŠ¼ã—ãŸç¬é–“ï¼†ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³çµ‚äº†æ™‚ã®ã¿å›é¿
 		evasionButtonPressed = true;
-		evasionCooldown = EVASION_COOLDOWN_TIME; // ƒN[ƒ‹ƒ_ƒEƒ“ŠJn
+		evasionCooldown = EVASION_COOLDOWN_TIME; // ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³é–‹å§‹
 		Evasion();
 	}
 	else if (!isEvasionButtonDown) {
-		// ƒ{ƒ^ƒ“‚ğ—£‚µ‚½‚ç‰Ÿ‰ºƒtƒ‰ƒOƒŠƒZƒbƒg
+		// ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸã‚‰æŠ¼ä¸‹ãƒ•ãƒ©ã‚°ãƒªã‚»ãƒƒãƒˆ
 		evasionButtonPressed = false;
 	}
 
-	// ===== –ˆƒtƒŒ[ƒ€ƒN[ƒ‹ƒ_ƒEƒ“Œ¸Z =====
+	// ===== æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³æ¸›ç®— =====
 	if (evasionCooldown > 0.0f)
 		evasionCooldown -= TimeManager::GetInstance()->deltaTime;
 }
 
 /// <summary>
-/// ‰ñ”ğ
+/// å›é¿
 /// </summary>
 void Player::Evasion() {
 	pCollider->SetEnable(false);
 
-	// uŠÔˆÚ“®
+	// ç¬é–“ç§»å‹•
 	evasionSpeed = 6;
 
-	// c‘œŠJn
+	// æ®‹åƒé–‹å§‹
 	isBlinking = true;
 	blinkTimer = 0.15f;
 
-	// --- —š—ğ‚ğ‚·‚×‚ÄŒ»İˆÊ’u‚ÉƒŠƒZƒbƒg ---
+	// --- å±¥æ­´ã‚’ã™ã¹ã¦ç¾åœ¨ä½ç½®ã«ãƒªã‚»ãƒƒãƒˆ ---
 	for (int i = 0; i < AFTIMAGENUM; i++) {
 		afterImagePos[i] = position;
 		afterImageRotY[i] = rotation.y;
@@ -406,23 +352,23 @@ void Player::Evasion() {
 }
 
 /// <summary>
-/// Blink‚ÌUpdate
+/// Blinkã®Update
 /// </summary>
 void Player::UpdateBlink() {
-	// --- ƒuƒŠƒ“ƒN’†‚Ìˆ— ---
-	if (isBlinking && !isAttacking) {
-		blinkTimer -= TimeManager::GetInstance()->deltaTime;   // 1ƒtƒŒ[ƒ€Œo‰ßi60FPS‘z’èj
+	// --- ãƒ–ãƒªãƒ³ã‚¯ä¸­ã®å‡¦ç† ---
+	if (isBlinking && !playerAttack->IsAttacking()) {
+		blinkTimer -= TimeManager::GetInstance()->deltaTime;   // 1ãƒ•ãƒ¬ãƒ¼ãƒ çµŒéï¼ˆ60FPSæƒ³å®šï¼‰
 		if (blinkTimer <= 0.0f) {
 			isBlinking = false;
 			Dash();
 			pCollider->SetEnable(true);
 		}
 
-		// æ‚ÉÅVˆÊ’u‚ğ“ü‚ê‚é
+		// å…ˆã«æœ€æ–°ä½ç½®ã‚’å…¥ã‚Œã‚‹
 		afterImagePos[0] = position;
 		afterImageRotY[0] = rotation.y;
 
-		// ŒÃ‚¢c‘œ‚ğŒã‚ë‚É‚¸‚ç‚·
+		// å¤ã„æ®‹åƒã‚’å¾Œã‚ã«ãšã‚‰ã™
 		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
 			afterImagePos[i] = afterImagePos[i - 1];
 			afterImageRotY[i] = afterImageRotY[i - 1];
@@ -430,201 +376,37 @@ void Player::UpdateBlink() {
 	}
 }
 
-/// <summary>
-/// UŒ‚“ü—ÍEHitBoxXV
-/// </summary>
-void Player::AttackInput() {
-	// ===== UŒ‚“ü—Í =====
-	bool isButtonDown = /*input->IsKey(KEY_INPUT_LCONTROL) && */input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
-
-	if (isButtonDown && !attackButtonPressed) {
-		// ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½uŠÔ‚¾‚¯ˆ—
-		attackButtonPressed = true;
-		if (pWeapon->GetType() == 0) {
-			if (!isAttacking && !isBlinking) {
-				// --- 1’i–ÚUŒ‚ ---
-				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				pAnimator->Play(2, pWeapon->GetAnimationSpeed(attackIndex - 1)); // UŒ‚1ƒ‚[ƒVƒ‡ƒ“
-			}
-			else if (canNextAttack && attackIndex < 3) {
-				// --- ƒRƒ“ƒ{“ü—Í ---
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				pAnimator->Play(2 + attackIndex - 1, pWeapon->GetAnimationSpeed(attackIndex - 1)); // UŒ‚2¨3
-			}
-		}
-
-		else if (pWeapon->GetType() == 1) {
-			if (!isAttacking && !isBlinking) {
-				// --- 1’i–ÚUŒ‚ ---
-				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				pAnimator->Play(9, pWeapon->GetAnimationSpeed(attackIndex - 1)); // UŒ‚1ƒ‚[ƒVƒ‡ƒ“
-			}
-			else if (canNextAttack && attackIndex < 3) {
-				// --- ƒRƒ“ƒ{“ü—Í ---
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				pAnimator->Play(9 + attackIndex - 1, pWeapon->GetAnimationSpeed(attackIndex - 1));
-			}
-		}
-
-		else if (pWeapon->GetType() == 2) {
-			if (!isAttacking && !isBlinking) {
-				// --- 1’i–ÚUŒ‚ ---
-				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				pAnimator->Play(6, pWeapon->GetAnimationSpeed(attackIndex - 1)); // UŒ‚1ƒ‚[ƒVƒ‡ƒ“
-			}
-			else if (canNextAttack && attackIndex < 3) {
-				// --- ƒRƒ“ƒ{“ü—Í ---
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				pAnimator->Play(6 + attackIndex - 1, pWeapon->GetAnimationSpeed(attackIndex - 1));
-			}
-		}
-	}
-
-	else if (!isButtonDown) {
-		// ƒ{ƒ^ƒ“‚ğ—£‚µ‚½‚çƒtƒ‰ƒOƒŠƒZƒbƒg
-		attackButtonPressed = false;
-	}
-
-	// ===== UŒ‚’†‚Ìƒ^ƒCƒ}[ŠÇ— =====
-	if (isAttacking) {
-		attackTimer += TimeManager::GetInstance()->deltaTime;
-
-
-		if (pWeapon->GetType() == 0) {
-
-			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
-
-			// UŒ‚”»’è¶¬
-			if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // üˆÍUŒ‚
-
-			if (attackTimer > 0.8f) {
-				isAttacking = false;
-				canNextAttack = false;
-				attackIndex = 0;
-			}
-		}
-
-		else if (pWeapon->GetType() == 1) {
-
-			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
-
-			// UŒ‚”»’è¶¬
-			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.3f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // üˆÍUŒ‚
-
-			if (attackIndex == 3) {
-				if (attackTimer > 2.78f) {
-					isAttacking = false;
-					canNextAttack = false;
-					attackIndex = 0;
-				}
-			}
-			else {
-				if (attackTimer > 1) {
-					isAttacking = false;
-					canNextAttack = false;
-					attackIndex = 0;
-				}
-			}
-		}
-
-		else if (pWeapon->GetType() == 2) {
-
-			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
-
-			// UŒ‚”»’è¶¬
-			if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f)
-				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // üˆÍUŒ‚
-
-			if (attackTimer > 1.2f) {
-				isAttacking = false;
-				canNextAttack = false;
-				attackIndex = 0;
-			}
-		}
-	}
-
-	// ƒqƒbƒgƒ{ƒbƒNƒXXV
-	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
-		CapsuleHitBox* h = *it;
-		h->Update();
-		if (h->IsDead()) {
-			delete h;
-			it = CapsuleHitboxes.erase(it);
-		}
-		else ++it;
-	}
-
-	for (auto it = SphereHitboxes.begin(); it != SphereHitboxes.end();) {
-		SphereHitBox* h = *it;
-		h->Update();
-		if (h->IsDead()) {
-			delete h;
-			it = SphereHitboxes.erase(it);
-		}
-		else ++it;
-	}
-}
+///// <summary>
+///// æ–¬æ’ƒæ›´æ–°
+///// </summary>
+//void Player::UpdateSlash() {
+//	for (auto it = slashes.begin(); it != slashes.end();) {
+//		Slash* s = *it;
+//		s->Update();
+//
+//		if (s->IsDead()) {
+//			delete s;
+//			it = slashes.erase(it);
+//		}
+//		else {
+//			++it;
+//		}
+//	}
+//}
 
 /// <summary>
-/// aŒ‚XV
-/// </summary>
-void Player::UpdateSlash() {
-	for (auto it = slashes.begin(); it != slashes.end();) {
-		Slash* s = *it;
-		s->Update();
-
-		if (s->IsDead()) {
-			delete s;
-			it = slashes.erase(it);
-		}
-		else {
-			++it;
-		}
-	}
-}
-
-/// <summary>
-/// ƒ_ƒbƒVƒ…
+/// ãƒ€ãƒƒã‚·ãƒ¥
 /// </summary>
 void Player::Dash() {
 	evasionSpeed = 1.2f;
 }
 
 /// <summary>
-/// •ŠíØ‚è‘Ö‚¦
+/// æ­¦å™¨åˆ‡ã‚Šæ›¿ãˆ
 /// </summary>
 /// <param name="weaponId"></param>
 void Player::ChangeWeapon(int weaponId) {
-	// Weapon ƒIƒuƒWƒFƒNƒg‚¾‚¯íœ
+	// Weapon ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã ã‘å‰Šé™¤
 	if (pWeapon) {
 		delete pWeapon;
 		pWeapon = nullptr;
@@ -633,7 +415,7 @@ void Player::ChangeWeapon(int weaponId) {
 	WeaponData* weaponData = WeaponManager::GetInstance().GetWeapon(weaponId);
 	if (!weaponData) return;
 
-	// V‚µ‚¢ Weapon ‚ğ¶¬•‘•”õ
+	// æ–°ã—ã„ Weapon ã‚’ç”Ÿæˆï¼†è£…å‚™
 	pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
 	pWeapon->SetColLength(weaponData->colLength);
 	pWeapon->SetColRadius(weaponData->colRadius);
@@ -641,15 +423,18 @@ void Player::ChangeWeapon(int weaponId) {
 	pWeapon->SetAnimationSpeed(weaponData->attackSpeed);
 	pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
 
-	// •K—v‚È‚ç Weapon Collider ‚àƒZƒbƒg
+	playerAttack->SetWeapon(pWeapon);
+
+	// å¿…è¦ãªã‚‰ Weapon Collider ã‚‚ã‚»ãƒƒãƒˆ
 	pWeapon->SetCollider(new CapsuleCollider(pWeapon, VZero, VScale(VDown, 0), 8.0f));
 }
 
 /// <summary>
-/// •ŠíØ‚è‘Ö‚¦“ü—Í
+/// æ­¦å™¨åˆ‡ã‚Šæ›¿ãˆå…¥åŠ›
 /// </summary>
 void Player::WeaponInput() {
-	if (input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed || input->IsButtonDown(XINPUT_BUTTON_BACK)) {
+	if ((input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed ||
+		input->IsButtonDown(XINPUT_BUTTON_BACK) && !changeWeaponButtonPressed) && !playerAttack->IsAttacking()) {
 		changeWeaponButtonPressed = true;
 
 		currentWeaponId++;
@@ -664,7 +449,7 @@ void Player::WeaponInput() {
 }
 
 /// <summary>
-/// ƒAƒCƒeƒ€‚Ìæ“¾
+/// ã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾—
 /// </summary>
 void Player::AddItem() {
 	auto& items = ItemDropManager::GetInstance()->GetActiveItems();
@@ -674,18 +459,18 @@ void Player::AddItem() {
 			item->SetVisible(false);
 			std::string itemName = item->GetItem()->GetName();
 
-			// ƒCƒ“ƒxƒ“ƒgƒŠ‚Ö’Ç‰Á
+			// ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã¸è¿½åŠ 
 			GetInventory()->AddItem(std::move(item->TakeItem()));
 
 
 			ItemDropManager::GetInstance()->RemoveItem(item.get());
-			break; // eraseŒã‚Évector‚ğ‘€ì‚µ‚È‚¢‚æ‚¤‚Ébreak
+			break; // eraseå¾Œã«vectorã‚’æ“ä½œã—ãªã„ã‚ˆã†ã«break
 		}
 	}
 }
 
 /// <summary>
-/// ƒAƒCƒeƒ€‚ÌƒCƒ“ƒxƒ“ƒgƒŠ‚ğŠJ‚­
+/// ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã‚’é–‹ã
 /// </summary>
 void Player::OpenInventory() {
 	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && !isItemUI) {
@@ -699,21 +484,25 @@ void Player::OpenInventory() {
 }
 
 void Player::PlayerStatusRender() {
-	DrawFormatString(1000, 20, red, "HP  : %d / %d", hp, maxHp);
-	DrawFormatString(1000, 40, red, "ATK : %d", atk);
-	DrawFormatString(1000, 60, red, "LV  : %d", Lv);
-	DrawFormatString(1000, 80, red, "EXP : %d", Exp);
+	DrawFormatString(960, 20, green, "LVã€€ã€€ã€€ã€€ã€€ : %d", Lv);
+	DrawFormatString(960, 40, green, "EXPã€€ã€€ã€€ã€€ã€€: %d", Exp);
+	DrawFormatString(960, 60, green, "HPã€€ã€€ã€€ã€€ã€€ : %d / %d", hp, maxHp);
+	DrawFormatString(960, 80, green, "æ”»æ’ƒåŠ›ã€€ã€€ã€€ : %d", atk);
+	DrawFormatString(960, 100, green, "é˜²å¾¡åŠ›ã€€ã€€ã€€ : %d", def);
+	DrawFormatString(960, 120, green, "ä¼šå¿ƒç‡ã€€ã€€ã€€ : %.1f", criticalHitRate);
+	DrawFormatString(960, 140, green, "ä¼šå¿ƒãƒ€ãƒ¡ãƒ¼ã‚¸ : %.1f", criticalDamage);
+	DrawFormatString(960, 160, green, "ã‚³ã‚¤ãƒ³ã€€ã€€ã€€ : %d", coinValue);
 }
 
 /*
  *	@function	OnTriggerEnter
- *	@brief		“–‚½‚Á‚½uŠÔ
+ *	@brief		å½“ãŸã£ãŸç¬é–“
  *	@param[in]	Collider* _pCol
  */
 void Player::OnTriggerEnter(Collider* _pCol) {
-	//	“–‚½‚Á‚½‘Šè‚Ìƒ^ƒO‚ª "Goblin" ‚¾‚Á‚½‚ç
+	//	å½“ãŸã£ãŸç›¸æ‰‹ã®ã‚¿ã‚°ãŒ "Goblin" ã ã£ãŸã‚‰
 	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
-		//	“–‚½‚Á‚½‘Šè‚ğ”ñ•\¦‚É‚·‚é
+		//	å½“ãŸã£ãŸç›¸æ‰‹ã‚’éè¡¨ç¤ºã«ã™ã‚‹
 		//_pCol->GetGameObject()->SetVisible(false);
 	/*	EffectManager::GetInstance()->Load("Res/Effect/01.efk", "FireFlower", 50.0f);
 		Effect* pEffe = EffectManager::GetInstance()->Instantiate("FireFlower", position);
@@ -723,26 +512,11 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 		//SceneManager::GetInstance()->SetNext(SceneType::GameOver);
 		FadeManager::GetInstance()->FadeOut();
 	}
-	if (_pCol->GetGameObject()->GetTag() == "Coin") {
-
-
-		auto& coins = Coin::GetInstance()->GetCoin();
-
-		for (auto& coin : coins) {
-			// Õ“Ë‚µ‚½ƒRƒCƒ“ƒIƒuƒWƒFƒNƒg‚Æˆê’v‚µ‚½ê‡‚Ì‚İˆ—
-			if (coin.get() == _pCol->GetGameObject()) {
-				coin->SetVisible(false);
-				coin->ApplyCoin(this);
-				Coin::GetInstance()->RemoveCoin(coin.get());
-				break; // íœ‚µ‚½‚Ì‚Åƒ‹[ƒv‚ğ”²‚¯‚é
-			}
-		}
-	}
 }
 
 /*wsa
  *	@function	OnTriggerSaty
- *	@brief		“–‚½‚Á‚Ä‚¢‚éŠÔ
+ *	@brief		å½“ãŸã£ã¦ã„ã‚‹é–“
  *	@param[in]	Collider* _pCol
  */
 void Player::OnTriggerStay(Collider* _pCol) {
@@ -753,7 +527,7 @@ void Player::OnTriggerStay(Collider* _pCol) {
 
 /*
  *	@function	OnTriggerExit
- *	@brief		—£‚ê‚½uŠÔ
+ *	@brief		é›¢ã‚ŒãŸç¬é–“
  *	@param[in]	Collider* _pCol
  */
 void Player::OnTriggerExit(Collider* _pCol) {

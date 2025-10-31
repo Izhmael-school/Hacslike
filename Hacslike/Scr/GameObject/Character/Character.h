@@ -67,7 +67,7 @@ public:	// ゲッターとセッター
 
 #pragma region Hp
 	inline void AddHp(int heal) { hp += heal; }
-	inline void SubHp(int damage) { hp -= damage; }
+	inline void SubHp(int damage) { hp -= (damage - def); }
 	inline void AddMaxHp(int max) { maxHp += max; }
 	inline void SetMaxHp(int _maxHp) { maxHp = _maxHp; }
 	inline int GetMaxHp() const { return maxHp; }
@@ -102,6 +102,22 @@ public:	// ゲッターとセッター
 	inline float GetSpeed() const { return speed; }
 	//	速度の設定
 	inline void SetSpeed(float _speed) { speed = _speed; }
+#pragma endregion
+
+#pragma region Exp
+	//	経験値の取得
+	inline int GetExp() const { return Exp; }
+	//	経験値の設定
+	inline void SetExp(int _Exp) { Exp = _Exp; }
+	//	経験値を足す処理
+	inline void AddExp(int _addExp) { Exp += _addExp; }
+#pragma endregion
+
+#pragma region Lv
+	//	レベルの取得
+	inline int GetLv() const { return Lv; }
+	//	レベルの設定
+	inline void SetLv(int _Lv) { Lv = _Lv; }
 #pragma endregion
 
 	inline Character* GetPlayer() const {
