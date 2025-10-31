@@ -34,7 +34,20 @@
 
 #define EnemyMax (10)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/maya_Player.mv1"))
+=======
+<<<<<<< Updated upstream
+#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
+=======
+#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/maya_Player.mv1"))
+#define PAD_PORT_MAX (4)
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+#define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/Neutral.mv1"))
+>>>>>>> parent of 536f9b8 (Add)
 
 // ステージ関連
 #define mapWidth_Large (64)	// マップの横サイズ

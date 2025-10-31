@@ -1,8 +1,15 @@
 #pragma once
 #include <Dxlib.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
 #include <cmath>
 #include <string>
 
+=======
+#include "../Component/Singleton.h"
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 
 class InputManager {
 #pragma region シングルトンのデータ構造
@@ -54,10 +61,20 @@ private:
 	char keyState[256];
 	char prevkeyState[256];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 	XINPUT_STATE padState;		  //現在
 	XINPUT_STATE padPrevState;    //1フレーム前のキーの状態
 	XINPUT_STATE sthickState;     //スティックの状態
 	float rangeOfMotion;          //スティック可動範囲
+=======
+	::XINPUT_STATE padState;
+	::XINPUT_STATE prevPadState;
+>>>>>>> Sekino
+=======
+	XINPUT_STATE padState;
+	XINPUT_STATE padPrevState;
+>>>>>>> parent of 536f9b8 (Add)
 
 	int prevMouse;
 	int mouse = GetMouseInput();

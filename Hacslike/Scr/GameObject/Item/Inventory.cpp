@@ -54,17 +54,23 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
         if (it != items.end()) {
             it->quantity++;
             printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
+<<<<<<< HEAD
             
             OnItemGained(it->item.get(), it->quantity);
+=======
+>>>>>>> Sekino
             return;
         }
     }
 
     // 新規登録（装備系や初取得の消費系）
     items.emplace_back(std::move(newItem), 1);
+<<<<<<< HEAD
     
     InventoryItem& addedItem = items.back();
     OnItemGained(addedItem.item.get(), addedItem.quantity);
+=======
+>>>>>>> Sekino
 #if _DEBUG
     printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
     printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());
@@ -131,7 +137,11 @@ void Inventory::Update()
 {
     char keyState[256];
     GetHitKeyStateAll(keyState);
+<<<<<<< HEAD
     InputManager* input = InputManager::GetInstance();
+=======
+    InputManager* input = &InputManager::GetInstance();
+>>>>>>> Sekino
     // 上
     if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_BUTTON_DPAD_UP)) {
         if (!menuActive) {
@@ -273,31 +283,47 @@ void Inventory::Render()
             desPosY = infoY + 10;
             itemName = ""; // デフォルト
             itemDes = "";
+<<<<<<< HEAD
             itemEffect = "";
+=======
+>>>>>>> Sekino
             if (curName == "ポーション(小)") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
+<<<<<<< HEAD
                 itemEffect = "回復量";
+=======
+>>>>>>> Sekino
             }
             else if (curName == "剣") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
+<<<<<<< HEAD
                 itemEffect = "攻撃力";
+=======
+>>>>>>> Sekino
             }
             else if (curName == "斧") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
+<<<<<<< HEAD
                 itemEffect = "攻撃力";
             }
             DrawString(desPosX, desPosY, itemName.c_str(), white);
             DrawString(desPosX, desPosY + 20, itemDes.c_str(), white);
             DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "%s : %d  価値 : %d", itemEffect,itemEffectValue, itemValue);
+=======
+            }
+            DrawString(desPosX, desPosY, itemName.c_str(), white);
+            DrawString(desPosX, desPosY + 20, itemDes.c_str(), white);
+            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "効果 : %d  価値 : %d", itemEffectValue, itemValue);
+>>>>>>> Sekino
         }
 
         // アイコンをテキスト高さに合わせて描画するループ内
@@ -440,6 +466,7 @@ void Inventory::Render()
         // ヒント
         DrawString(px + 8, py + popupH - 18, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180));
     }
+<<<<<<< HEAD
 }
 
 /// <summary>
@@ -532,3 +559,6 @@ void Inventory::AddItemRender()
             [](const GainedItemInfo& g) { return g.timer <= 0; }),
         gainedItems.end());
 }
+=======
+}
+>>>>>>> Sekino

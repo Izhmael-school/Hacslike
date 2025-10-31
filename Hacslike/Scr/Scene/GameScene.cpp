@@ -30,6 +30,8 @@ void GameScene::Start() {
 	pGameObjectArray.push_back(pCamera);
 
 	pCamera->SetTarget(pPlayer);
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 
@@ -44,6 +46,12 @@ void GameScene::Start() {
 			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "斧", "普通の斧", 200, GetRand(30) + 10); });
 	}
 	StageManager::GetInstance().GenerateStage();
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> parent of 536f9b8 (Add)
+	StageManager::GetInstance()->GenerateStage();
+>>>>>>> Sekino
 }
 
 void GameScene::Update() {
@@ -53,6 +61,36 @@ void GameScene::Update() {
 	{
 		InputManager* input = InputManager::GetInstance();
 
+<<<<<<< HEAD
+=======
+	StageManager::GetInstance()->Update();
+	EnemyManager::GetInstance().Update();
+<<<<<<< HEAD
+=======
+
+	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
+
+	//アイテムのセット
+	auto& factory = ItemFactory::Instance(); {
+		factory.RegisterItem("Potion_Small", []() {
+			return std::make_unique<ItemHeal>(VGet(0, 0, 0), "ポーション(小)", "体力を少し回復する", 50, 20); });
+
+		factory.RegisterItem("Sword_Iron", []() {
+			return std::make_unique<ItemSword>(VGet(0, 0, 0), "剣", "普通の剣", 150, 10); });
+		factory.RegisterItem("Axe", []() {
+			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "斧", "普通の斧", 200, 30); });
+	}
+	StageManager::GetInstance().GenerateStage(0);
+}
+
+void GameScene::Update() {
+#pragma region プロト用スキルとアイテム
+	// ★スキル選択中でなければ通常処理を行う
+	if (!isSelectingSkill)
+	{
+		InputManager* input = &InputManager::GetInstance();
+
+>>>>>>> Sekino
 		EffectManager::GetInstance()->Update();
 		ItemDropManager::GetInstance()->Update();
 
@@ -70,6 +108,7 @@ void GameScene::Update() {
 			VECTOR spawnPos = Character::player->GetPosition();
 			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
+<<<<<<< HEAD
 		// --- アイテムドロップテスト ---
 		if (input->IsKeyDown(KEY_INPUT_G))
 		{
@@ -84,6 +123,8 @@ void GameScene::Update() {
 			pObj->Update();
 		}
 		EnemyManager::GetInstance().Update();
+=======
+>>>>>>> Sekino
 	}
 	else
 	{
@@ -109,15 +150,35 @@ void GameScene::Update() {
 	}
 #pragma endregion
 	
+<<<<<<< HEAD
 	Coin::GetInstance()->UpdateAll();
 
 	
+=======
+	
+
+	StageManager::GetInstance().Update();
+	EnemyManager::GetInstance().Update();
+	for (auto pObj : pGameObjectArray) {
+		pObj->Update();
+	}
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 }
 
 void GameScene::Render() {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 	StageManager::GetInstance().Render();
+=======
+<<<<<<< Updated upstream
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 	for (auto pObj : pGameObjectArray) {
 		pObj->Render();
 	}

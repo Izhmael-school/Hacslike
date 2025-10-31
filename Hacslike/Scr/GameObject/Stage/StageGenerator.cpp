@@ -102,8 +102,33 @@ void StageGenerator::Update() {
 }
 
 void StageGenerator::Render() {
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 	for (auto c : cells) {
+=======
+	VECTOR p = Character::player->GetPosition();
+
+=======
+>>>>>>> parent of 536f9b8 (Add)
+	for (auto c : cells) {
+		if (useStair == nullptr) continue;
+<<<<<<< HEAD
+=======
+
+		if (c->GetObjectType() == Wall) {
+			int x = c->GetPosition().x;
+			int z = c->GetPosition().z + CellSize;
+			if (p.x >= x - CellSize / 2 && p.x < x + CellSize / 2 &&
+				p.z >= z - CellSize / 2 && p.z < z + CellSize / 2) 
+				return;
+		}
+
+
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 		c->Render();
 	}
 
@@ -156,9 +181,21 @@ void StageGenerator::ClearStage() {
 
 void StageGenerator::GenerateStageObject() {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 	// オブジェクトを生成する
 	for (int nowH = 0; nowH < mapHeight; nowH++) {
 		for (int nowW = 0; nowW < mapWidth; nowW++) {
+=======
+<<<<<<< Updated upstream
+	int mapWidth = 0;
+	int mapHeight = 0;
+=======
+	// オブジェクトを生成する
+	for (int nowH = 0; nowH < mapHeight; nowH++) {
+		for (int nowW = 0; nowW < mapWidth; nowW++) {
+			int dupMHandle = -1;
+>>>>>>> Sekino
 
 			if (!CheckEightDir(nowW, nowH)) continue;
 
@@ -230,6 +267,14 @@ void StageGenerator::SetGameObject(GameObject* _obj, VECTOR _pos) {
 }
 
 void StageGenerator::GenerateStageData() {
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+	int mapWidth = 0;
+	int mapHeight = 0;
+>>>>>>> parent of 536f9b8 (Add)
 	int roomMax = 0;
 
 	// フロアの大きさを決める
@@ -504,9 +549,26 @@ void StageGenerator::LoadStageData(int stageID) {
 		// 指定のステージIDと同じステージを探す
 		if (s["id"] != stageID) continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 		stage.id = stageID;
 		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> parent of 536f9b8 (Add)
+	   // 最小分割可能サイズチェック（十分な余裕が無ければ分割不可）
+	int minNeeded = roomMinNum * 2 + (offsetWall * 4);
+	if (_x < minNeeded && _y < minNeeded) {
+		return false;
+<<<<<<< HEAD
+=======
+		stage.id = stageID;
+		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
+		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
+		stage.stairSpawnPos = VGet(s["stairSpawnPos"][0], 0, s["stairSpawnPos"][1]);
+>>>>>>> Sekino
 
 		for (int i = 0; i < mapWidth_Large; i++) {
 			for (int j = 0; j < mapHeight_Large; j++) {
@@ -516,6 +578,12 @@ void StageGenerator::LoadStageData(int stageID) {
 				map[i][j] = s["stageData"][i][j];
 			}
 		}
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 	}
 	mapWidth = mapWidth_Small;
 	mapHeight = mapHeight_Small;

@@ -1,6 +1,17 @@
 #include "SphereHitBox.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
+=======
+<<<<<<< Updated upstream
+=======
+#include "../Hacslike/Scr/Manager/CollisionManager.h"
+#include "../../GameObject/Character/Character.h"
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 
 SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, float _lifeTime)
 	: owner(_owner)
@@ -39,6 +50,12 @@ void SphereHitBox::Render() {
 bool SphereHitBox::IsDead() const {
 	return timer >= lifeTime;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Sekino
 
 void SphereHitBox::CreateCollider() {
 	if (!pCollider) {
@@ -50,10 +67,16 @@ void SphereHitBox::CreateCollider() {
 }
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
+<<<<<<< HEAD
 	//	“–‚½‚Á‚½‘ŠŽè‚Ìƒ^ƒO‚ª "Goblin" ‚¾‚Á‚½‚ç
 	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
 		//	“–‚½‚Á‚½‘ŠŽè‚ð”ñ•\Ž¦‚É‚·‚é
 		_pCol->GetGameObject()->SetVisible(false);
+=======
+	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
+		Character* c = dynamic_cast<Character*>(_pCol->GetGameObject());
+		c->SubHp(1000);
+>>>>>>> Sekino
 	}
 }
 
@@ -62,3 +85,9 @@ void SphereHitBox::OnTriggerStay(Collider* _pCol) {
 
 void SphereHitBox::OnTriggerExit(Collider* _pCol) {
 }
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)

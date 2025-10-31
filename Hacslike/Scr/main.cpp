@@ -109,12 +109,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager::DestroyInstance();
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
+<<<<<<< HEAD
 	//StageManager::DestroyInstance();
 	SkillManager::DestroyInstance();
 	ItemDropManager::DestroyInstance();
 	EffectManager::DestroyInstance();
 	Coin::DestroyInstance();
 	Effkseer_End();
+=======
+	StageManager::DestroyInstance();
+
+<<<<<<< HEAD
+=======
+	SkillManager::DestroyInstance();
+	ItemDropManager::DestroyInstance();
+	EffectManager::DestroyInstance();
+	Effkseer_End();
+>>>>>>> Stashed changes
+>>>>>>> Sekino
+=======
+>>>>>>> parent of 536f9b8 (Add)
 	// DxLibÇÃèIóπ
 	DxLib_End();
 
