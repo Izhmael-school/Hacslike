@@ -8,6 +8,8 @@
 #include"../../Item/ItemBase.h"
 #include"../../../Manager/ItemDropManager.h"
 
+#include "PlayerAttack.h"
+
 //#include "../../../Manager/InputManager.h"
 
 
@@ -18,7 +20,7 @@
 class Player : public Character {
 #pragma region メンバ変数
 private:	//	メンバ変数
-	bool isAttacking;	//	攻撃中
+	//bool isAttacking;	//	攻撃中
 
 	Weapon* pWeapon;
 
@@ -28,15 +30,15 @@ private:	//	メンバ変数
 
 	XINPUT_STATE XY;
 
-	std::vector<Slash*> slashes;
+	//std::vector<Slash*> slashes;
 
-	int attackIndex;       // 現在の攻撃段階（1〜3）
-	float attackTimer;     // 経過時間
-	bool canNextAttack;    // 次の入力受付可
+	//int attackIndex;       // 現在の攻撃段階（1〜3）
+	//float attackTimer;     // 経過時間
+	//bool canNextAttack;    // 次の入力受付可
 
-	std::vector<CapsuleHitBox*> CapsuleHitboxes;
+	/*std::vector<CapsuleHitBox*> CapsuleHitboxes;
 
-	std::vector<SphereHitBox*> SphereHitboxes;
+	std::vector<SphereHitBox*> SphereHitboxes;*/
 
 	static const int AFTIMAGENUM = 20;
 	VECTOR afterImagePos[AFTIMAGENUM];
@@ -45,8 +47,8 @@ private:	//	メンバ変数
 	bool isBlinking;
 	float blinkTimer;
 
-	float attackInputCooldown;      // 攻撃クールダウン
-	bool attackButtonPressed;
+	//float attackInputCooldown;      // 攻撃クールダウン
+	//bool attackButtonPressed;
 	bool evasionButtonPressed;
 
 	float evasionCooldown;        // クールダウンタイマー
@@ -68,7 +70,11 @@ private:	//	メンバ変数
 
 	int expValue;
 
-	int atk;
+	float criticalHitRate;
+
+	float criticalDamage;
+
+	PlayerAttack* playerAttack;
 
 #pragma endregion
 
@@ -148,25 +154,6 @@ public:		//	メンバ関数
 	void EvasionInput();
 
 	/// <summary>
-	/// 攻撃入力・HitBox更新
-	/// </summary>
-	void AttackInput();
-
-	/// <summary>
-	/// 斬撃更新
-	/// </summary>
-	void UpdateSlash();
-
-	//void AttackEnd();
-
-	/// <summary>
-	/// 攻撃時の当たり判定発生処理
-	/// </summary>
-	/// <param name="length"></param>
-	/// <param name="radius"></param>
-	void CreateAttackHitbox(float length, float radius);
-
-	/// <summary>
 	/// 回避
 	/// </summary>
 	void Evasion();
@@ -241,14 +228,27 @@ public:		//	Getter と Setter
 	inline void SetCoinValue(int _coin) { coinValue = _coin; }
 
 	/// <summary>
-	/// 経験値に取得
+	/// 会心率の取得
 	/// </summary>
 	/// <returns></returns>
-	inline int GetExpValue() const { return expValue; }
+	inline float GetCriticalHitRate() const { return criticalHitRate; }
 
 	/// <summary>
-	/// 経験値の変更
+	/// 会心率の変更
 	/// </summary>
-	/// <param name="_exp"></param>
-	inline void SetExpValue(int _exp) { expValue = _exp; }
+	/// <param name="_criticalHitRate"></param>
+	inline void SetCriticalHitRate(float _criticalHitRate) { criticalHitRate = _criticalHitRate; }
+
+	/// <summary>
+	/// 会心ダメージの取得
+	/// </summary>
+	/// <returns></returns>
+	inline float GetCriticalDamage() const { return criticalDamage; }
+
+	/// <summary>
+	/// 会心ダメージの変更
+	/// </summary>
+	/// <param name="_criticalDamage"></param>
+	inline void SetCriticalDamage(float _criticalDamage) { criticalDamage = _criticalDamage; }
+
 };

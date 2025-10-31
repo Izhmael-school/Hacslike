@@ -114,6 +114,9 @@
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClCompile>
     <ClCompile Include="Scr\Scene\GameScene.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Player\PlayerAttack.cpp">
+      <Filter>GameObject\Character\Player\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -238,6 +241,9 @@
     <ClInclude Include="Scr\CommonModule.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Player\PlayerAttack.h">
+      <Filter>GameObject\Character\Player\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -299,6 +305,9 @@
     </Filter>
     <Filter Include="GameObject\Item\ItemEquip">
       <UniqueIdentifier>{002c9761-79d1-48b7-bd8d-8ba2eb7205cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Player\Attack">
+      <UniqueIdentifier>{ed91bd40-04ba-4e8b-80ce-5c6cbfc22ca5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
