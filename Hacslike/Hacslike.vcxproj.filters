@@ -117,6 +117,9 @@
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp">
       <Filter>GameObject\Coin</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Player\PlayerAttack.cpp">
+      <Filter>GameObject\Character\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -243,6 +246,9 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Coin\Coin.h">
       <Filter>GameObject\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Player\PlayerAttack.h">
+      <Filter>GameObject\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
