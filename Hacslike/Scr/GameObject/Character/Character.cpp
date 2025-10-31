@@ -25,20 +25,7 @@ Character::~Character() {
 }
 
 void Character::CheckWall() {
-<<<<<<< HEAD
-<<<<<<< HEAD
 	if (StageManager::GetInstance().GetMapData((int)((int)(position.x + CellCorrection) / CellSize), (int)((int)(position.z + CellCorrection) / CellSize)) != ObjectType::Wall) {
-=======
-<<<<<<< Updated upstream
-	if (StageManager::GetInstance()->GetMapData((int)((int)(position.x + CellCorrection) / CellSize), (int)((int)(position.z + CellCorrection) / CellSize)) != ObjectType::Wall) {
-=======
-	if (StageManager::GetInstance().GetMapData((int)((int)(position.x + CellCorrection) / CellSize),
-											   (int)((int)(position.z + CellCorrection) / CellSize)) != ObjectType::Wall) {
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
-	if (StageManager::GetInstance()->GetMapData((int)((int)(position.x + CellCorrection) / CellSize), (int)((int)(position.z + CellCorrection) / CellSize)) != ObjectType::Wall) {
->>>>>>> parent of 536f9b8 (Add)
 		prevPos = VGet(position.x,0, position.z);
 		if (wallCheckPos.x != (int)prevPos.x || wallCheckPos.y != (int)prevPos.z)
 			wallCheckPos = prevPos;

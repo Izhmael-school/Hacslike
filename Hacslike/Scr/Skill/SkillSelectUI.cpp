@@ -12,17 +12,7 @@ void SkillSelectUI::StartSelection()
 
 int SkillSelectUI::UpdateSelection()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
     InputManager* input = InputManager::GetInstance();
-=======
-<<<<<<< Updated upstream
-=======
-    InputManager* input = &InputManager::GetInstance();
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
->>>>>>> parent of 536f9b8 (Add)
     if (!isActive) return -1;
 
     if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_LEFT))

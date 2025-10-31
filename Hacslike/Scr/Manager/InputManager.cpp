@@ -5,8 +5,6 @@
 InputManager* InputManager::pInstance = nullptr;
 
 InputManager::InputManager()
-<<<<<<< HEAD
-<<<<<<< HEAD
 	:keyState()
 	,prevkeyState() 
 	, sthickState()
@@ -14,11 +12,6 @@ InputManager::InputManager()
 {
 	GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
 }
-=======
-	:keyState()
-	,prevkeyState() 
-{}
->>>>>>> parent of 536f9b8 (Add)
 
 /*
  * @function	CreateInstance
@@ -50,18 +43,6 @@ void InputManager::DestroyInstance() {
 		delete pInstance;
 		pInstance = nullptr;
 	}
-<<<<<<< HEAD
-=======
-	: keyState("")
-	, prevkeyState("")
-	, padState()
-	, prevPadState()
-	, mouseInput(-1)
-	, prevMouseInput(-1)
-{
->>>>>>> Sekino
-=======
->>>>>>> parent of 536f9b8 (Add)
 }
 
 /*
@@ -79,22 +60,10 @@ void InputManager::Update() {
 	// 今のフレームの状態を保存
 	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	//スティックの取得
 	GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
 
 	prevMouse = mouse;
 	mouse = GetMouseInput();
 
-=======
-	// マウス
-	prevMouseInput = mouseInput;
-	mouseInput = GetMouseInput();
->>>>>>> Sekino
-=======
-	prevMouse = mouse;
-	mouse = GetMouseInput();
-
->>>>>>> parent of 536f9b8 (Add)
 }

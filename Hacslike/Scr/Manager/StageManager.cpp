@@ -36,27 +36,11 @@ void StageManager::GenerateStage() {
 	generator->ClearStage();
 
 	floorCount++;
-<<<<<<< HEAD
 
 	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
 	generator->GenerateStageData();
 	generator->GenerateStageObject();
 	SetGameObjectRandomPos(Character::player);
-=======
-	
-	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
-
-	generator->StageGenerate();
-	SetObject(Character::player);
-<<<<<<< HEAD
-=======
-	generator->GenerateStageData();
-	generator->GenerateStageObject();
-	SetGameObjectRandomPos(Character::player);
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
->>>>>>> parent of 536f9b8 (Add)
 
 	for (int i = 0; i < 10; i++) {
 
@@ -64,13 +48,6 @@ void StageManager::GenerateStage() {
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-void StageManager::SetObject(GameObject* obj) {
-=======
->>>>>>> Sekino
 void StageManager::GenerateStage(int stageID) {
 	// ステージの初期化
 	generator->ClearStage();
@@ -84,21 +61,10 @@ void StageManager::GenerateStage(int stageID) {
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
 	// ボスの配置
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
-<<<<<<< HEAD
 	EnemyManager::GetInstance().SpawnEnemy(Goblin, VGet(pos.x * CellSize, 0, pos.z * CellSize));
 }
 
 void StageManager::SetGameObjectRandomPos(GameObject* obj) {
-=======
-	EnemyManager::GetInstance().SpawnEnemy(Goblin, VGet(pos.x * CellSize, 0, pos.z * CellSize),true);
-}
-
-void StageManager::SetGameObjectRandomPos(GameObject* obj) {
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
-void StageManager::SetObject(GameObject* obj) {
->>>>>>> parent of 536f9b8 (Add)
 	generator->SetGameObjectRandomPos(obj);
 }
 

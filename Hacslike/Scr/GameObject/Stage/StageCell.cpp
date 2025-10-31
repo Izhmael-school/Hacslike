@@ -28,20 +28,7 @@ void StageCell::Update() {
 	MV1SetMatrix(modelHandle, matrix);
 
 	if (isTouch && (InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X) || InputManager::GetInstance()->IsKeyDown(KEY_INPUT_X))) {
-<<<<<<< HEAD
 		StageManager::GetInstance().GenerateStage();
-=======
-		StageManager::GetInstance()->GenerateStage();
-<<<<<<< HEAD
-=======
-	if (type != Stair) return;
-
-	if (isTouch && (InputManager::GetInstance().IsButtonDown(XINPUT_BUTTON_X) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_X))) {
-		StageManager::GetInstance().GenerateStage();
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
->>>>>>> parent of 536f9b8 (Add)
 		isTouch = false;
 		return;
 	}

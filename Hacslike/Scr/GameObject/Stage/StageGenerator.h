@@ -7,28 +7,13 @@
 
 class StageCell;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Sekino
 struct StageData {
 	int id;
 	int stageData[mapWidth_Large][mapHeight_Large];
 	VECTOR playerSpawnPos;
 	VECTOR bossSpawnPos;
-<<<<<<< HEAD
 };
 
-=======
-	VECTOR stairSpawnPos;
-};
-
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
->>>>>>> parent of 536f9b8 (Add)
 class StageGenerator {
 private:
 	int groundModel = -1;
@@ -116,20 +101,7 @@ public:
 	int GetNowRoomNum(VECTOR pos);
 	// ランダムな部屋のランダムな座標を返す
 	VECTOR GetRandomRoomRandomPos();
-<<<<<<< HEAD
-<<<<<<< HEAD
 	// 読み込んだステージデータの取得
 	inline StageData GetStageData() { return stage; }
-=======
-<<<<<<< Updated upstream
-=======
-	// 読み込んだステージデータの取得
-	inline StageData GetStageData() { return stage; }
-	// 隠し階段の出現
-	void AppearHiddenStair();
->>>>>>> Stashed changes
->>>>>>> Sekino
-=======
->>>>>>> parent of 536f9b8 (Add)
 };
 
