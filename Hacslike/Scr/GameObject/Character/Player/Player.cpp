@@ -185,6 +185,7 @@ void Player::Render() {
 	if (!isVisible)
 		return;
 #pragma region アイテムのインベントリ表示
+	inventory.AddItemRender();
 	if (isItemUI) {
 		inventory.Render();
 		PlayerStatusRender();
