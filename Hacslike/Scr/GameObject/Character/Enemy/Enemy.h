@@ -11,6 +11,7 @@ protected:
 	float raySpan;		// レイが更新される間隔
 	float rayTime;			// レイが更新される時間
 
+	float moveSpeed;
 protected:
 	struct Point {
 		VECTOR position;
@@ -41,10 +42,15 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	
+	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
+	virtual void Tracking();
+	virtual void Move(VECTOR targetPos);
+
+
 	virtual void IsDead();
 	virtual bool Vision_Ray();
 	virtual bool Vision_Circle(float r);
-	virtual bool Vision_Fan();
+	virtual bool Vision_Fan(VECTOR targetPos);
 
 	inline EnemyType GetType() const { return type; }
 };

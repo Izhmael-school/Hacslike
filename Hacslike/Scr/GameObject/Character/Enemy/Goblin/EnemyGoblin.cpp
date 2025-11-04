@@ -27,13 +27,7 @@ void EnemyGoblin::Update() {
 	if (pAnimator->GetCurrentAnimation() != 1)
 		pAnimator->Play(0);
 
-	/*if (Vision_Fan()) {
-		pAnimator->Play(1);
-	}
-	else {
-		if (pAnimator->GetCurrentAnimation() == 1) return;
-		pAnimator->Play(0);
-	}*/
+	Tracking();
 }
 
 void EnemyGoblin::Render() {

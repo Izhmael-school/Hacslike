@@ -110,6 +110,7 @@
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="Scr\Data\StageData.json" />
     <None Include="Scr\Data\WeaponsData.json" />
   </ItemGroup>
@@ -179,6 +180,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -199,6 +201,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -215,6 +218,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -235,6 +239,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

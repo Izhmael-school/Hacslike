@@ -7,7 +7,6 @@ Camera::Camera(VECTOR _pos, float _length)
 	:GameObject(_pos)
 	,pTarget(nullptr)
 	,armLenght(_length)
-	, XY()
 	, offSet(VGet(0.0f, 700.0f, -400.0f))
 	, rotation_X(70)
 {
@@ -22,12 +21,6 @@ void Camera::Start() {
 }
 
 void Camera::Update() {
-
-	//インスタンス
-	InputManager* input = InputManager::GetInstance();
-
-	
-
 
 	//中心点が原点で半径1の球面上の座標
 	VECTOR sphere = VGet(

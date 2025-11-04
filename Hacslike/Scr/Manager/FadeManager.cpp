@@ -62,7 +62,7 @@ void FadeManager::Update() {
 	}
 
 	//	だんだんとフェード処理を行うための計算
-	blend += 255 * (int)fadeState * TimeManager::GetInstance()->deltaTime / time;
+	blend += 255 * (int)fadeState * TimeManager::GetInstance().deltaTime / time;
 
 	if (blend <= 0) {
 		blend = 0;
