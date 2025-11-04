@@ -15,15 +15,8 @@
 Player::Player(VECTOR _pos)
 	: Character(_pos, "Player", Lv, Exp, speed)
 	, pWeapon(nullptr)
-	, XY()
-	, inputVec()
 	, input(InputManager::GetInstance())
 	//, slashes()								//	斬撃
-	, isBlinking(false)						//	回避の長押し防止
-	, blinkTimer(0.0f)						//	回避のクールダウン
-	, evasionButtonPressed(false)			//	
-	, evasionCooldown(0.0f)
-	, evasionSpeed(1.0f)
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
 	, hitItem(false)
@@ -87,12 +80,6 @@ void Player::Start() {
 
 	pAnimator->Play(0);
 
-	// 残像データ初期化
-	for (int i = 0; i < AFTIMAGENUM; i++) {
-		afterImagePos[i] = position;
-		afterImageRotY[i] = rotation.y;
-	}
-
 	WeaponManager::GetInstance().LoadWeapons("Scr/Data/WeaponsData.json");
 	maxWeaponId = WeaponManager::GetInstance().GetMaxWeaponId();
 	changeWeaponButtonPressed = false;
@@ -108,6 +95,7 @@ void Player::Start() {
 	}
 
 	playerAttack = new PlayerAttack(this, pWeapon);
+	playerMovement = new PlayerMovement(this);
 	
 	SetSpeed(1);
 }
@@ -120,26 +108,15 @@ void Player::Update() {
 	//	非表示だったら更新しない
 	if (!isVisible)
 		return;
-	inputVec = VZero;
-
-	//	移動入力
-	MoveInput();
 
 	////	攻撃入力・HitBox更新
 	//AttackInput();
 
+
+	playerMovement->Update();
 	playerAttack->Update();
 
-	//	回避入力
-	EvasionInput();
-
-	//	BlinkのUpdate
-	UpdateBlink();
-
-	CheckWall();
-
-	//	移動・アニメーション・回転処理
-	UpdateMovement();
+	//CheckWall();
 
 	//	斬撃更新
 	//UpdateSlash();
@@ -192,25 +169,7 @@ void Player::Render() {
 	}
 #pragma endregion
 
-#pragma region 残像描画処理
-	// --- 残像描画 ---
-	if (isBlinking && !playerAttack->IsAttacking()) {
-		for (int i = AFTIMAGENUM - 1; i >= 0; i -= 4) {
-			int alpha = 255 - 255 * i / AFTIMAGENUM;
-
-			// モデルの座標・回転設定
-			MATRIX matRot = MGetRotY(Deg2Rad(afterImageRotY[i]));
-			MATRIX matTrans = MGetTranslate(afterImagePos[i]);
-			MATRIX mat = MMult(matRot, matTrans);
-
-			MV1SetMatrix(modelHandle, mat);
-
-			// 半透明描画
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-			MV1DrawModel(modelHandle);
-		}
-	}
-#pragma endregion
+	playerMovement->Render();
 
 #pragma region プレイヤーの描画
 	// --- 通常モデル描画 ---
@@ -235,148 +194,6 @@ void Player::Render() {
 #pragma endregion
 }
 
-/// <summary>
-/// 移動・アニメーション・回転処理
-/// </summary>
-void Player::UpdateMovement() {
-	if (!playerAttack->IsAttacking()) {
-		//	入力があれば
-		if (VSquareSize(inputVec) >= 0.01f) {
-			//	入力ベクトルの正規化
-			inputVec = VNorm(inputVec);
-
-			inputVec = VScale(inputVec, speed);
-
-			inputVec = VScale(inputVec, evasionSpeed);
-
-			//	カメラからみた移動する方向ベクトル
-			VECTOR moveDirection = VZero;
-
-			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	カメラのY軸回転行列
-			moveDirection = VTransform(inputVec, mRotY);
-
-			//	自身のy軸回転を計算した値に変更する
-			rotation.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
-
-			//	計算した入力ベクトル
-			position = VAdd(position, VScale(moveDirection, 10.0f));
-
-			//	移動アニメーションを再生
-			if (evasionSpeed >= 1.2f) {
-				pAnimator->Play(5, 0.5f);
-			}
-			else
-				pAnimator->Play(1, 1.3f);
-		}
-		else {
-			//	待機アニメーションを再生
-			pAnimator->Play(0);
-			evasionSpeed = 1;
-		}
-	}
-}
-
-
-/// <summary>
-/// 移動入力
-/// </summary>
-void Player::MoveInput() {
-	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
-
-	//入力処理
-	//inputVec = VZero;
-	inputVec = VGet(input->IsJoypadSthick("L_Horizontal"),
-		0.0f,
-		input->IsJoypadSthick("L_Vertical"));
-
-
-
-
-	if (input->IsKey(KEY_INPUT_W))
-		inputVec.z = inputVec.z + speed;
-	if (input->IsKey(KEY_INPUT_S))
-		inputVec.z = inputVec.z - speed;
-	if (input->IsKey(KEY_INPUT_D))
-		inputVec.x = inputVec.x + speed;
-	if (input->IsKey(KEY_INPUT_A))
-		inputVec.x = inputVec.x - speed;
-
-	if (input->IsKey(KEY_INPUT_Q))
-		inputVec = VAdd(inputVec, VUp);
-	/*if (input->IsKey(KEY_INPUT_E))
-		inputVec = VAdd(inputVec, VDown);*/
-		/*if (input->IsKey(KEY_INPUT_E))
-			inputVec = VAdd(inputVec, VDown);*/
-}
-
-/// <summary>
-/// 回避入力
-/// </summary>
-void Player::EvasionInput() {
-	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
-
-	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
-		// 押した瞬間＆クールダウン終了時のみ回避
-		evasionButtonPressed = true;
-		evasionCooldown = EVASION_COOLDOWN_TIME; // クールダウン開始
-		Evasion();
-	}
-	else if (!isEvasionButtonDown) {
-		// ボタンを離したら押下フラグリセット
-		evasionButtonPressed = false;
-	}
-
-	// ===== 毎フレームクールダウン減算 =====
-	if (evasionCooldown > 0.0f)
-		evasionCooldown -= TimeManager::GetInstance()->deltaTime;
-}
-
-/// <summary>
-/// 回避
-/// </summary>
-void Player::Evasion() {
-	pCollider->SetEnable(false);
-
-	// 瞬間移動
-	evasionSpeed = 6;
-
-	// 残像開始
-	isBlinking = true;
-	blinkTimer = 0.15f;
-
-	// --- 履歴をすべて現在位置にリセット ---
-	for (int i = 0; i < AFTIMAGENUM; i++) {
-		afterImagePos[i] = position;
-		afterImageRotY[i] = rotation.y;
-	}
-}
-
-/// <summary>
-/// BlinkのUpdate
-/// </summary>
-void Player::UpdateBlink() {
-	// --- ブリンク中の処理 ---
-	if (isBlinking && !playerAttack->IsAttacking()) {
-		blinkTimer -= TimeManager::GetInstance()->deltaTime;   // 1フレーム経過（60FPS想定）
-		if (blinkTimer <= 0.0f) {
-			isBlinking = false;
-			Dash();
-			pCollider->SetEnable(true);
-		}
-
-		// 先に最新位置を入れる
-		afterImagePos[0] = position;
-		afterImageRotY[0] = rotation.y;
-
-		// 古い残像を後ろにずらす
-		for (int i = AFTIMAGENUM - 1; i > 0; i--) {
-			afterImagePos[i] = afterImagePos[i - 1];
-			afterImageRotY[i] = afterImageRotY[i - 1];
-		}
-	}
-}
-
 ///// <summary>
 ///// 斬撃更新
 ///// </summary>
@@ -394,13 +211,6 @@ void Player::UpdateBlink() {
 //		}
 //	}
 //}
-
-/// <summary>
-/// ダッシュ
-/// </summary>
-void Player::Dash() {
-	evasionSpeed = 1.2f;
-}
 
 /// <summary>
 /// 武器切り替え

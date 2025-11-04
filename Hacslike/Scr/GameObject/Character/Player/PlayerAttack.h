@@ -1,8 +1,7 @@
 #pragma once
-#include <vector>
-#include <memory>
 #include "../../../Component/Collider/SphereHitBox.h"
 #include "../../../Component/Collider/CapsuleHitBox.h"
+#include "PlayerMovement.h"
 
 class Player;
 class Weapon;
@@ -24,6 +23,8 @@ private:
 	std::vector<CapsuleHitBox*> CapsuleHitboxes;
 	std::vector<SphereHitBox*> SphereHitboxes;
 
+	PlayerMovement* playerMovement;
+
 public:
 	PlayerAttack(Player* _player, Weapon* _weapon);
 
@@ -32,7 +33,7 @@ public:
 	void AttackInput();
 	void CreateAttackHitbox(float length, float radius);
 
-	bool IsAttacking() const { return isAttacking; }
+	inline bool IsAttacking() const { return isAttacking; }
 
 	void SetWeapon(Weapon* _weapon) {
 		pWeapon = _weapon;

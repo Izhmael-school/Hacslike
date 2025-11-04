@@ -3,16 +3,19 @@
 #include "../../../Manager/TimeManager.h"
 #include "../../Weapon/Weapon.h"
 
+
 PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon)
 	: pPlayer(_player)
 	, pWeapon(_weapon)
 	, input(InputManager::GetInstance())
 	, CapsuleHitboxes()
-	, SphereHitboxes() {
+	, SphereHitboxes()
+	, playerMovement(nullptr){
 	Start();
 }
 
 void PlayerAttack::Start() {
+	playerMovement = new PlayerMovement(pPlayer);
 }
 
 void PlayerAttack::Update() {
@@ -91,7 +94,7 @@ void PlayerAttack::AttackInput() {
 	}
 
 	// ===== 攻撃中のタイマー管理 =====
-	if (isAttacking) {
+	if (isAttacking && !playerMovement->IsBlinking()) {
 		attackTimer += TimeManager::GetInstance()->deltaTime;
 
 
