@@ -28,8 +28,6 @@ private:	//	メンバ変数
 
 	InputManager* input;
 
-	XINPUT_STATE XY;
-
 	//std::vector<Slash*> slashes;
 
 	//int attackIndex;       // 現在の攻撃段階（1〜3）

@@ -1,16 +1,15 @@
 #pragma once
+#include <Windows.h>
+#include <XInput.h>
 #include <Dxlib.h>
 #include <cmath>
 #include <string>
+#include "../Component/Singleton.h"
 
+#pragma comment(lib, "xinput.lib")
 
-class InputManager {
-#pragma region シングルトンのデータ構造
-private:	// 静的メンバ変数
-	static InputManager* pInstance;	// 自身のインスタンスのアドレスを格納
-
-
-private:	// コンストラクタとデストラクタ
+class InputManager : public Singleton<InputManager> {
+public:	// コンストラクタとデストラクタ
 	/*
 	 * @brief	コンストラクタ
 	 * @tip		外部で生成されないようにアクセス指定子をprivateにする
@@ -22,45 +21,17 @@ private:	// コンストラクタとデストラクタ
 	 */
 	~InputManager() = default;
 
-public:	//コピーと譲渡禁止
-	InputManager(const InputManager&) = delete;
-	InputManager& operator = (const InputManager&) = delete;
-	InputManager(InputManager&&) = delete;
-	InputManager& operator = (InputManager&&) = delete;
-
-private:	// 静的メンバ関数
-	/*
-	 * @function	CreateInstance
-	 * @brief		自信のインスタンスを生成する
-	 */
-	static void CreateInstance();
-
-public:	// 静的メンバ関数
-	/*
-	 * @function	GetInstance
-	 * @brief		自信のインスタンスを取得する唯一の手段
-	 * @return		InputManager*	自身のインスタンスのアドレス
-	 */
-	static InputManager* GetInstance();
-
-	/*
-	 * @function	DestroyInstance
-	 * @brief		自信のインスタンスを破棄する唯一の手段
-	 */
-	static void DestroyInstance();
-#pragma endregion
-
 private:
 	char keyState[256];
 	char prevkeyState[256];
 
 	XINPUT_STATE padState;		  //現在
-	XINPUT_STATE padPrevState;    //1フレーム前のキーの状態
+	XINPUT_STATE prevPadState;    //1フレーム前のキーの状態
 	XINPUT_STATE sthickState;     //スティックの状態
 	float rangeOfMotion;          //スティック可動範囲
 
-	int prevMouse;
-	int mouse = GetMouseInput();
+	int prevMouseInput;
+	int mouseInput;
 
 	bool isPadActive;
 public:	// メンバ変数
@@ -75,29 +46,28 @@ public:	// キーボード入力用
 	inline bool IsKey(int _key) const { return keyState[_key]; }
 
 	// キーが離されたか
-	inline bool IsKeyUp(int _key) const {return prevkeyState[_key] && !keyState[_key];
-	}
+	inline bool IsKeyUp(int _key) const { return prevkeyState[_key] && !keyState[_key]; }
 
 #pragma region パッド用
 	// キーが押されたか
-	inline bool IsButtonDown(int _key) { return !padPrevState.Buttons[_key] && padState.Buttons[_key]; }
+	inline bool IsButtonDown(int _key) { return !(prevPadState.Gamepad.wButtons & _key) && (padState.Gamepad.wButtons & _key); }
 
 	// キーが押されているか
-	inline bool IsButton(int _key) { return padState.Buttons[_key]; }
+	inline bool IsButton(int _key) { return padState.Gamepad.wButtons & _key; }
 
 	// キーが離されたか
-	inline bool IsButtonUp(int _key) { return padPrevState.Buttons[_key] && !padState.Buttons[_key]; }
+	inline bool IsButtonUp(int _key) { return (prevPadState.Gamepad.wButtons & _key) && !(padState.Gamepad.wButtons & _key); }
 #pragma endregion
 
 #pragma region マウス用
 	// クリックされたか
-	inline bool IsMouseDown(int _mouse) const { return !(prevMouse & _mouse) && (mouse & _mouse); }
+	inline bool IsMouseDown(int _mouse) const { return !(prevMouseInput & _mouse) && (mouseInput & _mouse); }
 
 	// クリックされているか
-	inline bool IsMouse(int _mouse) const { return (mouse & _mouse); }
+	inline bool IsMouse(int _mouse) const { return (mouseInput & _mouse); }
 
 	// クリックが離されたか
-	inline bool IsMouseUp(int _mouse) const { return (prevMouse & _mouse) && !(mouse & _mouse); }
+	inline bool IsMouseUp(int _mouse) const { return (prevMouseInput & _mouse) && !(mouseInput & _mouse); }
 #pragma endregion
 
 public: //左右のスティック入力用
@@ -106,30 +76,30 @@ public: //左右のスティック入力用
 		//入力値
 		float tmp = 0.0f;
 		if (_SthickName == "L_Vertical") {
-			tmp += sthickState.ThumbLY / rangeOfMotion;
-			if (sthickState.ThumbLY > rangeOfMotion) {
-				sthickState.ThumbLY = rangeOfMotion;
+			tmp += padState.Gamepad.sThumbLY / rangeOfMotion;
+			if (padState.Gamepad.sThumbLY > rangeOfMotion) {
+				padState.Gamepad.sThumbLY = rangeOfMotion;
 			}
 		}
 		else if (_SthickName == "L_Horizontal") {
-			if (sthickState.ThumbLX > rangeOfMotion) {
-				sthickState.ThumbLX = rangeOfMotion;
+			if (padState.Gamepad.sThumbLX > rangeOfMotion) {
+				padState.Gamepad.sThumbLX = rangeOfMotion;
 			}
-			tmp += sthickState.ThumbLX / rangeOfMotion;
+			tmp += padState.Gamepad.sThumbLX / rangeOfMotion;
 
 		}
 		else if (_SthickName == "R_Vertical") {
-			if (sthickState.ThumbRY > rangeOfMotion) {
-				sthickState.ThumbRY = rangeOfMotion;
+			if (padState.Gamepad.sThumbRY > rangeOfMotion) {
+				padState.Gamepad.sThumbRY = rangeOfMotion;
 			}
-			tmp += sthickState.ThumbRY / rangeOfMotion;
+			tmp += padState.Gamepad.sThumbRY / rangeOfMotion;
 
 		}
 		else if (_SthickName == "R_Horizontal") {
-			if (sthickState.ThumbRX > rangeOfMotion) {
-				sthickState.ThumbRX = rangeOfMotion;
+			if (padState.Gamepad.sThumbRX > rangeOfMotion) {
+				padState.Gamepad.sThumbRX = rangeOfMotion;
 			}
-			tmp += sthickState.ThumbRX / rangeOfMotion;
+			tmp += padState.Gamepad.sThumbRX / rangeOfMotion;
 
 		}
 

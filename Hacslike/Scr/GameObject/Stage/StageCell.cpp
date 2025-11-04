@@ -27,7 +27,7 @@ void StageCell::Update() {
 
 	MV1SetMatrix(modelHandle, matrix);
 
-	if (isTouch && (InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X) || InputManager::GetInstance()->IsKeyDown(KEY_INPUT_X))) {
+	if (isTouch && (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_X) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_X))) {
 		StageManager::GetInstance().GenerateStage();
 		isTouch = false;
 		return;

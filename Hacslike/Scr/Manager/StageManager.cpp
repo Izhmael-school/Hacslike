@@ -19,7 +19,7 @@ StageManager::~StageManager() {
 void StageManager::Update() {
 	generator->Update();
 
-	if (InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_DPAD_DOWN))
+	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
 		GenerateStage();
 }
 

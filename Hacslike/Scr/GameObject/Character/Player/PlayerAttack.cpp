@@ -6,7 +6,7 @@
 PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon)
 	: pPlayer(_player)
 	, pWeapon(_weapon)
-	, input(InputManager::GetInstance())
+	, input(&InputManager::GetInstance())
 	, CapsuleHitboxes()
 	, SphereHitboxes() {
 	Start();
@@ -24,7 +24,7 @@ void PlayerAttack::Update() {
 /// </summary>
 void PlayerAttack::AttackInput() {
 	// ===== 攻撃入力 =====
-	bool isButtonDown = /*input->IsKey(KEY_INPUT_LCONTROL) && */input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_X);
+	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_X);
 
 	if (isButtonDown && !attackButtonPressed) {
 		// ボタンが押された瞬間だけ処理
@@ -92,7 +92,7 @@ void PlayerAttack::AttackInput() {
 
 	// ===== 攻撃中のタイマー管理 =====
 	if (isAttacking) {
-		attackTimer += TimeManager::GetInstance()->deltaTime;
+		attackTimer += TimeManager::GetInstance().deltaTime;
 
 
 		if (pWeapon->GetType() == 0) {

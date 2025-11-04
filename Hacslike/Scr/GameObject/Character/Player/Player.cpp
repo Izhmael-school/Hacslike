@@ -15,9 +15,8 @@
 Player::Player(VECTOR _pos)
 	: Character(_pos, "Player", Lv, Exp, speed)
 	, pWeapon(nullptr)
-	, XY()
 	, inputVec()
-	, input(InputManager::GetInstance())
+	, input(&InputManager::GetInstance())
 	//, slashes()								//	斬撃
 	, isBlinking(false)						//	回避の長押し防止
 	, blinkTimer(0.0f)						//	回避のクールダウン
@@ -158,7 +157,7 @@ void Player::Update() {
 		inventory.Update();
 	}
 
-	if (input->IsButtonDown(XINPUT_BUTTON_Y)) {
+	if (input->IsButtonDown(XINPUT_GAMEPAD_Y)) {
 		SubHp(10);
 	}
 
@@ -281,7 +280,7 @@ void Player::UpdateMovement() {
 /// 移動入力
 /// </summary>
 void Player::MoveInput() {
-	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
+	
 
 	//入力処理
 	//inputVec = VZero;
@@ -314,7 +313,7 @@ void Player::MoveInput() {
 /// </summary>
 void Player::EvasionInput() {
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || input->IsButtonDown(XINPUT_GAMEPAD_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0) {
 		// 押した瞬間＆クールダウン終了時のみ回避
@@ -329,7 +328,7 @@ void Player::EvasionInput() {
 
 	// ===== 毎フレームクールダウン減算 =====
 	if (evasionCooldown > 0.0f)
-		evasionCooldown -= TimeManager::GetInstance()->deltaTime;
+		evasionCooldown -= TimeManager::GetInstance().deltaTime;
 }
 
 /// <summary>
@@ -358,7 +357,7 @@ void Player::Evasion() {
 void Player::UpdateBlink() {
 	// --- ブリンク中の処理 ---
 	if (isBlinking && !playerAttack->IsAttacking()) {
-		blinkTimer -= TimeManager::GetInstance()->deltaTime;   // 1フレーム経過（60FPS想定）
+		blinkTimer -= TimeManager::GetInstance().deltaTime;   // 1フレーム経過（60FPS想定）
 		if (blinkTimer <= 0.0f) {
 			isBlinking = false;
 			Dash();
@@ -435,7 +434,7 @@ void Player::ChangeWeapon(int weaponId) {
 /// </summary>
 void Player::WeaponInput() {
 	if ((input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed ||
-		input->IsButtonDown(XINPUT_BUTTON_BACK) && !changeWeaponButtonPressed) && !playerAttack->IsAttacking()) {
+		input->IsButtonDown(XINPUT_GAMEPAD_BACK) && !changeWeaponButtonPressed) && !playerAttack->IsAttacking()) {
 		changeWeaponButtonPressed = true;
 
 		currentWeaponId++;
@@ -456,7 +455,7 @@ void Player::AddItem() {
 	auto& items = ItemDropManager::GetInstance()->GetActiveItems();
 
 	for (auto& item : items) {
-		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_BUTTON_B))) {
+		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B))) {
 			item->SetVisible(false);
 			std::string itemName = item->GetItem()->GetName();
 
@@ -474,11 +473,11 @@ void Player::AddItem() {
 /// アイテムのインベントリを開く
 /// </summary>
 void Player::OpenInventory() {
-	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && !isItemUI) {
+	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isItemUI) {
 		isItemUI = true;
 
 	}
-	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && isItemUI) {
+	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isItemUI) {
 		isItemUI = false;
 
 	}

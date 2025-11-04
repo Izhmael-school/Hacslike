@@ -12,22 +12,22 @@ void SkillSelectUI::StartSelection()
 
 int SkillSelectUI::UpdateSelection()
 {
-    InputManager* input = InputManager::GetInstance();
+    InputManager* input = &InputManager::GetInstance();
     if (!isActive) return -1;
 
-    if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_LEFT))
+    if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT))
     {
         selectedIndex--;
         if (selectedIndex < 0) selectedIndex = 2;
         WaitTimer(150);
     }
-    else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_BUTTON_DPAD_RIGHT))
+    else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT))
     {
         selectedIndex++;
         if (selectedIndex > 2) selectedIndex = 0;
         WaitTimer(150);
     }
-    else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_BUTTON_B))
+    else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
     {
         isActive = false;
         return selectedIndex;

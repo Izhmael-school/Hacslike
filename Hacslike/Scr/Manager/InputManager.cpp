@@ -1,48 +1,15 @@
 #include "InputManager.h"
-#include <DxLib.h>
-
-// 静的メンバ変数の初期化
-InputManager* InputManager::pInstance = nullptr;
 
 InputManager::InputManager()
-	:keyState()
-	,prevkeyState() 
+	: keyState("")
+	, prevkeyState("")
+	, padState()
+	, prevPadState()
+	, mouseInput(-1)
+	, prevMouseInput(-1)
 	, sthickState()
 	, rangeOfMotion(32767.0f)
 {
-	GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
-}
-
-/*
- * @function	CreateInstance
- * @brief		自信のインスタンスを生成する
- */
-void InputManager::CreateInstance() {
-	pInstance = new InputManager();
-}
-
-/*
- * @function	GetInstance
- * @brief		自信のインスタンスを取得する唯一の手段
- * @return		InputManager*	自身のインスタンスのアドレス
- *  @tip		生成は１度だけ行う
- */
-InputManager* InputManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-/*
- * @function	DestroyInstance
- * @brief		自信のインスタンスを破棄する唯一の手段
- */
-void InputManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
 }
 
 /*
@@ -56,14 +23,19 @@ void InputManager::Update() {
 	GetHitKeyStateAll(keyState);
 
 	// １フレーム前のキーの状態を保存
-	padPrevState = padState;
+	prevPadState = padState;
 	// 今のフレームの状態を保存
-	GetJoypadXInputState(DX_INPUT_PAD1, &padState);
+	DWORD i = XInputGetState(0, &padState);
+
+	// 接続が取れているか確認
+	if (i == ERROR_SUCCESS) {
+		i = ERROR_SUCCESS;
+	}
 
 	//スティックの取得
-	GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
+	//GetJoypadXInputState(DX_INPUT_PAD1, &sthickState);
 
-	prevMouse = mouse;
-	mouse = GetMouseInput();
+	prevMouseInput = mouseInput;
+	mouseInput = GetMouseInput();
 
 }

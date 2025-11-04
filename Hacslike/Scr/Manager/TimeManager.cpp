@@ -1,35 +1,14 @@
 #include "TimeManager.h"
 #include <DxLib.h>
 #include "../Definition.h"
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
-TimeManager* TimeManager::pInstance = nullptr;
 
-void TimeManager::CreateInstance() {
-	pInstance = new TimeManager();
-}
-
-TimeManager* TimeManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void TimeManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
-}
-
-TimeManager::TimeManager() 
+TimeManager::TimeManager()
 	:prev()
-	,current()
-	,m()
-	,s()
-	,ms()
-	,deltaTime(0)
-{
+	, current()
+	, m()
+	, s()
+	, ms()
+	, deltaTime(0) {
 	Start();
 }
 
@@ -64,5 +43,5 @@ void TimeManager::Update() {
 }
 
 void TimeManager::Render() {
-	DrawFormatString(100, 100, red, "%02d %d",deltaTime,ms);
+	DrawFormatString(100, 100, red, "%02d %d", deltaTime, ms);
 }

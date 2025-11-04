@@ -34,7 +34,7 @@ void CapsuleHitBox::CreateCollider() {
 void CapsuleHitBox::Start() {}
 
 void CapsuleHitBox::Update() {
-	timer += TimeManager::GetInstance()->deltaTime;
+	timer += TimeManager::GetInstance().deltaTime;
 	if (pCollider && pCollider->IsEnable()) {
 		pCollider->Update();
 	}

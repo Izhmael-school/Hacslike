@@ -51,13 +51,13 @@ void GameScene::Update() {
 	// ★スキル選択中でなければ通常処理を行う
 	if (!isSelectingSkill)
 	{
-		InputManager* input = InputManager::GetInstance();
+		InputManager* input = &InputManager::GetInstance();
 
 		EffectManager::GetInstance()->Update();
 		ItemDropManager::GetInstance()->Update();
 
 		// --- Hキーでスキル選択画面を開く ---
-		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER))
+		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER))
 		{
 			skillChoices = SkillManager::GetInstance()->GenerateSkillChoices();
 			skillUI.StartSelection();
@@ -65,7 +65,7 @@ void GameScene::Update() {
 		}
 
 		// --- アイテムドロップテスト ---
-		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_BUTTON_LEFT_SHOULDER))
+		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER))
 		{
 			VECTOR spawnPos = Character::player->GetPosition();
 			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));

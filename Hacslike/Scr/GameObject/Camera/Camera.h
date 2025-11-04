@@ -5,7 +5,6 @@ class Camera : public GameObject {
 private:
 	GameObject* pTarget;	// 追従する対象とのポインタ
 	float armLenght;		// 追従する対象との距離
-	XINPUT_STATE XY;
 	VECTOR offSet;		 //位置調整
 	int rotation_X;
 
