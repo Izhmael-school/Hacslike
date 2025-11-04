@@ -2,16 +2,12 @@
 #include "../Character.h"
 #include "../../Weapon/Weapon.h"
 #include "../../Slash/Slash.h"
-#include "../../../Component/Collider/SphereHitBox.h"
-#include "../../../Component/Collider/CapsuleHitBox.h"
 #include"../../Item/Inventory.h"
 #include"../../Item/ItemBase.h"
 #include"../../../Manager/ItemDropManager.h"
 
 #include "PlayerAttack.h"
-
-//#include "../../../Manager/InputManager.h"
-
+#include "PlayerMovement.h"
 
 /*
  *	@brief	プレイヤークラス
@@ -24,39 +20,11 @@ private:	//	メンバ変数
 
 	Weapon* pWeapon;
 
-	VECTOR inputVec;
+	/*VECTOR inputVec;*/
 
 	InputManager* input;
 
-	XINPUT_STATE XY;
-
 	//std::vector<Slash*> slashes;
-
-	//int attackIndex;       // 現在の攻撃段階（1〜3）
-	//float attackTimer;     // 経過時間
-	//bool canNextAttack;    // 次の入力受付可
-
-	/*std::vector<CapsuleHitBox*> CapsuleHitboxes;
-
-	std::vector<SphereHitBox*> SphereHitboxes;*/
-
-	static const int AFTIMAGENUM = 20;
-	VECTOR afterImagePos[AFTIMAGENUM];
-	float afterImageRotY[AFTIMAGENUM];
-
-	bool isBlinking;
-	float blinkTimer;
-
-	//float attackInputCooldown;      // 攻撃クールダウン
-	//bool attackButtonPressed;
-	bool evasionButtonPressed;
-
-	float evasionCooldown;        // クールダウンタイマー
-	const float EVASION_COOLDOWN_TIME = 2.0f; // 2秒クールダウン
-
-	const float ATTACK_INPUT_COOLDOWN_TIME = 0.2f; // 0.2秒クールダウン
-
-	float evasionSpeed;
 
 	int currentWeaponId;            // 初期武器ID
 	bool changeWeaponButtonPressed; // ボタン押下フラグ
@@ -75,6 +43,7 @@ private:	//	メンバ変数
 	float criticalDamage;
 
 	PlayerAttack* playerAttack;
+	PlayerMovement* playerMovement;
 
 #pragma endregion
 
@@ -137,37 +106,6 @@ public:		//	オーバーライドした衝突検知
 
 
 public:		//	メンバ関数
-
-	/// <summary>
-	/// 移動・アニメーション・回転処理
-	/// </summary>
-	void UpdateMovement();
-
-	/// <summary>
-	/// 移動入力
-	/// </summary>
-	void MoveInput();
-
-	/// <summary>
-	/// 回避入力
-	/// </summary>
-	void EvasionInput();
-
-	/// <summary>
-	/// 回避
-	/// </summary>
-	void Evasion();
-
-	/// <summary>
-	/// BlinkのUpdate
-	/// </summary>
-	void UpdateBlink();
-
-	/// <summary>
-	/// ダッシュ
-	/// </summary>
-	void Dash();
-
 	/// <summary>
 	/// 武器切り替え
 	/// </summary>
@@ -250,5 +188,7 @@ public:		//	Getter と Setter
 	/// </summary>
 	/// <param name="_criticalDamage"></param>
 	inline void SetCriticalDamage(float _criticalDamage) { criticalDamage = _criticalDamage; }
+
+	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
 
 };

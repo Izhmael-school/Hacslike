@@ -30,6 +30,7 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Player\PlayerAttack.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Player\PlayerMovement.cpp" />
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp" />
     <ClCompile Include="Scr\GameObject\Effect\Effect.cpp" />
     <ClCompile Include="Scr\GameObject\GameObject.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Player\Player.h" />
     <ClInclude Include="Scr\GameObject\Character\Player\PlayerAttack.h" />
+    <ClInclude Include="Scr\GameObject\Character\Player\PlayerMovement.h" />
     <ClInclude Include="Scr\GameObject\Coin\Coin.h" />
     <ClInclude Include="Scr\GameObject\Effect\Effect.h" />
     <ClInclude Include="Scr\GameObject\GameObject.h" />

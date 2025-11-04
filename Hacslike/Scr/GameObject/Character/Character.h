@@ -130,15 +130,15 @@ public:	// ゲッターとセッター
 
 	inline void SetPosition(VECTOR set) override {
 		position = set;
-		prevPos = set;
-		wallCheckPos = set;
+		/*prevPos = set;
+		wallCheckPos = set;*/
 	}
 
 	inline void SetPosition(float x, float y, float z) override {
 		VECTOR set = VGet(x, y, z);
 		position = set;
-		prevPos = set;
-		wallCheckPos = set;
+		//prevPos = set;
+		//wallCheckPos = set;
 	}
 };
 
