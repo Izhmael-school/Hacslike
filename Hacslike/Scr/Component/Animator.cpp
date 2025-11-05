@@ -5,7 +5,9 @@ Animator::Animator()
 	:animationModelHandle(INVALID)
 	, pAnimations()
 	, currentAnimation(INVALID)
-	, isPlaying(false) {}
+	, isPlaying(false)
+	, rootFrameIndex()
+	, prevRootPos(){}
 
 Animator::~Animator() {
 	for (auto anim : pAnimations) {
@@ -113,5 +115,29 @@ int Animator::GetAnimationIndex(std::string animName) {
 		if (pAnimations[i]->name != animName) continue;
 		return i;
 	}
+}
+
+void Animator::SetAnimModelHandle(int handle) {
+	animationModelHandle = handle;
+	// モデルのルートボーンを探す（ボーン名はモデルに合わせて変更）
+	rootFrameIndex = MV1SearchFrame(animationModelHandle, "Root");
+	if (rootFrameIndex == -1) {
+		// Root が見つからない場合、Bip01やPelvisなどに変更
+		rootFrameIndex = MV1SearchFrame(animationModelHandle, "Bip01");
+	}
+	prevRootPos = MV1GetFramePosition(animationModelHandle, rootFrameIndex);
+}
+
+// ルートモーション差分を返す
+VECTOR Animator::GetRootMotionDelta() {
+	if (rootFrameIndex == -1) return VGet(0, 0, 0);
+
+	VECTOR currentPos = MV1GetFramePosition(animationModelHandle, rootFrameIndex);
+	VECTOR delta = VSub(currentPos, prevRootPos);
+
+	// 次回用に保存
+	prevRootPos = currentPos;
+
+	return delta;
 }
 

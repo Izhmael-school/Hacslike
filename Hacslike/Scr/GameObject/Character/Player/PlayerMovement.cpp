@@ -7,14 +7,14 @@
 
 PlayerMovement::PlayerMovement(Player* _player)
 	: pPlayer(_player)
-	, input(InputManager::GetInstance())
+	, input(&InputManager::GetInstance())
 	, isBlinking(false)
 	, blinkTimer(0.0f)
 	, evasionButtonPressed(false)
 	, evasionCooldown(0.0f)
 	, evasionSpeed(1.0f)
 	, inputVec()
-	, XY(){
+	, dashState(false){
 	Start();
 }
 
@@ -31,8 +31,8 @@ void PlayerMovement::Update() {
 	inputVec = VZero;
 	MoveInput();
 	EvasionInput();
-	UpdateBlink();
 	UpdateMovement();
+	UpdateBlink();
 }
 
 void PlayerMovement::Render() {
@@ -87,14 +87,18 @@ void PlayerMovement::UpdateMovement() {
 			//	移動アニメーションを再生
 			if (evasionSpeed >= 1.2f) {
 				pPlayer->GetAnimator()->Play(5, 0.5f);
+				dashState = true;
 			}
-			else
+			else{
 				pPlayer->GetAnimator()->Play(1, 1.3f);
+				dashState = false;
+			}
 		}
 		else {
 			//	待機アニメーションを再生
 			pPlayer->GetAnimator()->Play(0);
 			evasionSpeed = 1;
+			dashState = false;
 		}
 	}
 }
@@ -103,8 +107,6 @@ void PlayerMovement::UpdateMovement() {
 /// 移動入力
 /// </summary>
 void PlayerMovement::MoveInput() {
-	GetJoypadXInputState(DX_INPUT_PAD1, &XY);
-
 	inputVec = VGet(input->IsJoypadSthick("L_Horizontal"),
 		0.0f,
 		input->IsJoypadSthick("L_Vertical"));
@@ -127,7 +129,7 @@ void PlayerMovement::MoveInput() {
 /// </summary>
 void PlayerMovement::EvasionInput() {
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || InputManager::GetInstance()->IsButtonDown(XINPUT_BUTTON_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || input->IsButtonDown(XINPUT_GAMEPAD_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0 && !pPlayer->GetPlayerAttack()->IsAttacking()) {
 		// 押した瞬間＆クールダウン終了時のみ回避
@@ -142,7 +144,7 @@ void PlayerMovement::EvasionInput() {
 
 	// ===== 毎フレームクールダウン減算 =====
 	if (evasionCooldown > 0.0f)
-		evasionCooldown -= TimeManager::GetInstance()->deltaTime;
+		evasionCooldown -= TimeManager::GetInstance().deltaTime;
 }
 
 /// <summary>
@@ -171,11 +173,12 @@ void PlayerMovement::Evasion() {
 void PlayerMovement::UpdateBlink() {
 	// --- ブリンク中の処理 ---
 	if (isBlinking && !pPlayer->GetPlayerAttack()->IsAttacking()) {
-		blinkTimer -= TimeManager::GetInstance()->deltaTime;   // 1フレーム経過（60FPS想定）
+		blinkTimer -= TimeManager::GetInstance().deltaTime;
 		if (blinkTimer <= 0.0f) {
+			pPlayer->GetCollider()->SetEnable(true);
 			isBlinking = false;
 			Dash();
-			pPlayer->GetCollider()->SetEnable(true);
+			blinkTimer = 0;
 		}
 
 		// 先に最新位置を入れる

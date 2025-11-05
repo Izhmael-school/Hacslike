@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="Scr\Data\SkillTreeData.json" />
     <None Include="Scr\Data\StageData.json" />
     <None Include="Scr\Data\WeaponsData.json" />
   </ItemGroup>

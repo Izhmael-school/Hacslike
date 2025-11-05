@@ -1,0 +1,17 @@
+[
+  {
+    "id": 0,
+    "name": "core",
+    "position": {
+      "x": 400,
+      "y": 300
+    },
+    "requiredSkillIds": []
+  },
+
+  {
+    "id": 1,
+    "name": "Atk + 2",
+    "position": {"x": 410}
+  }
+]

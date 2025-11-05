@@ -25,8 +25,11 @@ private:
 
 	PlayerMovement* playerMovement;
 
+	VECTOR dashAttackDir;
+	bool isDashAttack;
+
 public:
-	PlayerAttack(Player* _player, Weapon* _weapon);
+	PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _playerMovement);
 
 	void Start();
 	void Update();
@@ -34,6 +37,8 @@ public:
 	void CreateAttackHitbox(float length, float radius);
 
 	inline bool IsAttacking() const { return isAttacking; }
+
+	inline bool IsDashAttacking() const { return isDashAttack; }
 
 	void SetWeapon(Weapon* _weapon) {
 		pWeapon = _weapon;

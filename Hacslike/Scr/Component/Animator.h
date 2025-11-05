@@ -19,6 +19,8 @@ struct AnimationClip {
 	float eventTime;			// イベントが発生する時間
 	bool isAction;				// イベントが発生したかどうか
 
+	
+
 	/*
 	 * @brief コンストラクタ
 	 * @param[out] int& _animHandle
@@ -66,6 +68,9 @@ private:
 	int currentAnimation;
 	bool isPlaying;
 
+	int rootFrameIndex;
+	VECTOR prevRootPos;
+
 public:
 	Animator();
 	~Animator();
@@ -92,4 +97,7 @@ public:
 	inline void ChangeSpeed(int index, float _speed) { pAnimations[index]->playSpeed = _speed; }
 	float GetTotalTime(std::string animName);
 	int GetAnimationIndex(std::string animName);
+
+	inline void SetAnimModelHandle(int handle);
+	inline VECTOR GetRootMotionDelta();
 };

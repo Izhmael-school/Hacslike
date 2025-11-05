@@ -15,7 +15,7 @@
 Player::Player(VECTOR _pos)
 	: Character(_pos, "Player", Lv, Exp, speed)
 	, pWeapon(nullptr)
-	, input(InputManager::GetInstance())
+	, input(&InputManager::GetInstance())
 	//, slashes()								//	斬撃
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
@@ -74,9 +74,11 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1", "AxeAtk1");
 	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1", "AxeAtk2");
 	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1", "AxeAtk3");
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack4.mv1", "AxeAtk4");
 	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1", "GreatAtk1");
 	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2");
 	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3");
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack4.mv1", "GreatAtk4");
 
 	pAnimator->Play(0);
 
@@ -94,8 +96,8 @@ void Player::Start() {
 		pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
 	}
 
-	playerAttack = new PlayerAttack(this, pWeapon);
 	playerMovement = new PlayerMovement(this);
+	playerAttack = new PlayerAttack(this, pWeapon, playerMovement);
 	
 	SetSpeed(1);
 }
@@ -135,11 +137,12 @@ void Player::Update() {
 		inventory.Update();
 	}
 
-	if (input->IsButtonDown(XINPUT_BUTTON_Y)) {
+	if (input->IsButtonDown(XINPUT_GAMEPAD_Y)) {
 		SubHp(10);
 	}
 
 	pAnimator->Update();
+
 	GameObject::Update();
 
 	//	武器の更新
@@ -245,7 +248,7 @@ void Player::ChangeWeapon(int weaponId) {
 /// </summary>
 void Player::WeaponInput() {
 	if ((input->IsKeyDown(KEY_INPUT_C) && !changeWeaponButtonPressed ||
-		input->IsButtonDown(XINPUT_BUTTON_BACK) && !changeWeaponButtonPressed) && !playerAttack->IsAttacking()) {
+		input->IsButtonDown(XINPUT_GAMEPAD_BACK) && !changeWeaponButtonPressed) && !playerAttack->IsAttacking()) {
 		changeWeaponButtonPressed = true;
 
 		currentWeaponId++;
@@ -266,7 +269,7 @@ void Player::AddItem() {
 	auto& items = ItemDropManager::GetInstance()->GetActiveItems();
 
 	for (auto& item : items) {
-		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_BUTTON_B))) {
+		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B))) {
 			item->SetVisible(false);
 			std::string itemName = item->GetItem()->GetName();
 
@@ -284,11 +287,11 @@ void Player::AddItem() {
 /// アイテムのインベントリを開く
 /// </summary>
 void Player::OpenInventory() {
-	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && !isItemUI) {
+	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isItemUI) {
 		isItemUI = true;
 
 	}
-	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_BUTTON_START)) && isItemUI) {
+	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isItemUI) {
 		isItemUI = false;
 
 	}

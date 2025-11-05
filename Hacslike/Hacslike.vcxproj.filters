@@ -329,5 +329,9 @@
     <None Include="Scr\Data\StageData.json">
       <Filter>Data</Filter>
     </None>
+    <None Include="cpp.hint" />
+    <None Include="Scr\Data\SkillTreeData.json">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

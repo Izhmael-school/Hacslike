@@ -191,4 +191,8 @@ public:		//	Getter と Setter
 
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
 
+	VECTOR GetForward() const {
+		return VNorm(VGet(-sinf(Deg2Rad(rotation.y)), 0.0f, -cosf(Deg2Rad(rotation.y))));
+	}
+
 };

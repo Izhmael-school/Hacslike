@@ -31,7 +31,7 @@ private:
 
 	PlayerAttack* playerAttack;
 
-	XINPUT_STATE XY;
+	bool dashState;
 
 public:
 	PlayerMovement(Player* _player);
@@ -73,4 +73,6 @@ public:
 
 public:
 	inline bool IsBlinking() const { return isBlinking; }
+
+	inline bool IsDashState() const { return dashState; }
 };
