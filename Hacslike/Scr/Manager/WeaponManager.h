@@ -3,6 +3,7 @@
 #include <string>
 #include "../json.hpp"
 #include "../Component/Singleton.h"
+#include "../Definition.h"
 #include <DxLib.h> // DxLibのヘッダ
 
 struct WeaponData {
@@ -10,9 +11,9 @@ struct WeaponData {
     std::string name;
     std::string modelPath;   // JSONのパス
     int type;
-    std::array<float, 3> attackSpeed;
-    std::array<float, 3> colLength;
-    std::array<float, 3> colRadius;
+    std::array<float, ATTACK_SPEED_NUM> attackSpeed;
+    std::array<float, COL_LENGTH_NUM> colLength;
+    std::array<float, COL_RADIUS_NUM> colRadius;
     int modelHandle = -1;    // DxLibのモデルハンドル
 };
 

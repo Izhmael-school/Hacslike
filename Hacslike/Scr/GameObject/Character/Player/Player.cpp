@@ -4,7 +4,6 @@
 #include "../../../Component/Collider/Collider.h"
 #include "../../../Definition.h"
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
-#include "../Hacslike/Scr/Manager/WeaponManager.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
 
@@ -24,7 +23,8 @@ Player::Player(VECTOR _pos)
 	, coinValue()
 	, expValue()
 	, criticalHitRate()
-	, criticalDamage() {
+	, criticalDamage()
+	, weaponData(nullptr){
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
@@ -86,7 +86,7 @@ void Player::Start() {
 	maxWeaponId = WeaponManager::GetInstance().GetMaxWeaponId();
 	changeWeaponButtonPressed = false;
 	currentWeaponId = 10;
-	WeaponData* weaponData = WeaponManager::GetInstance().GetWeapon(currentWeaponId);
+	weaponData = WeaponManager::GetInstance().GetWeapon(currentWeaponId);
 	if (weaponData) {
 		pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
 		pWeapon->SetColLength(weaponData->colLength);
@@ -220,27 +220,17 @@ void Player::Render() {
 /// </summary>
 /// <param name="weaponId"></param>
 void Player::ChangeWeapon(int weaponId) {
-	// Weapon オブジェクトだけ削除
-	if (pWeapon) {
-		delete pWeapon;
-		pWeapon = nullptr;
-	}
-
-	WeaponData* weaponData = WeaponManager::GetInstance().GetWeapon(weaponId);
+	weaponData = WeaponManager::GetInstance().GetWeapon(weaponId);
 	if (!weaponData) return;
 
-	// 新しい Weapon を生成＆装備
-	pWeapon = new Weapon(weaponData->name, weaponData->modelHandle);
+	pWeapon->ChangeModel(weaponData->modelHandle);
+
+	pWeapon->SetType(static_cast<WeaponType>(weaponData->type));
 	pWeapon->SetColLength(weaponData->colLength);
 	pWeapon->SetColRadius(weaponData->colRadius);
-	pWeapon->SetType((WeaponType)weaponData->type);
 	pWeapon->SetAnimationSpeed(weaponData->attackSpeed);
-	pWeapon->attach(modelHandle, pWeapon->GetModelHandle(), "wp", this);
 
 	playerAttack->SetWeapon(pWeapon);
-
-	// 必要なら Weapon Collider もセット
-	pWeapon->SetCollider(new CapsuleCollider(pWeapon, VZero, VScale(VDown, 0), 8.0f));
 }
 
 /// <summary>

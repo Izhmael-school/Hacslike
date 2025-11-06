@@ -54,6 +54,16 @@
 #define RoomMax_Middle (10)
 #define RoomMax_Large (12)
 
+//	•ŠíŠÖ˜A
+#define ATTACK_SPEED_NUM (4)
+#define DEFAULT_ATTACK_SPEED std::array<float, ATTACK_SPEED_NUM>{1.0f, 1.0f, 1.0f, 1.0f}
+#define COL_LENGTH_NUM (3)
+#define DEFAULT_COL_LENGTH std::array<float, COL_LENGTH_NUM>{30.0f, 40.0f, 0.0f}
+#define COL_RADIUS_NUM (3)
+#define DEFAULT_COL_RADIUS std::array<float, COL_RADIUS_NUM>{80.0f, 110.0f, 150.0f}
+
+
+
 //	=================================================================
 //		’è”‚ğ’è‹`‚·‚éêŠ
 //	=================================================================

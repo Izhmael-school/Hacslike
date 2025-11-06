@@ -26,28 +26,28 @@ void WeaponManager::LoadWeapons(const std::string& path) {
         weapon.modelPath = w["modelPath"];
         weapon.type = w["type"];
         if (w.contains("attackSpeed") && w["attackSpeed"].is_array()) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < ATTACK_SPEED_NUM; i++) {
                 weapon.attackSpeed[i] = (i < w["attackSpeed"].size()) ? w["attackSpeed"][i].get<float>() : 1.0f;
             }
         }
         else {
-            weapon.attackSpeed = { 1.0f, 1.0f, 1.0f };
+            weapon.attackSpeed =  DEFAULT_ATTACK_SPEED ;
         }
         if (w.contains("colLength") && w["colLength"].is_array()) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < COL_LENGTH_NUM; i++) {
                 weapon.colLength[i] = (i < w["colLength"].size()) ? w["colLength"][i].get<float>() : 1.0f;
             }
         }
         else {
-            weapon.colLength = { 30.0f, 40.0f, 0.0f };
+            weapon.colLength = DEFAULT_COL_LENGTH;
         }
         if (w.contains("colRadius") && w["colRadius"].is_array()) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < COL_RADIUS_NUM; i++) {
                 weapon.colRadius[i] = (i < w["colRadius"].size()) ? w["colRadius"][i].get<float>() : 1.0f;
             }
         }
         else {
-            weapon.colRadius = { 80.0f, 110.0f, 150.0f };
+            weapon.colRadius = DEFAULT_COL_RADIUS;
         }
         weapon.modelHandle = MV1LoadModel(weapon.modelPath.c_str());
         if (weapon.modelHandle == -1)

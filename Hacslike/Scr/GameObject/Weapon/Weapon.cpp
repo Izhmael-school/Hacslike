@@ -6,7 +6,15 @@
 
 // コンストラクタ
 Weapon::Weapon(const std::string& _tag, int handle)
-    : GameObject({}, _tag), modelHandle(handle), attachModelHandle(-1), attachFrameIndex(-1), User(nullptr), type() {
+    : GameObject({}, _tag)
+    , modelHandle(handle)
+    , attachModelHandle(-1)
+    , attachFrameIndex(-1)
+    , User(nullptr)
+    , type()
+    , animationSpeed()
+    , colLength()
+    , colRadius(){
 }
 
 // デストラクタ
@@ -126,3 +134,7 @@ void Weapon::OnTriggerEnter(Collider* _pCol) {}
 void Weapon::OnTriggerStay(Collider* _pCol) {}
 
 void Weapon::OnTriggerExit(Collider* _pCol) {}
+
+void Weapon::ChangeModel(int newModelHandle) {
+    modelHandle = newModelHandle;  
+}

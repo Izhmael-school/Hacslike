@@ -67,7 +67,7 @@ void PlayerAttack::AttackInput() {
 			if (!isAttacking && playerMovement->IsDashState()) {
 				isAttacking = true;
 				isDashAttack = true;
-				attackIndex = 3;
+				attackIndex = 4;
 				attackTimer = 0.0f;
 
 				pPlayer->GetAnimator()->Play("GreatAtk4", pWeapon->GetAnimationSpeed(attackIndex - 1));
@@ -162,7 +162,7 @@ void PlayerAttack::AttackInput() {
 			if (attackIndex == 4 /*&& attackTimer > 0.18f && attackTimer < 0.22f*/)
 				CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 周囲攻撃
 
-			if (attackIndex >= 3) {
+			if (attackIndex == 3) {
 				if (attackTimer > 2.78f) {
 					isAttacking = false;
 					canNextAttack = false;

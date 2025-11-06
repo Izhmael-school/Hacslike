@@ -11,9 +11,9 @@ private:
 	Character* User = nullptr;     // 武器を装備しているキャラクター
 
 	WeaponType type;
-	std::array<float, 3> animationSpeed; // 各段のスピード
-	std::array<float, 3> colLength;
-	std::array<float, 3> colRadius;
+	std::array<float, ATTACK_SPEED_NUM> animationSpeed; // 各段のスピード
+	std::array<float, COL_LENGTH_NUM> colLength;
+	std::array<float, COL_RADIUS_NUM> colRadius;
 
 public:
 	Weapon(const std::string& _tag = "", int handle = -1);
@@ -35,25 +35,27 @@ public:
 	inline void SetType(WeaponType _type) { type = _type; }
 
 	inline float GetAnimationSpeed(int index) const {
-		return (index >= 0 && index < 3) ? animationSpeed[index] : 1.0f;
+		return (index >= 0 && index < ATTACK_SPEED_NUM) ? animationSpeed[index] : 1.0f;
 	}
-	inline void SetAnimationSpeed(const std::array<float, 3>& speeds) {
+	inline void SetAnimationSpeed(const std::array<float, ATTACK_SPEED_NUM>& speeds) {
 		animationSpeed = speeds;
 	}
 	inline float GetColLength(int index) const {
-		return (index >= 0 && index < 3) ? colLength[index] : 1.0f;
+		return (index >= 0 && index < COL_LENGTH_NUM) ? colLength[index] : 1.0f;
 	}
-	inline void SetColLength(const std::array<float, 3>& _colLength) {
+	inline void SetColLength(const std::array<float, COL_LENGTH_NUM>& _colLength) {
 		colLength = _colLength;
 	}
 	inline float GetColRadius(int index) const {
-		return (index >= 0 && index < 3) ? colRadius[index] : 1.0f;
+		return (index >= 0 && index < COL_RADIUS_NUM) ? colRadius[index] : 1.0f;
 	}
-	inline void SetColRadius(const std::array<float, 3>& _colRadius) {
+	inline void SetColRadius(const std::array<float, COL_RADIUS_NUM>& _colRadius) {
 		colRadius = _colRadius;
 	}
 
 	void OnTriggerEnter(Collider* _pCol) override;
 	void OnTriggerStay(Collider* _pCol) override;
 	void OnTriggerExit(Collider* _pCol) override;
+
+	void ChangeModel(int newModelHandle);
 };

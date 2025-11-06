@@ -4,7 +4,8 @@
 #include "../../Slash/Slash.h"
 #include"../../Item/Inventory.h"
 #include"../../Item/ItemBase.h"
-#include"../../../Manager/ItemDropManager.h"
+#include"../../../Manager/ItemDropManager.h" 
+#include "../Hacslike/Scr/Manager/WeaponManager.h"
 
 #include "PlayerAttack.h"
 #include "PlayerMovement.h"
@@ -44,6 +45,8 @@ private:	//	メンバ変数
 
 	PlayerAttack* playerAttack;
 	PlayerMovement* playerMovement;
+
+	WeaponData* weaponData;
 
 #pragma endregion
 
@@ -190,9 +193,5 @@ public:		//	Getter と Setter
 	inline void SetCriticalDamage(float _criticalDamage) { criticalDamage = _criticalDamage; }
 
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
-
-	VECTOR GetForward() const {
-		return VNorm(VGet(-sinf(Deg2Rad(rotation.y)), 0.0f, -cosf(Deg2Rad(rotation.y))));
-	}
 
 };
