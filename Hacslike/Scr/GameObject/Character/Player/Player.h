@@ -198,8 +198,7 @@ public:		//	Getter と Setter
 
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
 
-<<<<<<< HEAD
-=======
+
 	VECTOR GetForward() const {
 		return VNorm(VGet(-sinf(Deg2Rad(rotation.y)), 0.0f, -cosf(Deg2Rad(rotation.y))));
 	}
@@ -208,5 +207,5 @@ public:
 	static Player* CreateInstance(VECTOR _pos = VZero);
 	static Player* GetInstance();
 	static void DestroyInstance();
->>>>>>> saito
+
 };
