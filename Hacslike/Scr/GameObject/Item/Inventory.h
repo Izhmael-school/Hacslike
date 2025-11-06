@@ -63,8 +63,9 @@ private:
 
     // アイコン読み込みキャッシュ（パス -> グラフィックハンドル）
     std::unordered_map<std::string, int> iconCache;
+    // 装備用変数
+    ItemBase* equippedItem = nullptr;
 
-   
 
     // 内部ヘルパー
     void DropItemAtIndex(int idx);
@@ -83,10 +84,16 @@ public:
     /// 指定されたアイテムを使用
     /// </summary>
     /// <param name="name">使用するアイテム名</param>
-    void UseItem(const std::string& name);
+    void UseItem(int index);
 
 
     void Update();
+
+    /// <summary>
+    /// 装備
+    /// </summary>
+    /// <param name="item"></param>
+    void EquipItem(ItemBase* item);  // 新規追加
     void Render();
     /// <summary>
     /// 入手したアイテムの取得

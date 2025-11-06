@@ -1,5 +1,8 @@
 #pragma once
 #include "../ItemBase.h"
+
+class Player;
+
 class ItemSword : public ItemBase
 {
 private://メンバ変数
@@ -21,6 +24,7 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 
+	void UnEquip()override;
 
 
 };
@@ -44,5 +48,6 @@ public://メンバ関数
 	/// アイテムを使用した時の効果
 	/// </summary>
 	void Use()override;
+	void UnEquip()override;
 
 };

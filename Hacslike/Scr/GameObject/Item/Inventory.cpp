@@ -1,4 +1,4 @@
-#include "Inventory.h"
+ï»¿#include "Inventory.h"
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
@@ -7,6 +7,8 @@
 #include <string>
 #include <cstddef> // size_t
 #include"../../Manager/InputManager.h"
+#include"../Character/Character.h"
+#include"../Character/Player/Player.h"
 
 Inventory::InventoryItem::InventoryItem(std::unique_ptr<ItemBase> _item, int _quantity)
     : item(std::move(_item)), quantity(_quantity)
@@ -21,7 +23,7 @@ menuChoice(0)
   
 };
 Inventory::~Inventory() {
-    // ƒLƒƒƒbƒVƒ…‚³‚ê‚½ƒOƒ‰ƒtƒBƒbƒNƒnƒ“ƒhƒ‹‚ğ‰ğ•úi•K—v‚È‚çj
+    // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã•ã‚ŒãŸã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒãƒ³ãƒ‰ãƒ«ã‚’è§£æ”¾ï¼ˆå¿…è¦ãªã‚‰ï¼‰
     for (auto& p : iconCache) {
         if (p.second >= 0) {
             DeleteGraph(p.second);
@@ -31,7 +33,7 @@ Inventory::~Inventory() {
 };
 
 /// <summary>
-/// ƒAƒCƒeƒ€’Ç‰Áˆ—
+/// ã‚¢ã‚¤ãƒ†ãƒ è¿½åŠ å‡¦ç†
 /// </summary>
 void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 {
@@ -42,7 +44,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
     const std::string& itemName = newItem->GetName();
     const std::string& itemType = newItem->GetType();
 
-    // Á”ïŒniConsumablej‚ÍƒXƒ^ƒbƒN‰Â”\
+    // æ¶ˆè²»ç³»ï¼ˆConsumableï¼‰ã¯ã‚¹ã‚¿ãƒƒã‚¯å¯èƒ½
     if (itemType == "Consumable")
     {
         auto it = std::find_if(items.begin(), items.end(),
@@ -53,20 +55,20 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 
         if (it != items.end()) {
             it->quantity++;
-            printfDx("u%sv‚ğƒXƒgƒbƒNI x%d\n", itemName.c_str(), it->quantity);
+            printfDx("ã€Œ%sã€ã‚’ã‚¹ãƒˆãƒƒã‚¯ï¼ x%d\n", itemName.c_str(), it->quantity);
             
             OnItemGained(it->item.get(), it->quantity);
             return;
         }
     }
 
-    // V‹K“o˜^i‘•”õŒn‚â‰æ“¾‚ÌÁ”ïŒnj
+    // æ–°è¦ç™»éŒ²ï¼ˆè£…å‚™ç³»ã‚„åˆå–å¾—ã®æ¶ˆè²»ç³»ï¼‰
     items.emplace_back(std::move(newItem), 1);
     
     InventoryItem& addedItem = items.back();
     OnItemGained(addedItem.item.get(), addedItem.quantity);
 #if _DEBUG
-    printfDx("u%sv‚ğƒCƒ“ƒxƒ“ƒgƒŠ‚É’Ç‰ÁI\n", itemName.c_str());
+    printfDx("ã€Œ%sã€ã‚’ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã«è¿½åŠ ï¼\n", itemName.c_str());
     printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());
 #endif
 }
@@ -74,32 +76,31 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 
 
 /// <summary>
-/// ƒAƒCƒeƒ€g—pˆ—
+/// ã‚¢ã‚¤ãƒ†ãƒ ä½¿ç”¨å‡¦ç†
 /// </summary>
-void Inventory::UseItem(const std::string& name)
+void Inventory::UseItem(int index)
 {
-    auto it = std::find_if(items.begin(), items.end(),
-        [&](const InventoryItem& invItem)
-        {
-            return invItem.item->GetName() == name;
-        });
+    if (index < 0 || index >= (int)items.size()) return;
 
-    if (it == items.end()) {
-#if _DEBUG
-        printfDx("ƒAƒCƒeƒ€u%sv‚ÍŠ‚µ‚Ä‚¢‚Ü‚¹‚ñI\n", name.c_str());
-#endif
-        return;
+    InventoryItem& inv = items[index];
+    const std::string& name = inv.item->GetName();
+
+    if (inv.item->GetType() == "Consumable") {
+        inv.item->Use();
+        inv.quantity--;
+    }
+    else if (inv.item->GetType() == "Equipment") {
+        EquipItem(inv.item.get());
     }
 
-    // Use()ŠÖ”‚ğŒÄ‚Ño‚·iItemBase‘¤‚ÉÀ‘•‚³‚ê‚Ä‚¢‚é‘O’ñj
-    it->item->Use();
-    it->quantity--;
-
-    if (it->quantity <= 0) {
+    if (inv.quantity <= 0) {
 #if _DEBUG
-        printfDx("u%sv‚ğg‚¢Ø‚Á‚½I\n", name.c_str());
+        printfDx("ã€Œ%sã€ã‚’ä½¿ã„åˆ‡ã£ãŸï¼\n", name.c_str());
 #endif
-        items.erase(it);
+        items.erase(items.begin() + index);
+        if (currentIndex >= (int)items.size()) {
+            currentIndex = (std::max)(0, (int)items.size() - 1);
+        }
     }
 }
 
@@ -107,10 +108,10 @@ void Inventory::DropItemAtIndex(int idx)
 {
     if (idx < 0 || idx >= (int)items.size()) return;
     InventoryItem& inv = items[idx];
-    // ‚±‚±‚Åƒ[ƒ‹ƒh‚Éƒhƒƒbƒv‚·‚éˆ—‚ğ“ü‚ê‚é‚±‚Æ‚à‚Å‚«‚Ü‚·i–¢À‘•j
+    // ã“ã“ã§ãƒ¯ãƒ¼ãƒ«ãƒ‰ã«ãƒ‰ãƒ­ãƒƒãƒ—ã™ã‚‹å‡¦ç†ã‚’å…¥ã‚Œã‚‹ã“ã¨ã‚‚ã§ãã¾ã™ï¼ˆæœªå®Ÿè£…ï¼‰
     inv.quantity--;
 #if _DEBUG
-    printfDx("u%sv‚ğÌ‚Ä‚½Bc‚è x%d\n", inv.item->GetName().c_str(), inv.quantity);
+    printfDx("ã€Œ%sã€ã‚’æ¨ã¦ãŸã€‚æ®‹ã‚Š x%d\n", inv.item->GetName().c_str(), inv.quantity);
 #endif
 
     if (inv.quantity <= 0) {
@@ -132,22 +133,22 @@ void Inventory::Update()
     char keyState[256];
     GetHitKeyStateAll(keyState);
     InputManager* input = &InputManager::GetInstance();
-    // ã
+    // ä¸Š
     if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
         if (!menuActive) {
             if (!items.empty()) {
                 currentIndex = (std::max)(0, currentIndex - 1);
-                // ƒXƒNƒ[ƒ‹’²®
+                // ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«èª¿æ•´
                 if (currentIndex < scrollOffset) scrollOffset = currentIndex;
             }
         }
         else {
-            // ƒƒjƒ…[“àˆÚ“®iã‰º‚ÅØ‚è‘Ö‚¦‚éj
-            menuChoice = (menuChoice + 1) % 2; // 0/1 Ø‘Ö
+            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼å†…ç§»å‹•ï¼ˆä¸Šä¸‹ã§åˆ‡ã‚Šæ›¿ãˆã‚‹ï¼‰
+            menuChoice = (menuChoice + 1) % 2; // 0/1 åˆ‡æ›¿
         }
     }
 
-    // ‰º
+    // ä¸‹
     if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
         if (!menuActive) {
             if (!items.empty()) {
@@ -160,7 +161,7 @@ void Inventory::Update()
             }
         }
         else {
-            // ƒƒjƒ…[“àˆÚ“®
+            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼å†…ç§»å‹•
             menuChoice = (menuChoice + 1) % 2;
         }
     }
@@ -168,20 +169,20 @@ void Inventory::Update()
     // Enter
     if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
         if (!menuActive) {
-            // ƒƒjƒ…[‚ğŠJ‚­iƒAƒCƒeƒ€‚ª‘¶İ‚·‚é‚Æ‚«j
+            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’é–‹ãï¼ˆã‚¢ã‚¤ãƒ†ãƒ ãŒå­˜åœ¨ã™ã‚‹ã¨ãï¼‰
             if (!items.empty()) {
                 menuActive = true;
-                menuChoice = 0; // ƒfƒtƒHƒ‹ƒg‚Í Use
+                menuChoice = 0; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ Use
             }
         }
         else {
-            // ƒƒjƒ…[‚Å‘I‘ğ‚ğÀs
+            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§é¸æŠã‚’å®Ÿè¡Œ
             if (currentIndex >= 0 && currentIndex < (int)items.size()) {
                 InventoryItem& inv = items[currentIndex];
                 const std::string name = inv.item->GetName();
                 if (menuChoice == 0) {
                     // Use
-                    UseItem(name);
+                    UseItem(currentIndex);
                 }
                 else {
                     // Drop
@@ -192,14 +193,14 @@ void Inventory::Update()
         }
     }
 
-    // Escape ƒLƒƒƒ“ƒZƒ‹
+    // Escape ã‚­ãƒ£ãƒ³ã‚»ãƒ«
     if (input->IsKeyDown(KEY_INPUT_ESCAPE) || input->IsButtonDown(XINPUT_GAMEPAD_A)) {
         if (menuActive) {
             menuActive = false;
         }
     }
 
-    // ¶‰E‚Åƒƒjƒ…[‚ÌØ‘ÖiEnter‚ÅOK‚·‚é•û®‚Ìê‡‚Í•s—v‚¾‚ªA‘Î‰j
+    // å·¦å³ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ‡æ›¿ï¼ˆEnterã§OKã™ã‚‹æ–¹å¼ã®å ´åˆã¯ä¸è¦ã ãŒã€å¯¾å¿œï¼‰
     if (menuActive) {
         if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
             menuChoice = (std::max)(0, menuChoice - 1);
@@ -212,24 +213,52 @@ void Inventory::Update()
    
 }
 
+void Inventory::EquipItem(ItemBase* item)
+{
+    if (!item ) return;
+
+    if (equippedItem == item) {
+#if _DEBUG
+        printfDx("ã™ã§ã«ã€Œ%sã€ã‚’è£…å‚™ä¸­ã§ã™ã€‚\n", item->GetName().c_str());
+#endif
+        return;
+    }
+
+    if (equippedItem) {
+#if _DEBUG
+        printfDx("ã€Œ%sã€ã‹ã‚‰ã€Œ%sã€ã«è£…å‚™ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã—ãŸã€‚\n",
+            equippedItem->GetName().c_str(), item->GetName().c_str());
+#endif
+        equippedItem->UnEquip();
+    }
+    else {
+#if _DEBUG
+        printfDx("ã€Œ%sã€ã‚’è£…å‚™ã—ã¾ã—ãŸï¼\n", item->GetName().c_str());
+#endif
+    }
+
+    equippedItem = item; // equippedItem ã¯ ItemBase* ã§OK
+    item->Use();
+}
+
 /// <summary>
-/// •`‰æˆ—
+/// æç”»å‡¦ç†
 /// </summary>
 void Inventory::Render()
 {
-    // ƒŒƒCƒAƒEƒg’è”‚Íƒwƒbƒ_‚Ì‚Æ‚¨‚è
-    const int iconX = baseX + padding;
-    const int textX = iconX + iconSize + 8;
+    // ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆå®šæ•°ã¯ãƒ˜ãƒƒãƒ€ã®ã¨ãŠã‚Š
+    const int iconX = baseX + padding + 20;
+    const int textX = iconX + iconSize + 4;
     const int qtyRightPad = 12;
 
-    // ”wŒii”¼“§–¾‚Á‚Û‚¢ˆÃ‚ß‚Ì‹éŒ`j
+    // èƒŒæ™¯ï¼ˆåŠé€æ˜ã£ã½ã„æš—ã‚ã®çŸ©å½¢ï¼‰
     const int bgColor = black;
     const int borderColor = GetColor(200, 200, 200);
     DrawBox(baseX, baseY, baseX + boxW, baseY + boxH, bgColor, TRUE);
-    DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, borderColor, FALSE); // ƒ^ƒCƒgƒ‹ã‚ÌŒrü
+    DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, borderColor, FALSE); // ã‚¿ã‚¤ãƒˆãƒ«ä¸Šã®ç½«ç·š
 
-    // ƒ^ƒCƒgƒ‹
-    const char* title = "‚¿•¨";
+    // ã‚¿ã‚¤ãƒˆãƒ«
+    const char* title = "æŒã¡ç‰©";
     DrawString(baseX + padding, baseY + 2, title, white);
 
     int maxVisible = GetMaxVisible();
@@ -248,62 +277,62 @@ void Inventory::Render()
         const std::string& type = inv.item->GetType();
         int quantity = inv.quantity;
 
-        // ‘I‘ğs‚ÌƒnƒCƒ‰ƒCƒg
+        // é¸æŠè¡Œã®ãƒã‚¤ãƒ©ã‚¤ãƒˆ
         bool isSelected = (i == currentIndex);
 
         if (isSelected) {
-            // ˜gi‰©Fj
+            // æ ï¼ˆé»„è‰²ï¼‰
             int selColor = yellow;
             DrawBox(baseX + 1, y, baseX + boxW - 1, y + lineHeight - 1, selColor, FALSE);
-            // ŠÈˆÕƒ}[ƒJ[
-            DrawString(baseX + 2, y + 4, ">", selColor);
-            //Œ»İ‘I‘ğ’†‚ÌƒAƒCƒeƒ€
+            // ç°¡æ˜“ãƒãƒ¼ã‚«ãƒ¼
+            DrawString(textX-40, y+4,  "->", selColor);
+            //ç¾åœ¨é¸æŠä¸­ã®ã‚¢ã‚¤ãƒ†ãƒ 
             const InventoryItem& curInv = items[currentIndex];
             const std::string curName = curInv.item->GetName();
-            //‘I‘ğ’†‚Ì^‰¡‚ÉƒAƒCƒeƒ€‚Ìà–¾—p‚Ìƒ{ƒbƒNƒX‚ğ•\¦
-             // ===== à–¾ƒ{ƒbƒNƒX‚ğ‰E‰¡‚É•`‰æ =====
-            infoW = 240;         // •
-            infoH = 80;          // ‚‚³
-            infoX = baseX + boxW + 10;  // ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì‰E‰¡‚É•\¦
-            infoY = y - 4;       // ‘I‘ğs‚Ì‚‚³‚É‡‚í‚¹‚Ä”z’ui­‚µã‚Éj
-            // ”wŒi‚Æ˜gü
+            //é¸æŠä¸­ã®çœŸæ¨ªã«ã‚¢ã‚¤ãƒ†ãƒ ã®èª¬æ˜ç”¨ã®ãƒœãƒƒã‚¯ã‚¹ã‚’è¡¨ç¤º
+             // ===== èª¬æ˜ãƒœãƒƒã‚¯ã‚¹ã‚’å³æ¨ªã«æç”» =====
+            infoW = 240;         // å¹…
+            infoH = 80;          // é«˜ã•
+            infoX = baseX + boxW + 10;  // ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã®å³æ¨ªã«è¡¨ç¤º
+            infoY = y - 4;       // é¸æŠè¡Œã®é«˜ã•ã«åˆã‚ã›ã¦é…ç½®ï¼ˆå°‘ã—ä¸Šã«ï¼‰
+            // èƒŒæ™¯ã¨æ ç·š
             DrawBox(infoX, infoY, infoX + infoW, infoY + infoH, GetColor(40, 40, 40), TRUE);
             DrawBox(infoX, infoY, infoX + infoW, infoY + infoH, GetColor(200, 200, 200), FALSE);
             desPosX = infoX + 12;
             desPosY = infoY + 10;
-            itemName = ""; // ƒfƒtƒHƒ‹ƒg
+            itemName = ""; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
             itemDes = "";
             itemEffect = "";
-            if (curName == "ƒ|[ƒVƒ‡ƒ“(¬)") {
+            if (curName == "ãƒãƒ¼ã‚·ãƒ§ãƒ³(å°)") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
-                itemEffect = "‰ñ•œ—Ê";
+                itemEffect = "å›å¾©é‡";
             }
-            else if (curName == "Œ•") {
+            else if (curName == "å‰£") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
-                itemEffect = "UŒ‚—Í";
+                itemEffect = "æ”»æ’ƒåŠ›";
             }
-            else if (curName == "•€") {
+            else if (curName == "æ–§") {
                 itemName = curInv.item->GetName();
                 itemDes = curInv.item->GetDescription();
                 itemEffectValue = curInv.item->GetEffectValue();
                 itemValue = curInv.item->GetValue();
-                itemEffect = "UŒ‚—Í";
+                itemEffect = "æ”»æ’ƒåŠ›";
             }
             DrawString(desPosX, desPosY, itemName.c_str(), white);
             DrawString(desPosX, desPosY + 20, itemDes.c_str(), white);
-            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "%s : %d  ‰¿’l : %d", itemEffect,itemEffectValue, itemValue);
+            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "%s : %d  ä¾¡å€¤ : %d", itemEffect,itemEffectValue, itemValue);
         }
 
-        // ƒAƒCƒRƒ“‚ğƒeƒLƒXƒg‚‚³‚É‡‚í‚¹‚Ä•`‰æ‚·‚éƒ‹[ƒv“à
-        int targetH = lineHeight - 4; // •¶š‚Æ­‚µ—]”’‚ğ“ü‚ê‚éi’²®‰Âj
-        int iconY = y + (lineHeight - targetH) / 2; // c’†‰›‚É‡‚í‚¹‚é
-        // ƒAƒCƒRƒ“æ“¾iItemBase::GetItemIcon() ‚Í‰æ‘œƒpƒX‚ğ•Ô‚·‘z’èj
+        // ã‚¢ã‚¤ã‚³ãƒ³ã‚’ãƒ†ã‚­ã‚¹ãƒˆé«˜ã•ã«åˆã‚ã›ã¦æç”»ã™ã‚‹ãƒ«ãƒ¼ãƒ—å†…
+        int targetH = lineHeight - 4; // æ–‡å­—ã¨å°‘ã—ä½™ç™½ã‚’å…¥ã‚Œã‚‹ï¼ˆèª¿æ•´å¯ï¼‰
+        int iconY = y + (lineHeight - targetH) / 2; // ç¸¦ä¸­å¤®ã«åˆã‚ã›ã‚‹
+        // ã‚¢ã‚¤ã‚³ãƒ³å–å¾—ï¼ˆItemBase::GetItemIcon() ã¯ç”»åƒãƒ‘ã‚¹ã‚’è¿”ã™æƒ³å®šï¼‰
         int iconHandle = -1;
         std::string iconPath = inv.item->GetItemIcon();
         if (!iconPath.empty()) {
@@ -326,24 +355,24 @@ void Inventory::Render()
 
         if (iconHandle >= 0) {
             int gw = 0, gh = 0;
-            GetGraphSize(iconHandle, &gw, &gh); // Œ³‰æ‘œ‚Ì•E‚‚³‚ğæ“¾
+            GetGraphSize(iconHandle, &gw, &gh); // å…ƒç”»åƒã®å¹…ãƒ»é«˜ã•ã‚’å–å¾—
             if (gw > 0 && gh > 0) {
-                // c‚‚³‚É‡‚í‚¹‚Ä‰¡•‚ğZoiƒAƒXƒyƒNƒg”äˆÛj
+                // ç¸¦é«˜ã•ã«åˆã‚ã›ã¦æ¨ªå¹…ã‚’ç®—å‡ºï¼ˆã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ç¶­æŒï¼‰
                 int destW = static_cast<int>((float)gw * ((float)targetH / (float)gh) + 0.5f);
-                // DrawExtendGraph: ¶ã(x1,y1) ‰E‰º(x2,y2)
+                // DrawExtendGraph: å·¦ä¸Š(x1,y1) å³ä¸‹(x2,y2)
                 DrawExtendGraph(iconX, iconY, iconX + destW, iconY + targetH, iconHandle, TRUE);
             }
             else {
-                // ƒTƒCƒYæ“¾‚Å‚«‚È‚¯‚ê‚Î‚»‚Ì‚Ü‚Ü•`‰æ
+                // ã‚µã‚¤ã‚ºå–å¾—ã§ããªã‘ã‚Œã°ãã®ã¾ã¾æç”»
                 DrawGraph(iconX, iconY, iconHandle, TRUE);
             }
         }
         else {
-            // ƒAƒCƒRƒ“–³‚µ‚Ì‘ã‘Ö•\¦
+            // ã‚¢ã‚¤ã‚³ãƒ³ç„¡ã—ã®ä»£æ›¿è¡¨ç¤º
             DrawBox(iconX, iconY, iconX + targetH, iconY + targetH, GetColor(120, 120, 120), TRUE);
         }
 
-        // –¼‘O‚ÌF•ª‚¯i—á: ‘•”õŒn‚Í…FAÁ”ï‚Í—Îj
+        // åå‰ã®è‰²åˆ†ã‘ï¼ˆä¾‹: è£…å‚™ç³»ã¯æ°´è‰²ã€æ¶ˆè²»ã¯ç·‘ï¼‰
         int nameColor = GetColor(220, 220, 220);
         if (type == "Consumable") {
             nameColor = palegreen; // palegreen
@@ -352,60 +381,65 @@ void Inventory::Render()
             nameColor = white;
         }
 
-        // ƒAƒCƒeƒ€–¼
-        DrawString(textX, y, name.c_str(), nameColor);
+        // ã‚¢ã‚¤ãƒ†ãƒ å
+        DrawString(textX, y+4, name.c_str(), nameColor);
 
-        // ”—Êi2ˆÈã‚Ì‚İ•\¦j
+        // âœ… è£…å‚™ä¸­ãªã‚‰ã€ŒFã€ã‚’è¡¨ç¤º
+        if (equippedItem && equippedItem == inv.item.get()) {
+            DrawString(baseX + 3, y + 4, "E", GetColor(0, 255, 255)); // æ°´è‰²ã§è¡¨ç¤º
+        }
+
+        // æ•°é‡ï¼ˆ2ä»¥ä¸Šã®ã¿è¡¨ç¤ºï¼‰
         if (quantity > 1) {
             char buf[32];
             snprintf(buf, sizeof(buf), "x%d", quantity);
-            // ‰EŠñ‚¹•\¦iŠÈˆÕjBDrawString ‚Ì•æ“¾‚ğs‚¤‚È‚ç‚æ‚è³Šm‚É‰EŠñ‚¹‚Å‚«‚Ü‚·B
-            int qtyX = baseX + boxW - qtyRightPad - 48; // 48‚Íx•‚Ì–ÚˆÀiƒtƒHƒ“ƒg‚É‚æ‚Á‚Ä’²®j
+            // å³å¯„ã›è¡¨ç¤ºï¼ˆç°¡æ˜“ï¼‰ã€‚DrawString ã®å¹…å–å¾—ã‚’è¡Œã†ãªã‚‰ã‚ˆã‚Šæ­£ç¢ºã«å³å¯„ã›ã§ãã¾ã™ã€‚
+            int qtyX = baseX + boxW - qtyRightPad - 48; // 48ã¯xå¹…ã®ç›®å®‰ï¼ˆãƒ•ã‚©ãƒ³ãƒˆã«ã‚ˆã£ã¦èª¿æ•´ï¼‰
             DrawString(qtyX, y, buf, GetColor(255, 255, 192));
         }
 
         y += lineHeight;
     }
 
-    //ƒAƒCƒeƒ€‘I‘ğ‰æ–Ê‚Ì•\¦
-    // ƒƒjƒ…[‚ªƒAƒNƒeƒBƒu‚È‚çƒ|ƒbƒvƒAƒbƒv•\¦i‘I‘ğs‚Ì‚·‚®‰º‚Éo‚·j
+    //ã‚¢ã‚¤ãƒ†ãƒ é¸æŠç”»é¢ã®è¡¨ç¤º
+    // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚‰ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—è¡¨ç¤ºï¼ˆé¸æŠè¡Œã®ã™ãä¸‹ã«å‡ºã™ï¼‰
     if (menuActive && currentIndex >= 0 && currentIndex < (int)items.size()) {
         const int popupW = 300;
         const int popupH = 56;
 
-        // ‘I‘ğs‚ªŒ»İ‚Ì•\¦”ÍˆÍ“à‚©‚ğ”»’è
+        // é¸æŠè¡ŒãŒç¾åœ¨ã®è¡¨ç¤ºç¯„å›²å†…ã‹ã‚’åˆ¤å®š
         bool selectedIsVisible = (currentIndex >= startIdx && currentIndex < endIdx);
 
-        int px = baseX + (boxW - popupW) / 2; // ƒfƒtƒHƒ‹ƒg (’†‰›)
+        int px = baseX + (boxW - popupW) / 2; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ (ä¸­å¤®)
         int py = baseY + (boxH - popupH) / 2;
 
         if (selectedIsVisible) {
-            // ‘I‘ğs‚Ì‘Š‘ÎY‚ğŒvZistartIdx ‚©‚ç‚ÌƒIƒtƒZƒbƒgj
+            // é¸æŠè¡Œã®ç›¸å¯¾Yã‚’è¨ˆç®—ï¼ˆstartIdx ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆï¼‰
             int selRelative = currentIndex - startIdx;
             int selY = baseY + titleHeight + padding + selRelative * lineHeight;
 
-            // ƒfƒtƒHƒ‹ƒg‚Í‘I‘ğs‚Ì‚·‚®‰º‚É•\¦
-            px = textX; // ƒeƒLƒXƒgŠJnˆÊ’u‚Ì‰º‚Éo‚·i”CˆÓ‚Å’²®j
-            py = selY + lineHeight; // ‘I‘ğs‚Ì’¼‰º
+            // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯é¸æŠè¡Œã®ã™ãä¸‹ã«è¡¨ç¤º
+            px = textX; // ãƒ†ã‚­ã‚¹ãƒˆé–‹å§‹ä½ç½®ã®ä¸‹ã«å‡ºã™ï¼ˆä»»æ„ã§èª¿æ•´ï¼‰
+            py = selY + lineHeight; // é¸æŠè¡Œã®ç›´ä¸‹
 
-            // ‰E’[‚É‚Í‚İo‚·ê‡‚Í¶‚ÉƒVƒtƒg
+            // å³ç«¯ã«ã¯ã¿å‡ºã™å ´åˆã¯å·¦ã«ã‚·ãƒ•ãƒˆ
             int rightLimit = baseX + boxW - padding;
             if (px + popupW > rightLimit) {
                 px = rightLimit - popupW;
             }
-            // ¶’[‚æ‚è¶‚É‚È‚ç‚È‚¢‚æ‚¤‚ÉƒNƒŠƒbƒv
+            // å·¦ç«¯ã‚ˆã‚Šå·¦ã«ãªã‚‰ãªã„ã‚ˆã†ã«ã‚¯ãƒªãƒƒãƒ—
             int leftLimit = baseX + padding;
             if (px < leftLimit) px = leftLimit;
 
-            // ‰º‚É‚Í‚İo‚·ê‡‚Í‘I‘ğs‚Ìã‚É•\¦
+            // ä¸‹ã«ã¯ã¿å‡ºã™å ´åˆã¯é¸æŠè¡Œã®ä¸Šã«è¡¨ç¤º
             int bottomLimit = baseY + boxH - padding;
             if (py + popupH > bottomLimit) {
                 py = selY - popupH;
             }
-            // ãŒÀ‚àƒ`ƒFƒbƒNiƒ^ƒCƒgƒ‹—Ìˆæ‚É”í‚ç‚È‚¢‚æ‚¤‚É‚·‚éj
-            int topLimit = baseY + titleHeight + padding - popupH; // ‚±‚±‚Í”÷’²®‰Â
+            // ä¸Šé™ã‚‚ãƒã‚§ãƒƒã‚¯ï¼ˆã‚¿ã‚¤ãƒˆãƒ«é ˜åŸŸã«è¢«ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹ï¼‰
+            int topLimit = baseY + titleHeight + padding - popupH; // ã“ã“ã¯å¾®èª¿æ•´å¯
             if (py < baseY + titleHeight + padding) {
-                // ƒtƒH[ƒ‹ƒoƒbƒNF’†‰›•\¦
+                // ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ï¼šä¸­å¤®è¡¨ç¤º
                 px = baseX + (boxW - popupW) / 2;
                 py = baseY + (boxH - popupH) / 2;
             }
@@ -414,36 +448,36 @@ void Inventory::Render()
         DrawBox(px, py, px + popupW, py + popupH, darkGray, TRUE);
         DrawBox(px, py, px + popupW, py + popupH, white, FALSE);
 
-        // ƒƒjƒ…[€–Ú
-        // Œ»İ‘I‘ğ‚µ‚Ä‚¢‚éƒAƒCƒeƒ€‚Ìí—Ş‚É‰‚¶‚Äƒ‰ƒxƒ‹‚ğØ‚è‘Ö‚¦‚é
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼é …ç›®
+        // ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®ç¨®é¡ã«å¿œã˜ã¦ãƒ©ãƒ™ãƒ«ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
         const InventoryItem& curInv = items[currentIndex];
         const std::string curType = curInv.item->GetType();
-        const char* opt0 = "g‚¤"; // ƒfƒtƒHƒ‹ƒg
+        const char* opt0 = "ä½¿ã†"; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
         if (curType == "Equipment") {
-            opt0 = "‘•”õ";
+            opt0 = "è£…å‚™";
         }
         else if (curType == "Consumable") {
-            opt0 = "g‚¤";
-        } // ‘¼‚Ìƒ^ƒCƒv‚ª‚ ‚ê‚Î‚±‚±‚Å’Ç‰Á‰Â”\
+            opt0 = "ä½¿ã†";
+        } // ä»–ã®ã‚¿ã‚¤ãƒ—ãŒã‚ã‚Œã°ã“ã“ã§è¿½åŠ å¯èƒ½
 
-        const char* opt1 = "Ì‚Ä‚é";
+        const char* opt1 = "æ¨ã¦ã‚‹";
 
         int optX = px + 12;
         int optY = py + 12;
-        // opt0 (g‚¤/‘•”õ)
+        // opt0 (ä½¿ã†/è£…å‚™)
         int col0 = (menuChoice == 0) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
         DrawString(optX, optY, opt0, col0);
         // Drop
         int col1 = (menuChoice == 1) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
         DrawString(optX + 120, optY, opt1, col1);
 
-        // ƒqƒ“ƒg
-        DrawString(px + 8, py + popupH - 18, "Enter: Œˆ’è  Esc: ƒLƒƒƒ“ƒZƒ‹", GetColor(180, 180, 180));
+        // ãƒ’ãƒ³ãƒˆ
+        DrawString(px + 8, py + popupH - 18, "Enter: æ±ºå®š  Esc: ã‚­ãƒ£ãƒ³ã‚»ãƒ«", GetColor(180, 180, 180));
     }
 }
 
 /// <summary>
-/// “üè‚µ‚½ƒAƒCƒeƒ€‚Ìæ“¾
+/// å…¥æ‰‹ã—ãŸã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾—
 /// </summary>
 /// <param name="item"></param>
 /// <param name="qty"></param>
@@ -453,21 +487,21 @@ void Inventory::OnItemGained(const ItemBase* item, int qty)
     info.name = item->GetName();
     info.iconPath = item->GetItemIcon();
     info.quantity = qty;
-    info.timer = 180;  // –ñ3•b
+    info.timer = 180;  // ç´„3ç§’
     info.alpha = 255;
 
     gainedItems.push_back(info);
 }
 
 /// <summary>
-/// ƒAƒCƒeƒ€‚Ìæ“¾‚ÌUI•\¦
+/// ã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾—æ™‚ã®UIè¡¨ç¤º
 /// </summary>
 void Inventory::AddItemRender()
 {
     if (gainedItems.empty()) return;
 
     const int baseX = WINDOW_WIDTH - 350;
-    const int baseY = WINDOW_HEIGHT - 100; // ‰º•”Šñ‚¹•\¦
+    const int baseY = WINDOW_HEIGHT - 100; // ä¸‹éƒ¨å¯„ã›è¡¨ç¤º
     const int iconSize = 28;
     const int lineH = 36;
     const int padding = 6;
@@ -477,21 +511,21 @@ void Inventory::AddItemRender()
 
     for (auto& g : gainedItems)
     {
-        // ƒ^ƒCƒ}[Œ¸­EƒtƒF[ƒh
+        // ã‚¿ã‚¤ãƒãƒ¼æ¸›å°‘ãƒ»ãƒ•ã‚§ãƒ¼ãƒ‰
         g.timer--;
         if (g.timer < 60) {
             g.alpha = static_cast<int>(255.0f * (g.timer / 60.0f));
             if (g.alpha < 0) g.alpha = 0;
         }
 
-        // ”wŒi‚Æ˜g
+        // èƒŒæ™¯ã¨æ 
         int bgCol = GetColor(30, 30, 30);
         int frameCol = GetColor(180, 180, 180);
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, g.alpha);
         DrawBox(baseX, y, baseX + boxW, y + lineH, bgCol, TRUE);
         DrawBox(baseX, y, baseX + boxW, y + lineH, frameCol, FALSE);
 
-        // ƒAƒCƒRƒ“•`‰æ
+        // ã‚¢ã‚¤ã‚³ãƒ³æç”»
         int iconHandle = -1;
         auto itc = iconCache.find(g.iconPath);
         if (itc != iconCache.end()) {
@@ -513,20 +547,20 @@ void Inventory::AddItemRender()
             DrawExtendGraph(baseX + padding, y + 4, baseX + padding + iconSize, y + 4 + iconSize, iconHandle, TRUE);
         }
         else {
-            // ƒAƒCƒRƒ“‚È‚µ‚Ì‘ã‘Ö
+            // ã‚¢ã‚¤ã‚³ãƒ³ãªã—æ™‚ã®ä»£æ›¿
             DrawBox(baseX + padding, y + 4, baseX + padding + iconSize, y + 4 + iconSize, GetColor(100, 100, 100), TRUE);
         }
 
-        // –¼‘O{”—Ê‚ğ•`‰æ
+        // åå‰ï¼‹æ•°é‡ã‚’æç”»
         char buf[128];
         snprintf(buf, sizeof(buf), "%s", g.name.c_str());
         DrawString(baseX + padding + iconSize + 8, y + 8, buf, GetColor(255, 255, 255));
 
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-        y -= (lineH + 4); // ã•ûŒü‚ÉÏ‚İã‚°‚Ä‚¢‚­
+        y -= (lineH + 4); // ä¸Šæ–¹å‘ã«ç©ã¿ä¸Šã’ã¦ã„ã
     }
 
-    // ƒ^ƒCƒ}[Ø‚ê‚Åíœ
+    // ã‚¿ã‚¤ãƒãƒ¼åˆ‡ã‚Œã§å‰Šé™¤
     gainedItems.erase(
         std::remove_if(gainedItems.begin(), gainedItems.end(),
             [](const GainedItemInfo& g) { return g.timer <= 0; }),
