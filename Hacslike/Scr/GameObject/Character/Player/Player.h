@@ -10,11 +10,15 @@
 #include "PlayerAttack.h"
 #include "PlayerMovement.h"
 
+
+
 /*
  *	@brief	プレイヤークラス
  *	@tips	Characterクラスの派生クラス
  */
 class Player : public Character {
+private:
+	static Player* instance; // シングルトン用
 #pragma region メンバ変数
 private:	//	メンバ変数
 	//bool isAttacking;	//	攻撃中
@@ -194,4 +198,15 @@ public:		//	Getter と Setter
 
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
 
+<<<<<<< HEAD
+=======
+	VECTOR GetForward() const {
+		return VNorm(VGet(-sinf(Deg2Rad(rotation.y)), 0.0f, -cosf(Deg2Rad(rotation.y))));
+	}
+public:
+	// 🔹 シングルトン関連
+	static Player* CreateInstance(VECTOR _pos = VZero);
+	static Player* GetInstance();
+	static void DestroyInstance();
+>>>>>>> saito
 };

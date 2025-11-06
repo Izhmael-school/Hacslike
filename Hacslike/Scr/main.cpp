@@ -92,9 +92,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		CollisionManager::GetInstance()->Render();
 #endif
 		// エスケープキーでウィンドウを閉じる
-		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE))
-			break;
-
+		//if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE))
+		//	break;
+		
 		// 裏画面と表画面を切り替える
 		ScreenFlip();
 

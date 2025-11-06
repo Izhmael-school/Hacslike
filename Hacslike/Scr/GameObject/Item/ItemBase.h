@@ -34,7 +34,7 @@ public://コンストラクタとデストラクタ
 
 public://メンバ関数
     virtual void Use() = 0;
-
+    virtual void UnEquip() {}; // 装備解除時に効果を外すため
 public://ゲッター
     /// <summary>
     /// 名前の取得

@@ -7,6 +7,9 @@
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
 
+// シングルトンインスタンスの初期化
+Player* Player::instance = nullptr;
+
 /*
  *	@brief		コンストラクタ
  *	@param[in]	VECTOR _pos		初期化する座標
@@ -32,6 +35,13 @@ Player::Player(VECTOR _pos)
 	Exp = 0;
 	criticalHitRate = 10;
 	criticalDamage = 100;
+	// コンストラクタでシングルトンの重複生成を防ぐ
+	if (instance != nullptr) {
+		printfDx("[Error] Player instance already exists!\n");
+	}
+	else {
+		instance = this;
+	}
 	Start();
 
 }
@@ -43,7 +53,27 @@ Player::~Player() {
 	delete pWeapon;
 	pWeapon = nullptr;
 
+	if (instance == this) {
+		instance = nullptr;
+	}
+
 	MV1DeleteModel(PLAYER_MODEL_HANDLE);
+}
+
+Player* Player::CreateInstance(VECTOR _pos) {
+	if (!instance) {
+		instance = new Player(_pos);
+	}
+	return instance;
+}
+
+Player* Player::GetInstance() {
+	return instance;
+}
+
+void Player::DestroyInstance() {
+	delete instance;
+	instance = nullptr;
 }
 
 /*
@@ -125,7 +155,7 @@ void Player::Update() {
 
 	MV1SetMatrix(modelHandle, matrix);
 
-	WeaponInput();
+	//WeaponInput();
 
 	//アイテムの取得
 	AddItem();
