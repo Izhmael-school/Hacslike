@@ -20,7 +20,7 @@ void ItemSword::Use()
 {
 	Player::GetInstance()->ChangeWeapon(1);
 	
-	
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 	
 	std::cout << name << " ‚ð‘•”õIUŒ‚—Í +" << attackValue << "I\n";
 }
@@ -45,6 +45,7 @@ void ItemAxe::Render()
 void ItemAxe::Use()
 {
 	Player::GetInstance()->ChangeWeapon(3);
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 
 	
 }

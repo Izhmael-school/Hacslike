@@ -165,7 +165,9 @@ void Player::Update() {
 	//アイテムインベントリの更新
 	if (isItemUI) {
 		inventory.Update();
+
 	}
+
 
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y)) {
 		SubHp(10);

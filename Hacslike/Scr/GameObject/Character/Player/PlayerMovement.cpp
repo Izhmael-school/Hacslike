@@ -59,7 +59,7 @@ void PlayerMovement::Render() {
 /// 移動・アニメーション・回転処理
 /// </summary>
 void PlayerMovement::UpdateMovement() {
-	//if (!pPlayer->GetPlayerAttack()->IsAttacking()) {
+	if (!pPlayer->GetPlayerAttack()->IsAttacking()) {
 		//	入力があれば
 		if (VSquareSize(inputVec) >= 0.01f) {
 			//	入力ベクトルの正規化
@@ -89,7 +89,7 @@ void PlayerMovement::UpdateMovement() {
 				pPlayer->GetAnimator()->Play(5, 0.5f);
 				dashState = true;
 			}
-			else{
+			else {
 				pPlayer->GetAnimator()->Play(1, 1.3f);
 				dashState = false;
 			}
@@ -100,7 +100,7 @@ void PlayerMovement::UpdateMovement() {
 			evasionSpeed = 1;
 			dashState = false;
 		}
-	//}
+	}
 }
 
 /// <summary>

@@ -17,6 +17,9 @@ Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed
 	,Exp(0)
 	,prevPos(VGet(position.x,position.z,0))
 	,wallCheckPos(prevPos)
+	,baseAttack(5)
+	,proximityCorrection(1.0)
+	,rangedCorrection(1.0)
 {}
 
 Character::~Character() {

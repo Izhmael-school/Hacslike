@@ -27,14 +27,15 @@ AttackUpSkill::AttackUpSkill(float boost)
 void AttackUpSkill::Apply(Player* player)
 {
     if (!player) return;
-    player->SetAtk(player->GetAtk() * attackBoost);
+    player->SetBaseAtk(player->GetBaseAtk() + attackBoost);
 
 }
 
 void AttackUpSkill::Remove(Player* player)
 {
     if (!player) return;
-    player->SetAtk(player->GetAtk() / attackBoost);
+    player->SetBaseAtk(player->GetBaseAtk() / attackBoost);
+
 }
 
 #pragma endregion 
