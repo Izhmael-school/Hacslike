@@ -59,7 +59,6 @@ void PlayerMovement::Render() {
 /// 移動・アニメーション・回転処理
 /// </summary>
 void PlayerMovement::UpdateMovement() {
-	//if (!pPlayer->GetPlayerAttack()->IsAttacking()) {
 		//	入力があれば
 		if (VSquareSize(inputVec) >= 0.01f) {
 			//	入力ベクトルの正規化
@@ -84,6 +83,7 @@ void PlayerMovement::UpdateMovement() {
 			rot.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
 			pPlayer->SetRotation(rot);
 
+	if (!pPlayer->GetPlayerAttack()->IsAttacking()) {
 			//	移動アニメーションを再生
 			if (evasionSpeed >= 1.2f) {
 				pPlayer->GetAnimator()->Play(5, 0.5f);
@@ -94,13 +94,13 @@ void PlayerMovement::UpdateMovement() {
 				dashState = false;
 			}
 		}
+	}
 		else {
 			//	待機アニメーションを再生
 			pPlayer->GetAnimator()->Play(0);
 			evasionSpeed = 1;
 			dashState = false;
 		}
-	//}
 }
 
 /// <summary>
