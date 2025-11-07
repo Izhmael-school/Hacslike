@@ -99,5 +99,5 @@ public:
 	int GetAnimationIndex(std::string animName);
 
 	inline void SetAnimModelHandle(int handle);
-	inline VECTOR GetRootMotionDelta();
+	VECTOR GetRootMotionDelta();
 };

@@ -180,7 +180,8 @@ void Player::Update() {
 		pWeapon->Update();
 	}
 
-	if (pCollider != nullptr) {		pCollider->Update();
+	if (pCollider != nullptr) {		
+		pCollider->Update();
 	}
 
 }

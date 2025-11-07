@@ -15,6 +15,7 @@ Weapon::Weapon(const std::string& _tag, int handle)
     , animationSpeed()
     , colLength()
     , colRadius(){
+    Start();
 }
 
 // デストラクタ
@@ -26,7 +27,6 @@ Weapon::~Weapon() {
 }
 
 void Weapon::Start() {
-
 }
 
 // 武器をキャラクターに装備する

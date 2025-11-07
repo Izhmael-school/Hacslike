@@ -12,6 +12,55 @@
   {
     "id": 1,
     "name": "Atk + 2",
-    "position": {"x": 410}
+    "position": {
+      "x": 420,
+      "y": 300
+    },
+    "requiredSkillds": [ 0 ]
+  },
+
+  {
+    "id": 2,
+    "name": "Def + 2",
+    "position": {
+      "x": 400,
+      "y": 280
+    },
+    "requiredSkills": [ 0 ]
+  },
+
+  {
+    "id": 3,
+    "name": "HP + 2",
+    "position": {
+      "x": 380,
+      "y": 300
+    },
+    "requiredSkills": [ 0 ]
+  },
+
+  {
+    "id": 4,
+    "name": "UnRockDA",
+    "position": {
+      "x": 400,
+      "y": 320
+    },
+    "requiredSkills": [ 0 ]
+  },
+
+  {
+    "id": 5,
+    "name": "AttackSpeed + 2",
+    "position": {
+      "x": 420,
+      "y": 280
+    },
+    "requiredSkills": [ 1 ]
+  },
+
+  {
+    "id": 6,
+    "name": ""
   }
 ]

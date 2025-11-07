@@ -23,6 +23,11 @@ protected:	// ƒƒ“ƒo•Ï”
 
 	VECTOR prevPos;
 	VECTOR wallCheckPos;
+
+	int baseAttack;			//	Šî‘bUŒ‚—Í
+	float proximityCorrection;	//	‹ßÚUŒ‚—Í•â³
+	float rangedCorrection;		//	‰“‹——£UŒ‚—Í•â³
+
 public:
 	static Character* player;
 
@@ -84,6 +89,18 @@ public:	// ƒQƒbƒ^[‚ÆƒZƒbƒ^[
 	inline bool isAttack() const { return atking; }
 	// UŒ‚ƒtƒ‰ƒO‚Ìİ’è
 	inline void SetAttacking(bool _fact) { atking = _fact; }
+	//	Šî‘bUŒ‚—Í‚Ìæ“¾
+	inline int GetBaseAtk() const { return baseAttack; }
+	//	Šî‘bUŒ‚—Í‚Ìİ’è
+	inline void SetBaseAtk(int _baseAtk) { baseAttack = _baseAtk; }
+	//	‹ßÚUŒ‚—Í•â³‚ÌE“¾
+	inline float GetProximityCorrection() const { return proximityCorrection; }
+	//	‹ßÚUŒ‚—Í•â³‚Ìİ‰c
+	inline void SetProximityCorrection(float _proximityCorrection) { proximityCorrection = _proximityCorrection; }
+	//	‰“‹——£UŒ‚—Í•â³‚Ì¼­Ä¸
+	inline float GetRangedCorrection() const { return rangedCorrection; }
+	//	‰“‹——£UŒ‚—Í•â³‚Ì¾¯Ã²
+	inline void SetRangedCorrection(float _rangedCorrection) { rangedCorrection = _rangedCorrection; }
 #pragma endregion
 
 #pragma region Defence
