@@ -9,37 +9,71 @@ class InputManager;
 
 class PlayerAttack {
 private:
-	Player* pPlayer;
-	Weapon* pWeapon;
+	Player* pPlayer;		//	プレイヤー
+	Weapon* pWeapon;		//	武器
+	InputManager* input;	//	入力
 
-	InputManager* input;
+	bool isAttacking;	//	攻撃してるか
+	int attackIndex;	//	攻撃の番号
+	float attackTimer;	//	攻撃の当たり判定の表示時間
+	bool canNextAttack;	//	次の攻撃ができるかどうか
+	bool attackButtonPressed;	//	攻撃ボタンが押されているかどうか
 
-	bool isAttacking = false;
-	int attackIndex = 0;
-	float attackTimer = 0.0f;
-	bool canNextAttack = false;
-	bool attackButtonPressed = false;
+	std::vector<CapsuleHitBox*> CapsuleHitboxes;	//	当たり判定(カプセル)
+	std::vector<SphereHitBox*> SphereHitboxes;		//	当たり判定(スフィア)
 
-	std::vector<CapsuleHitBox*> CapsuleHitboxes;
-	std::vector<SphereHitBox*> SphereHitboxes;
+	PlayerMovement* playerMovement;	//	プレイヤーの移動処理
 
-	PlayerMovement* playerMovement;
-
-	VECTOR dashAttackDir;
 	bool isDashAttack;
 
+	bool isCharging;
+	float chargeTime;
+	const float maxChargeTime ;
+
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="_player"></param>
+	/// <param name="_weapon"></param>
+	/// <param name="_playerMovement"></param>
 	PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _playerMovement);
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Start();
+
+	/// <summary>
+	/// 更新処理
+	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// 攻撃入力・HitBox更新
+	/// </summary>
 	void AttackInput();
+
+	///<summary>
+	///攻撃時の当たり判定発生処理
+	///</summary>
+	///<param name="length"></param>
+	///<param name="radius"></param>
 	void CreateAttackHitbox(float length, float radius);
 
+	/// <summary>
+	/// アタック中かどうか
+	/// </summary>
 	inline bool IsAttacking() const { return isAttacking; }
 
+	/// <summary>
+	/// ダッシュアタックしてるかどうか
+	/// </summary>
 	inline bool IsDashAttacking() const { return isDashAttack; }
 
+	/// <summary>
+	/// 武器の設定
+	/// </summary>
 	void SetWeapon(Weapon* _weapon) {
 		pWeapon = _weapon;
 	}

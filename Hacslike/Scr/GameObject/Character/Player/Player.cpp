@@ -109,6 +109,9 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2");
 	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3");
 	GetAnimator()->Load("Res/PlayerModel/GreatAttack4.mv1", "GreatAtk4");
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1");
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3");
 
 	pAnimator->Play(0);
 

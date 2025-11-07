@@ -2,25 +2,43 @@
 #include "Player.h"
 #include "../../../Manager/TimeManager.h"
 #include "../../Weapon/Weapon.h"
+#include "DxLib.h"
 
-
-
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_player"></param>
+/// <param name="_weapon"></param>
+/// <param name="_playerMovement"></param>
 PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _playerMovement)
 	: pPlayer(_player)
 	, pWeapon(_weapon)
 	, input(&InputManager::GetInstance())
+	, isAttacking(false)
+	, attackIndex(0)
+	, attackTimer(0.0f)
+	, canNextAttack(false)
+	, attackButtonPressed(false)
 	, CapsuleHitboxes()
 	, SphereHitboxes()
 	, playerMovement(_playerMovement)
-	, dashAttackDir(VZero)
-	, isDashAttack(false) {
+	, isDashAttack(false)
+	, isCharging(false)
+	, chargeTime(0.0f)
+	, maxChargeTime(3.0f) {
 	Start();
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void PlayerAttack::Start() {
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
 void PlayerAttack::Update() {
 	AttackInput();
 }
@@ -31,6 +49,57 @@ void PlayerAttack::Update() {
 void PlayerAttack::AttackInput() {
 	// ===== 攻撃入力 =====
 	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X);
+
+	// ===== ため攻撃入力（★ここから追加） =====
+	bool isChargeButtonDown = input->IsMouseDown(MOUSE_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
+	bool isChargeButton = input->IsMouse(MOUSE_INPUT_RIGHT) || input->IsButton(XINPUT_GAMEPAD_RIGHT_SHOULDER);
+	bool isChargeButtonUp = input->IsMouseUp(MOUSE_INPUT_RIGHT) || input->IsButtonUp(XINPUT_GAMEPAD_RIGHT_SHOULDER);
+
+	// --- チャージ開始 ---
+	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking()) {
+		isAttacking = true;
+		if (pWeapon->GetType() == 1) {
+			chargeTime = 0.0f;
+			isCharging = true;
+			pPlayer->GetAnimator()->Play("GreatCharge1", 1.3f);
+		}
+	}
+
+	// --- チャージ中 ---
+	if (isCharging) {
+		chargeTime += TimeManager::GetInstance().deltaTime;
+		// 溜め中アニメーションに切り替え
+		if(chargeTime >= 0.65f)
+		pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
+
+		// 最大チャージで自動リリース
+		if (chargeTime >= maxChargeTime) {
+			isChargeButtonUp = true;
+		}
+	}
+
+	// --- チャージ終了 ---
+	if (isChargeButtonUp && isCharging) {
+		isCharging = false;
+		isAttacking = true;  // ←★追加
+		attackTimer = 0.0f;
+
+		float ratio = chargeTime / maxChargeTime;
+		float chargeRatio = (ratio < 1.0f) ? ratio : 1.0f;
+
+		if (chargeRatio < 0.75f) {
+			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
+			attackIndex = 4;
+		}
+		else if (chargeRatio < 1.2f) {
+			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
+			attackIndex = 4;
+		}
+		else {
+			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
+			attackIndex = 4;
+		}
+	}
 
 	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking()) {
 		// ボタンが押された瞬間だけ処理
@@ -123,7 +192,7 @@ void PlayerAttack::AttackInput() {
 	}
 
 	// ===== 攻撃中のタイマー管理 =====
-	if (isAttacking && !playerMovement->IsBlinking()) {
+	if (isAttacking && !isCharging && !playerMovement->IsBlinking()) {
 		attackTimer += TimeManager::GetInstance().deltaTime;
 
 
@@ -157,12 +226,12 @@ void PlayerAttack::AttackInput() {
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f)
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-			if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) 
+			if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f)
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // 周囲攻撃	
-			if (attackIndex == 4 /*&& attackTimer > 0.18f && attackTimer < 0.22f*/)
+			if (attackIndex == 4 && attackTimer > 0.9f && attackTimer <1.9f)
 				CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 周囲攻撃
 
-			if (attackIndex == 3) {
+			if (attackIndex >= 3) {
 				if (attackTimer > 2.78f) {
 					isAttacking = false;
 					canNextAttack = false;
