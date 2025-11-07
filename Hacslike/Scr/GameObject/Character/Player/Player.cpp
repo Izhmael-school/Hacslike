@@ -155,7 +155,7 @@ void Player::Update() {
 
 	MV1SetMatrix(modelHandle, matrix);
 
-	//WeaponInput();
+	WeaponInput();
 
 	//アイテムの取得
 	AddItem();
