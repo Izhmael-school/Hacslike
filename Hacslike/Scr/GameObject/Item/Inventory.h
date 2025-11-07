@@ -94,6 +94,12 @@ public:
     /// </summary>
     /// <param name="item"></param>
     void EquipItem(ItemBase* item);  // 新規追加
+
+    /// <summary>
+    /// アイテム並び替え用
+    /// </summary>
+    void SortItemsByOrder();
+
     void Render();
     /// <summary>
     /// 入手したアイテムの取得
@@ -109,5 +115,6 @@ public:
 
 public:
     inline const std::vector<InventoryItem>& GetItems() const { return items; }
+
 };
 

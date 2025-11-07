@@ -18,7 +18,7 @@ void ItemSword::Render()
 
 void ItemSword::Use()
 {
-	Player::GetInstance()->ChangeWeapon(1);
+	Player::GetInstance()->ChangeWeapon(4);
 	
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 	
