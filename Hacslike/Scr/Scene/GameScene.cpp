@@ -3,8 +3,6 @@
 #include "../GameObject/Character/Enemy/Goblin/EnemyGoblin.h"
 #include "../GameObject/Character/Player/Player.h"
 #include "../Manager/StageManager.h"
-#include"../GameObject/Item/ItemEquip/ItemEquip.h"
-#include"../GameObject/Item/ItemHeal/ItemHeal.h"
 #include"../Manager/ItemDropManager.h"
 #include"../GameObject/Coin/Coin.h"
 
@@ -34,15 +32,7 @@ void GameScene::Start() {
 	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 
 	//アイテムのセット
-	auto& factory = ItemFactory::Instance(); {
-		factory.RegisterItem("Potion_Small", []() {
-			return std::make_unique<ItemHeal>(VGet(0, 0, 0), "ポーション(小)", "体力を少し回復する", 50, 20); });
-
-		factory.RegisterItem("Sword_Iron", []() {
-			return std::make_unique<ItemSword>(VGet(0, 0, 0), "剣", "普通の剣", 150, GetRand(20) + 10); });
-		factory.RegisterItem("Axe", []() {
-			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "斧", "普通の斧", 200, GetRand(30) + 10); });
-	}
+	ItemFactory::Instance().InitializeDefaultItems();
 	StageManager::GetInstance().GenerateStage();
 }
 

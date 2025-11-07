@@ -55,8 +55,9 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 
         if (it != items.end()) {
             it->quantity++;
+            #if _DEBUG
             printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
-            
+            #endif  
             OnItemGained(it->item.get(), it->quantity);
             return;
         }
@@ -104,6 +105,10 @@ void Inventory::UseItem(int index)
     }
 }
 
+/// <summary>
+/// アイテムを捨てる
+/// </summary>
+/// <param name="idx"></param>
 void Inventory::DropItemAtIndex(int idx)
 {
     if (idx < 0 || idx >= (int)items.size()) return;
@@ -121,6 +126,7 @@ void Inventory::DropItemAtIndex(int idx)
         }
     }
 }
+
 int Inventory::GetMaxVisible() const
 {
     int maxVisible = (boxH - titleHeight - padding) / lineHeight;
@@ -128,11 +134,21 @@ int Inventory::GetMaxVisible() const
     return maxVisible;
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void Inventory::Update()
 {
     char keyState[256];
     GetHitKeyStateAll(keyState);
     InputManager* input = &InputManager::GetInstance();
+    // 並び替え
+    if (input->IsKeyDown(KEY_INPUT_R) || input->IsButtonDown(XINPUT_GAMEPAD_Y))
+    {
+        SortItemsByOrder();
+        currentIndex = 0;
+    }
+
     // 上
     if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
         if (!menuActive) {
@@ -213,6 +229,10 @@ void Inventory::Update()
    
 }
 
+/// <summary>
+/// アイテム装備
+/// </summary>
+/// <param name="item"></param>
 void Inventory::EquipItem(ItemBase* item)
 {
     if (!item ) return;
@@ -242,27 +262,65 @@ void Inventory::EquipItem(ItemBase* item)
 }
 
 /// <summary>
+/// アイテム格納マップ
+/// </summary>
+static const std::unordered_map<std::string, std::string> itemEffectMap = {
+    {"ポーション(小)", "回復量"},
+    {"ポーション(中)", "回復量"},
+    {"ポーション(大)", "回復量"},
+    {"剣", "攻撃力"},
+    {"斧", "攻撃力"},
+    // ここに増やすだけでOK！
+};
+
+// 並び替え順を保持（登録順）
+static const std::vector<std::string> itemOrder = {
+    "ポーション(小)",
+    "ポーション(中)",
+    "ポーション(大)",
+    "剣",
+    "斧",
+};
+
+/// <summary>
+/// アイテムの並び替え用
+/// </summary>
+void Inventory::SortItemsByOrder()
+{
+   
+    std::sort(items.begin(), items.end(), [](const InventoryItem& a, const InventoryItem& b) {
+        auto findIndex = [](const std::string& name) {
+            auto it = std::find(itemOrder.begin(), itemOrder.end(), name);
+            if (it != itemOrder.end()) return static_cast<int>(std::distance(itemOrder.begin(), it));
+            return static_cast<int>(itemOrder.size());
+        };
+        return findIndex(a.item->GetName()) < findIndex(b.item->GetName());
+        });
+}
+
+/// <summary>
 /// 描画処理
 /// </summary>
 void Inventory::Render()
 {
-    // レイアウト定数はヘッダのとおり
+    
+
+    // レイアウト定数
     const int iconX = baseX + padding + 20;
     const int textX = iconX + iconSize + 4;
     const int qtyRightPad = 12;
 
-    // 背景（半透明っぽい暗めの矩形）
+    // 背景
     const int bgColor = black;
     const int borderColor = GetColor(200, 200, 200);
     DrawBox(baseX, baseY, baseX + boxW, baseY + boxH, bgColor, TRUE);
-    DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, borderColor, FALSE); // タイトル上の罫線
+    DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, borderColor, FALSE);
 
     // タイトル
     const char* title = "持ち物";
     DrawString(baseX + padding, baseY + 2, title, white);
 
     int maxVisible = GetMaxVisible();
-
     int startIdx = scrollOffset;
     if (startIdx < 0) startIdx = 0;
     int endIdx = static_cast<int>(items.size());
@@ -277,63 +335,58 @@ void Inventory::Render()
         const std::string& type = inv.item->GetType();
         int quantity = inv.quantity;
 
-        // 選択行のハイライト
+        // 選択行ハイライト
         bool isSelected = (i == currentIndex);
 
         if (isSelected) {
-            // 枠（黄色）
+            // 枠とマーカー
             int selColor = yellow;
             DrawBox(baseX + 1, y, baseX + boxW - 1, y + lineHeight - 1, selColor, FALSE);
-            // 簡易マーカー
-            DrawString(textX-40, y+4,  "->", selColor);
-            //現在選択中のアイテム
+            DrawString(textX - 40, y + 4, "->", selColor);
+
+            // 現在のアイテム情報
             const InventoryItem& curInv = items[currentIndex];
             const std::string curName = curInv.item->GetName();
-            //選択中の真横にアイテムの説明用のボックスを表示
-             // ===== 説明ボックスを右横に描画 =====
-            infoW = 240;         // 幅
-            infoH = 80;          // 高さ
-            infoX = baseX + boxW + 10;  // インベントリの右横に表示
-            infoY = y - 4;       // 選択行の高さに合わせて配置（少し上に）
-            // 背景と枠線
+
+            // ===== 説明ボックス描画 =====
+            infoW = 240;
+            infoH = 80;
+            infoX = baseX + boxW + 10;
+            infoY = y - 4;
+
             DrawBox(infoX, infoY, infoX + infoW, infoY + infoH, GetColor(40, 40, 40), TRUE);
             DrawBox(infoX, infoY, infoX + infoW, infoY + infoH, GetColor(200, 200, 200), FALSE);
+
             desPosX = infoX + 12;
             desPosY = infoY + 10;
-            itemName = ""; // デフォルト
-            itemDes = "";
-            itemEffect = "";
-            if (curName == "ポーション(小)") {
-                itemName = curInv.item->GetName();
-                itemDes = curInv.item->GetDescription();
-                itemEffectValue = curInv.item->GetEffectValue();
-                itemValue = curInv.item->GetValue();
-                itemEffect = "回復量";
+
+            // ===== アイテム情報取得 =====
+            itemName = curInv.item->GetName();
+            itemDes = curInv.item->GetDescription();
+            itemEffectValue = curInv.item->GetEffectValue();
+            itemValue = curInv.item->GetValue();
+
+            // ===== 効果タイプ判定（マップで管理） =====
+            auto it = itemEffectMap.find(curName);
+            if (it != itemEffectMap.end()) {
+                itemEffect = it->second;
             }
-            else if (curName == "剣") {
-                itemName = curInv.item->GetName();
-                itemDes = curInv.item->GetDescription();
-                itemEffectValue = curInv.item->GetEffectValue();
-                itemValue = curInv.item->GetValue();
-                itemEffect = "攻撃力";
+            else {
+                itemEffect = "効果不明";
             }
-            else if (curName == "斧") {
-                itemName = curInv.item->GetName();
-                itemDes = curInv.item->GetDescription();
-                itemEffectValue = curInv.item->GetEffectValue();
-                itemValue = curInv.item->GetValue();
-                itemEffect = "攻撃力";
-            }
+
+            // ===== 描画 =====
             DrawString(desPosX, desPosY, itemName.c_str(), white);
             DrawString(desPosX, desPosY + 20, itemDes.c_str(), white);
-            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white, "%s : %d  価値 : %d", itemEffect,itemEffectValue, itemValue);
+            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white,
+                "%s : %d  価値 : %d", itemEffect.c_str(), itemEffectValue, itemValue);
         }
 
-        // アイコンをテキスト高さに合わせて描画するループ内
-        int targetH = lineHeight - 4; // 文字と少し余白を入れる（調整可）
-        int iconY = y + (lineHeight - targetH) / 2; // 縦中央に合わせる
-        // アイコン取得（ItemBase::GetItemIcon() は画像パスを返す想定）
+        // アイコン描画
+        int targetH = lineHeight - 4;
+        int iconY = y + (lineHeight - targetH) / 2;
         int iconHandle = -1;
+
         std::string iconPath = inv.item->GetItemIcon();
         if (!iconPath.empty()) {
             auto itc = iconCache.find(iconPath);
@@ -355,91 +408,69 @@ void Inventory::Render()
 
         if (iconHandle >= 0) {
             int gw = 0, gh = 0;
-            GetGraphSize(iconHandle, &gw, &gh); // 元画像の幅・高さを取得
+            GetGraphSize(iconHandle, &gw, &gh);
             if (gw > 0 && gh > 0) {
-                // 縦高さに合わせて横幅を算出（アスペクト比維持）
                 int destW = static_cast<int>((float)gw * ((float)targetH / (float)gh) + 0.5f);
-                // DrawExtendGraph: 左上(x1,y1) 右下(x2,y2)
                 DrawExtendGraph(iconX, iconY, iconX + destW, iconY + targetH, iconHandle, TRUE);
             }
             else {
-                // サイズ取得できなければそのまま描画
                 DrawGraph(iconX, iconY, iconHandle, TRUE);
             }
         }
         else {
-            // アイコン無しの代替表示
             DrawBox(iconX, iconY, iconX + targetH, iconY + targetH, GetColor(120, 120, 120), TRUE);
         }
 
-        // 名前の色分け（例: 装備系は水色、消費は緑）
+        // 名前色分け
         int nameColor = GetColor(220, 220, 220);
         if (type == "Consumable") {
-            nameColor = palegreen; // palegreen
+            nameColor = palegreen;
         }
         else if (type == "Equipment") {
             nameColor = white;
         }
 
-        // アイテム名
-        DrawString(textX, y+4, name.c_str(), nameColor);
+        DrawString(textX, y + 4, name.c_str(), nameColor);
 
-        // ✅ 装備中なら「F」を表示
+        // 装備中マーク
         if (equippedItem && equippedItem == inv.item.get()) {
-            DrawString(baseX + 3, y + 4, "E", GetColor(0, 255, 255)); // 水色で表示
+            DrawString(baseX + 3, y + 4, "E", GetColor(0, 255, 255));
         }
 
-        // 数量（2以上のみ表示）
+        // 数量
         if (quantity > 1) {
             char buf[32];
             snprintf(buf, sizeof(buf), "x%d", quantity);
-            // 右寄せ表示（簡易）。DrawString の幅取得を行うならより正確に右寄せできます。
-            int qtyX = baseX + boxW - qtyRightPad - 48; // 48はx幅の目安（フォントによって調整）
+            int qtyX = baseX + boxW - qtyRightPad - 48;
             DrawString(qtyX, y, buf, GetColor(255, 255, 192));
         }
 
         y += lineHeight;
     }
 
-    //アイテム選択画面の表示
-    // メニューがアクティブならポップアップ表示（選択行のすぐ下に出す）
+    // ===== アイテム選択ポップアップ =====
     if (menuActive && currentIndex >= 0 && currentIndex < (int)items.size()) {
         const int popupW = 300;
         const int popupH = 56;
 
-        // 選択行が現在の表示範囲内かを判定
         bool selectedIsVisible = (currentIndex >= startIdx && currentIndex < endIdx);
-
-        int px = baseX + (boxW - popupW) / 2; // デフォルト (中央)
+        int px = baseX + (boxW - popupW) / 2;
         int py = baseY + (boxH - popupH) / 2;
 
         if (selectedIsVisible) {
-            // 選択行の相対Yを計算（startIdx からのオフセット）
             int selRelative = currentIndex - startIdx;
             int selY = baseY + titleHeight + padding + selRelative * lineHeight;
+            px = textX;
+            py = selY + lineHeight;
 
-            // デフォルトは選択行のすぐ下に表示
-            px = textX; // テキスト開始位置の下に出す（任意で調整）
-            py = selY + lineHeight; // 選択行の直下
-
-            // 右端にはみ出す場合は左にシフト
             int rightLimit = baseX + boxW - padding;
-            if (px + popupW > rightLimit) {
-                px = rightLimit - popupW;
-            }
-            // 左端より左にならないようにクリップ
+            if (px + popupW > rightLimit) px = rightLimit - popupW;
             int leftLimit = baseX + padding;
             if (px < leftLimit) px = leftLimit;
 
-            // 下にはみ出す場合は選択行の上に表示
             int bottomLimit = baseY + boxH - padding;
-            if (py + popupH > bottomLimit) {
-                py = selY - popupH;
-            }
-            // 上限もチェック（タイトル領域に被らないようにする）
-            int topLimit = baseY + titleHeight + padding - popupH; // ここは微調整可
+            if (py + popupH > bottomLimit) py = selY - popupH;
             if (py < baseY + titleHeight + padding) {
-                // フォールバック：中央表示
                 px = baseX + (boxW - popupW) / 2;
                 py = baseY + (boxH - popupH) / 2;
             }
@@ -448,30 +479,21 @@ void Inventory::Render()
         DrawBox(px, py, px + popupW, py + popupH, darkGray, TRUE);
         DrawBox(px, py, px + popupW, py + popupH, white, FALSE);
 
-        // メニュー項目
-        // 現在選択しているアイテムの種類に応じてラベルを切り替える
+        // メニュー内容
         const InventoryItem& curInv = items[currentIndex];
         const std::string curType = curInv.item->GetType();
-        const char* opt0 = "使う"; // デフォルト
-        if (curType == "Equipment") {
-            opt0 = "装備";
-        }
-        else if (curType == "Consumable") {
-            opt0 = "使う";
-        } // 他のタイプがあればここで追加可能
+        const char* opt0 = "使う";
+        if (curType == "Equipment") opt0 = "装備";
+        else if (curType == "Consumable") opt0 = "使う";
 
         const char* opt1 = "捨てる";
 
         int optX = px + 12;
         int optY = py + 12;
-        // opt0 (使う/装備)
         int col0 = (menuChoice == 0) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
         DrawString(optX, optY, opt0, col0);
-        // Drop
         int col1 = (menuChoice == 1) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
         DrawString(optX + 120, optY, opt1, col1);
-
-        // ヒント
         DrawString(px + 8, py + popupH - 18, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180));
     }
 }

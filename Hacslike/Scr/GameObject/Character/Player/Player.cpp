@@ -168,7 +168,7 @@ void Player::Update() {
 	//アイテムインベントリの更新
 	if (isItemUI) {
 		inventory.Update();
-
+		
 	}
 
 
