@@ -26,5 +26,12 @@ public: //メンバ関数
 	/// <param name="id"></param>
 	/// <returns></returns>
 	std::unique_ptr<ItemBase> CreateItem(const std::string& _id);
+	// 登録処理をまとめる関数を追加
+	void InitializeDefaultItems();
+
+	// シングルトンなのでコンストラクタ等は非公開
+	ItemFactory() = default;
+	ItemFactory(const ItemFactory&) = delete;
+	ItemFactory& operator=(const ItemFactory&) = delete;
 };
 
