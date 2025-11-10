@@ -123,6 +123,16 @@
     <ClCompile Include="Scr\GameObject\Character\Player\PlayerMovement.cpp">
       <Filter>GameObject\Character\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Artifact\ArtifactBase.cpp">
+      <Filter>GameObject\Artifact</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Artifact\ArtifactSelectUI.cpp">
+      <Filter>GameObject\Artifact</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp">
+      <Filter>GameObject\Artifact</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\ArtifactManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -256,6 +266,16 @@
     <ClInclude Include="Scr\GameObject\Character\Player\PlayerMovement.h">
       <Filter>GameObject\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Artifact\ArtifactBase.h">
+      <Filter>GameObject\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Artifact\ArtifactSelectUI.h">
+      <Filter>GameObject\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Artifact\ArtifactUI.h">
+      <Filter>GameObject\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\ArtifactManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -320,6 +340,9 @@
     </Filter>
     <Filter Include="GameObject\Coin">
       <UniqueIdentifier>{cf11c74b-37cd-459d-beb5-37616f7d275f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Artifact">
+      <UniqueIdentifier>{a7499a45-694e-4c12-9831-fc61086869a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

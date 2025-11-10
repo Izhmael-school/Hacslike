@@ -23,6 +23,9 @@
     <ClCompile Include="Scr\Component\Collider\CapsuleHitBox.cpp" />
     <ClCompile Include="Scr\Component\Collider\Collider.cpp" />
     <ClCompile Include="Scr\Component\Collider\SphereHitBox.cpp" />
+    <ClCompile Include="Scr\GameObject\Artifact\ArtifactBase.cpp" />
+    <ClCompile Include="Scr\GameObject\Artifact\ArtifactSelectUI.cpp" />
+    <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp" />
     <ClCompile Include="Scr\GameObject\Audio\Audio.cpp" />
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
@@ -45,6 +48,7 @@
     <ClCompile Include="Scr\GameObject\Stage\StageGenerator.cpp" />
     <ClCompile Include="Scr\GameObject\Weapon\Weapon.cpp" />
     <ClCompile Include="Scr\main.cpp" />
+    <ClCompile Include="Scr\Manager\ArtifactManager.cpp" />
     <ClCompile Include="Scr\Manager\AudioManager.cpp" />
     <ClCompile Include="Scr\Manager\CollisionManager.cpp" />
     <ClCompile Include="Scr\Manager\EffectManager.cpp" />
@@ -70,6 +74,9 @@
     <ClInclude Include="Scr\Component\Collider\SphereHitBox.h" />
     <ClInclude Include="Scr\Component\Singleton.h" />
     <ClInclude Include="Scr\Definition.h" />
+    <ClInclude Include="Scr\GameObject\Artifact\ArtifactBase.h" />
+    <ClInclude Include="Scr\GameObject\Artifact\ArtifactSelectUI.h" />
+    <ClInclude Include="Scr\GameObject\Artifact\ArtifactUI.h" />
     <ClInclude Include="Scr\GameObject\Audio\Audio.h" />
     <ClInclude Include="Scr\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
@@ -91,6 +98,7 @@
     <ClInclude Include="Scr\GameObject\Stage\StageCell.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageGenerator.h" />
     <ClInclude Include="Scr\GameObject\Weapon\Weapon.h" />
+    <ClInclude Include="Scr\Manager\ArtifactManager.h" />
     <ClInclude Include="Scr\Manager\AudioManager.h" />
     <ClInclude Include="Scr\Manager\CollisionManager.h" />
     <ClInclude Include="Scr\Manager\EffectManager.h" />

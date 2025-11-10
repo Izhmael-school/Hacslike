@@ -51,6 +51,8 @@ public://メンバ変数
 	std::vector<std::unique_ptr<ItemEntity>> activeItems;
 
 	Effect* pEffe;
+    float itemDropRate = 0.4f;
+
 
 public: //メンバ関数
 	void TryDropItem(float _dropRate, VECTOR _pos = VZero);
@@ -69,6 +71,12 @@ private://メンバ関数
 public:
 	// ★ 外部からアイテム一覧を取得できる関数を追加
 	const std::vector<std::unique_ptr<ItemEntity>>& GetActiveItems() const { return activeItems; }
+    /// <summary>
+    /// アイテム出現確立のゲッター
+    /// </summary>
+    /// <returns></returns>
+    inline float GetItemDropRate() { return itemDropRate; }
 
+    inline void SetItemDropRate(float _dropRate) { itemDropRate = _dropRate; }
 };
 
