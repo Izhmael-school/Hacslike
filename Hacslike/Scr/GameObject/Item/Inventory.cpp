@@ -101,7 +101,7 @@ void Inventory::UseItem(int index)
         items.erase(items.begin() + index);
         if (currentIndex >= (int)items.size()) {
             currentIndex = (std::max)(0, (int)items.size() - 1);
-        }
+    }
     }
 }
 
@@ -137,96 +137,94 @@ int Inventory::GetMaxVisible() const
 /// <summary>
 /// 更新
 /// </summary>
-void Inventory::Update()
+void Inventory::Update(Player* player)
 {
-    char keyState[256];
-    GetHitKeyStateAll(keyState);
-    InputManager* input = &InputManager::GetInstance();
-    // 並び替え
-    if (input->IsKeyDown(KEY_INPUT_R) || input->IsButtonDown(XINPUT_GAMEPAD_Y))
-    {
-        SortItemsByOrder();
-        currentIndex = 0;
-    }
+    if (player->GetIsMenuSelected() == true) {
 
-    // 上
-    if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
-        if (!menuActive) {
-            if (!items.empty()) {
-                currentIndex = (std::max)(0, currentIndex - 1);
-                // スクロール調整
-                if (currentIndex < scrollOffset) scrollOffset = currentIndex;
-            }
+        InputManager* input = &InputManager::GetInstance();
+        // 並び替え
+        if (input->IsKeyDown(KEY_INPUT_R) || input->IsButtonDown(XINPUT_GAMEPAD_Y))
+        {
+            SortItemsByOrder();
+            currentIndex = 0;
         }
-        else {
-            // メニュー内移動（上下で切り替える）
-            menuChoice = (menuChoice + 1) % 2; // 0/1 切替
-        }
-    }
-
-    // 下
-    if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
-        if (!menuActive) {
-            if (!items.empty()) {
-                currentIndex = (std::min)((int)items.size() - 1, currentIndex + 1);
-                int maxVisible = GetMaxVisible();
-                if (currentIndex >= scrollOffset + maxVisible) {
-                    scrollOffset = currentIndex - (maxVisible - 1);
-                    if (scrollOffset < 0) scrollOffset = 0;
+        // 上
+        if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
+            if (!menuActive) {
+                if (!items.empty()) {
+                    currentIndex = (std::max)(0, currentIndex - 1);
+                    // スクロール調整
+                    if (currentIndex < scrollOffset) scrollOffset = currentIndex;
                 }
             }
-        }
-        else {
-            // メニュー内移動
-            menuChoice = (menuChoice + 1) % 2;
-        }
-    }
-
-    // Enter
-    if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
-        if (!menuActive) {
-            // メニューを開く（アイテムが存在するとき）
-            if (!items.empty()) {
-                menuActive = true;
-                menuChoice = 0; // デフォルトは Use
+            else {
+                // メニュー内移動（上下で切り替える）
+                menuChoice = (menuChoice + 1) % 2; // 0/1 切替
             }
         }
-        else {
-            // メニューで選択を実行
-            if (currentIndex >= 0 && currentIndex < (int)items.size()) {
-                InventoryItem& inv = items[currentIndex];
-                const std::string name = inv.item->GetName();
-                if (menuChoice == 0) {
-                    // Use
-                    UseItem(currentIndex);
-                }
-                else {
-                    // Drop
-                    DropItemAtIndex(currentIndex);
+
+        // 下
+        if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
+            if (!menuActive) {
+                if (!items.empty()) {
+                    currentIndex = (std::min)((int)items.size() - 1, currentIndex + 1);
+                    int maxVisible = GetMaxVisible();
+                    if (currentIndex >= scrollOffset + maxVisible) {
+                        scrollOffset = currentIndex - (maxVisible - 1);
+                        if (scrollOffset < 0) scrollOffset = 0;
+                    }
                 }
             }
-            menuActive = false;
+            else {
+                // メニュー内移動
+                menuChoice = (menuChoice + 1) % 2;
+            }
         }
-    }
 
-    // Escape キャンセル
-    if (input->IsKeyDown(KEY_INPUT_ESCAPE) || input->IsButtonDown(XINPUT_GAMEPAD_A)) {
+        // Enter
+        if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
+            if (!menuActive) {
+                // メニューを開く（アイテムが存在するとき）
+                if (!items.empty()) {
+                    menuActive = true;
+                    menuChoice = 0; // デフォルトは Use
+                }
+            }
+            else {
+                // メニューで選択を実行
+                if (currentIndex >= 0 && currentIndex < (int)items.size()) {
+                    InventoryItem& inv = items[currentIndex];
+                    const std::string name = inv.item->GetName();
+                    if (menuChoice == 0) {
+                        // Use
+                        UseItem(currentIndex);
+                    }
+                    else {
+                        // Drop
+                        DropItemAtIndex(currentIndex);
+                    }
+                }
+                menuActive = false;
+            }
+        }
+
+        // Escape キャンセル
+        if (input->IsKeyDown(KEY_INPUT_ESCAPE) || input->IsButtonDown(XINPUT_GAMEPAD_A)) {
+            if (menuActive) {
+                menuActive = false;
+            }
+        }
+
+        // 左右でメニューの切替（EnterでOKする方式の場合は不要だが、対応）
         if (menuActive) {
-            menuActive = false;
+            if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
+                menuChoice = (std::max)(0, menuChoice - 1);
+            }
+            if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
+                menuChoice = (std::min)(1, menuChoice + 1);
+            }
         }
     }
-
-    // 左右でメニューの切替（EnterでOKする方式の場合は不要だが、対応）
-    if (menuActive) {
-        if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
-            menuChoice = (std::max)(0, menuChoice - 1);
-        }
-        if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
-            menuChoice = (std::min)(1, menuChoice + 1);
-        }
-    }
-
-   
 }
 
 /// <summary>

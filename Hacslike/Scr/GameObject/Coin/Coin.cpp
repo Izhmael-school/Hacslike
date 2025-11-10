@@ -183,8 +183,9 @@ void Coin::ApplyCoin(Player* player)
 {
 
     if (!player || !active) return;
-    player->SetCoinValue(player->GetCoinValue() + value);
+    player->SetCoinValue(player->GetCoinValue() + player->GetCoinAcquisitionValue() + coinValue);
 
+    player->SetIsCoin(false);
 
 
 }

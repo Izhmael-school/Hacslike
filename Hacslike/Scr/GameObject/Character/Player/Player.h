@@ -1,15 +1,23 @@
 ﻿#pragma once
+#include <memory>
 #include "../Character.h"
 #include "../../Weapon/Weapon.h"
 #include "../../Slash/Slash.h"
 #include"../../Item/Inventory.h"
 #include"../../Item/ItemBase.h"
 #include"../../../Manager/ItemDropManager.h" 
+#include"../../Coin/Coin.h"
+#include"../../Artifact/ArtifactUI.h"
+#include"../../Artifact/ArtifactBase.h"
 #include "../Hacslike/Scr/Manager/WeaponManager.h"
 
 #include "PlayerAttack.h"
 #include "PlayerMovement.h"
 
+static enum MenuType {
+	menuInventory = 0,
+	menuArtifact = 1,
+};
 
 
 /*
@@ -35,9 +43,6 @@ private:	//	メンバ変数
 	bool changeWeaponButtonPressed; // ボタン押下フラグ
 	int maxWeaponId;                // 武器の最大ID（JSONの数に合わせる）
 
-	Inventory inventory; //アイテムインベントリ
-	bool hitItem;		 //アイテムに当たっているかどうか
-	bool isItemUI;		 //アイテムのUIを開いているかどうか
 
 	int coinValue;
 
@@ -53,6 +58,28 @@ private:	//	メンバ変数
 	WeaponData* weaponData;
 
 	float hpRate;
+#pragma region インベントリ/アイテム関連
+	Inventory inventory; //アイテムインベントリ
+	bool hitItem;		 //アイテムに当たっているかどうか
+	bool isItemUI;		 //アイテムのUIを開いているかどうか
+#pragma endregion
+
+#pragma region アーティファクト/コイン
+	ArtifactUI artifactUI;
+	bool isArtifactUI = false;
+	int coin_acquisition_value;
+	bool isGetCoin = false;
+	attactPower_raise_GetCoin* coinArtifact;  // コイン取得系のアーティファクト
+	itemDropRateUpwardOnCoinAcquisition* itemArtifact;
+#pragma endregion
+
+#pragma region メニュー
+	bool isMenuUI = false;
+	MenuType menu;
+	bool isMenuSelected = false;   // メニュー項目が選択中かどうか
+	float blinkTime = 0.0f;       // 点滅用のタイマー
+	bool blinkVisible = true;      // 現在表示中かどうか
+#pragma endregion
 
 #pragma endregion
 
@@ -132,6 +159,31 @@ public:		//	メンバ関数
 	void AddItem();
 
 	/// <summary>
+	/// メニューを開く
+	/// </summary>
+	void OpenMenu();
+
+	/// <summary>
+	/// メニューセレクト
+	/// </summary>
+	void selectMenu();
+
+	/// <summary>
+	/// メニューの表示
+	/// </summary>
+	void DrawMenu();
+
+	/// <summary>
+	/// コイン取得時の処理
+	/// </summary>
+	void GetCoin(); 
+
+	/// <summary>
+	/// コイン取得時の処理
+	/// </summary>
+	void GetCoin_Item();
+
+	/// <summary>
 	/// アイテムのインベントリを開く
 	/// </summary>
 	void OpenInventory();
@@ -175,6 +227,43 @@ public:		//	Getter と Setter
 	inline void SetCoinValue(int _coin) { coinValue = _coin; }
 
 	/// <summary>
+	/// 入手コインの取得
+	/// </summary>
+	/// <returns></returns>
+	inline int GetCoinAcquisitionValue() const { return coin_acquisition_value; }
+	
+	/// <summary>
+	/// 入手コインの設定
+	/// </summary>
+	/// <param name="_value"></param>
+	inline void SetCoinAcquisitionValue(int _value) { coin_acquisition_value = _value; }
+
+	/// <summary>
+	/// メニューセレクトの設定
+	/// </summary>
+	/// <returns></returns>
+	inline bool GetIsMenuSelected() { return isMenuSelected; }
+
+	/// <summary>
+	/// コインを取得下かどうかの取得
+	/// </summary>
+	/// <returns></returns>
+	inline bool GetIsCoin() { return isGetCoin; }
+
+	/// <summary>
+	/// コインを取得下かどうかの設定
+	/// </summary>
+	/// <param name="isCoin"></param>
+	inline void SetIsCoin(bool isCoin) { isGetCoin = isCoin; }
+
+	/// <summary>
+	/// アーティファクトの設定
+	/// </summary>
+	/// <param name="artifact"></param>
+	void SetCoinArtifact(attactPower_raise_GetCoin* artifact) { coinArtifact = artifact; }
+	void SetItemArtifact(itemDropRateUpwardOnCoinAcquisition* artifact) { itemArtifact = artifact; }
+
+	/// <summary>
 	/// 会心率の取得
 	/// </summary>
 	/// <returns></returns>
@@ -204,6 +293,8 @@ public:		//	Getter と Setter
 	VECTOR GetForward() const {
 		return VNorm(VGet(-sinf(Deg2Rad(rotation.y)), 0.0f, -cosf(Deg2Rad(rotation.y))));
 	}
+
+
 public:
 	// 🔹 シングルトン関連
 	static Player* CreateInstance(VECTOR _pos = VZero);

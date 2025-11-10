@@ -101,7 +101,7 @@ void CoinValue_raise::Update(Player* player)
 void CoinValue_raise::Apply(Player* player)
 {
     if (!player) return;
-    //player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() + UpValue);
+    player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() + UpValue);
 }
 
 void CoinValue_raise::Remove(Player* player)
@@ -171,8 +171,8 @@ void attactPower_raise_GetCoin::OnGetCoin(Player* player)
         timer = duration;
         return;
     }
-    originalAtk = player->GetAtk(); // Œ³‚ÌUŒ‚—Í‚ð‹L˜^
-    player->SetAtk(originalAtk * boostAmount);
+    originalAtk = player->GetBaseAtk(); // Œ³‚ÌUŒ‚—Í‚ð‹L˜^
+    player->SetBaseAtk(originalAtk * boostAmount);
     timer = duration;
     isBoosted = true;
 }
@@ -187,7 +187,7 @@ void attactPower_raise_GetCoin::Update(Player* player)
 
     if (timer <= 0.0f) {
         // Œø‰ÊI—¹
-        player->SetAtk(originalAtk);
+        player->SetBaseAtk(originalAtk);
         isBoosted = false;
         timer = 0.0f;
     }
@@ -196,13 +196,13 @@ void attactPower_raise_GetCoin::Update(Player* player)
 void attactPower_raise_GetCoin::Apply(Player* player)
 {
 
-    //player->SetCoinArtifact(this);
+    player->SetCoinArtifact(this);
     Update(player);
 }
 
 void attactPower_raise_GetCoin::Remove(Player* player)
 {
-    player->SetAtk(originalAtk);
+    player->SetBaseAtk(originalAtk);
 
 }
 #pragma endregion
@@ -251,7 +251,7 @@ void itemDropRateUpwardOnCoinAcquisition::Update(Player* player)
 
 void itemDropRateUpwardOnCoinAcquisition::Apply(Player* player)
 {
-    //player->SetItemArtifact(this);
+    player->SetItemArtifact(this);
     Update(player);
 }
 

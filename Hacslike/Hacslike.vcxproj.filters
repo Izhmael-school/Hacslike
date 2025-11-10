@@ -132,7 +132,10 @@
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp">
       <Filter>GameObject\Artifact</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Manager\ArtifactManager.cpp" />
+    <ClCompile Include="Scr\Scene\TitleScene.cpp" />
+    <ClCompile Include="Scr\Manager\ArtifactManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -275,7 +278,10 @@
     <ClInclude Include="Scr\GameObject\Artifact\ArtifactUI.h">
       <Filter>GameObject\Artifact</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Manager\ArtifactManager.h" />
+    <ClInclude Include="Scr\Scene\TitleScene.h" />
+    <ClInclude Include="Scr\Manager\ArtifactManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

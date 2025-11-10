@@ -30,7 +30,7 @@ public:
 
 private:
     std::vector<InventoryItem> items;
-    const int baseX = 16;               // インベントリウィンドウ左上X
+    const int baseX = 250;               // インベントリウィンドウ左上X
     const int baseY = 16;               // インベントリウィンドウ左上Y
     const int boxW = 320;              // ウィンドウ幅
     const int boxH = 360;              // ウィンドウ最大高さ（表示領域）
@@ -87,7 +87,7 @@ public:
     void UseItem(int index);
 
 
-    void Update();
+    void Update(Player* player);
 
     /// <summary>
     /// 装備

@@ -175,14 +175,19 @@ void Player::Update() {
 	//アイテムの取得
 	AddItem();
 	//アイテムのインベントリ表示非表示
-	OpenInventory();
+	//OpenInventory();
 
-	//アイテムインベントリの更新
-	if (isItemUI) {
-		inventory.Update();
-		
+	selectMenu();
+
+	OpenMenu();
+
+	if(isItemUI) {
+		inventory.Update(this);
 	}
 
+	if (isArtifactUI) {
+		artifactUI.Update();
+	}
 
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
 		AddHp(10);
@@ -216,10 +221,16 @@ void Player::Render() {
 	if (!isVisible)
 		return;
 #pragma region アイテムのインベントリ表示
-	inventory.AddItemRender();
 	if (isItemUI) {
 		inventory.Render();
-		PlayerStatusRender();
+	}
+	if (isArtifactUI) {
+		artifactUI.Render();
+	}
+	inventory.AddItemRender();
+
+	if (isMenuUI) {
+		DrawMenu();
 	}
 	int cx = 0, cy = 800;   // 中心
 	int r_outer = 200;
@@ -355,19 +366,139 @@ void Player::AddItem() {
 	}
 }
 
-/// <summary>
-/// アイテムのインベントリを開く
-/// </summary>
-void Player::OpenInventory() {
-	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isItemUI) {
-		isItemUI = true;
-
+void Player::OpenMenu()
+{
+	// TAB または START でメニュー開閉
+	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
+		isMenuUI = true;
 	}
-	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isItemUI) {
+	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isMenuUI) {
+		isMenuUI = false;
 		isItemUI = false;
+		isArtifactUI = false;
+		isMenuSelected = false; // 閉じたときにリセット
+	}
 
+	if (isMenuUI)
+	{
+		// メニュー操作
+		if (!isMenuSelected) // 選択中はカーソル操作を無効に
+		{
+			// ↑キー
+			if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP))
+			{
+				if (menu == MenuType::menuArtifact)
+					menu = MenuType::menuInventory;
+			}
+
+			// ↓キー
+			if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
+			{
+				if (menu == MenuType::menuInventory)
+					menu = MenuType::menuArtifact;
+			}
+
+			// Enterで選択
+			if (input->IsKeyUp(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B))
+			{
+				isMenuSelected = true;
+				blinkTime = 0.0f;
+				blinkVisible = true;
+			}
+		}
+
+		// Backspaceで解除
+		if (input->IsKeyDown(KEY_INPUT_BACK) || input->IsButtonUp(XINPUT_GAMEPAD_A))
+		{
+			isMenuSelected = false;
+			blinkVisible = true; // 常に表示状態に戻す
+		}
+	}
+
+	// 点滅制御
+	if (isMenuSelected)
+	{
+		blinkTime += 1.0f / 60.0f; // 1フレーム1/60秒進む想定
+		if (blinkTime >= 0.3f) // 約0.3秒ごとに切り替え
+		{
+			blinkVisible = !blinkVisible;
+			blinkTime = 0.0f;
+		}
+	}
+	else
+	{
+		blinkVisible = true;
 	}
 }
+
+void Player::selectMenu()
+{
+	if (isMenuUI == true) {
+		switch (menu)
+		{
+		case menuInventory:
+			isItemUI = true;
+			isArtifactUI = false;
+			break;
+		case menuArtifact:
+			isItemUI = false;
+			isArtifactUI = true;
+			break;
+		default:
+			break;
+		}
+	}
+	else return;
+}
+
+void Player::DrawMenu()
+{
+	if (!isMenuUI) return;
+
+	const int x = 20;
+	const int y = 50;
+	const int width = 200;
+	const int height = 40;
+	const int margin = 10;
+
+	const char* menuNames[] = { "アイテム", "アーティファクト" };
+	const int menuCount = 2;
+
+	for (int i = 0; i < menuCount; i++)
+	{
+		int boxY = y + i * (height + margin);
+
+		bool isCurrent = (static_cast<int>(menu) == i);
+
+		// 選択中かつ点滅表示がオンの時のみピンク枠
+		if (isCurrent && (!isMenuSelected || (isMenuSelected && blinkVisible)))
+		{
+			DrawBox(x - 4, boxY - 4, x + width + 4, boxY + height + 4, GetColor(255, 0, 255), TRUE);
+			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
+		}
+		else
+		{
+			DrawBox(x - 2, boxY - 2, x + width + 2, boxY + height + 2, GetColor(255, 255, 255), FALSE);
+			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
+		}
+
+		DrawString(x + 40, boxY + 10, menuNames[i], GetColor(255, 255, 255));
+	}
+}
+
+void Player::GetCoin()
+{
+	if (coinArtifact)
+		coinArtifact->OnGetCoin(this);
+}
+
+void Player::GetCoin_Item()
+{
+	if (itemArtifact)
+		itemArtifact->OnGetCoin_Item(this);
+}
+
+
 
 void Player::PlayerStatusRender() {
 
@@ -393,6 +524,23 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 	//	当たった相手のタグが "Goblin" だったら
 	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
 
+	}
+	if (_pCol->GetGameObject()->GetTag() == "Coin") {
+
+
+		auto& coins = Coin::GetInstance()->GetCoin();
+
+		for (auto& coin : coins) {
+			// 衝突したコインオブジェクトと一致した場合のみ処理
+			if (coin.get() == _pCol->GetGameObject()) {
+				coin->SetVisible(false);
+				coin->ApplyCoin(this);
+				GetCoin();  // ← プレイヤー経由で発動
+				GetCoin_Item();
+				Coin::GetInstance()->RemoveCoin(coin.get());
+				break; // 削除したのでループを抜ける
+			}
+		}
 	}
 }
 

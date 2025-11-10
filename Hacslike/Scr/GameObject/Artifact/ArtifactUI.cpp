@@ -10,14 +10,14 @@ void ArtifactUI::Update()
     int total = (int)ArtifactManager::GetInstance()->GetObtainedArtifacts().size();
 
     // 下キー：次のページ
-    if (input->IsKeyDown(KEY_INPUT_DOWN))
+    if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
     {
         if (displayStartIndex + displayCount < total)
             displayStartIndex++;
     }
 
     // 上キー：前のページ
-    if (input->IsKeyDown(KEY_INPUT_UP))
+    if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP))
     {
         if (displayStartIndex > 0)
             displayStartIndex--;

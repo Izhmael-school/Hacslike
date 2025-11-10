@@ -38,10 +38,42 @@ void GameScene::Start() {
 
 void GameScene::Update() {
 #pragma region プロト用スキルとアイテム
+	InputManager* input = &InputManager::GetInstance();
+	if (!isSelectingArtifact) {
+		if (input->IsKeyDown(KEY_INPUT_Y)) {
+			artifactChioces = ArtifactManager::GetInstance()->GenerateArtifactChoices();
+			artifactUI.StartSelection();
+			isSelectingArtifact = true;
+		}
+		
+	}
+	else {
+		// ★スキル選択中の処理
+		int Selected = artifactUI.UpdateSelection();
+		if (Selected != -1)
+		{
+			
+			// プレイヤー取得
+			Player* player = nullptr;
+			for (auto p : pGameObjectArray)
+			{
+				player = dynamic_cast<Player*>(p);
+				if (player) break;
+			}
+
+			if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
+			{
+				ArtifactManager::GetInstance()->ApplySelectedArtifact(player, artifactChioces[Selected]);
+			}
+
+			isSelectingArtifact = false;
+		}
+	}
+
 	// ★スキル選択中でなければ通常処理を行う
 	if (!isSelectingSkill)
 	{
-		InputManager* input = &InputManager::GetInstance();
+		
 
 		EffectManager::GetInstance()->Update();
 		ItemDropManager::GetInstance()->Update();
@@ -118,6 +150,9 @@ void GameScene::Render() {
 	if (isSelectingSkill)
 	{
 		skillUI.Render(skillChoices);
+	}
+	if (isSelectingArtifact) {
+		artifactUI.Render(artifactChioces);
 	}
 	// エフェクトの描画
 	EffectManager::GetInstance()->Render();
