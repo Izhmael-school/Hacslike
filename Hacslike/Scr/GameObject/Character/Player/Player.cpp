@@ -6,6 +6,10 @@
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
+#include <math.h>
+
+
+#define M_PI 3.14159265358979323846
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
@@ -184,7 +188,7 @@ void Player::Update() {
 		AddHp(10);
 	}
 	else if (input->IsKeyDown(KEY_INPUT_2)) {
-		AddMaxHp(10);
+		SubHp(10);
 	}
 
 	pAnimator->Update();
@@ -217,6 +221,35 @@ void Player::Render() {
 		inventory.Render();
 		PlayerStatusRender();
 	}
+	int cx = 0, cy = 800;   // 中心
+	int r_outer = 200;
+	int r_inner = 120;
+	int steps = 50;
+
+	double percent = (double)hp / maxHp * 100;
+	double max_angle = 90.0;
+	double angle_end = max_angle * percent / 100.0;
+
+	for (int i = 0; i < steps; i++) {
+		double angle1 = (angle_end * i / steps) * M_PI / 180.0;
+		double angle2 = (angle_end * (i + 1) / steps) * M_PI / 180.0;
+
+		// 外側頂点
+		int x1o = cx + (int)(r_outer * cos(angle1));
+		int y1o = cy - (int)(r_outer * sin(angle1)); // sinの符号を反転
+		int x2o = cx + (int)(r_outer * cos(angle2));
+		int y2o = cy - (int)(r_outer * sin(angle2));
+
+		// 内側頂点
+		int x1i = cx + (int)(r_inner * cos(angle1));
+		int y1i = cy - (int)(r_inner * sin(angle1));
+		int x2i = cx + (int)(r_inner * cos(angle2));
+		int y2i = cy - (int)(r_inner * sin(angle2));
+
+		// 三角形2つで四角形を描く
+		DrawTriangle(x1o, y1o, x2o, y2o, x1i, y1i, green, TRUE);
+		DrawTriangle(x2o, y2o, x2i, y2i, x1i, y1i, green, TRUE);
+	}
 #pragma endregion
 
 	playerMovement->Render();
@@ -242,6 +275,8 @@ void Player::Render() {
 		pWeapon->Render();
 	}
 #pragma endregion
+
+
 }
 
 ///// <summary>
@@ -335,10 +370,7 @@ void Player::OpenInventory() {
 }
 
 void Player::PlayerStatusRender() {
-	int barX = 30;         // 左端
-	int barY = 700;         // 縦位置
-	int barWidth = 200;     // 全体の幅
-	int barHeight = 20;     // 高さ
+
 
 	DrawFormatString(960, 20, green, "LV　　　　　 : %d", Lv);
 	DrawFormatString(960, 40, green, "EXP　　　　　: %d", Exp);
@@ -349,19 +381,7 @@ void Player::PlayerStatusRender() {
 	DrawFormatString(960, 140, green, "会心ダメージ : %.1f", criticalDamage);
 	DrawFormatString(960, 160, green, "コイン　　　 : %d", coinValue);
 
-	// HPバー（右端を固定）
-	// 右端固定
-	barWidth = hp;  // 今はHP値そのまま幅にする
-
-	// 背景（任意、例えば最大HPまでの枠線だけ）
-
-	// 満タンで barX ～ right の全域
-	// HP0で right ～ right（消える）
-	if (hp > 0)
-		DrawBox(barX, barY, barX + barWidth, barY + barHeight, green, TRUE);
-
-	DrawBox(barX, barY, barX + maxHp, barY + barHeight, black, FALSE);
-	DrawFormatString(barX, barY - 25, white, "HP: %d / %d", hp, maxHp);
+	
 }
 
 /*
