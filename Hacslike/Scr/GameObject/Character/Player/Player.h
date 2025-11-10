@@ -52,6 +52,8 @@ private:	//	メンバ変数
 
 	WeaponData* weaponData;
 
+	float hpRate;
+
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ

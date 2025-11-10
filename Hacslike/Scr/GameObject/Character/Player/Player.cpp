@@ -27,7 +27,8 @@ Player::Player(VECTOR _pos)
 	, expValue()
 	, criticalHitRate()
 	, criticalDamage()
-	, weaponData(nullptr){
+	, weaponData(nullptr)
+	, hpRate() {
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
@@ -131,7 +132,7 @@ void Player::Start() {
 
 	playerMovement = new PlayerMovement(this);
 	playerAttack = new PlayerAttack(this, pWeapon, playerMovement);
-	
+
 	SetSpeed(1);
 }
 
@@ -143,6 +144,13 @@ void Player::Update() {
 	//	非表示だったら更新しない
 	if (!isVisible)
 		return;
+
+	hpRate = (float)hp / (float)maxHp;
+
+	if (hp > maxHp) {
+		hp = maxHp;
+	}
+
 
 	////	攻撃入力・HitBox更新
 	//AttackInput();
@@ -172,8 +180,11 @@ void Player::Update() {
 	}
 
 
-	if (input->IsButtonDown(XINPUT_GAMEPAD_Y)) {
-		SubHp(10);
+	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
+		AddHp(10);
+	}
+	else if (input->IsKeyDown(KEY_INPUT_2)) {
+		AddMaxHp(10);
 	}
 
 	pAnimator->Update();
@@ -185,7 +196,7 @@ void Player::Update() {
 		pWeapon->Update();
 	}
 
-	if (pCollider != nullptr) {		
+	if (pCollider != nullptr) {
 		pCollider->Update();
 	}
 
@@ -217,13 +228,13 @@ void Player::Render() {
 	MV1DrawModel(modelHandle);
 #pragma endregion
 
-//#pragma region Slash描画
-//	for (auto s : slashes) {
-//		s->Render();
-//	}
-//#pragma endregion
-//
-//#pragma endregion
+	//#pragma region Slash描画
+	//	for (auto s : slashes) {
+	//		s->Render();
+	//	}
+	//#pragma endregion
+	//
+	//#pragma endregion
 
 #pragma region 武器の描画
 	//	武器の描画
@@ -324,6 +335,11 @@ void Player::OpenInventory() {
 }
 
 void Player::PlayerStatusRender() {
+	int barX = 30;         // 左端
+	int barY = 700;         // 縦位置
+	int barWidth = 200;     // 全体の幅
+	int barHeight = 20;     // 高さ
+
 	DrawFormatString(960, 20, green, "LV　　　　　 : %d", Lv);
 	DrawFormatString(960, 40, green, "EXP　　　　　: %d", Exp);
 	DrawFormatString(960, 60, green, "HP　　　　　 : %d / %d", hp, maxHp);
@@ -332,6 +348,20 @@ void Player::PlayerStatusRender() {
 	DrawFormatString(960, 120, green, "会心率　　　 : %.1f", criticalHitRate);
 	DrawFormatString(960, 140, green, "会心ダメージ : %.1f", criticalDamage);
 	DrawFormatString(960, 160, green, "コイン　　　 : %d", coinValue);
+
+	// HPバー（右端を固定）
+	// 右端固定
+	barWidth = hp;  // 今はHP値そのまま幅にする
+
+	// 背景（任意、例えば最大HPまでの枠線だけ）
+
+	// 満タンで barX ～ right の全域
+	// HP0で right ～ right（消える）
+	if (hp > 0)
+		DrawBox(barX, barY, barX + barWidth, barY + barHeight, green, TRUE);
+
+	DrawBox(barX, barY, barX + maxHp, barY + barHeight, black, FALSE);
+	DrawFormatString(barX, barY - 25, white, "HP: %d / %d", hp, maxHp);
 }
 
 /*
