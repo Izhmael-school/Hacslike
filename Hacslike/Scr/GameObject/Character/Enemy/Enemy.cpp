@@ -174,6 +174,7 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 
 	return true;
 }
+
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 	VECTOR dir = VSub(targetPos, position);
 

@@ -187,8 +187,6 @@ bool CollisionManager::CheckHit(Collider* _pCol1, Collider* _pCol2) {
 	return false;
 }
 
-CollisionManager* CollisionManager::pInstance = nullptr;
-
 CollisionManager::CollisionManager()
 	:pColliderArray()
 	, prevs()
@@ -208,24 +206,6 @@ CollisionManager::~CollisionManager() {
 	prevs.shrink_to_fit();
 	currents.clear();
 	currents.shrink_to_fit();
-}
-
-void CollisionManager::CreateInstance() {
-	pInstance = new CollisionManager();
-}
-
-CollisionManager* CollisionManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void CollisionManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
 }
 
 void CollisionManager::Update() {

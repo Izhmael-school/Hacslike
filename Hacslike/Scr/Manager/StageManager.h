@@ -26,18 +26,23 @@ public:
 	std::vector<int> floorDifTexture;
 	std::vector<int> floorNormalTexture;
 	int textureChangeFloor = 10;
+	const int BossFloorNum = 10;
 
+public:
 	void Update();
 	void Render();
 
 	int GetMapData(int x,int y);
+	void SetGameObjectRandomPos(GameObject* obj);
+	int GetNowRoomNum(VECTOR pos);
+	VECTOR GetRandomRoomRandomPos();
+	void Generate();
+
+
+private:
 	void GenerateStage();
 	void GenerateStage(int stageID);
-
-	void SetGameObjectRandomPos(GameObject* obj);
 	void ChangeTexture(int textureHandle, ObjectType changeObject);
-	int GetNowRoomNum(VECTOR pos);
 
-	VECTOR GetRandomRoomRandomPos();
 };
 

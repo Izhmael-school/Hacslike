@@ -113,12 +113,17 @@
     <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp">
       <Filter>GameObject\Coin</Filter>
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Player\PlayerAttack.cpp">
       <Filter>GameObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Scene\GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Scene\TitleScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +245,6 @@
     <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\CommonModule.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -249,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Player\PlayerAttack.h">
       <Filter>GameObject\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Scene\GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Scene\TitleScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,5 +333,6 @@
     <None Include="Scr\Data\StageData.json">
       <Filter>Data</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "StageCell.h"
 #include "../../Manager/CollisionManager.h"
+#include "../../Manager/FadeManager.h"
 
 
 StageCell::StageCell(int _modelHandle, ObjectType _type, VECTOR position)
@@ -19,7 +20,7 @@ void StageCell::Start() {
 	if (type != Stair) return;
 
 	pCollider = new SphereCollider(this,VZero,100);
-	CollisionManager::GetInstance()->Register(pCollider);
+	CollisionManager::GetInstance().Register(pCollider);
 }
 
 void StageCell::Update() {
@@ -28,7 +29,10 @@ void StageCell::Update() {
 	MV1SetMatrix(modelHandle, matrix);
 
 	if (isTouch && (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_X) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_X))) {
-		StageManager::GetInstance().GenerateStage();
+
+		if (FadeManager::GetInstance().GetFadeState() != FadeState::FadeEnd) return;
+
+		StageManager::GetInstance().Generate();
 		isTouch = false;
 		return;
 	}

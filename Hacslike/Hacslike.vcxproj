@@ -58,6 +58,7 @@
     <ClCompile Include="Scr\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
+    <ClCompile Include="Scr\Scene\TitleScene.cpp" />
     <ClCompile Include="Scr\Skill\Skill.cpp" />
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
   </ItemGroup>
@@ -104,6 +105,7 @@
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
+    <ClInclude Include="Scr\Scene\TitleScene.h" />
     <ClInclude Include="Scr\Skill\Skill.h" />
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
   </ItemGroup>

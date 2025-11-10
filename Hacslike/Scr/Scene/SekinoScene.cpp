@@ -27,7 +27,7 @@ void SekinoScene::Start() {
 
 	pCamera->SetTarget(pPlayer);
 
-	StageManager::GetInstance().GenerateStage();
+	StageManager::GetInstance().Generate();
 }
 
 void SekinoScene::Update() {

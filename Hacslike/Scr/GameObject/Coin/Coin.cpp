@@ -64,7 +64,7 @@ void Coin::DestroyInstance()
 void Coin::Start()
 {
     SetCollider(new SphereCollider(this, VZero, 30));
-    CollisionManager::GetInstance()->Register(pCollider);
+    CollisionManager::GetInstance().Register(pCollider);
     coinModelHandle = MV1LoadModel("Res/Model/DropObject/coin.mv1");
     coinValue = 1;
     value = coinValue;
@@ -164,7 +164,7 @@ void Coin::RemoveCoin(Coin* target)
             [target](const std::unique_ptr<Coin>& coin) {
                 if (coin.get() == target) {
                     if (coin->GetCollider()) {
-                        CollisionManager::GetInstance()->UnRegister(coin->GetCollider());
+                        CollisionManager::GetInstance().UnRegister(coin->GetCollider());
 
                     }
                     return true;

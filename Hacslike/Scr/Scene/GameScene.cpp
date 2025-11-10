@@ -43,7 +43,7 @@ void GameScene::Start() {
 		factory.RegisterItem("Axe", []() {
 			return std::make_unique<ItemAxe>(VGet(0, 0, 0), "•€", "•’Ê‚Ì•€", 200, GetRand(30) + 10); });
 	}
-	StageManager::GetInstance().GenerateStage();
+	StageManager::GetInstance().Generate();
 }
 
 void GameScene::Update() {
@@ -111,17 +111,22 @@ void GameScene::Update() {
 	
 	Coin::GetInstance()->UpdateAll();
 
-	
+	CollisionManager::GetInstance().Update();
 }
 
 void GameScene::Render() {
 
-
 	StageManager::GetInstance().Render();
+
 	for (auto pObj : pGameObjectArray) {
 		pObj->Render();
 	}
+
 	EnemyManager::GetInstance().Render();
+
+#if _DEBUG
+	CollisionManager::GetInstance().Render();
+#endif
 
 	Coin::GetInstance()->RenderAll();
 	// šƒXƒLƒ‹‘I‘ğ‰æ–Ê‚Ì•`‰æ

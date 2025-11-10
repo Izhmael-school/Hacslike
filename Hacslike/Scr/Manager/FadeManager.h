@@ -1,65 +1,22 @@
 #pragma once
 #include "../Definition.h"
+#include "../Component/Singleton.h"
 
-class FadeManager {
-#pragma region シングルトンのデータ構造
-private:	// 静的メンバ変数
-	static FadeManager* pInstance;	// 自身のインスタンスのアドレスを格納
-
-
-private:	// コンストラクタとデストラクタ
-	/*
-	 * @brief	コンストラクタ
-	 * @tip		外部で生成されないようにアクセス指定子をprivateにする
-	 */
-	FadeManager();
-
-	/*
-	 * @brief	デストラクタ
-	 */
-	~FadeManager() = default;
-
-public:	//コピーと譲渡禁止
-	FadeManager(const FadeManager&) = delete;
-	FadeManager& operator = (const FadeManager&) = delete;
-	FadeManager(FadeManager&&) = delete;
-	FadeManager& operator = (FadeManager&&) = delete;
-
-private:	// 静的メンバ関数
-	/*
-	 * @function	CreateInstance
-	 * @brief		自信のインスタンスを生成する
-	 */
-	static void CreateInstance();
-
-public:	// 静的メンバ関数
-	/*
-	 * @function	GetInstance
-	 * @brief		自信のインスタンスを取得する唯一の手段
-	 * @return		InputManager*	自身のインスタンスのアドレス
-	 */
-	static FadeManager* GetInstance();
-
-	/*
-	 * @function	DestroyInstance
-	 * @brief		自信のインスタンスを破棄する唯一の手段
-	 */
-	static void DestroyInstance();
-#pragma endregion
-
+class FadeManager : public Singleton<FadeManager> {
 private:
-	float blend;
-	float time;
-
-	FadeState fadeState;
+	const int BlendMax = 255;
+	float time = 0;
+	float alpha = 0;
+	FadeState fadeState = FadeState::FadeEnd;
+	int screenGraph = -1;
 public:
 	void Update();
-
 	void Render();
+	void FadeStart(FadeState state, float _t = 1.0f);
 
-	void FadeIn(float _t = 1.0f);
-
-	void FadeOut(float _t = 1.0f);
+	void Fade(FadeState state,float _t = 1.0f);
+	void FadeIn(float _t);
+	void FadeOut(float _t);
 public:
 	inline FadeState GetFadeState() const { return fadeState; }
 };
