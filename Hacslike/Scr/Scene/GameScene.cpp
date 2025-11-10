@@ -33,7 +33,7 @@ void GameScene::Start() {
 
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
-	StageManager::GetInstance().GenerateStage();
+	StageManager::GetInstance().Generate();
 }
 
 void GameScene::Update() {
