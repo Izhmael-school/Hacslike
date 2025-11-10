@@ -271,7 +271,7 @@ void Player::Render() {
 
 #pragma region 武器の描画
 	//	武器の描画
-	if (pCollider != nullptr && pWeapon != nullptr) {
+	if (pWeapon != nullptr) {
 		pWeapon->Render();
 	}
 #pragma endregion
