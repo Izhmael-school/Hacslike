@@ -11,9 +11,6 @@
 class BaseScene {
 protected:	// メンバ変数
 	std::vector<GameObject*> pGameObjectArray;	// 一元管理配列
-	//std::vector<Goblin*> pGoblinArray;
-	//std::vector<Weapon*> pWeaponArray;
-	//std::vector<Weapon*> pGoblinWeaponArray;
 
 public:		// トラクタ
 	BaseScene() = default;
@@ -23,39 +20,6 @@ public:		// トラクタ
 			if (pObj == nullptr)
 				return;
 		}
-
-		//	pObj = nullptr;
-		//	delete pObj;
-		//}
-
-		//for (auto pObj : pWeaponArray) {
-		//	if (pObj == nullptr)
-		//		return;
-
-		//	pObj = nullptr;
-		//	delete pObj;
-		//}
-
-		//for (auto pObj : pGoblinArray) {
-		//	if (pObj == nullptr)
-		//		return;
-
-		//	pObj = nullptr;
-		//	delete pObj;
-		//}
-
-		//for (auto pObj : pGoblinWeaponArray) {
-		//	if (pObj == nullptr)
-		//		return;
-
-		//	pObj = nullptr;
-		//	delete pObj;
-		//}
-
-		// 当たり判定の登録も初期化
-		CollisionManager::DestroyInstance();
-		// 使用中のエフェクトも初期化
-		//EffectManager::DestroyInstance();
 	}
 
 public:		// メンバ関数
@@ -77,5 +41,4 @@ public:		// メンバ関数
 	 */
 	virtual void Render() = 0;
 
-public:		// etter
 };

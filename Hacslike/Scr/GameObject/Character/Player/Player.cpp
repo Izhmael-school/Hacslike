@@ -86,7 +86,7 @@ void Player::Start() {
 	if (!isVisible)
 		return;
 	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
-	CollisionManager::GetInstance()->Register(pCollider);
+	CollisionManager::GetInstance().Register(pCollider);
 
 	modelHandle = PLAYER_MODEL_HANDLE;
 
@@ -372,15 +372,7 @@ void Player::PlayerStatusRender() {
 void Player::OnTriggerEnter(Collider* _pCol) {
 	//	当たった相手のタグが "Goblin" だったら
 	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
-		//	当たった相手を非表示にする
-		//_pCol->GetGameObject()->SetVisible(false);
-	/*	EffectManager::GetInstance()->Load("Res/Effect/01.efk", "FireFlower", 50.0f);
-		Effect* pEffe = EffectManager::GetInstance()->Instantiate("FireFlower", position);
 
-		Camera::main->Shake(2, 0.5f);*/
-
-		//SceneManager::GetInstance()->SetNext(SceneType::GameOver);
-		FadeManager::GetInstance()->FadeOut();
 	}
 }
 

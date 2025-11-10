@@ -98,7 +98,7 @@ void ItemDropManager::RemoveItem(ItemEntity* target)
             [target](const std::unique_ptr<ItemEntity>& item) {
                 if (item.get() == target) {
                     if (item->GetCollider()) {
-                        CollisionManager::GetInstance()->UnRegister(item->GetCollider());
+                        CollisionManager::GetInstance().UnRegister(item->GetCollider());
                     }
                     return true;
                 }

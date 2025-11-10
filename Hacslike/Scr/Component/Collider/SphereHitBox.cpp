@@ -15,7 +15,7 @@ SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, fl
 
 SphereHitBox::~SphereHitBox() {
 	if (pCollider) {
-		CollisionManager::GetInstance()->UnRegister(pCollider);
+		CollisionManager::GetInstance().UnRegister(pCollider);
 		delete pCollider;
 		pCollider = nullptr;
 	}
@@ -45,7 +45,7 @@ void SphereHitBox::CreateCollider() {
 		SetPosition(owner->GetPosition());
 		pCollider = new SphereCollider(this, offset, radius);
 		pCollider->SetEnable(true);
-		CollisionManager::GetInstance()->Register(pCollider);
+		CollisionManager::GetInstance().Register(pCollider);
 	}
 }
 

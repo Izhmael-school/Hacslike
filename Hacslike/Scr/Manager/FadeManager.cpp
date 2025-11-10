@@ -1,59 +1,8 @@
 #include "FadeManager.h"
 #include "TimeManager.h"
+#include "SceneManager.h"
+#include <thread>
 
-#pragma region シングルトンのデータ構造
-
-//	静的メンバ変数の初期化
-FadeManager* FadeManager::pInstance = nullptr;
-
-/*
-*	@brief	コンストラクタ
-*/
-FadeManager::FadeManager()
-	: blend(0.0f)
-	, time(0.0f)
-	, fadeState(FadeState::FadeEnd) {}
-
-/*
-*	@brief	デストラクタ
-*/
-//FadeManager::~FadeManager() {}
-
-/*
-*	@function	CreateInstance
-*	@brief		自身のインスタンスを生成する
-*/
-void FadeManager::CreateInstance() {
-	pInstance = new FadeManager();
-}
-
-/*
-*	@function	GetInstance
-*	@brief		自身のインスタンスを取得する唯一の手段
-*	@return		InputManager*	自身のインスタンスのアドレス
-*/
-FadeManager* FadeManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-	return pInstance;
-}
-
-/*
-*	@function	DestroyInstance
-*	@breif		自身のインスタンスを破棄する唯一の手段
-*/
-void FadeManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
-}
-#pragma endregion
-
-/*
-*	@function	Update
-*	@breif		更新処理
-*/
 void FadeManager::Update() {
 	// フェード処理が完了していたら更新しない
 	if (fadeState == FadeState::FadeEnd) {
@@ -62,14 +11,14 @@ void FadeManager::Update() {
 	}
 
 	//	だんだんとフェード処理を行うための計算
-	blend += 255 * (int)fadeState * TimeManager::GetInstance().deltaTime / time;
+	alpha += 255 * (int)fadeState * TimeManager::GetInstance().deltaTime / time;
 
-	if (blend <= 0) {
-		blend = 0;
+	if (alpha <= 0) {
+		alpha = 0;
 		fadeState = FadeState::FadeEnd;
 	}
-	if (blend >= 255) {
-		blend = 255;
+	if (alpha >= 255) {
+		alpha = 255;
 		fadeState = FadeState::FadeEnd;
 	}
 }
@@ -79,37 +28,85 @@ void FadeManager::Update() {
 *	@breif		描画処理
 */
 void FadeManager::Render() {
-	//	フェード処理が完了していたら描画しない
-	if (fadeState == FadeState::FadeEnd)
-		return;
-
+	SceneManager::GetInstance().Render();
 	//	透明度を変化させてフェード処理とする
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)blend);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
 	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, black, TRUE);
-	//	ブレンドの状態を戻す
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	// ブレンドモードを元に戻す
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, -1);
+	DrawFormatString(100, 200, red, "blend : %f", alpha);
+	DrawFormatString(100, 220, red, " time : %f", TimeManager::GetInstance().deltaTime);
 }
 
-/*
-*	@function		FadeIn
-*	@brief			フェードイン
-*	@param[in]	float _t = 1.0f		全体時間
-*/
+void FadeManager::FadeStart(FadeState state, float _t) {
+	fadeState = state;
+	time = _t;
+	alpha = fadeState == FadeState::FadeIn ? BlendMax : 0.0f;
+}
+
+void FadeManager::Fade(FadeState state, float _t) {
+	if (state == FadeState::FadeEnd) return;
+	fadeState = state;
+	time = _t;
+	alpha = state == FadeState::FadeIn ? BlendMax : 0;
+
+	if (fadeState == FadeState::FadeIn) {
+		SceneManager::GetInstance().Update();
+		SceneManager::GetInstance().Render();
+	}
+	//if (fadeState == FadeState::FadeOut)
+	//	screenGraph = MakeScreen(WINDOW_WIDTH, WINDOW_HEIGHT, TRUE);
+
+	//// 直前のゲーム画面を画像として保持する
+	//if (screenGraph != -1) {
+	//	SetDrawScreen(screenGraph);
+	//	ClearDrawScreen();
+
+	//	SceneManager::GetInstance().Render();
+
+	//	SetDrawScreen(DX_SCREEN_BACK);
+	//	GetDrawScreenGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, screenGraph, FALSE);
+	//}
+
+	while (1) {
+		TimeManager::GetInstance().Update();
+		//	だんだんとフェード処理を行うための計算
+		alpha += (BlendMax * TimeManager::GetInstance().deltaTime / time) * (int)fadeState;
+
+		if (fadeState == FadeState::FadeOut && alpha >= BlendMax) {
+			alpha = BlendMax;
+			break;
+		}
+
+		if (fadeState == FadeState::FadeIn && alpha <= 0) {
+			alpha = 0;
+			break;
+		}
+
+		ClearDrawScreen();
+		Render();
+		ScreenFlip();
+
+		// 処理が速すぎたら待つ
+		while (1) {
+			if (GetNowCount() - TimeManager::GetInstance().GetCurrent() >= 1000 / FPS)
+				break;
+		}
+	}
+
+	ClearDrawScreen();
+	Render();
+	ScreenFlip();
+
+	DeleteGraph(screenGraph);
+	screenGraph = -1;
+	fadeState = FadeState::FadeEnd;
+}
+
 void FadeManager::FadeIn(float _t) {
-	//	各種の変数を初期化
-	fadeState = FadeState::FadeIn;
-	time = _t;
-	blend = 255.0f;
+	Fade(FadeState::FadeIn, _t);
 }
 
-/*
-*	@function		FadeOut
-*	@brief			フェードアウト
-*	@param[in]	float _t = 1.0f		全体時間
-*/
 void FadeManager::FadeOut(float _t) {
-	//	各種の変数を初期化
-	fadeState = FadeState::FadeOut;
-	time = _t;
-	blend = 0.0f;
+	Fade(FadeState::FadeOut,_t);
 }

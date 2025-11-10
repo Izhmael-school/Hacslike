@@ -1,4 +1,5 @@
 #include "StageManager.h"
+#include "FadeManager.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -19,13 +20,15 @@ StageManager::~StageManager() {
 void StageManager::Update() {
 	generator->Update();
 
+#if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
 		GenerateStage();
+#endif
 }
 
 void StageManager::Render() {
 	generator->Render();
-	DrawFormatString(100, 100, red, "ŠK‘w %d ŠK", floorCount);
+	DrawFormatString(100, 100, red, "ŠK‘w %d ŠK", floorCount - 1);
 }
 
 int StageManager::GetMapData(int x, int y) {
@@ -33,17 +36,16 @@ int StageManager::GetMapData(int x, int y) {
 }
 
 void StageManager::GenerateStage() {
+	// ‰Šú‰»
 	generator->ClearStage();
-
+	// ŠK‘w‚Ì‰ÁŽZ
 	floorCount++;
-
 	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
 	generator->GenerateStageData();
 	generator->GenerateStageObject();
 	SetGameObjectRandomPos(Character::player);
 
 	for (int i = 0; i < 10; i++) {
-
 		EnemyManager::GetInstance().SpawnEnemy(Goblin, GetRandomRoomRandomPos());
 	}
 }
@@ -64,6 +66,19 @@ void StageManager::GenerateStage(int stageID) {
 	EnemyManager::GetInstance().SpawnEnemy(Goblin, VGet(pos.x * CellSize, 0, pos.z * CellSize));
 }
 
+void StageManager::Generate() {
+	FadeManager::GetInstance().FadeOut(0.5f);
+
+	if (floorCount % BossFloorNum == 0) {
+		GenerateStage((int)(floorCount / BossFloorNum));
+	}
+	else {
+		GenerateStage();
+	}
+
+	FadeManager::GetInstance().FadeIn(0.5f);
+}
+
 void StageManager::SetGameObjectRandomPos(GameObject* obj) {
 	generator->SetGameObjectRandomPos(obj);
 }
@@ -79,5 +94,6 @@ int StageManager::GetNowRoomNum(VECTOR pos) {
 VECTOR StageManager::GetRandomRoomRandomPos() {
 	return generator->GetRandomRoomRandomPos();
 }
+
 
 

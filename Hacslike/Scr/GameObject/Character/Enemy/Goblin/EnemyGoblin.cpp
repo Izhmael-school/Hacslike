@@ -12,7 +12,7 @@ void EnemyGoblin::Start() {
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	type = Goblin;
 
-	CollisionManager::GetInstance()->Register(pCollider);
+	CollisionManager::GetInstance().Register(pCollider);
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);
 	pAnimator->Load("Res/Model/Enemy/Goblin/idle.mv1","idle01", true);

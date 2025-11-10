@@ -6,8 +6,7 @@
 #include "Manager/InputManager.h"
 #include "Manager/SceneManager.h"
 #include "Manager/StageManager.h"
-#include "Manager/CollisionManager.h"
-#include "Manager/EnemyManager.h"
+#include "Manager/FadeManager.h"
 #include"Manager/SkillManager.h"
 #include"Manager/ItemDropManager.h"
 #include"Manager/EffectManager.h"
@@ -27,7 +26,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 起動時のウィンドウのモードの設定
 	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
 	// 背景色の設定
+#if _DEBUG
 	SetBackgroundColor(196, 196, 196);
+#else 
+	SetBackgroundColor(0, 0, 0);
+#endif
 
 	// Dxlibの初期化
 	if (DxLib_Init() == -1)
@@ -77,20 +80,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//DxLibのカメラとEffekseerのカメラを同期する
 		Effekseer_Sync3DSetting();
 		// 更新処理
-		SceneManager::GetInstance()->Update();
+		SceneManager::GetInstance().Update();
 		TimeManager::GetInstance().Update();
 		InputManager::GetInstance().Update();
-		CollisionManager::GetInstance()->Update();
-		
 
 		// 画面をクリアする
 		ClearDrawScreen();
 
 		// 描画処理
-		SceneManager::GetInstance()->Render();
-#if _DEBUG
-		CollisionManager::GetInstance()->Render();
-#endif
+		SceneManager::GetInstance().Render();
+
 		// エスケープキーでウィンドウを閉じる
 		//if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE))
 		//	break;
@@ -105,8 +104,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 	}
-
-	SceneManager::DestroyInstance();
 	SkillManager::DestroyInstance();
 	ItemDropManager::DestroyInstance();
 	EffectManager::DestroyInstance();

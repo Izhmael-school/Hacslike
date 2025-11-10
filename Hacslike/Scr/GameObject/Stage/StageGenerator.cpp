@@ -9,7 +9,7 @@ StageGenerator::StageGenerator()
 	, roomCount(0)
 	, line(0)
 	, mapSize(4)
-	, mapOffset(VGet(600, 0, 400)) {
+	, mapOffset(VGet(950, 0, 800)) {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	roadModel = MV1LoadModel("Res/Model/Stage/Room.mv1");

@@ -14,7 +14,7 @@ CapsuleHitBox::CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR&
 
 CapsuleHitBox::~CapsuleHitBox() {
 	if (pCollider) {
-		CollisionManager::GetInstance()->UnRegister(pCollider);
+		CollisionManager::GetInstance().UnRegister(pCollider);
 		delete pCollider;
 		pCollider = nullptr;
 	}
@@ -25,7 +25,7 @@ void CapsuleHitBox::CreateCollider() {
 		SetPosition(owner->GetPosition());
 		pCollider = new CapsuleCollider(this, startPos, endPos, radius);
 		pCollider->SetEnable(true);
-		CollisionManager::GetInstance()->Register(pCollider);
+		CollisionManager::GetInstance().Register(pCollider);
 	}
 }
 
