@@ -2,6 +2,7 @@
 #include<vector>
 #include <string>
 class Player;
+class PlayerMovement;
 
 #pragma region アーティファクトベース
 /// <summary>
@@ -132,6 +133,26 @@ public:
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
 
+};
+
+/// <summary>
+/// 回避後数秒間攻撃力上昇
+/// </summary>
+class AttackincreasesforSeveralSecondsAfterEvasion : public ArtifactBase {
+private:
+	float attackPowerUp;  //攻撃力上昇
+	bool  isBoost;		  //上昇中かどうか
+	float duration;       // 効果時間
+	float timer;          // 残り時間
+	float originalAtk;   //元の攻撃力を保存
+public:
+	AttackincreasesforSeveralSecondsAfterEvasion(float boost = 1.5, float time = 3.0f);
+	void OnBlinking(PlayerMovement* playermove);
+	void Update(Player* player)override;
+	void Apply(Player* player) override;
+	void Remove(Player* player) override;
+
+	
 };
 
 #pragma endregion

@@ -1,11 +1,16 @@
 #pragma once
 #include <DxLib.h>
+#include"../../Artifact/ArtifactBase.h"
 
 class Player;
 class PlayerAttack;
 class InputManager;
 
+
+
 class PlayerMovement {
+private:
+	static PlayerMovement* instance; // シングルトン用
 private:
 	Player* pPlayer;
 
@@ -33,8 +38,15 @@ private:
 
 	bool dashState;
 
+	AttackincreasesforSeveralSecondsAfterEvasion* attactArtifact;
+
+
 public:
 	PlayerMovement(Player* _player);
+
+	static PlayerMovement* CreateInstance(Player* _player);
+	static PlayerMovement* GetInstance();
+	static void DestroyInstance();
 
 	void Start();
 	void Update();
@@ -75,4 +87,6 @@ public:
 	inline bool IsBlinking() const { return isBlinking; }
 
 	inline bool IsDashState() const { return dashState; }
+
+	inline void SetAttactArtifact(AttackincreasesforSeveralSecondsAfterEvasion* artifact) { attactArtifact = artifact; }
 };

@@ -20,6 +20,7 @@ ArtifactManager::ArtifactManager()
         std::make_shared<conditional_defense_power_raise_HP>(),
         std::make_shared<attactPower_raise_GetCoin>(),
         std::make_shared<itemDropRateUpwardOnCoinAcquisition>(),
+        std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>(),
 
     };
 }

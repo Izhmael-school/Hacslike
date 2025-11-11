@@ -1,6 +1,7 @@
 #include "ArtifactBase.h"
 #include"../Character/Player/Player.h"
 #include"../../Manager/TimeManager.h"
+#include"../Character/Player/PlayerMovement.h"
 
 ArtifactBase::ArtifactBase(const std::string& _name, const std::string& _desc, const std::string& _icon)
     :name(_name)
@@ -109,7 +110,6 @@ void CoinValue_raise::Remove(Player* player)
 }
 #pragma endregion
 
-
 #pragma region HP‚ªˆê’è’lˆÈ‰º‚¾‚Æ–hŒä—Íã¸
 conditional_defense_power_raise_HP::conditional_defense_power_raise_HP(float boost)
     :ArtifactBase("|‚ÌˆÓu", "HP‚ª”¼•ªˆÈ‰º‚¾‚Æ–hŒä—Íã¸", "Res/ArtifactIcon/Defense_HP.png")
@@ -171,7 +171,7 @@ void attactPower_raise_GetCoin::OnGetCoin(Player* player)
         timer = duration;
         return;
     }
-    originalAtk = player->GetBaseAtk(); // Œ³‚ÌUŒ‚—Í‚ğ‹L˜^
+    originalAtk = player->GetAtk(); // Œ³‚ÌUŒ‚—Í‚ğ‹L˜^
     player->SetBaseAtk(originalAtk * boostAmount);
     timer = duration;
     isBoosted = true;
@@ -258,5 +258,76 @@ void itemDropRateUpwardOnCoinAcquisition::Apply(Player* player)
 void itemDropRateUpwardOnCoinAcquisition::Remove(Player* player)
 {
     ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() - dropRateUpward);
+}
+#pragma endregion
+
+#pragma region  ‰ñ”ğUŒ‚—Íã¸
+AttackincreasesforSeveralSecondsAfterEvasion::AttackincreasesforSeveralSecondsAfterEvasion(float boost, float time)
+    :ArtifactBase("™‹“ß‚Ìw—Ö", "‰ñ”ğŒã”•bŠÔUŒ‚ã¸", "Res/ArtifactIcon/Attack_UP.png")
+    , attackPowerUp(boost)
+    , duration(time)
+    , isBoost(false)
+    , timer(0.0f)
+    , originalAtk(0) {
+}
+
+/// <summary>
+/// PlayerMovement‚ÅŒÄ‚ñ‚Å‚¢‚é
+/// ‰ñ”ğ‚µ‚½
+/// </summary>
+/// <param name="playermove"></param>
+void AttackincreasesforSeveralSecondsAfterEvasion::OnBlinking(PlayerMovement* playermove)
+{
+        timer = duration;
+        isBoost = true;
+}
+
+void AttackincreasesforSeveralSecondsAfterEvasion::Update(Player* player)
+{
+    if (PlayerMovement::GetInstance()->IsBlinking()) {
+        // í‚ÉƒŠƒZƒbƒgiÄ‰ñ”ğ‚Å‰„’·‚³‚ê‚éj
+    }
+  
+    if (!player) return;
+
+    TimeManager* time = &TimeManager::GetInstance();
+
+
+    if (isBoost)
+    {
+        // ‰‰ñ‚Ì‚İUŒ‚—Íã¸‚ğ“K—p
+        if (timer == duration)
+        {
+            originalAtk = player->GetAtk();
+            player->SetAtk(originalAtk * attackPowerUp);
+        }
+
+        // ŠÔŒo‰ß
+        timer -= time->deltaTime;
+
+        // I—¹ˆ—
+        if (timer <= 0.0f)
+        {
+            player->SetAtk(originalAtk);
+            isBoost = false;
+            timer = 0.0f;
+        }
+    }
+}
+
+void AttackincreasesforSeveralSecondsAfterEvasion::Apply(Player* player)
+{
+    PlayerMovement::GetInstance()->SetAttactArtifact(this);
+    Update(player);
+}
+
+void AttackincreasesforSeveralSecondsAfterEvasion::Remove(Player* player)
+{
+    if (isBoost && player)
+    {
+        player->SetBaseAtk(originalAtk);
+        isBoost = false;
+        timer = 0.0f;
+    }
 }
 #pragma endregion

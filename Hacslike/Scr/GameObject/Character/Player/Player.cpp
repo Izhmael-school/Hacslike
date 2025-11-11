@@ -530,6 +530,7 @@ void Player::DrawMenu()
 
 		DrawString(x + 40, boxY + 10, menuNames[i], GetColor(255, 255, 255));
 	}
+	PlayerStatusRender();
 }
 
 void Player::GetCoin()
