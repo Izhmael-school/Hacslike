@@ -174,7 +174,7 @@ void PlayerMovement::EvasionInput() {
 /// ‰ñ”ğ
 /// </summary>
 void PlayerMovement::Evasion() {
-	attactArtifact->OnBlinking(this);
+	
 	pPlayer->GetCollider()->SetEnable(false);
 
 	// uŠÔˆÚ“®

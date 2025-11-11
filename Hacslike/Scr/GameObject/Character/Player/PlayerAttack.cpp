@@ -48,15 +48,15 @@ void PlayerAttack::Update() {
 /// 攻撃入力・HitBox更新
 /// </summary>
 void PlayerAttack::AttackInput() {
-	// ===== 攻撃入力 =====
+	//	攻撃入力
 	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X);
 
-	// ===== ため攻撃入力（★ここから追加） =====
+	//	ため攻撃入力
 	bool isChargeButtonDown = input->IsMouseDown(MOUSE_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 	bool isChargeButton = input->IsMouse(MOUSE_INPUT_RIGHT) || input->IsButton(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 	bool isChargeButtonUp = input->IsMouseUp(MOUSE_INPUT_RIGHT) || input->IsButtonUp(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 
-	// --- チャージ開始 ---
+	//	チャージ開始
 	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking()) {
 		isAttacking = true;
 		if (pWeapon->GetType() == 1) {
@@ -66,24 +66,24 @@ void PlayerAttack::AttackInput() {
 		}
 	}
 
-	// --- チャージ中 ---
+	//	チャージ中
 	if (isCharging) {
 		chargeTime += TimeManager::GetInstance().deltaTime;
 			Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
-		// 溜め中アニメーションに切り替え
+		//	溜め中アニメーションに切り替え
 		if(chargeTime >= 0.65f)
 		pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
 
-		// 最大チャージで自動リリース
+		//	最大チャージで自動リリース
 		if (chargeTime >= maxChargeTime) {
 			isChargeButtonUp = true;
 		}
 	}
 
-	// --- チャージ終了 ---
+	//	チャージ終了
 	if (isChargeButtonUp && isCharging) {
 		isCharging = false;
-		isAttacking = true;  // ←★追加
+		isAttacking = true;
 		attackTimer = 0.0f;
 
 		float ratio = chargeTime / maxChargeTime;
@@ -104,7 +104,7 @@ void PlayerAttack::AttackInput() {
 	}
 
 	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking()) {
-		// ボタンが押された瞬間だけ処理
+		//	ボタンが押された瞬間だけ処理
 		attackButtonPressed = true;
 		if (pWeapon->GetType() == 0) {
 			std::string animName = "Atk" + std::to_string(attackIndex + 1);
@@ -117,7 +117,7 @@ void PlayerAttack::AttackInput() {
 				pPlayer->GetAnimator()->Play("Atk3", pWeapon->GetAnimationSpeed(attackIndex - 1));
 			}
 			else if (!isAttacking) {
-				// --- 1段目攻撃 ---
+				//	1段目攻撃
 				isAttacking = true;
 				attackIndex++;
 				attackTimer = 0.0f;
@@ -125,7 +125,7 @@ void PlayerAttack::AttackInput() {
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				// --- コンボ入力 ---
+				//	コンボ入力
 				attackIndex++;
 				attackTimer = 0.0f;
 				canNextAttack = false;
@@ -144,7 +144,7 @@ void PlayerAttack::AttackInput() {
 				pPlayer->GetAnimator()->Play("GreatAtk4", pWeapon->GetAnimationSpeed(attackIndex - 1));
 			}
 			else if (!isAttacking) {
-				// --- 1段目攻撃 ---
+				//	1段目攻撃
 				isAttacking = true;
 				attackIndex++;
 				attackTimer = 0.0f;
@@ -152,7 +152,7 @@ void PlayerAttack::AttackInput() {
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				// --- コンボ入力 ---
+				//	コンボ入力
 				attackIndex++;
 				attackTimer = 0.0f;
 				canNextAttack = false;
@@ -171,7 +171,7 @@ void PlayerAttack::AttackInput() {
 				pPlayer->GetAnimator()->Play("AxeAtk4", pWeapon->GetAnimationSpeed(attackIndex - 1));
 			}
 			else if (!isAttacking) {
-				// --- 1段目攻撃 ---
+				//	1段目攻撃
 				isAttacking = true;
 				attackIndex++;
 				attackTimer = 0.0f;
@@ -179,7 +179,7 @@ void PlayerAttack::AttackInput() {
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				// --- コンボ入力 ---
+				//	コンボ入力
 				attackIndex++;
 				attackTimer = 0.0f;
 				canNextAttack = false;
@@ -193,7 +193,7 @@ void PlayerAttack::AttackInput() {
 		attackButtonPressed = false;
 	}
 
-	// ===== 攻撃中のタイマー管理 =====
+	//	攻撃中のタイマー管理
 	if (isAttacking && !isCharging && !playerMovement->IsBlinking()) {
 		attackTimer += TimeManager::GetInstance().deltaTime;
 
@@ -299,7 +299,7 @@ void PlayerAttack::AttackInput() {
 ///<param name="length"></param>
 ///<param name="radius"></param>
 void PlayerAttack::CreateAttackHitbox(float length, float radius) {
-	//Unity座標系の前方
+	//	Unity座標系の前方
 	VECTOR forward = VNorm(VGet(
 		-sinf(Deg2Rad(pPlayer->GetRotation().y)),
 		0.0f,
@@ -310,7 +310,7 @@ void PlayerAttack::CreateAttackHitbox(float length, float radius) {
 	float life = 0.20f;
 
 	if (attackIndex < 3) {
-		// 1～2段目 前方カプセル
+		//	1～2段目 前方カプセル
 		start = VAdd(pPlayer->GetPosition(), VScale(forward, 20.0f));
 		end = VAdd(start, VScale(forward, length));
 		CapsuleHitBox* CapHit = new CapsuleHitBox(pPlayer, start, end, radius, life);
@@ -318,10 +318,10 @@ void PlayerAttack::CreateAttackHitbox(float length, float radius) {
 		CapsuleHitboxes.push_back(CapHit);
 	}
 	else {
-		// 3段目 周囲攻撃（球状に近いカプセル）
+		//	3段目 周囲攻撃（球状に近いカプセル）
 		life = 0.25f;
 
-		// SphereHitBox を生成
+		//	SphereHitBox を生成
 		float life = 0.25f;
 		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
 
