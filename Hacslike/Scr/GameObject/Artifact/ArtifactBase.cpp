@@ -172,7 +172,7 @@ void attactPower_raise_GetCoin::OnGetCoin(Player* player)
         return;
     }
     originalAtk = player->GetAtk(); // 元の攻撃力を記録
-    player->SetBaseAtk(originalAtk * boostAmount);
+    player->SetAtk(originalAtk * boostAmount);
     timer = duration;
     isBoosted = true;
 }
@@ -187,7 +187,7 @@ void attactPower_raise_GetCoin::Update(Player* player)
 
     if (timer <= 0.0f) {
         // 効果終了
-        player->SetBaseAtk(originalAtk);
+        player->SetAtk(originalAtk);
         isBoosted = false;
         timer = 0.0f;
     }
@@ -278,56 +278,49 @@ AttackincreasesforSeveralSecondsAfterEvasion::AttackincreasesforSeveralSecondsAf
 /// <param name="playermove"></param>
 void AttackincreasesforSeveralSecondsAfterEvasion::OnBlinking(PlayerMovement* playermove)
 {
+    Player* player = playermove->GetPlayer(); // MovementからPlayerを取得できるなら
+    if (!player) return;
+
+   
+    if (!player) return;
+
+    // 既に上昇中ならタイマーをリセットする（重ねがけ防止）
+    if (isBoost) {
         timer = duration;
-        isBoost = true;
+        return;
+    }
+    originalAtk = player->GetAtk(); // 元の攻撃力を記録
+    player->SetAtk(originalAtk * attackPowerUp);
+    timer = duration;
+    isBoost = true;
 }
 
 void AttackincreasesforSeveralSecondsAfterEvasion::Update(Player* player)
 {
-    if (PlayerMovement::GetInstance()->IsBlinking()) {
-        // 常にリセット（再回避で延長される）
-    }
-  
-    if (!player) return;
-
     TimeManager* time = &TimeManager::GetInstance();
 
 
-    if (isBoost)
-    {
-        // 初回のみ攻撃力上昇を適用
-        if (timer == duration)
-        {
-            originalAtk = player->GetAtk();
-            player->SetAtk(originalAtk * attackPowerUp);
-        }
 
-        // 時間経過
-        timer -= time->deltaTime;
+    if (!isBoost || !player) return;
 
-        // 終了処理
-        if (timer <= 0.0f)
-        {
-            player->SetAtk(originalAtk);
-            isBoost = false;
-            timer = 0.0f;
-        }
+    timer -= time->deltaTime;  // 経過時間を減らす
+
+    if (timer <= 0.0f) {
+        // 効果終了
+        player->SetAtk(originalAtk);
+        isBoost = false;
+        timer = 0.0f;
     }
 }
 
 void AttackincreasesforSeveralSecondsAfterEvasion::Apply(Player* player)
 {
-    PlayerMovement::GetInstance()->SetAttactArtifact(this);
+    player->GetPlayerMovement()->SetAttactArtifact(this);
     Update(player);
 }
 
 void AttackincreasesforSeveralSecondsAfterEvasion::Remove(Player* player)
 {
-    if (isBoost && player)
-    {
-        player->SetBaseAtk(originalAtk);
-        isBoost = false;
-        timer = 0.0f;
-    }
+    player->SetAtk(originalAtk);
 }
 #pragma endregion

@@ -54,6 +54,7 @@ void PlayerMovement::Update() {
 	EvasionInput();
 	UpdateMovement();
 	UpdateBlink();
+	
 }
 
 void PlayerMovement::Render() {
@@ -74,8 +75,8 @@ void PlayerMovement::Render() {
 			MV1DrawModel(pPlayer->GetModelHandle());
 		}
 	}
-	if(attactArtifact)
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "%s", attactArtifact->GetName());
+	
+	
 }
 
 /// <summary>
@@ -174,11 +175,15 @@ void PlayerMovement::EvasionInput() {
 /// ‰ñ”ð
 /// </summary>
 void PlayerMovement::Evasion() {
-	attactArtifact->OnBlinking(this);
+	
 	pPlayer->GetCollider()->SetEnable(false);
 
 	// uŠÔˆÚ“®
 	evasionSpeed = 6;
+
+	if(attactArtifact)
+	attactArtifact->OnBlinking(this);
+	
 
 	// Žc‘œŠJŽn
 	isBlinking = true;

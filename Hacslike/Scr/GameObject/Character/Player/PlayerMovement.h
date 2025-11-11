@@ -86,7 +86,11 @@ public:
 public:
 	inline bool IsBlinking() const { return isBlinking; }
 
+	inline bool IsEvasionButtonPressed() const { return evasionButtonPressed; }
+
 	inline bool IsDashState() const { return dashState; }
+
+	inline Player* GetPlayer()const {return pPlayer;}
 
 	inline void SetAttactArtifact(AttackincreasesforSeveralSecondsAfterEvasion* artifact) { attactArtifact = artifact; }
 };

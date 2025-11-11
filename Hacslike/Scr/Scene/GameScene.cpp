@@ -38,6 +38,9 @@ void GameScene::Start() {
 }
 
 void GameScene::Update() {
+
+
+
 #pragma region プロト用スキルとアイテム
 	InputManager* input = &InputManager::GetInstance();
 	if (!isSelectingArtifact) {
@@ -46,7 +49,11 @@ void GameScene::Update() {
 			artifactUI.StartSelection();
 			isSelectingArtifact = true;
 		}
-		
+		StageManager::GetInstance().Update();
+		for (auto pObj : pGameObjectArray) {
+			pObj->Update();
+		}
+		EnemyManager::GetInstance().Update();
 	}
 	else {
 		// ★スキル選択中の処理
@@ -94,7 +101,7 @@ void GameScene::Update() {
 			ItemDropManager::GetInstance().TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
 		// --- アイテムドロップテスト ---
-		if (input->IsKeyDown(KEY_INPUT_G))
+		if (input->IsKeyDown(KEY_INPUT_Q))
 		{
 			VECTOR spawnPos = Character::player->GetPosition();
 
@@ -102,11 +109,7 @@ void GameScene::Update() {
 			Coin::GetInstance()->SpawnCoin(VGet(spawnPos.x + 70, 5.0f, spawnPos.z + 70));
 
 		}
-		StageManager::GetInstance().Update();
-		for (auto pObj : pGameObjectArray) {
-			pObj->Update();
-		}
-		EnemyManager::GetInstance().Update();
+		
 	}
 	else
 	{
@@ -157,6 +160,8 @@ void GameScene::Render() {
 	}
 	// エフェクトの描画
 	EffectManager::GetInstance().Render();
+
+	
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
 	{
