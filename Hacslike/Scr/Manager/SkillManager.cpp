@@ -5,11 +5,6 @@
 #include <iostream>
 
 // ------------------------
-// 静的メンバ初期化
-// ------------------------
-SkillManager* SkillManager::pInstance = nullptr;
-
-// ------------------------
 // コンストラクタ
 // ------------------------
 SkillManager::SkillManager()
@@ -30,41 +25,6 @@ SkillManager::~SkillManager()
 {
     activeSkills.clear();
     skillPool.clear();
-}
-
-// ------------------------
-// インスタンス生成
-// ------------------------
-void SkillManager::CreateInstance()
-{
-    if (!pInstance)
-    {
-        pInstance = new SkillManager();
-    }
-}
-
-// ------------------------
-// インスタンス取得
-// ------------------------
-SkillManager* SkillManager::GetInstance()
-{
-    if (!pInstance)
-    {
-        CreateInstance();
-    }
-    return pInstance;
-}
-
-// ------------------------
-// インスタンス破棄
-// ------------------------
-void SkillManager::DestroyInstance()
-{
-    if (pInstance)
-    {
-        delete pInstance;
-        pInstance = nullptr;
-    }
 }
 
 // ------------------------

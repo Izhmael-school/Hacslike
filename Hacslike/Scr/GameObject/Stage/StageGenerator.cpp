@@ -9,7 +9,8 @@ StageGenerator::StageGenerator()
 	, roomCount(0)
 	, line(0)
 	, mapSize(4)
-	, mapOffset(VGet(950, 0, 800)) {
+	, mapOffset(VGet(950, 0, 800))
+	, stage() {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
 	roadModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
@@ -104,7 +105,30 @@ void StageGenerator::Update() {
 void StageGenerator::Render() {
 
 	for (auto c : cells) {
+
+		if (c->GetObjectType() == Wall) {
+			VECTOR pos = c->GetPosition();
+			VECTOR playerPos = Character::player->GetPosition();
+			int x = (int)std::round(playerPos.x / CellSize);
+			int z = (int)std::round(playerPos.z / CellSize);
+
+			if (map[x][z - 1] == (int)Wall) {
+				if (pos.x + NextCellEnd >= playerPos.x && pos.x - NextCellEnd <= playerPos.x &&
+					pos.z + NextCellEnd >= playerPos.z && pos.z + CellEnd <= playerPos.z) {
+					SetWriteZBuffer3D(FALSE);
+					MV1SetOpacityRate(c->GetModelHandle(), 0.5f);
+					//MV1SetMaterialDrawBlendMode(c->GetModelHandle(), 0, DX_BLENDMODE_ALPHA);
+					//MV1SetMaterialDrawBlendParam(c->GetModelHandle(), 0, 100);
+					continue;
+				}
+			}
+			else {
+				MV1SetOpacityRate(c->GetModelHandle(), 1.0f);
+			}
+		}
+
 		c->Render();
+		SetWriteZBuffer3D(TRUE);
 	}
 
 	if (useStair != nullptr)

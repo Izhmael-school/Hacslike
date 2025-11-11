@@ -107,9 +107,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 	}
-	SkillManager::DestroyInstance();
-	ItemDropManager::DestroyInstance();
-	EffectManager::DestroyInstance();
+
 	Coin::DestroyInstance();
 	Effkseer_End();
 	// DxLibÇÃèIóπ

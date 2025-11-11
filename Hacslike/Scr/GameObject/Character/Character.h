@@ -93,13 +93,13 @@ public:	// ƒQƒbƒ^[‚ÆƒZƒbƒ^[
 	inline int GetBaseAtk() const { return baseAttack; }
 	//	Šî‘bUŒ‚—Í‚Ìİ’è
 	inline void SetBaseAtk(int _baseAtk) { baseAttack = _baseAtk; }
-	//	‹ßÚUŒ‚—Í•â³‚ÌE“¾
+	//	‹ßÚUŒ‚—Í•â³‚Ìæ“¾
 	inline float GetProximityCorrection() const { return proximityCorrection; }
-	//	‹ßÚUŒ‚—Í•â³‚Ìİ‰c
+	//	‹ßÚUŒ‚—Í•â³‚Ìİ’è
 	inline void SetProximityCorrection(float _proximityCorrection) { proximityCorrection = _proximityCorrection; }
-	//	‰“‹——£UŒ‚—Í•â³‚Ì¼­Ä¸
+	//	‰“‹——£UŒ‚—Í•â³‚Ìæ“¾
 	inline float GetRangedCorrection() const { return rangedCorrection; }
-	//	‰“‹——£UŒ‚—Í•â³‚Ì¾¯Ã²
+	//	‰“‹——£UŒ‚—Í•â³‚Ìİ’è
 	inline void SetRangedCorrection(float _rangedCorrection) { rangedCorrection = _rangedCorrection; }
 #pragma endregion
 
@@ -143,7 +143,10 @@ public:	// ƒQƒbƒ^[‚ÆƒZƒbƒ^[
 
 	inline void SetPlayer(Character* _player) { Character::player = _player; }
 
+	// •Ç”»’è‚ÌŒvZ
 	void CheckWall();
+	// •Ç ‚è‚ ‚è‚Ì•Ç”»’è‚ÌŒvZ
+	VECTOR CheckWallToWallRubbing(VECTOR dir);
 
 	inline void SetPosition(VECTOR set) override {
 		position = set;

@@ -113,7 +113,6 @@
     <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp">
       <Filter>GameObject\Coin</Filter>
     </ClCompile>
@@ -133,6 +132,12 @@
       <Filter>GameObject\Artifact</Filter>
     </ClCompile>
     <ClCompile Include="Scr\Manager\ArtifactManager.cpp" />
+    <ClCompile Include="Scr\Scene\TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Scene\GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -253,7 +258,6 @@
     <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\CommonModule.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -276,6 +280,12 @@
       <Filter>GameObject\Artifact</Filter>
     </ClInclude>
     <ClInclude Include="Scr\Manager\ArtifactManager.h" />
+    <ClInclude Include="Scr\Scene\TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Scene\GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

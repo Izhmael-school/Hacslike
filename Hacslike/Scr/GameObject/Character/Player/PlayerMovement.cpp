@@ -77,8 +77,8 @@ void PlayerMovement::UpdateMovement() {
 
 			VECTOR pos = pPlayer->GetPosition();
 			pos = VAdd(pos, VScale(moveDirection, 10.0f));
-			pPlayer->SetPosition(pos.x, pos.y, pos.z);
-			pPlayer->CheckWall(); // ← 壁補正（これで壁抜けしない）
+			VECTOR dir = pPlayer->CheckWallToWallRubbing(pos); // ← 壁補正（これで壁抜けしない）
+			pPlayer->SetPosition(dir.x, dir.y, dir.z);
 
 			VECTOR rot = pPlayer->GetRotation();
 			rot.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;

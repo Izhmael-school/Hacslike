@@ -1,18 +1,17 @@
 #pragma once
 #include"../Skill/Skill.h"
+#include "../Component/Singleton.h"
 #include <vector>
 #include <memory>
 #include <random>
 
 class Player;
 
-class SkillManager{
-private:
-    // ======== シングルトン関連 ========
-    static SkillManager* pInstance;  // 自身のインスタンスのアドレス
+class SkillManager : public Singleton<SkillManager>{
+public:
 
     /// <summary>
-    /// コンストラクタ（外部から生成禁止）
+    /// コンストラクタ
     /// </summary>
     SkillManager();
 
@@ -21,29 +20,6 @@ private:
     /// </summary>
     ~SkillManager();
 
-public:
-    // コピー・ムーブ禁止
-    SkillManager(const SkillManager&) = delete;
-    SkillManager& operator=(const SkillManager&) = delete;
-    SkillManager(SkillManager&&) = delete;
-    SkillManager& operator=(SkillManager&&) = delete;
-
-private:
-    /// <summary>
-    /// インスタンス生成（内部用）
-    /// </summary>
-    static void CreateInstance();
-
-public:
-    /// <summary>
-    /// インスタンス取得（唯一のアクセス手段）
-    /// </summary>
-    static SkillManager* GetInstance();
-
-    /// <summary>
-    /// インスタンス破棄
-    /// </summary>
-    static void DestroyInstance();
 
     // ======== スキル関連処理 ========
 private:
