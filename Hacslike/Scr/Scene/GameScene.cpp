@@ -21,6 +21,7 @@ GameScene::~GameScene() {
 
 void GameScene::Start() {
 	Player* pPlayer = new Player();
+	PlayerMovement::CreateInstance(pPlayer);
 	pGameObjectArray.push_back(pPlayer);
 	//Weapon* pWeapon = new Weapon("sabel");
 

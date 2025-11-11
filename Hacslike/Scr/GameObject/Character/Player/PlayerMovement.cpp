@@ -5,6 +5,8 @@
 #include "../../Camera/Camera.h"
 #include "../../../Manager/TimeManager.h"
 
+PlayerMovement* PlayerMovement::instance = nullptr;
+
 PlayerMovement::PlayerMovement(Player* _player)
 	: pPlayer(_player)
 	, input(&InputManager::GetInstance())
@@ -16,6 +18,25 @@ PlayerMovement::PlayerMovement(Player* _player)
 	, inputVec()
 	, dashState(false){
 	Start();
+}
+
+PlayerMovement* PlayerMovement::CreateInstance(Player* _player)
+{
+	if (!instance) {
+		instance = new PlayerMovement(_player);
+	}
+	return instance;
+}
+
+PlayerMovement* PlayerMovement::GetInstance()
+{
+	return instance;
+}
+
+void PlayerMovement::DestroyInstance()
+{
+	delete instance;
+	instance = nullptr;
 }
 
 void PlayerMovement::Start() {
@@ -53,6 +74,8 @@ void PlayerMovement::Render() {
 			MV1DrawModel(pPlayer->GetModelHandle());
 		}
 	}
+	if(attactArtifact)
+	DrawFormatString(0, 0, GetColor(255, 255, 255), "%s", attactArtifact->GetName());
 }
 
 /// <summary>
@@ -151,6 +174,7 @@ void PlayerMovement::EvasionInput() {
 /// 回避
 /// </summary>
 void PlayerMovement::Evasion() {
+	attactArtifact->OnBlinking(this);
 	pPlayer->GetCollider()->SetEnable(false);
 
 	// 瞬間移動
@@ -159,6 +183,7 @@ void PlayerMovement::Evasion() {
 	// 残像開始
 	isBlinking = true;
 	blinkTimer = 0.15f;
+
 
 	// --- 履歴をすべて現在位置にリセット ---
 	for (int i = 0; i < AFTIMAGENUM; i++) {
