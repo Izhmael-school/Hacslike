@@ -3,6 +3,7 @@
 #include "../../../Manager/TimeManager.h"
 #include "../../Weapon/Weapon.h"
 #include "DxLib.h"
+#include "../Hacslike/Scr/Manager/EffectManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -33,7 +34,7 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 /// 初期化
 /// </summary>
 void PlayerAttack::Start() {
-
+	EffectManager::GetInstance()->Load("Res/Effect/ChargeAttackEfk.efk", "ChargeBlad", 50.0f);
 }
 
 /// <summary>
@@ -68,6 +69,7 @@ void PlayerAttack::AttackInput() {
 	// --- チャージ中 ---
 	if (isCharging) {
 		chargeTime += TimeManager::GetInstance().deltaTime;
+			Effect* pEffe = EffectManager::GetInstance()->Instantiate("ChargeBlad", pPlayer->GetPosition());
 		// 溜め中アニメーションに切り替え
 		if(chargeTime >= 0.65f)
 		pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
@@ -228,9 +230,9 @@ void PlayerAttack::AttackInput() {
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f)
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // 周囲攻撃	
-			if (attackIndex == 4 && attackTimer > 0.9f && attackTimer <1.9f)
+			if (attackIndex == 4 && attackTimer > 0.9f && attackTimer < 1.9f) {
 				CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 周囲攻撃
-
+			}
 			if (attackIndex >= 3) {
 				if (attackTimer > 2.78f) {
 					isAttacking = false;

@@ -81,6 +81,10 @@ private:	//	メンバ変数
 	bool blinkVisible = true;      // 現在表示中かどうか
 #pragma endregion
 
+	int maxExp;
+
+	int remainExp;
+
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
@@ -288,6 +292,7 @@ public:		//	Getter と Setter
 	inline void SetCriticalDamage(float _criticalDamage) { criticalDamage = _criticalDamage; }
 
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
+	inline PlayerMovement* GetPlayerMovement() const { return playerMovement; }
 
 
 	VECTOR GetForward() const {

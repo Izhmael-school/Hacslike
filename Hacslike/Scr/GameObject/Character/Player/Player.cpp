@@ -8,9 +8,6 @@
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
 #include <math.h>
 
-
-#define M_PI 3.14159265358979323846
-
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
 
@@ -32,7 +29,9 @@ Player::Player(VECTOR _pos)
 	, criticalHitRate()
 	, criticalDamage()
 	, weaponData(nullptr)
-	, hpRate() {
+	, hpRate()
+	, maxExp()
+	, remainExp(){
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
@@ -98,6 +97,8 @@ void Player::Start() {
 
 	SetPlayer(this);
 
+	maxExp = 100;
+
 
 	//	アニメーションの読み込み
 	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle", true);
@@ -119,6 +120,8 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3");
 
 	pAnimator->Play(0);
+
+	
 
 	WeaponManager::GetInstance().LoadWeapons("Scr/Data/WeaponsData.json");
 	maxWeaponId = WeaponManager::GetInstance().GetMaxWeaponId();
@@ -154,7 +157,6 @@ void Player::Update() {
 	if (hp > maxHp) {
 		hp = maxHp;
 	}
-
 
 	////	攻撃入力・HitBox更新
 	//AttackInput();
@@ -196,6 +198,16 @@ void Player::Update() {
 		SubHp(10);
 	}
 
+	if (input->IsKeyDown(KEY_INPUT_3)) {
+		AddExp(15);
+	}
+
+	if (Exp >= maxExp) {
+		remainExp = Exp - maxExp;
+		Exp = remainExp;
+		maxExp *= 1.1;
+	}
+
 	pAnimator->Update();
 
 	GameObject::Update();
@@ -232,22 +244,22 @@ void Player::Render() {
 	if (isMenuUI) {
 		DrawMenu();
 	}
-	int cx = 0, cy = 800;   // 中心
-	int r_outer = 200;
-	int r_inner = 120;
-	int steps = 50;
+	int cx = 0, cy = 800;   //	中心座標
+	int r_outer = 200;		//	外側半径
+	int r_inner = 160;		//	内側半径
+	int steps = 50;			//	分割数
 
-	double percent = (double)hp / maxHp * 100;
-	double max_angle = 90.0;
-	double angle_end = max_angle * percent / 100.0;
+	double percent = (double)hp / maxHp * 100;		//	HP割合
+	double max_angle = 90.0;						//	四分円の角度
+	double angle_end = max_angle * percent / 100.0;	//	HP割合に応じて何度まで描画するか
 
 	for (int i = 0; i < steps; i++) {
-		double angle1 = (angle_end * i / steps) * M_PI / 180.0;
-		double angle2 = (angle_end * (i + 1) / steps) * M_PI / 180.0;
+		double angle1 = Deg2Rad(angle_end * i / steps);			//	ラジアン角への変換
+		double angle2 = Deg2Rad(angle_end * (i + 1) / steps);	//	ラジアン角への変換
 
 		// 外側頂点
 		int x1o = cx + (int)(r_outer * cos(angle1));
-		int y1o = cy - (int)(r_outer * sin(angle1)); // sinの符号を反転
+		int y1o = cy - (int)(r_outer * sin(angle1)); 
 		int x2o = cx + (int)(r_outer * cos(angle2));
 		int y2o = cy - (int)(r_outer * sin(angle2));
 
@@ -257,10 +269,44 @@ void Player::Render() {
 		int x2i = cx + (int)(r_inner * cos(angle2));
 		int y2i = cy - (int)(r_inner * sin(angle2));
 
-		// 三角形2つで四角形を描く
-		DrawTriangle(x1o, y1o, x2o, y2o, x1i, y1i, green, TRUE);
-		DrawTriangle(x2o, y2o, x2i, y2i, x1i, y1i, green, TRUE);
+		// 三角形2つで四角形を描画
+		DrawTriangle(x1o, y1o, x2o, y2o, x1i, y1i, GetColor(30, 200, 30), TRUE);
+		DrawTriangle(x2o, y2o, x2i, y2i, x1i, y1i, GetColor(30, 200, 30), TRUE);
 	}
+
+	int expR_outer = 160;  //	外側半径
+	int expR_inner = 140;  //	内側半径
+	int expSteps = 50;	   //	分割数
+
+	double expPercent = (double)Exp / maxExp * 100;
+	double Exp_max_angle = 90.0;
+	double Exp_angle_end = Exp_max_angle * expPercent / 100.0;
+
+	for (int i = 0; i < expSteps; i++) {
+		double expAngle1 = Deg2Rad(Exp_angle_end * i / expSteps);		//	ラジアン角への変換
+		double expAngle2 = Deg2Rad(Exp_angle_end * (i + 1) / expSteps);	//	ラジアン角への変換
+
+		//	外側頂点
+		int expX1o = cx + (int)(expR_outer * cos(expAngle1));
+		int expY1o = cy - (int)(expR_outer * sin(expAngle1));
+		int expX2o = cx + (int)(expR_outer * cos(expAngle2));
+		int expY2o = cy - (int)(expR_outer * sin(expAngle2));
+
+		//	内側頂点
+		int expX1i = cx + (int)(expR_inner * cos(expAngle1));
+		int expY1i = cy - (int)(expR_inner * sin(expAngle1));
+		int expX2i = cx + (int)(expR_inner * cos(expAngle2));
+		int expY2i = cy - (int)(expR_inner * sin(expAngle2));
+
+		//	三角形2つで四角形を描画
+		DrawTriangle(expX1o, expY1o, expX2o, expY2o, expX1i, expY1i, yellow, TRUE);
+		DrawTriangle(expX2o, expY2o, expX2i, expY2i, expX1i, expY1i, yellow, TRUE);
+	}
+		DrawCircle(cx, cy, r_outer, white, FALSE);
+		DrawCircle(cx, cy, r_inner, white, FALSE);
+		DrawCircle(cx, cy, expR_inner, white, FALSE);
+
+		
 #pragma endregion
 
 	playerMovement->Render();
