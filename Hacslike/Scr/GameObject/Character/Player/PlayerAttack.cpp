@@ -34,7 +34,7 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 /// 初期化
 /// </summary>
 void PlayerAttack::Start() {
-	EffectManager::GetInstance()->Load("Res/Effect/ChargeAttackEfk.efk", "ChargeBlad", 50.0f);
+	EffectManager::GetInstance().Load("Res/Effect/ChargeAttackEfk.efk", "ChargeBlad", 50.0f);
 }
 
 /// <summary>
@@ -69,7 +69,7 @@ void PlayerAttack::AttackInput() {
 	// --- チャージ中 ---
 	if (isCharging) {
 		chargeTime += TimeManager::GetInstance().deltaTime;
-			Effect* pEffe = EffectManager::GetInstance()->Instantiate("ChargeBlad", pPlayer->GetPosition());
+			Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
 		// 溜め中アニメーションに切り替え
 		if(chargeTime >= 0.65f)
 		pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
