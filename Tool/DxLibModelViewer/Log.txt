@@ -142,3 +142,31 @@
 571:	ＤＸライブラリの初期化処理終了
 573:	ウインドウスタイルをウインドウモード用に変更します... 完了
 573:	ウインドウスタイルをウインドウモード用に変更します... 完了
+1685818:	VMD Load Error : 対応していない VMD バージョンです
+
+1919242:	VMD Load Error : 対応していない VMD バージョンです
+
+2148142:	VMD Load Error : 対応していない VMD バージョンです
+
+2171747:	VMD Load Error : 対応していない VMD バージョンです
+
+2303329:	VMD Load Error : 対応していない VMD バージョンです
+
+2400577:	VMD Load Error : 対応していない VMD バージョンです
+
+2408960:	VMD Load Error : 対応していない VMD バージョンです
+
+2413561:	VMD Load Error : 対応していない VMD バージョンです
+
+2440451:	VMD Load Error : 対応していない VMD バージョンです
+
+2451496:	VMD Load Error : 対応していない VMD バージョンです
+
+2469675:	VMD Load Error : 対応していない VMD バージョンです
+
+2487190:	VMD Load Error : 対応していない VMD バージョンです
+
+2502015:	VMD Load Error : 対応していない VMD バージョンです
+
+2518122:	VMD Load Error : 対応していない VMD バージョンです
+
