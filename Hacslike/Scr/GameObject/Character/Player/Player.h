@@ -203,6 +203,7 @@ public:		//	Getter と Setter
 	inline void SetCriticalDamage(float _criticalDamage) { criticalDamage = _criticalDamage; }
 
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
+	inline PlayerMovement* GetPlayerMovement() const { return playerMovement; }
 
 
 	VECTOR GetForward() const {
