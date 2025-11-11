@@ -54,6 +54,10 @@ private:	//	メンバ変数
 
 	float hpRate;
 
+	int maxExp;
+
+	int remainExp;
+
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
