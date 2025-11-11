@@ -3,14 +3,11 @@
 #include <list>
 #include <map>
 #include <DxLib.h>
+#include "../Component/Singleton.h"
 
-class EffectManager {
-#pragma region シングルトンのデータ構造
-private:	// 静的メンバ変数
-	static EffectManager* pInstance;	// 自身のインスタンスのアドレスを格納
+class EffectManager : public Singleton<EffectManager>{
 
-
-private:	// コンストラクタとデストラクタ
+public:	// コンストラクタとデストラクタ
 	/*
 	 * @brief	コンストラクタ
 	 * @tip		外部で生成されないようにアクセス指定子をprivateにする
@@ -21,34 +18,6 @@ private:	// コンストラクタとデストラクタ
 	 * @brief	デストラクタ
 	 */
 	~EffectManager();
-
-public:	//コピーと譲渡禁止
-	EffectManager(const EffectManager&) = delete;
-	EffectManager& operator = (const EffectManager&) = delete;
-	EffectManager(EffectManager&&) = delete;
-	EffectManager& operator = (EffectManager&&) = delete;
-
-private:	// 静的メンバ関数
-	/*
-	 * @function	CreateInstance
-	 * @brief		自信のインスタンスを生成する
-	 */
-	static void CreateInstance();
-
-public:	// 静的メンバ関数
-	/*
-	 * @function	GetInstance
-	 * @brief		自信のインスタンスを取得する唯一の手段
-	 * @return		InputManager*	自身のインスタンスのアドレス
-	 */
-	static EffectManager* GetInstance();
-
-	/*
-	 * @function	DestroyInstance
-	 * @brief		自信のインスタンスを破棄する唯一の手段
-	 */
-	static void DestroyInstance();
-#pragma endregion
 
 private:
 	std::map<std::string, int> effectResourceMap;	// リソースの連想配列

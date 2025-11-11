@@ -3,18 +3,17 @@
 #include "../GameObject/Item/ItemFactory.h"
 #include "../GameObject/Item/ItemEntity.h"
 #include"../GameObject/Effect/Effect.h"
+#include "../Component/Singleton.h"
 #include <string>
 #include <random>
 #include <vector>
 
-class ItemDropManager
+class ItemDropManager : public Singleton<ItemDropManager>
 {
-private:
-    // ======== シングルトン関連 ========
-    static ItemDropManager* pInstance;  // 自身のインスタンスのアドレス
+public:
 
     /// <summary>
-    /// コンストラクタ（外部から生成禁止）
+    /// コンストラクタ
     /// </summary>
     ItemDropManager();
 
@@ -22,30 +21,6 @@ private:
     /// デストラクタ
     /// </summary>
     ~ItemDropManager();
-
-public:
-    // コピー・ムーブ禁止
-    ItemDropManager(const ItemDropManager&) = delete;
-    ItemDropManager& operator=(const ItemDropManager&) = delete;
-    ItemDropManager(ItemDropManager&&) = delete;
-    ItemDropManager& operator=(ItemDropManager&&) = delete;
-
-private:
-    /// <summary>
-    /// インスタンス生成（内部用）
-    /// </summary>
-    static void CreateInstance();
-
-public:
-    /// <summary>
-    /// インスタンス取得（唯一のアクセス手段）
-    /// </summary>
-    static ItemDropManager* GetInstance();
-
-    /// <summary>
-    /// インスタンス破棄
-    /// </summary>
-    static void DestroyInstance();
 
 public://メンバ変数
 	std::vector<std::unique_ptr<ItemEntity>> activeItems;

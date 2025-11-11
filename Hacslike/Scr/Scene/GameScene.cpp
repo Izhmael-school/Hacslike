@@ -29,7 +29,7 @@ void GameScene::Start() {
 
 	pCamera->SetTarget(pPlayer);
 
-	EffectManager::GetInstance()->Load("Res/Effect/Item.efkefc", "Item", 10.0f);
+	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
@@ -75,13 +75,13 @@ void GameScene::Update() {
 	{
 		
 
-		EffectManager::GetInstance()->Update();
-		ItemDropManager::GetInstance()->Update();
+		EffectManager::GetInstance().Update();
+		ItemDropManager::GetInstance().Update();
 
 		// --- Hキーでスキル選択画面を開く ---
 		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER))
 		{
-			skillChoices = SkillManager::GetInstance()->GenerateSkillChoices();
+			skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 			skillUI.StartSelection();
 			isSelectingSkill = true;
 		}
@@ -90,7 +90,7 @@ void GameScene::Update() {
 		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER))
 		{
 			VECTOR spawnPos = Character::player->GetPosition();
-			ItemDropManager::GetInstance()->TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
+			ItemDropManager::GetInstance().TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
 		// --- アイテムドロップテスト ---
 		if (input->IsKeyDown(KEY_INPUT_G))
@@ -123,7 +123,7 @@ void GameScene::Update() {
 
 			if (player && selected >= 0 && selected < (int)skillChoices.size())
 			{
-				SkillManager::GetInstance()->ApplySelectedSkill(player, skillChoices[selected]);
+				SkillManager::GetInstance().ApplySelectedSkill(player, skillChoices[selected]);
 			}
 
 			isSelectingSkill = false;
@@ -155,7 +155,7 @@ void GameScene::Render() {
 		artifactUI.Render(artifactChioces);
 	}
 	// エフェクトの描画
-	EffectManager::GetInstance()->Render();
+	EffectManager::GetInstance().Render();
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
 	{

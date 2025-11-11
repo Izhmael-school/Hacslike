@@ -349,7 +349,7 @@ void Player::WeaponInput() {
 /// アイテムの取得
 /// </summary>
 void Player::AddItem() {
-	auto& items = ItemDropManager::GetInstance()->GetActiveItems();
+	auto& items = ItemDropManager::GetInstance().GetActiveItems();
 
 	for (auto& item : items) {
 		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B))) {
@@ -360,7 +360,7 @@ void Player::AddItem() {
 			GetInventory()->AddItem(std::move(item->TakeItem()));
 
 
-			ItemDropManager::GetInstance()->RemoveItem(item.get());
+			ItemDropManager::GetInstance().RemoveItem(item.get());
 			break; // erase後にvectorを操作しないようにbreak
 		}
 	}

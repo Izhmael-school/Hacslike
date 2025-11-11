@@ -50,6 +50,9 @@
 #define CellSize (200)	// 1マスの大きさ 
 #define CellCorrection (CellSize / 2) // 壁判定用の補正値
 
+#define NextCellEnd (300) // 隣のセルの端っこ
+#define CellEnd (100) // セルの端っこ
+
 #define RoomMax_Small (6)
 #define RoomMax_Middle (10)
 #define RoomMax_Large (12)

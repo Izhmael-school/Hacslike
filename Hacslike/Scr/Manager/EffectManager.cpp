@@ -1,7 +1,6 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include"../GameObject/Effect/Effect.h"
-EffectManager* EffectManager::pInstance = nullptr;
 
 EffectManager::EffectManager()
 	:effectResourceMap()
@@ -23,24 +22,6 @@ EffectManager::~EffectManager() {
 	}
 	pEffectList.clear();
 
-}
-
-void EffectManager::CreateInstance() {
-	pInstance = new EffectManager;
-}
-
-EffectManager* EffectManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void EffectManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
 }
 
 /*

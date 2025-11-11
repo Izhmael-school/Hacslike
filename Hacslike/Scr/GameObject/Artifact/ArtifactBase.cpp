@@ -226,7 +226,7 @@ void itemDropRateUpwardOnCoinAcquisition::OnGetCoin_Item(Player* player)
         timer = duration;
         return;
     }
-    ItemDropManager::GetInstance()->SetItemDropRate(ItemDropManager::GetInstance()->GetItemDropRate() + dropRateUpward);
+    ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() + dropRateUpward);
     timer = duration;
     isBoost = true;
 }
@@ -241,7 +241,7 @@ void itemDropRateUpwardOnCoinAcquisition::Update(Player* player)
 
     if (timer <= 0.0f && isBoost) {
         // Œø‰ÊI—¹
-        ItemDropManager::GetInstance()->SetItemDropRate(ItemDropManager::GetInstance()->GetItemDropRate() - dropRateUpward);
+        ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() - dropRateUpward);
         isBoost = false;
         timer = 0.0f;
     }
@@ -257,6 +257,6 @@ void itemDropRateUpwardOnCoinAcquisition::Apply(Player* player)
 
 void itemDropRateUpwardOnCoinAcquisition::Remove(Player* player)
 {
-    ItemDropManager::GetInstance()->SetItemDropRate(ItemDropManager::GetInstance()->GetItemDropRate() - dropRateUpward);
+    ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() - dropRateUpward);
 }
 #pragma endregion
