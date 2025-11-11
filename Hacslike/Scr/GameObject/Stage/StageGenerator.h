@@ -94,6 +94,8 @@ public:
 
 	// マップの描画
 	void DrawMap();
+	// 壁の透過
+	void TransparencyWall(StageCell* cell);
 
 	// ステージオブジェクトのテクスチャ張替
 	void ChangeObjectTexture(int textureHandle,ObjectType changeObject);

@@ -106,26 +106,8 @@ void StageGenerator::Render() {
 
 	for (auto c : cells) {
 
-		if (c->GetObjectType() == Wall) {
-			VECTOR pos = c->GetPosition();
-			VECTOR playerPos = Character::player->GetPosition();
-			int x = (int)std::round(playerPos.x / CellSize);
-			int z = (int)std::round(playerPos.z / CellSize);
-
-			if (map[x][z - 1] == (int)Wall) {
-				if (pos.x + NextCellEnd >= playerPos.x && pos.x - NextCellEnd <= playerPos.x &&
-					pos.z + NextCellEnd >= playerPos.z && pos.z + CellEnd <= playerPos.z) {
-					SetWriteZBuffer3D(FALSE);
-					MV1SetOpacityRate(c->GetModelHandle(), 0.5f);
-					//MV1SetMaterialDrawBlendMode(c->GetModelHandle(), 0, DX_BLENDMODE_ALPHA);
-					//MV1SetMaterialDrawBlendParam(c->GetModelHandle(), 0, 100);
-					continue;
-				}
-			}
-			else {
-				MV1SetOpacityRate(c->GetModelHandle(), 1.0f);
-			}
-		}
+		// 壁の透過処理
+		TransparencyWall(c);
 
 		c->Render();
 		SetWriteZBuffer3D(TRUE);
@@ -700,6 +682,31 @@ void StageGenerator::DrawMap() {
 
 	// プレイヤーの描画
 	DrawBox((x * mapSize) + mapOffset.x, (-z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (-z * mapSize + mapSize) + mapOffset.z, red, true);
+}
+
+void StageGenerator::TransparencyWall(StageCell* cell) {
+	if (cell->GetObjectType() == Wall) {
+		VECTOR pos = cell->GetPosition();
+		VECTOR playerPos = Character::player->GetPosition();
+		int x = (int)std::round(playerPos.x / CellSize);
+		int z = (int)std::round(playerPos.z / CellSize);
+
+		// プレイヤーのいるマスの一つ下が壁の場合
+		if (map[x][z - 1] == (int)Wall) {
+			// プレイヤーの座標から見て±1マス内の壁だったら
+			if (pos.x + NextCellEnd >= playerPos.x && pos.x - NextCellEnd <= playerPos.x &&
+				pos.z + NextCellEnd >= playerPos.z && pos.z + CellEnd <= playerPos.z) {
+				SetWriteZBuffer3D(FALSE);
+				MV1SetOpacityRate(cell->GetModelHandle(), 0.5f);
+				//MV1SetMaterialDrawBlendMode(c->GetModelHandle(), 0, DX_BLENDMODE_ALPHA);
+				//MV1SetMaterialDrawBlendParam(c->GetModelHandle(), 0, 100);
+				/*continue;*/
+			}
+			else {
+				MV1SetOpacityRate(cell->GetModelHandle(), 1.0f);
+			}
+		}
+	}
 }
 
 void StageGenerator::ChangeObjectTexture(int textureHandle, ObjectType changeObject) {
