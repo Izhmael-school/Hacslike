@@ -39,7 +39,7 @@ private:
 	bool dashState;
 
 	AttackincreasesforSeveralSecondsAfterEvasion* attactArtifact;
-
+	CriticalHitRateIncreasesForSeveralSecondsAfterEvasion* CriticalArtifact;
 
 public:
 	PlayerMovement(Player* _player);
@@ -93,4 +93,5 @@ public:
 	inline Player* GetPlayer()const {return pPlayer;}
 
 	inline void SetAttactArtifact(AttackincreasesforSeveralSecondsAfterEvasion* artifact) { attactArtifact = artifact; }
+	inline void SetCriticalArtifact(CriticalHitRateIncreasesForSeveralSecondsAfterEvasion* artifact) { CriticalArtifact = artifact; }
 };

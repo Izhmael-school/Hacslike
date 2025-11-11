@@ -182,8 +182,9 @@ void PlayerMovement::Evasion() {
 	evasionSpeed = 6;
 
 	if(attactArtifact)
-	attactArtifact->OnBlinking(this);
-	
+		attactArtifact->OnBlinking(this);
+	if (CriticalArtifact)
+		CriticalArtifact->OnBlinking(this);
 
 	// c‘œŠJn
 	isBlinking = true;

@@ -324,3 +324,61 @@ void AttackincreasesforSeveralSecondsAfterEvasion::Remove(Player* player)
     player->SetAtk(originalAtk);
 }
 #pragma endregion
+
+#pragma region  回避時攻撃力上昇
+CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::CriticalHitRateIncreasesForSeveralSecondsAfterEvasion(float boost, float time)
+    :ArtifactBase("時流の指輪", "回避後数秒間会心率上昇", "Res/ArtifactIcon/Critical_UP.png")
+    , CriticalUp(boost)
+    , duration(time)
+    , isBoost(false)
+    , timer(0.0f)
+    , originalAtk(0) {
+}
+
+void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::OnBlinking(PlayerMovement* playermove)
+{
+    Player* player = playermove->GetPlayer(); // MovementからPlayerを取得できるなら
+    if (!player) return;
+
+
+    if (!player) return;
+
+    // 既に上昇中ならタイマーをリセットする（重ねがけ防止）
+    if (isBoost) {
+        timer = duration;
+        return;
+    }
+    originalAtk = player->GetCriticalHitRate(); // 元の攻撃力を記録
+    player->SetCriticalHitRate(originalAtk + CriticalUp);
+    timer = duration;
+    isBoost = true;
+}
+
+void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Update(Player* player)
+{
+    TimeManager* time = &TimeManager::GetInstance();
+
+    if (!isBoost || !player) return;
+
+    timer -= time->deltaTime;  // 経過時間を減らす
+
+    if (timer <= 0.0f) {
+        // 効果終了
+        player->SetCriticalHitRate(originalAtk);
+        isBoost = false;
+        timer = 0.0f;
+    }
+}
+
+void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Apply(Player* player)
+{
+    player->GetPlayerMovement()->SetCriticalArtifact(this);
+    player->Update();
+}
+
+void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Remove(Player* player)
+{
+    player->SetCriticalHitRate(originalAtk);
+
+}
+#pragma endregion

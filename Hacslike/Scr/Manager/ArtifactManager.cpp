@@ -21,6 +21,7 @@ ArtifactManager::ArtifactManager()
         std::make_shared<attactPower_raise_GetCoin>(),
         std::make_shared<itemDropRateUpwardOnCoinAcquisition>(),
         std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>(),
+        std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>(),
 
     };
 }

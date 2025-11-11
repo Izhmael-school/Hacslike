@@ -155,4 +155,19 @@ public:
 	
 };
 
+class CriticalHitRateIncreasesForSeveralSecondsAfterEvasion : public ArtifactBase {
+private:
+	float CriticalUp;  //UŒ‚—Íã¸
+	bool  isBoost;		  //ã¸’†‚©‚Ç‚¤‚©
+	float duration;       // Œø‰ÊŠÔ
+	float timer;          // c‚èŠÔ
+	float originalAtk;   //Œ³‚ÌUŒ‚—Í‚ğ•Û‘¶
+public:
+	CriticalHitRateIncreasesForSeveralSecondsAfterEvasion(float boost = 10.0f, float time = 3.0f);
+	void OnBlinking(PlayerMovement* playermove);
+	void Update(Player* player)override;
+	void Apply(Player* player) override;
+	void Remove(Player* player) override;
+};
+
 #pragma endregion
