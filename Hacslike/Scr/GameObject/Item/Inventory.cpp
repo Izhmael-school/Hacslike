@@ -268,6 +268,9 @@ static const std::unordered_map<std::string, std::string> itemEffectMap = {
     {"ポーション(大)", "回復量"},
     {"剣", "攻撃力"},
     {"斧", "攻撃力"},
+    {"木の棒","攻撃力"},
+    {"グレートソード","攻撃力"},
+    {"槍","攻撃力"},
     // ここに増やすだけでOK！
 };
 
@@ -276,8 +279,11 @@ static const std::vector<std::string> itemOrder = {
     "ポーション(小)",
     "ポーション(中)",
     "ポーション(大)",
+    "木の棒",
     "剣",
     "斧",
+    "グレートソード",
+    "槍"
 };
 
 /// <summary>

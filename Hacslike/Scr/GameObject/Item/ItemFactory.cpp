@@ -53,11 +53,26 @@ void ItemFactory::InitializeDefaultItems()
 
     RegisterItem("Sword_Iron", []() {
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
-        "剣", "普通の剣", 150, GetRand(20) + 10);
+        "剣", "普通の剣", 150, GetRand(20) + 10 ,"MeleeWeapon");
         });
 
     RegisterItem("Axe", []() {
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
-        "斧", "普通の斧", 200, GetRand(30) + 10);
+        "斧", "普通の斧", 200, GetRand(30) + 10, "RangedWeapon");
+        });
+
+    RegisterItem("Stick", []() {
+        return std::make_unique<ItemStick>(VGet(0, 0, 0),
+        "木の棒", "そこら辺に落ちてる木の棒", 0, 10, "MeleeWeapon");
+        });
+
+    RegisterItem("Greatsword", []() {
+        return std::make_unique<Greatsword>(VGet(0, 0, 0),
+        "グレートソード", "重い！強い！かっこいい！", 500, GetRand(150) + 80, "MeleeWeapon");
+        });
+
+    RegisterItem("Spear", []() {
+        return std::make_unique<Spear>(VGet(0, 0, 0),
+        "槍", "槍", 230, GetRand(80) + 40, "MeleeWeapon");
         });
 }
