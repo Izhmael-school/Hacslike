@@ -59,9 +59,10 @@ void Animator::Update() {
 void Animator::Load(std::string _filePath, std::string _name, bool _isLoop, int _transition) {
 	// アニメーションの動的確保 + 読み込み
 	AnimationClip<>* pAnimClip = new AnimationClip<>(MV1LoadModel(_filePath.c_str()), _name, _isLoop, _transition);
+	// 読み込めてなかったらリターン
+	if (pAnimClip->animationHandle == -1) return;
 	// アニメーション群に追加
 	pAnimations.push_back(pAnimClip);
-
 }
 
 void Animator::Play(int _index, float _speed) {
@@ -88,13 +89,14 @@ void Animator::Play(int _index, float _speed) {
 	pAnimations[_index]->isAction = false;
 }
 
-void Animator::Play(std::string _name, float _speed) {
+int Animator::Play(std::string _name, float _speed) {
 	for (int i = 0, max = pAnimations.size(); i < max; i++) {
 		if (pAnimations[i]->name != _name) continue;
 
 		Play(i, _speed);
+		return 0;
 	}
-	return;
+	return -1;
 }
 
 AnimationClip<>* Animator::GetAnimation(std::string _name) const {

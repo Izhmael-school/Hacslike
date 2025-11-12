@@ -213,6 +213,9 @@ void CollisionManager::Update() {
 	for (int i = 0; i < currents.size(); i++) {
 		for (int j = i + 1; j < currents[i].size(); j++) {
 
+			// 非表示は処理しない
+			if (!pColliderArray[i]->GetGameObject()->IsVisible() || !pColliderArray[j]->GetGameObject()->IsVisible()) continue;
+
 			// 現在の衝突結果を更新
 			currents[i][j] = CheckHit(pColliderArray[i], pColliderArray[j]);
 
@@ -251,6 +254,10 @@ void CollisionManager::Update() {
 void CollisionManager::Render() {
 	for (auto pCol : pColliderArray) {
 		if (pCol != nullptr) {
+
+			// 非表示は描画しない
+			if (!pCol->GetGameObject()->IsVisible()) return;
+
 			pCol->Render();
 		}
 	}
@@ -258,10 +265,6 @@ void CollisionManager::Render() {
 
 void CollisionManager::Register(Collider* _pCol) {
 	pColliderArray.push_back(_pCol);
-
-	// 衝突結果配列にも追加
-	//prevs.push_back(false);
-	//currents.push_back(false);
 
 	prevs.push_back(std::vector<bool>());
 	currents.push_back(std::vector<bool>());

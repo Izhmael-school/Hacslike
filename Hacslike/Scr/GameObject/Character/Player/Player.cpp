@@ -81,6 +81,10 @@ void Player::DestroyInstance() {
 	instance = nullptr;
 }
 
+void Player::IsDead() {
+	if (hp > 0) return;
+}
+
 /*
  *	@function	Start
  *	@breif		初期化処理
@@ -90,7 +94,7 @@ void Player::Start() {
 	if (!isVisible)
 		return;
 	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
-	CollisionManager::GetInstance().Register(pCollider);
+	//CollisionManager::GetInstance().Register(pCollider);
 
 	modelHandle = PLAYER_MODEL_HANDLE;
 
@@ -265,6 +269,7 @@ void Player::Render() {
 
 	playerMovement->Render();
 
+	DrawFormatString(200, 200, red, "x : %d | z : %d", (int)position.x, (int)position.z);
 #pragma region プレイヤーの描画
 	// --- 通常モデル描画 ---
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

@@ -11,7 +11,8 @@ GameObject::GameObject(VECTOR _pos,std::string _tag)
 	,tag(_tag)
 	,layer(-1)
 	,pCollider(nullptr)
-{}
+{
+}
 
 // デストラクタ
 GameObject::~GameObject() {}

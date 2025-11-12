@@ -286,6 +286,7 @@ void PlayerAttack::AttackInput() {
 		if (h->IsDead()) {
 			delete h;
 			it = SphereHitboxes.erase(it);
+
 		}
 		else ++it;
 	}
@@ -324,7 +325,6 @@ void PlayerAttack::CreateAttackHitbox(float length, float radius) {
 		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
 
 		SphereHitBox* Shit = new SphereHitBox(pPlayer, offset, radius, life);
-		Shit->CreateCollider();
 		SphereHitboxes.push_back(Shit);
 	}
 

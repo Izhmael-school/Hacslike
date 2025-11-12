@@ -1,6 +1,7 @@
 #pragma once
 #include "Collider.h"
 #include "../../GameObject/GameObject.h"
+#include "../../GameObject/Character/Character.h"
 #include <vector>
 
 #include <DxLib.h>
@@ -8,6 +9,8 @@
 class SphereHitBox : public GameObject{
 private:
 	GameObject* owner;
+	Character* character;
+
 	VECTOR offset;
 	float radius;
 

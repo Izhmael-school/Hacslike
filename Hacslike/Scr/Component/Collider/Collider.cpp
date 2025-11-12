@@ -1,13 +1,18 @@
 #include "Collider.h"
 #include "../../Definition.h"
 
+#include "../../Manager/CollisionManager.h"
+
 #pragma region Collider
 // コンストラクタ
 Collider::Collider(GameObject* _pObj) 
 	:isEnable(true)
 	,pGameObject(_pObj)
 	,matrix(MGetIdent())
-{}
+{
+	pCharacter = static_cast<Character*>(pGameObject);
+	CollisionManager::GetInstance().Register(this);
+}
 
 // デストラクタ
 Collider::~Collider() {}

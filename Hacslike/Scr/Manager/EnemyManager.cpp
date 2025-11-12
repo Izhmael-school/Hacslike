@@ -1,6 +1,8 @@
 #include "EnemyManager.h"
 #include "../GameObject/Character/Enemy/Goblin/EnemyGoblin.h"
 #include "../GameObject/Character/Enemy/Enemy.h"
+#include "../GameObject/Character/Enemy/Boss/BossBase.h"
+#include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
 
 EnemyManager::EnemyManager() {
 	Start();
@@ -16,7 +18,7 @@ EnemyManager::~EnemyManager() {
 }
 
 void EnemyManager::Start() {
-	originGoblinMHandle = MV1LoadModel("Res/Model/Enemy/Goblin/goblin.mv1");
+	originGoblinMHandle = MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1");
 	pEnemyArray.clear();
 }
 
@@ -43,14 +45,26 @@ void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 			break;
 		}
 		else {
-			EnemyGoblin* g = new EnemyGoblin();
-			g->SetModelHandleDup(MV1DuplicateModel(originGoblinMHandle));
+			EnemyGoblin* g = new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle));
 			pEnemyArray.push_back(g);
 			break;
 		}
 	}
 
 	pEnemyArray[pEnemyArray.size() - 1]->SetPosition(pos);
+}
+
+void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
+	BossBase* boss = nullptr;
+	switch (type) {
+	case Goblin:
+		boss = new BossGoblin();
+		break;
+	}
+	boss->SetAppearPos(pos);
+	boss->SetPosition(VGet(pos.x * CellSize,0,pos.z * CellSize));
+	boss->SetVisible(true);
+	pEnemyArray.push_back(boss);
 }
 
 Enemy* EnemyManager::UseEnemy(EnemyType type) {
@@ -81,7 +95,7 @@ void EnemyManager::UnuseAllEnemy() {
 void EnemyManager::DeleteEnemy(Enemy* enemy) {
 	for (int i = 0, max = pEnemyArray.size(); i < max; i++) {
 		if (pEnemyArray[i] != enemy) continue;
-
+		CollisionManager::GetInstance().UnRegister(enemy->GetCollider());
 		pEnemyArray.erase(pEnemyArray.begin() + i);
 		delete enemy;
 		enemy = nullptr;

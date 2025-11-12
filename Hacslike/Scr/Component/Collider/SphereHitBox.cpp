@@ -1,6 +1,7 @@
 #include "SphereHitBox.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
+#include "../../GameObject/Character/Character.h"
 
 SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, float _lifeTime)
 	: owner(_owner)
@@ -8,9 +9,8 @@ SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, fl
 	, radius(_radius)
 	, pCollider(nullptr)
 	, timer(0.0f)
-	, lifeTime(_lifeTime){
-	//pCollider = new SphereCollider(ownwr, _offset, _radius);
-	//pCollider->SetEnable(true);
+	, lifeTime(_lifeTime / FPS) {
+	Start();
 }
 
 SphereHitBox::~SphereHitBox() {
@@ -21,7 +21,10 @@ SphereHitBox::~SphereHitBox() {
 	}
 }
 
-void SphereHitBox::Start() {}
+void SphereHitBox::Start() {
+	CreateCollider();
+	character = static_cast<Character*>(owner);
+}
 
 void SphereHitBox::Update() {
 	timer += TimeManager::GetInstance().deltaTime;
@@ -41,24 +44,22 @@ bool SphereHitBox::IsDead() const {
 }
 
 void SphereHitBox::CreateCollider() {
-	if (!pCollider) {
+	if (pCollider == nullptr) {
 		SetPosition(owner->GetPosition());
 		pCollider = new SphereCollider(this, offset, radius);
 		pCollider->SetEnable(true);
-		CollisionManager::GetInstance().Register(pCollider);
 	}
 }
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
-	//	当たった相手のタグが "Goblin" だったら
-	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
-		//	当たった相手を非表示にする
-		_pCol->GetGameObject()->SetVisible(false);
+	Character* pTarget = _pCol->GetCharacter();
+
+	//	当たった相手のタグが "Enemy" か "Player" かつ当たった対象と当たり判定の持ち主が違う場合
+	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
+		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
 	}
 }
 
-void SphereHitBox::OnTriggerStay(Collider* _pCol) {
-}
+void SphereHitBox::OnTriggerStay(Collider* _pCol) {}
 
-void SphereHitBox::OnTriggerExit(Collider* _pCol) {
-}
+void SphereHitBox::OnTriggerExit(Collider* _pCol) {}

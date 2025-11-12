@@ -113,7 +113,6 @@
     <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp">
       <Filter>GameObject\Coin</Filter>
     </ClCompile>
@@ -132,10 +131,17 @@
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp">
       <Filter>GameObject\Artifact</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Scene\TitleScene.cpp" />
+    <ClCompile Include="Scr\Scene\TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Scene\GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
     <ClCompile Include="Scr\Manager\ArtifactManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -256,10 +262,6 @@
     <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h">
       <Filter>GameObject\Item\ItemEquip</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Scene\GameScene.h" />
-    <ClInclude Include="Scr\CommonModule.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\GameObject\Coin\Coin.h">
       <Filter>GameObject\Coin</Filter>
     </ClInclude>
@@ -278,10 +280,18 @@
     <ClInclude Include="Scr\GameObject\Artifact\ArtifactUI.h">
       <Filter>GameObject\Artifact</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Scene\TitleScene.h" />
+    <ClInclude Include="Scr\Scene\TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Scene\GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\CommonModule.h" />
     <ClInclude Include="Scr\Manager\ArtifactManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -350,6 +360,9 @@
     <Filter Include="GameObject\Artifact">
       <UniqueIdentifier>{a7499a45-694e-4c12-9831-fc61086869a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Character\Enemy\Boss">
+      <UniqueIdentifier>{fb92ef34-50ec-4690-9b08-379bd10701ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Scr\Data\WeaponsData.json">
@@ -360,6 +373,9 @@
     </None>
     <None Include="cpp.hint" />
     <None Include="Scr\Data\SkillTreeData.json">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="Scr\Data\BossData.json">
       <Filter>Data</Filter>
     </None>
   </ItemGroup>

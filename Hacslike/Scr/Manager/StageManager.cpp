@@ -1,5 +1,6 @@
 #include "StageManager.h"
 #include "FadeManager.h"
+#include "../GameObject/Character/Character.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -21,7 +22,7 @@ void StageManager::Update() {
 	generator->Update();
 
 #if _DEBUG
-	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
+	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN))
 		GenerateStage();
 #endif
 }
@@ -33,6 +34,14 @@ void StageManager::Render() {
 
 int StageManager::GetMapData(int x, int y) {
 	return generator->map[x][y];
+}
+
+int StageManager::SetMapData(int x, int y, int setValue) {
+	return generator->map[x][y] = setValue;
+}
+
+int StageManager::GetRoomStatus(int roomNum, RoomStatus status) {
+	return generator->roomStatus[roomNum][status];
 }
 
 void StageManager::GenerateStage() {
@@ -63,7 +72,11 @@ void StageManager::GenerateStage(int stageID) {
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
 	// ボスの配置
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
-	EnemyManager::GetInstance().SpawnEnemy(Goblin, VGet(pos.x * CellSize, 0, pos.z * CellSize));
+
+	int enemyType = generator->GetStageData().bossType;
+	if (enemyType == -1) return;
+
+	EnemyManager::GetInstance().SpawnBoss((EnemyType)enemyType, VGet(pos.x, 0, pos.z));
 }
 
 void StageManager::Generate() {
@@ -77,6 +90,14 @@ void StageManager::Generate() {
 	}
 
 	FadeManager::GetInstance().FadeIn(0.5f);
+}
+
+void StageManager::UnuseObject(StageCell* cell) {
+	generator->UnuseObject(cell);
+}
+
+StageCell* StageManager::UseObject(ObjectType type) {
+	return generator->UseObject(type);
 }
 
 void StageManager::SetGameObjectRandomPos(GameObject* obj) {

@@ -7,7 +7,7 @@ void ArtifactUI::Update()
 {
     InputManager* input = &InputManager::GetInstance();
 
-    int total = (int)ArtifactManager::GetInstance()->GetObtainedArtifacts().size();
+    int total = (int)ArtifactManager::GetInstance().GetObtainedArtifacts().size();
 
     // 下キー：次のページ
     if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
@@ -26,7 +26,7 @@ void ArtifactUI::Update()
 
 void ArtifactUI::Render()
 {
-    const auto& obtained = ArtifactManager::GetInstance()->GetObtainedArtifacts();
+    const auto& obtained = ArtifactManager::GetInstance().GetObtainedArtifacts();
     if (obtained.empty()) return;
 
     const int iconSize = 48;

@@ -2,7 +2,7 @@
 #include "../GameObject/Stage/StageCell.h"
 #include "../GameObject/Stage/StageGenerator.h"
 #include "../Definition.h"
-#include "../GameObject/Character/Character.h"
+
 #include "EnemyManager.h"
 #include <vector>
 
@@ -33,11 +33,15 @@ public:
 	void Render();
 
 	int GetMapData(int x,int y);
+	int SetMapData(int x,int y,int setValue);
+	int GetRoomStatus(int roomNum,RoomStatus status);
 	void SetGameObjectRandomPos(GameObject* obj);
 	int GetNowRoomNum(VECTOR pos);
 	VECTOR GetRandomRoomRandomPos();
 	void Generate();
 
+	void UnuseObject(StageCell* cell);
+	StageCell* UseObject(ObjectType type);
 
 private:
 	void GenerateStage();

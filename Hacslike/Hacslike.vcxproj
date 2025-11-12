@@ -29,6 +29,8 @@
     <ClCompile Include="Scr\GameObject\Audio\Audio.cpp" />
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp" />
@@ -81,6 +83,8 @@
     <ClInclude Include="Scr\GameObject\Audio\Audio.h" />
     <ClInclude Include="Scr\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Player\Player.h" />
@@ -121,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="Scr\Data\BossData.json" />
     <None Include="Scr\Data\SkillTreeData.json" />
     <None Include="Scr\Data\StageData.json" />
     <None Include="Scr\Data\WeaponsData.json" />

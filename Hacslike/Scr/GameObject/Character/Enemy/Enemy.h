@@ -1,6 +1,7 @@
 #pragma once
 #include "../Character.h"
 #include "../../../Manager/CollisionManager.h"
+#include "../../../Component/Collider/SphereHitBox.h"
 
 class Enemy : public Character {
 protected:
@@ -32,8 +33,23 @@ protected:
 		Hostile		// 敵対
 	};
 public:
+	// 敵の種類
 	EnemyType type;
+	// 経験値量
+	int exp;
+	// 名前
+	std::string name;
+	// モデルやアニメーションのファイルパス
+	std::string mPath;
 
+	// レイに入ってるかどうか
+	bool rayAnswer;
+	// プレイヤーと接触しているか
+	bool isTouch;
+	// 死んでいるかどうか
+	bool isDead;
+
+	std::vector<SphereHitBox*> attackColliderList;
 public:
 	Enemy();
 	~Enemy();
@@ -46,12 +62,22 @@ public:
 	virtual void Tracking();
 	virtual void Move(VECTOR targetPos);
 
+	void Attack();
 
-	virtual void IsDead();
+	void SetStatusData(int enemyID);
+	void LoadAnimation();
+	void IsDead() override;
 	virtual bool Vision_Ray();
 	virtual bool Vision_Circle(float r);
 	virtual bool Vision_Fan(VECTOR targetPos);
 
 	inline EnemyType GetType() const { return type; }
+
+	// 入ったとき
+	virtual void OnTriggerEnter(Collider* _pOther) override;
+	// 入っているとき
+	virtual void OnTriggerStay(Collider* _pOther) override;
+	// 出たとき
+	virtual void OnTriggerExit(Collider* _pOther) override;
 };
 

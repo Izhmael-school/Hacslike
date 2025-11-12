@@ -1,0 +1,21 @@
+[
+  {
+    "id": 0,
+    "name": "ゴブリン",
+    "mPath": "Res/Model/Enemy/Goblin/",
+    "hp": 1,
+    "atk": 10,
+    "def": 5,
+    "exp": 15
+  },
+
+  {
+    "id": 1,
+    "name": "ゴブリンリーダー",
+    "mPath": "Res/Model/Enemy/Goblin/",
+    "hp": 1,
+    "atk": 35,
+    "def": 10,
+    "exp": 1000
+  }
+]

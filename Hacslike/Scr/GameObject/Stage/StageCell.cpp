@@ -1,13 +1,14 @@
 #include "StageCell.h"
-#include "../../Manager/CollisionManager.h"
 #include "../../Manager/FadeManager.h"
-
+#include "../../Manager/StageManager.h"
+#include "../../Component/Collider/Collider.h"
 
 StageCell::StageCell(int _modelHandle, ObjectType _type, VECTOR position)
 	:modelHandle(_modelHandle)
 	,type(_type)
 	, GameObject(position,"Stage")
 	,isTouch(false)
+	,dataPos()
 {
 	Start();
 }
@@ -20,7 +21,6 @@ void StageCell::Start() {
 	if (type != Stair) return;
 
 	pCollider = new SphereCollider(this,VZero,100);
-	CollisionManager::GetInstance().Register(pCollider);
 }
 
 void StageCell::Update() {

@@ -12,6 +12,7 @@ struct StageData {
 	int stageData[mapWidth_Large][mapHeight_Large];
 	VECTOR playerSpawnPos;
 	VECTOR bossSpawnPos;
+	int bossType;
 };
 
 class StageGenerator {
@@ -36,19 +37,7 @@ private:
 
 	StageData stage;
 public:
-	enum RoomStatus {	// 部屋の配列ステータス
-		x,	// マップX座標
-		y,	// マップY座標
-		w,	// 分割した幅
-		h,	// 分割した高さ
-
-		rx,	// 部屋の生成位置
-		ry,	// 部屋の生成位置
-		rw,	// 部屋の幅
-		rh,	// 部屋の高さ
-		Max,
-	};
-
+	
 	int map[mapWidth_Large][mapHeight_Large];	// マップ管理配列
 	bool mapObjects[mapWidth_Large][mapHeight_Large];	// マップ上のオブジェクトの配置
 	int roomStatus[RoomStatus::Max][RoomMax_Large];	// 部屋の配列ステータス
@@ -61,8 +50,6 @@ public:
 	StageCell* unuseStair;
 	StageCell* useStair;
 	int gr;
-
-	StageCell* test;
 
 public:
 	StageGenerator();
@@ -94,13 +81,14 @@ public:
 
 	// マップの描画
 	void DrawMap();
-	// 壁の透過
-	void TransparencyWall(StageCell* cell);
+	// 壁の透過をするかどうか
+	bool TransparencyWall(StageCell* cell);
 
 	// ステージオブジェクトのテクスチャ張替
 	void ChangeObjectTexture(int textureHandle,ObjectType changeObject);
 	// 座標から今いる部屋番号を返す
 	int GetNowRoomNum(VECTOR pos);
+	int GetNowRoomNum(int x,int z);
 	// ランダムな部屋のランダムな座標を返す
 	VECTOR GetRandomRoomRandomPos();
 	// 読み込んだステージデータの取得
