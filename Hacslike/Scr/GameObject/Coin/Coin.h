@@ -78,6 +78,8 @@ public: //メンバ変数
 	/// </summary>
 	static void SpawnCoin(VECTOR _pos = VZero);
 
+	void UpdateMatrix();
+
 	/// <summary>
 	/// コインの削除
 	/// </summary>
@@ -111,5 +113,31 @@ public:
 	/// <returns></returns>
 	inline const int GetCoinValue() { return coinValue; }
 
+	// 表示フラグの変更
+	inline void SetActive(bool _a) { active = _a; }
+
 	const std::vector<std::unique_ptr<Coin>>& GetCoin() const { return coinPool; }
+
+public:
+	// 平行移動行列を作る関数
+	inline MATRIX MGetTrans(float x, float y, float z)
+	{
+		MATRIX m;
+
+		// 単位行列を作る
+		m = MGetIdent();
+
+		// 平行移動成分を代入
+		m.m[3][0] = x;
+		m.m[3][1] = y;
+		m.m[3][2] = z;
+
+		return m;
+	}
+
+	// VECTOR 版のオーバーロード
+	inline MATRIX MGetTrans(VECTOR pos)
+	{
+		return MGetTrans(pos.x, pos.y, pos.z);
+	}
 };

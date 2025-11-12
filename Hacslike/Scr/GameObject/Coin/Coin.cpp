@@ -9,11 +9,11 @@ std::vector<std::unique_ptr<Coin>> Coin::coinPool;
 Coin* Coin::pInstance = nullptr;
 
 /// <summary>
-/// デストラクタ
+/// コンストラクタ
 /// </summary>
-Coin::Coin(VECTOR _pos, std::string tag, int _value, int _coinValue, int _deleteTime, int _startTime
-    , int _maxCoin, int _currentCoin)
-    :GameObject(_pos, "Coin")
+Coin::Coin(VECTOR _pos, std::string tag, int _value, int _coinValue, int _deleteTime, int _startTime,
+    int _maxCoin, int _currentCoin)
+    : GameObject(_pos, "Coin")
     , value(_value)
     , coinModelHandle(INVALID)
     , coinValue(_coinValue)
@@ -21,8 +21,8 @@ Coin::Coin(VECTOR _pos, std::string tag, int _value, int _coinValue, int _delete
     , startTime(_startTime)
     , maxCoin(_maxCoin)
     , currentCoin(_currentCoin)
-    , active(false) {
-
+    , active(false)
+{
 }
 
 /// <summary>
@@ -68,6 +68,18 @@ void Coin::Start()
     coinModelHandle = MV1LoadModel("Res/Model/DropObject/coin.mv1");
     coinValue = 1;
     value = coinValue;
+    UpdateMatrix(); // 初期行列更新
+}
+
+/// <summary>
+/// モデル行列更新
+/// </summary>
+void Coin::UpdateMatrix()
+{
+    MATRIX rotY = MGetRotY(Deg2Rad(rotation.y));
+    MATRIX trans = MGetTrans(position.x, position.y, position.z);
+    matrix = MMult(rotY, trans);
+    MV1SetMatrix(coinModelHandle, matrix);
 }
 
 /// <summary>
@@ -77,9 +89,9 @@ void Coin::Update()
 {
     if (!active) return;
 
-   
-
     rotation.y += 10.0f;
+
+    // 上下に少し浮かせるアニメーション
     if (position.y <= 6) {
         position.y += 0.1f;
     }
@@ -87,17 +99,22 @@ void Coin::Update()
         position.y -= 0.1f;
     }
 
+    // 削除時間チェック
     if (startTime >= deleteTime)
     {
-
         return;
     }
+
+    // 行列更新
+    UpdateMatrix();
+
+    // コライダー更新
     if (pCollider != nullptr)
     {
         pCollider->SetMatrix(matrix);
         pCollider->Update();
     }
-    MV1SetMatrix(coinModelHandle, matrix);
+
     GameObject::Update();
 }
 
@@ -115,8 +132,9 @@ void Coin::Render()
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     MV1SetMatrix(coinModelHandle, matrix);
     MV1DrawModel(coinModelHandle);
-    //当たり判定の描画
-   /* if (pCollider != nullptr) {
+
+    // 当たり判定の描画（デバッグ用）
+    /*if (pCollider != nullptr) {
         pCollider->Render();
     }*/
 }
@@ -129,25 +147,36 @@ void Coin::SpawnCoin(VECTOR _pos)
 #if _DEBUG
     DrawFormatString(0, 10, red, "生成");
 #endif
-    // 最大数チェック
+
+    // 現在のアクティブなコイン数
     int activeCount = std::count_if(coinPool.begin(), coinPool.end(),
         [](const std::unique_ptr<Coin>& c) { return c->active; });
 
-    /* if (activeCount >= maxCoin) return;*/
-
-     // 非アクティブなコインを探して再利用
+    // 再利用可能なコインを探す
     for (auto& coin : coinPool)
     {
         if (!coin->active)
         {
+            // 位置・状態を初期化
             coin->position = _pos;
+            coin->rotation = VGet(0, 0, 0);
             coin->startTime = 0;
             coin->active = true;
+
+            // 行列・コライダー再設定
+            coin->UpdateMatrix();
+            if (coin->pCollider)
+            {
+                coin->pCollider->SetEnable(true);
+                coin->pCollider->SetMatrix(coin->matrix);
+                coin->pCollider->Update();
+            }
+
             return;
         }
     }
 
-    // 見つからなければ新規作成
+    // 非アクティブなものがない場合は新規生成
     auto newCoin = std::make_unique<Coin>(_pos, "Coin", 1, 1, 5000, 0, 10, activeCount);
     newCoin->Start();
     newCoin->active = true;
@@ -155,39 +184,14 @@ void Coin::SpawnCoin(VECTOR _pos)
 }
 
 /// <summary>
-/// ステージ上のコインの削除（非アクティブ化）
-/// </summary>
-void Coin::RemoveCoin(Coin* target)
-{
-    coinPool.erase(
-        std::remove_if(coinPool.begin(), coinPool.end(),
-            [target](const std::unique_ptr<Coin>& coin) {
-                if (coin.get() == target) {
-                    if (coin->GetCollider()) {
-                        CollisionManager::GetInstance().UnRegister(coin->GetCollider());
-
-                    }
-                    return true;
-                }
-                return false;
-            }),
-        coinPool.end());
-
-}
-
-
-/// <summary>
 /// コインの取得処理
 /// </summary>
 void Coin::ApplyCoin(Player* player)
 {
-
     if (!player || !active) return;
+
     player->SetCoinValue(player->GetCoinValue() + player->GetCoinAcquisitionValue() + coinValue);
-
     player->SetIsCoin(false);
-
-
 }
 
 /// <summary>

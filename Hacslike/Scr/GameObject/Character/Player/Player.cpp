@@ -582,11 +582,13 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 		for (auto& coin : coins) {
 			// 衝突したコインオブジェクトと一致した場合のみ処理
 			if (coin.get() == _pCol->GetGameObject()) {
-				coin->SetVisible(false);
 				coin->ApplyCoin(this);
 				GetCoin();  // ← プレイヤー経由で発動
 				GetCoin_Item();
-				Coin::GetInstance()->RemoveCoin(coin.get());
+				coin.get()->SetVisible(false);
+				coin.get()->SetActive(false);
+				coin.get()->GetCollider()->SetEnable(false);
+				//Coin::GetInstance()->RemoveCoin(coin.get());
 				break; // 削除したのでループを抜ける
 			}
 		}
