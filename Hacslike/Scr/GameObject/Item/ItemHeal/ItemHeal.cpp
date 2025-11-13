@@ -2,10 +2,11 @@
 #include <DxLib.h>   // DxLibキー入力を使う場合
 #include <iostream>
 #include"../../Character/Player/Player.h"
+#include "../../../Manager/TimeManager.h"
 
 
 ItemHeal::ItemHeal(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item","" , _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 }
 
@@ -32,12 +33,18 @@ void ItemHeal::Use()
 /// <param name="_value"></param>
 /// <param name="_effectValue"></param>
 SmallHealItem::SmallHealItem(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item","Potion_Small", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 }
 
 void SmallHealItem::Start()
 {
+	isEffectFinished = false;
+}
+
+void SmallHealItem::Update()
+{
+	
 }
 
 void SmallHealItem::Render()
@@ -46,8 +53,8 @@ void SmallHealItem::Render()
 
 void SmallHealItem::Use()
 {
-
 	Character::player->AddHp(healValue);
+	isEffectFinished = true;  // ★Playerが削除できるように
 }
 
 /// <summary>
@@ -59,23 +66,30 @@ void SmallHealItem::Use()
 /// <param name="_value"></param>
 /// <param name="_effectValue"></param>
 MiddleHealItem::MiddleHealItem(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item","Potion_Middle", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 }
 
 void MiddleHealItem::Start()
 {
+	isEffectFinished = false;
+
 }
 
 void MiddleHealItem::Render()
 {
 }
 
+void MiddleHealItem::Update()
+{
+	
+}
+
 void MiddleHealItem::Use()
 {
 	Character::player->AddHp(healValue);
+	isEffectFinished = true;  // ★Playerが削除できるように
 }
-#pragma endregion
 
 /// <summary>
 /// 回復(大)
@@ -86,20 +100,138 @@ void MiddleHealItem::Use()
 /// <param name="_value"></param>
 /// <param name="_effectValue"></param>
 LargeHealItem::LargeHealItem(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item", "Potion_Large", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 }
 
 void LargeHealItem::Start()
 {
+	isEffectFinished = false;
+
 }
 
 void LargeHealItem::Render()
 {
 }
 
+void LargeHealItem::Update()
+{
+	
+}
+
 void LargeHealItem::Use()
 {
 	Character::player->AddHp(healValue);
+	isEffectFinished = true;  // ★Playerが削除できるように
+}
+#pragma endregion
+
+#pragma region バフ系
+AttactPotion::AttactPotion(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue,float _time)
+	:ItemBase(VZero, "item","AttactPotion", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/attackPotion.png")
+	, attactValue(_effectValue)
+	,originAttack(0.0f)
+	,isBoost(false)
+	, duration(_time)
+	, timer() {
+}
+
+void AttactPotion::Start()
+{
+	isEffectFinished = false;
 
 }
+
+void AttactPotion::Render()
+{
+}
+
+void AttactPotion::Update()
+{
+	
+	TimeManager* time = &TimeManager::GetInstance();
+
+	if (!isBoost) return;
+
+	timer -= time->deltaTime;  // 経過時間を減らす
+	printfDx("効果時間%f\n",timer);
+	if (timer <= 0.0f) {
+		// 効果終了
+		Character::player->SetAtk(originAttack);
+		isBoost = false;
+		timer = 0.0f;
+		isEffectFinished = true;  // ★Playerが削除できるように
+		
+
+	}
+}
+
+void AttactPotion::Use()
+{
+	// 既に上昇中ならタイマーをリセットする（重ねがけ防止）
+	if (isBoost) {
+		timer = duration;
+		return;
+	}
+	originAttack = Character::player->GetAtk();
+	Character::player->SetAtk(originAttack + attactValue);
+	//printfDx("timerセット前: %f\n", timer);
+	timer = duration;
+	isEffectFinished = false;
+	isBoost = true;
+
+
+}
+
+DefensePotion::DefensePotion(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, float _time)
+	:ItemBase(VZero, "item", "DefensePotion", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/defensePotion.png")
+	, defenseValue(_effectValue)
+	, originDefense(0.0f)
+	, isBoost(false)
+	, duration(_time)
+	, timer() {
+}
+
+void DefensePotion::Start()
+{
+	isEffectFinished = false;
+}
+
+void DefensePotion::Render()
+{
+}
+
+void DefensePotion::Update()
+{
+	TimeManager* time = &TimeManager::GetInstance();
+
+	if (!isBoost) return;
+
+	timer -= time->deltaTime;  // 経過時間を減らす
+
+	if (timer <= 0.0f) {
+		// 効果終了
+		Character::player->SetDef(originDefense);
+		isBoost = false;
+		timer = 0.0f;
+		isEffectFinished = true;  // ★Playerが削除できるように
+
+
+	}
+}
+
+void DefensePotion::Use()
+{
+	// 既に上昇中ならタイマーをリセットする（重ねがけ防止）
+	if (isBoost) {
+		timer = duration;
+		return;
+	}
+	originDefense = Character::player->GetDef();
+	Character::player->SetDef(originDefense + defenseValue);
+	//printfDx("timerセット前: %f\n", timer);
+	timer = duration;
+	isEffectFinished = false;
+	isBoost = true;
+}
+#pragma endregion

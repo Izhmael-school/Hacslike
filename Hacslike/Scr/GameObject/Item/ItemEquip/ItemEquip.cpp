@@ -5,7 +5,7 @@
 
 #pragma region ìÅ
 ItemSword::ItemSword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/sword.png")
+	: ItemBase(VZero, "item","Sword_Iron", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/sword.png")
 	, attackValue(_effectValue) {
 }
 
@@ -33,7 +33,7 @@ void ItemSword::UnEquip()
 
 #pragma region ïÄ
 ItemAxe::ItemAxe(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Axe.png")
+	: ItemBase(VZero, "item","Axe", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Axe.png")
 	, attackValue(_effectValue) {
 }
 
@@ -60,7 +60,7 @@ void ItemAxe::UnEquip()
 
 #pragma region ñÿÇÃñ_
 ItemStick::ItemStick(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/stick.png")
+	: ItemBase(VZero, "item","Stick", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/stick.png")
 	, attackValue(_effectValue) {
 }
 
@@ -86,7 +86,7 @@ void ItemStick::UnEquip()
 
 #pragma region ÉOÉåÉ\
 Greatsword::Greatsword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
+	: ItemBase(VZero, "item","Greatsword", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
 	, attackValue(_effectValue) {
 }
 
@@ -112,7 +112,7 @@ void Greatsword::UnEquip()
 
 #pragma region ëÑ
 Spear::Spear(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/coiled-nail.png")
+	: ItemBase(VZero, "item", "Spear", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/coiled-nail.png")
 	, attackValue(_effectValue) {
 }
 

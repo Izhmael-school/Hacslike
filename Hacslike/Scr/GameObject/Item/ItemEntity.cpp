@@ -19,6 +19,8 @@ ItemEntity::~ItemEntity()
 
 void ItemEntity::Start()
 {
+	if (item)
+		item->Start(); // ←★ アイテム固有のStartを呼び出す
 }
 
 void ItemEntity::Update()
@@ -28,6 +30,7 @@ void ItemEntity::Update()
 		pCollider->SetMatrix(matrix);
 		pCollider->Update();
 	}
+
 }
 
 void ItemEntity::Render()

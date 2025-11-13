@@ -81,28 +81,49 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 /// </summary>
 void Inventory::UseItem(int index)
 {
-    if (index < 0 || index >= (int)items.size()) return;
+    if (index < 0 || index >= items.size()) return;
 
-    InventoryItem& inv = items[index];
-    const std::string& name = inv.item->GetName();
+    auto& inv = items[index];
 
     if (inv.item->GetType() == "Consumable") {
-        inv.item->Use();
+
+        // --- すでに使用中の同一IDアイテムがあるか確認 ---
+        bool isAlreadyActive = false;
+        for (auto* active : activeItems)
+        {
+            if (active && active->GetID() == inv.item->GetID())
+            {
+                isAlreadyActive = true;
+                break;
+            }
+            }
+
+        if (isAlreadyActive)
+        {
+#if _DEBUG
+            printfDx("「%s」はまだ効果中のため使用できません！\n", inv.item->GetName().c_str());
+#endif
+            return; // 効果中なら使用禁止
+        }
+
+        // --- 使用処理 ---
+        inv.item->Use(); // 効果開始
+
+        // 使用中リストに登録
+        activeItems.push_back(inv.item.get());
+
+        // ストック数を1減らす（削除はしない）
         inv.quantity--;
-    }
+        if (inv.quantity < 0) inv.quantity = 0;
+
+#if _DEBUG
+        printfDx("「%s」を使用した。残り x%d\n", inv.item->GetName().c_str(), inv.quantity);
+#endif
+        }
     else if (inv.item->GetType() == "Equipment") {
         EquipItem(inv.item.get());
     }
-
-    if (inv.quantity <= 0) {
-#if _DEBUG
-        printfDx("「%s」を使い切った！\n", name.c_str());
-#endif
-        items.erase(items.begin() + index);
-        if (currentIndex >= (int)items.size()) {
-            currentIndex = (std::max)(0, (int)items.size() - 1);
-    }
-    }
+    
 }
 
 /// <summary>
@@ -133,6 +154,8 @@ int Inventory::GetMaxVisible() const
     if (maxVisible <= 0) maxVisible = 1;
     return maxVisible;
 }
+
+
 
 /// <summary>
 /// 更新
@@ -198,6 +221,7 @@ void Inventory::Update(Player* player)
                     if (menuChoice == 0) {
                         // Use
                         UseItem(currentIndex);
+                        
                     }
                     else {
                         // Drop
@@ -225,6 +249,40 @@ void Inventory::Update(Player* player)
             }
         }
     }
+  
+    // --- アイテム効果更新 ---
+    for (int i = 0; i < (int)activeItems.size(); )
+    {
+        ItemBase* item = activeItems[i];
+        if (item)
+        {
+            item->Update(); // 効果時間を進める
+
+            // 効果終了判定
+            if (item->IsEffectFinished())
+            {
+#if _DEBUG
+                printfDx("「%s」の効果が切れた。\n", item->GetName().c_str());
+#endif
+                // activeItemsから削除
+                activeItems.erase(activeItems.begin() + i);
+
+                // 同じIDのアイテムがInventory内にあれば、
+                // ストックが0ならここで完全削除
+                for (int j = 0; j < (int)items.size(); ++j)
+                {
+                    if (items[j].item->GetID() == item->GetID() && items[j].quantity <= 0)
+                    {
+                        items.erase(items.begin() + j);
+                        break;
+                    }
+                }
+
+                continue; // eraseしたのでインデックス進めない
+        }
+    }
+        ++i;
+}
 }
 
 /// <summary>
@@ -266,6 +324,8 @@ static const std::unordered_map<std::string, std::string> itemEffectMap = {
     {"ポーション(小)", "回復量"},
     {"ポーション(中)", "回復量"},
     {"ポーション(大)", "回復量"},
+    {"攻撃のポーション","効力"},
+    {"防御のポーション","効力"},
     {"剣", "攻撃力"},
     {"斧", "攻撃力"},
     {"木の棒","攻撃力"},
@@ -279,6 +339,8 @@ static const std::vector<std::string> itemOrder = {
     "ポーション(小)",
     "ポーション(中)",
     "ポーション(大)",
+    "攻撃のポーション",
+    "防御のポーション",
     "木の棒",
     "剣",
     "斧",

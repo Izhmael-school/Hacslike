@@ -23,6 +23,9 @@ public://メンバ関数
 };
 
 #pragma region 回復系
+/// <summary>
+/// 小回復
+/// </summary>
 class SmallHealItem : public ItemBase {
 private://メンバ変数
 
@@ -36,15 +39,21 @@ public://メンバ関数
 
 	void Start()override;
 
+	void Update()override;
+
 	void Render()override;
 
 	/// <summary>
 	/// アイテムを使用した時の効果
 	/// </summary>
 	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
 
 };
 
+/// <summary>
+/// 中回復
+/// </summary>
 class MiddleHealItem : public ItemBase {
 private://メンバ変数
 
@@ -60,13 +69,19 @@ public://メンバ関数
 
 	void Render()override;
 
+	void Update()override;
+
 	/// <summary>
 	/// アイテムを使用した時の効果
 	/// </summary>
 	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
 
 };
 
+/// <summary>
+/// 大回復
+/// </summary>
 class LargeHealItem : public ItemBase {
 private://メンバ変数
 
@@ -81,12 +96,80 @@ public://メンバ関数
 	void Start()override;
 
 	void Render()override;
+	void Update()override;
 
 	/// <summary>
 	/// アイテムを使用した時の効果
 	/// </summary>
 	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
 
 };
 #pragma endregion
 
+#pragma region バフ系
+/// <summary>
+/// 攻撃力上昇ポーション
+/// </summary>
+class AttactPotion : public ItemBase {
+private://メンバ変数
+
+	int attactValue; //回復量
+	bool isBoost;
+	float originAttack;//元の攻撃
+	float duration;       // 効果時間
+	float timer;          // 残り時間
+
+public://コンストラクタ
+
+	AttactPotion(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0,float _time = 120.0f);
+
+public://メンバ関数
+
+	void Start()override;
+
+	void Render()override;
+
+	void Update()override;
+
+	/// <summary>
+	/// アイテムを使用した時の効果
+	/// </summary>
+	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
+
+};
+
+/// <summary>
+/// 防御力を上げるポーション
+/// </summary>
+class DefensePotion : public ItemBase {
+private://メンバ変数
+
+	int  defenseValue; //回復量
+	bool isBoost;
+	float originDefense;//元の攻撃
+	float duration;       // 効果時間
+	float timer;          // 残り時間
+
+public://コンストラクタ
+
+	DefensePotion(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0, float _time = 120.0f);
+
+public://メンバ関数
+
+	void Start()override;
+
+	void Render()override;
+
+	void Update()override;
+
+	/// <summary>
+	/// アイテムを使用した時の効果
+	/// </summary>
+	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
+
+};
+
+#pragma endregion

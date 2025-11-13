@@ -9,6 +9,12 @@ ItemFactory& ItemFactory::Instance()
     return instance;
 }
 
+ItemFactory* ItemFactory::GetInstance()
+{
+    static ItemFactory instance;
+    return &instance;
+}
+
 /// <summary>
 /// アイテムの設定
 /// </summary>
@@ -27,8 +33,11 @@ void ItemFactory::RegisterItem(const std::string& _id, std::function<std::unique
 std::unique_ptr<ItemBase> ItemFactory::CreateItem(const std::string& _id)
 {
     auto it = itemTemplates.find(_id);
-    if (it != itemTemplates.end())
+    if (it != itemTemplates.end()) {
         return it->second();
+    }
+
+    printfDx("ItemFactory: ID '%s' のアイテムが登録されていません。\n", _id.c_str());
 
     return nullptr;
 }
@@ -49,6 +58,16 @@ void ItemFactory::InitializeDefaultItems()
     RegisterItem("Potion_Large", []() {
         return std::make_unique<LargeHealItem>(VGet(0, 0, 0),
         "ポーション(大)", "体力を大幅に回復する", 110, 100);
+        });
+
+    RegisterItem("AttactPotion", []() {
+        return std::make_unique<AttactPotion>(VGet(0, 0, 0),
+        "攻撃のポーション", "2分間攻撃力を上げる", 110, 5,120.0f);
+        });
+
+    RegisterItem("DefensePotion", []() {
+        return std::make_unique<DefensePotion>(VGet(0, 0, 0),
+        "防御のポーション", "2分間防御力を上げる", 110, 5, 120.0f);
         });
 
     RegisterItem("Sword_Iron", []() {

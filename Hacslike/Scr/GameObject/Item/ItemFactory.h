@@ -33,5 +33,8 @@ public: //メンバ関数
 	ItemFactory() = default;
 	ItemFactory(const ItemFactory&) = delete;
 	ItemFactory& operator=(const ItemFactory&) = delete;
+
+	// --- シングルトン取得 ---
+	static ItemFactory* GetInstance();
 };
 

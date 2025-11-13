@@ -187,10 +187,6 @@ public:		//	メンバ関数
 	/// </summary>
 	void GetCoin_Item();
 
-	/// <summary>
-	/// アイテムのインベントリを開く
-	/// </summary>
-	void OpenInventory();
 
 	/// <summary>
 	/// プレイヤーステータスの描画

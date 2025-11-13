@@ -98,7 +98,7 @@ void GameScene::Update() {
 		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER))
 		{
 			VECTOR spawnPos = Character::player->GetPosition();
-			ItemDropManager::GetInstance().TryDropItem(0.4f, VGet(spawnPos.x, 5.0f, spawnPos.z));
+			ItemDropManager::GetInstance().TryDropItem(ItemDropManager::GetInstance().GetItemDropRate(), VGet(spawnPos.x, 5.0f, spawnPos.z));
 		}
 		// --- アイテムドロップテスト ---
 		if (input->IsKeyDown(KEY_INPUT_Q))

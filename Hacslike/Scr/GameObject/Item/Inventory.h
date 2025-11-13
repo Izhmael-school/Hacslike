@@ -28,6 +28,9 @@ public:
     };
     std::vector<GainedItemInfo> gainedItems; // 取得リスト
 
+    struct ActiveItem {
+        ItemBase* item; // Inventoryが持つポインタを指すだけ
+    };
 private:
     std::vector<InventoryItem> items;
     const int baseX = 250;               // インベントリウィンドウ左上X
@@ -66,7 +69,7 @@ private:
     // 装備用変数
     ItemBase* equippedItem = nullptr;
 
-
+    std::vector<ItemBase*> activeItems; // 現在効果中のアイテム
     // 内部ヘルパー
     void DropItemAtIndex(int idx);
     int GetMaxVisible() const;
@@ -85,6 +88,8 @@ public:
     /// </summary>
     /// <param name="name">使用するアイテム名</param>
     void UseItem(int index);
+
+   
 
 
     void Update(Player* player);

@@ -180,13 +180,15 @@ void Player::Update() {
 	//OpenInventory();
 
 	ArtifactManager::GetInstance()->Update(this);
+	
+	
 
 	selectMenu();
 
 	OpenMenu();
 
+	inventory.Update(this);
 	if(isItemUI) {
-		inventory.Update(this);
 	}
 
 	if (isArtifactUI) {
@@ -546,7 +548,6 @@ void Player::GetCoin_Item()
 	if (itemArtifact)
 		itemArtifact->OnGetCoin_Item(this);
 }
-
 
 
 void Player::PlayerStatusRender() {

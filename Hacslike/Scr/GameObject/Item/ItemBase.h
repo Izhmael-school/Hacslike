@@ -7,12 +7,14 @@ class Player;
 class ItemBase : public GameObject
 {
 protected: //メンバ変数
+    std::string id;      // ← ファクトリ登録用ID
     std::string name;      //アイテムの名前
     std::string  description;	//説明
     std::string type;      //アイテムのタイプ
     int value;             //アイテムの価値など
     int itenEffectValue;   //アイテムの効果値
     std::string itemIcon;  //アイテムUI用のアイコン
+    bool isEffectFinished = false;  // 効果が終わったらtrueに
 
 public:
     static ItemBase* item;
@@ -24,7 +26,7 @@ public://コンストラクタとデストラクタ
     /// <param name="_name"></param>
     /// <param name="_type"></param>
     /// <param name="_value"></param>
-    ItemBase(VECTOR _pos = VZero, std::string tag = "", const std::string& _name = "", const std::string& _desc = "", const std::string& _type = "", int _value = 0, int _effectValue = 0, const std::string& _icon = "");
+    ItemBase(VECTOR _pos = VZero, std::string tag = "", const std::string& _id = "", const std::string& _name = "", const std::string& _desc = "", const std::string& _type = "", int _value = 0, int _effectValue = 0, const std::string& _icon = "");
     
 
     /// <summary>
@@ -35,6 +37,8 @@ public://コンストラクタとデストラクタ
 public://メンバ関数
     virtual void Use() = 0;
     virtual void UnEquip() {}; // 装備解除時に効果を外すため
+    virtual void Update() {};
+    inline bool IsEffectFinished() const { return isEffectFinished; }
 public://ゲッター
     /// <summary>
     /// 名前の取得
@@ -69,5 +73,7 @@ public://ゲッター
     /// </summary>
     /// <returns></returns>
     inline const std::string& GetItemIcon() const { return itemIcon; }
+
+    inline const std::string& GetID() const { return id; }
 };
 
