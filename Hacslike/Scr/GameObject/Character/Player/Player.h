@@ -13,6 +13,7 @@
 
 #include "PlayerAttack.h"
 #include "PlayerMovement.h"
+#include "../../../Skill/SkillSelectUI.h"
 
 static enum MenuType {
 	menuInventory = 0,
@@ -71,6 +72,13 @@ private:	//	メンバ変数
 	bool isGetCoin = false;
 	attactPower_raise_GetCoin* coinArtifact;  // コイン取得系のアーティファクト
 	itemDropRateUpwardOnCoinAcquisition* itemArtifact;
+#pragma endregion
+
+#pragma region スキル
+	SkillSelectUI skillUI;
+	std::vector<std::shared_ptr<Skill>> skillChoices;
+	bool isSelectingSkill = false;
+
 #pragma endregion
 
 #pragma region メニュー
@@ -187,6 +195,10 @@ public:		//	メンバ関数
 	/// </summary>
 	void GetCoin_Item();
 
+	/// <summary>
+	/// アイテムを取るキーの描画
+	/// </summary>
+	void AddItemRender();
 
 	/// <summary>
 	/// プレイヤーステータスの描画

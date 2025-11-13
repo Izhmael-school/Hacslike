@@ -89,9 +89,7 @@ void GameScene::Update() {
 		// --- Hキーでスキル選択画面を開く ---
 		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER))
 		{
-			skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
-			skillUI.StartSelection();
-			isSelectingSkill = true;
+			
 		}
 
 		// --- アイテムドロップテスト ---

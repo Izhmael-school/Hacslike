@@ -589,7 +589,7 @@ void Inventory::AddItemRender()
     if (gainedItems.empty()) return;
 
     const int baseX = WINDOW_WIDTH - 350;
-    const int baseY = WINDOW_HEIGHT - 100; // 下部寄せ表示
+    const int baseY = WINDOW_HEIGHT - 400; // 下部寄せ表示
     const int iconSize = 28;
     const int lineH = 36;
     const int padding = 6;

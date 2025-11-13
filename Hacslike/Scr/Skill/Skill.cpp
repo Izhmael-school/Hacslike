@@ -50,7 +50,7 @@ HPUpSkill::HPUpSkill(int hp)
 void HPUpSkill::Apply(Player* player)
 {
     if (!player) return;
-    player->SetMaxHp(player->GetMaxHp() * hpIncrease);
+    player->SetMaxHp(player->GetMaxHp() + hpIncrease);
 }
 
 void HPUpSkill::Remove(Player* player)
@@ -95,3 +95,94 @@ void DefenseUpSkill::Remove(Player* player)
     player->SetDef(player->GetDef() / defenseBoost);
 }
 #pragma endregion
+
+#pragma region 近距離補正を上げるスキル
+ProximityCorrectionUpSkill::ProximityCorrectionUpSkill(float boost)
+    :Skill("近距離攻撃力アップ", "近距離攻撃力が上昇する", "Res/SkillIcon/ProximityCorrectionUp.png")
+    , ProximityCorrectionBoost(boost) {
+}
+
+void ProximityCorrectionUpSkill::Apply(Player* player)
+{
+    if (!player)return;
+    player->SetProximityCorrection(player->GetProximityCorrection() + ProximityCorrectionBoost);
+}
+
+void ProximityCorrectionUpSkill::Remove(Player* player)
+{
+    if (!player)return;
+    player->SetProximityCorrection(player->GetProximityCorrection() - ProximityCorrectionBoost);
+}
+#pragma endregion
+
+#pragma region 遠距離補正を上げるスキル
+RangedCorrectionUpSkill::RangedCorrectionUpSkill(float boost)
+    :Skill("遠距離攻撃力アップ", "遠距離攻撃力が上昇する", "Res/SkillIcon/RangedCorrectionUp.png")
+    , RangedCorrectionBoost(boost) {
+}
+
+void RangedCorrectionUpSkill::Apply(Player* player)
+{
+    if (!player)return;
+    player->SetRangedCorrection(player->GetRangedCorrection() + RangedCorrectionBoost);
+}
+
+void RangedCorrectionUpSkill::Remove(Player* player)
+{
+    if (!player)return;
+    player->SetRangedCorrection(player->GetRangedCorrection() - RangedCorrectionBoost);
+}
+#pragma endregion
+
+#pragma region アイテムドロップ確率
+ItemDropRateUpSkill::ItemDropRateUpSkill(float boost)
+    :Skill("アイテムドロップ率アップ", "アイテムドロップ率が上昇する", "Res/SkillIcon/ItemDropRate.png")
+    , rateBoost(boost) {
+}
+
+void ItemDropRateUpSkill::Apply(Player* player)
+{
+    ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() + rateBoost);
+}
+
+void ItemDropRateUpSkill::Remove(Player* player)
+{
+    ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() - rateBoost);
+}
+#pragma endregion 
+
+#pragma region 会心率上昇
+CriticalHitRateUpSkill::CriticalHitRateUpSkill(float boost)
+    :Skill("会心率アップ", "会心率が上昇する", "Res/SkillIcon/CriticalUP.png")
+    , CriticalHitRateBoost(boost) {
+}
+
+void CriticalHitRateUpSkill::Apply(Player* player)
+{
+    if (!player)return;
+    player->SetCriticalHitRate(player->GetCriticalHitRate() + CriticalHitRateBoost);
+}
+
+void CriticalHitRateUpSkill::Remove(Player* player)
+{
+    if (!player)return;
+    player->SetCriticalHitRate(player->GetCriticalHitRate() - CriticalHitRateBoost);
+}
+#pragma endregion
+
+CriticalDamageUpSkill::CriticalDamageUpSkill(float boost)
+    :Skill("会心ダメージアップ", "会心ダメージが上昇する", "Res/SkillIcon/CriticalDamageUP.png")
+    , CriticalDamageBoost(boost) {
+}
+
+void CriticalDamageUpSkill::Apply(Player* player)
+{
+    if (!player) return;
+    player->SetCriticalDamage(player->GetCriticalDamage() + CriticalDamageBoost);
+}
+
+void CriticalDamageUpSkill::Remove(Player* player)
+{
+    if (!player) return;
+    player->SetCriticalDamage(player->GetCriticalDamage() - CriticalDamageBoost);
+}

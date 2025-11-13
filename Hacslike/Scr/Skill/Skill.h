@@ -89,3 +89,60 @@ public:
 
 };
 
+/// <summary>
+/// 近距離補正を上げるスキル
+/// </summary>
+class  ProximityCorrectionUpSkill : public Skill {
+    float  ProximityCorrectionBoost;
+public:
+    ProximityCorrectionUpSkill(float boost = 5);
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+
+
+};
+
+/// <summary>
+/// 遠距離補正を上げるスキル
+/// </summary>
+class RangedCorrectionUpSkill : public Skill {
+    float   RangedCorrectionBoost;
+public:
+    RangedCorrectionUpSkill(float boost = 5);
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+
+};
+
+/// <summary>
+/// アイテムドロップ率
+/// </summary>
+class ItemDropRateUpSkill : public Skill {
+    float rateBoost;
+public:
+    ItemDropRateUpSkill(float boost = 0.05);
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+};
+
+/// <summary>
+/// 会心率
+/// </summary>
+class CriticalHitRateUpSkill : public Skill {
+    float CriticalHitRateBoost;
+public:
+    CriticalHitRateUpSkill(float boost = 10.0f);
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+
+};
+
+class CriticalDamageUpSkill : public Skill {
+    float CriticalDamageBoost;
+public:
+    CriticalDamageUpSkill(float boost = 20.0f);
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+
+};
+

@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "../../../Manager/FadeManager.h"
+#include"../../../Manager/SkillManager.h"
 #include "../../Camera/Camera.h"
 #include "../../../Component/Collider/Collider.h"
 #include "../../../Definition.h"
@@ -206,12 +207,30 @@ void Player::Update() {
 		AddExp(15);
 	}
 
-	if (Exp >= maxExp) {
+#pragma region スキル選択
+	if (Exp >= maxExp && !isSelectingSkill) {
 		remainExp = Exp - maxExp;
 		Exp = remainExp;
 		maxExp *= 1.1;
+		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
+		skillUI.StartSelection();
+		isSelectingSkill = true;
 	}
+	if (isSelectingSkill) {
+		// ★スキル選択中の処理
+		int selected = skillUI.UpdateSelection();
+		if (selected != -1)
+		{
 
+			if (player && selected >= 0 && selected < (int)skillChoices.size())
+			{
+				SkillManager::GetInstance().ApplySelectedSkill(this, skillChoices[selected]);
+			}
+			isSelectingSkill = false;
+
+		}
+	}
+#pragma endregion
 	pAnimator->Update();
 
 	GameObject::Update();
@@ -236,18 +255,8 @@ void Player::Render() {
 	//	非表示だったら描画しない
 	if (!isVisible)
 		return;
-#pragma region アイテムのインベントリ表示
-	if (isItemUI) {
-		inventory.Render();
-	}
-	if (isArtifactUI) {
-		artifactUI.Render();
-	}
-	inventory.AddItemRender();
 
-	if (isMenuUI) {
-		DrawMenu();
-	}
+#pragma region プレイヤーのHPやEXP
 	int cx = 0, cy = 800;   //	中心座標
 	int r_outer = 200;		//	外側半径
 	int r_inner = 160;		//	内側半径
@@ -310,8 +319,8 @@ void Player::Render() {
 		DrawCircle(cx, cy, r_inner, white, FALSE);
 		DrawCircle(cx, cy, expR_inner, white, FALSE);
 
-		
-#pragma endregion
+#pragma endregion		
+
 
 	playerMovement->Render();
 
@@ -337,7 +346,26 @@ void Player::Render() {
 	}
 #pragma endregion
 
+#pragma region アイテムのインベントリ表示
+	if (isMenuUI) {
+		DrawMenu();
+	}
+	if (isItemUI) {
+		inventory.Render();
+	}
+	if (isArtifactUI) {
+		artifactUI.Render();
+	}
 
+	inventory.AddItemRender();
+
+	if (isSelectingSkill)
+	{
+		skillUI.Render(skillChoices);
+	}
+
+	AddItemRender();
+#pragma endregion
 }
 
 ///// <summary>
@@ -403,6 +431,7 @@ void Player::AddItem() {
 
 	for (auto& item : items) {
 		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B))) {
+			hitItem = false;
 			item->SetVisible(false);
 			std::string itemName = item->GetItem()->GetName();
 
@@ -549,18 +578,44 @@ void Player::GetCoin_Item()
 		itemArtifact->OnGetCoin_Item(this);
 }
 
+void Player::AddItemRender()
+{
+	int StartX = (WINDOW_WIDTH / 2) - 200;
+	int StartY = (WINDOW_HEIGHT)-200;
+	int GoalX = (WINDOW_WIDTH / 2) +200;
+	int GoalY = (WINDOW_HEIGHT)-150;
+	int textX = StartX + 80;
+	int textY = StartY + 17;
+	int GHandle;
+	GHandle = LoadGraph("Res/ItemIcon/YButton.png");
+	if (hitItem) {
+		DrawBox(StartX,StartY,GoalX,GoalY, darkGray,TRUE);
+		DrawBox(StartX+2, StartY+2, GoalX-2, GoalY-2, white, FALSE);
+		DrawFormatString(textX, textY,white,"Fキー/   :アイテムを取る");
+		DrawExtendGraph(textX + 55, textY,(textX+55)+20 ,textY+15,GHandle, TRUE);
+
+	}
+	else return;
+}
+
 
 void Player::PlayerStatusRender() {
 
+	DrawBox(920, 20, WINDOW_WIDTH, 280, black, TRUE);
+	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
+	DrawFormatString(930, 20, white, "ステータス");
+	DrawFormatString(930, 60, green, "LV　　　　　 : %d", Lv);
+	DrawFormatString(930, 80, green, "EXP　　　　　: %d", Exp);
+	DrawFormatString(930, 100, green, "HP　　　　　 : %d / %d", hp, maxHp);
+	DrawFormatString(930, 120, green, "攻撃力　　　 : %d", atk);
+	DrawFormatString(930, 140, green, "防御力　　　 : %d", def);
+	DrawFormatString(930, 160, green, "会心率　　　 : %.1f", criticalHitRate);
+	DrawFormatString(930, 180, green, "会心ダメージ : %.1f", criticalDamage);
+	DrawFormatString(930, 200, green, "コイン　　　 : %d", coinValue);
+	DrawFormatString(930, 220, green, "近距離補正　 : %f", proximityCorrection);
+	DrawFormatString(930, 240, green, "遠距離補正　 : %f", rangedCorrection);
 
-	DrawFormatString(960, 20, green, "LV　　　　　 : %d", Lv);
-	DrawFormatString(960, 40, green, "EXP　　　　　: %d", Exp);
-	DrawFormatString(960, 60, green, "HP　　　　　 : %d / %d", hp, maxHp);
-	DrawFormatString(960, 80, green, "攻撃力　　　 : %d", atk);
-	DrawFormatString(960, 100, green, "防御力　　　 : %d", def);
-	DrawFormatString(960, 120, green, "会心率　　　 : %.1f", criticalHitRate);
-	DrawFormatString(960, 140, green, "会心ダメージ : %.1f", criticalDamage);
-	DrawFormatString(960, 160, green, "コイン　　　 : %d", coinValue);
+
 
 	
 }

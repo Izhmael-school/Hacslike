@@ -15,6 +15,11 @@ SkillManager::SkillManager()
         std::make_shared<HPUpSkill>(),
         std::make_shared<SpeedUpSkill>(),
         std::make_shared<DefenseUpSkill>(),
+        std::make_shared<ProximityCorrectionUpSkill>(),
+        std::make_shared<RangedCorrectionUpSkill>(),
+        std::make_shared<ItemDropRateUpSkill>(),
+        std::make_shared<CriticalHitRateUpSkill>(),
+        std::make_shared<CriticalDamageUpSkill>(),
     };
 }
 
