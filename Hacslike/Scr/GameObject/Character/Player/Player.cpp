@@ -183,7 +183,7 @@ void Player::Update() {
 	//アイテムのインベントリ表示非表示
 	//OpenInventory();
 
-	ArtifactManager::GetInstance()->Update(this);
+	ArtifactManager::GetInstance().Update(this);
 	
 	
 
