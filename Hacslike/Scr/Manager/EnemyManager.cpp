@@ -41,7 +41,7 @@ void EnemyManager::Start() {
 	pEnemyArray.clear();
 
 	AudioManager* manager = &AudioManager::GetInstance();
-	manager->Load(audioFilePath + "SwordSwing", "SwordSwing", false);
+	manager->Load(audioFilePath + "SwordSwing.mp3", "SwordSwing", false);
 }
 
 void EnemyManager::Update() {
