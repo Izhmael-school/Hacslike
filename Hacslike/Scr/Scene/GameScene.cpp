@@ -45,7 +45,7 @@ void GameScene::Update() {
 	InputManager* input = &InputManager::GetInstance();
 	if (!isSelectingArtifact) {
 		if (input->IsKeyDown(KEY_INPUT_Y)) {
-			artifactChioces = ArtifactManager::GetInstance()->GenerateArtifactChoices();
+			artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
 			artifactUI.StartSelection();
 			isSelectingArtifact = true;
 		}
@@ -71,7 +71,7 @@ void GameScene::Update() {
 
 			if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
 			{
-				ArtifactManager::GetInstance()->ApplySelectedArtifact(player, artifactChioces[Selected]);
+				ArtifactManager::GetInstance().ApplySelectedArtifact(player, artifactChioces[Selected]);
 			}
 
 			isSelectingArtifact = false;

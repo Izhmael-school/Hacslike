@@ -1,13 +1,14 @@
 #pragma once
 #include "../GameObject.h"
 #include "../../Definition.h"
-#include "../../Component/Collider/Collider.h"
+
 #include "../../Manager/InputManager.h"
-#include "../../Manager/StageManager.h"
+
 
 class StageCell : public GameObject {
 private:
 	int modelHandle;
+	VECTOR dataPos;
 	ObjectType type;
 	bool isTouch;
 
@@ -37,5 +38,7 @@ public:
 	inline ObjectType GetObjectType() const { return type; }
 	void OnTriggerEnter(Collider* _pOther) override;
 	void OnTriggerExit(Collider* _pOther) override;
+	void SetDataPos(VECTOR pos) { dataPos = pos; }
+	VECTOR GetDataPos() { return dataPos; }
 };
 

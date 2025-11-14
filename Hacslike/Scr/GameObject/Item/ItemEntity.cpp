@@ -8,7 +8,7 @@ ItemEntity::ItemEntity(std::unique_ptr<ItemBase> _item, const VECTOR& _pos, floa
 	// ƒRƒ‰ƒCƒ_[‚ğì¬‚µ‚Ä“o˜^
 	pCollider = new SphereCollider(this, position, radius); // ©š‚±‚±‚Å‘ã“ü
 	this->SetCollider(pCollider);                        // © GameObject ‚É‚à“o˜^
-	CollisionManager::GetInstance().Register(pCollider); // © “–‚½‚è”»’è“o˜^
+	//CollisionManager::GetInstance().Register(pCollider); // © “–‚½‚è”»’è“o˜^
 	this->SetTag("item");								  //ƒ^ƒO‚Ì’Ç‰Á
 }
 

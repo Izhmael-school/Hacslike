@@ -2,9 +2,16 @@
 #include "../GameObject/Stage/StageCell.h"
 #include "../GameObject/Stage/StageGenerator.h"
 #include "../Definition.h"
-#include "../GameObject/Character/Character.h"
+
 #include "EnemyManager.h"
 #include <vector>
+
+struct FloorData {
+	int startFloor;
+	int endFloor;
+	std::string floorTextureName;
+	std::vector<int> spawnEnemyID;
+};
 
 class StageManager :public Singleton<StageManager>{
 #pragma region シングルトンのデータ構造
@@ -27,17 +34,23 @@ public:
 	std::vector<int> floorNormalTexture;
 	int textureChangeFloor = 10;
 	const int BossFloorNum = 10;
+	FloorData floorData;
 
 public:
 	void Update();
 	void Render();
+	void LoadFloorData();
 
 	int GetMapData(int x,int y);
+	int SetMapData(int x,int y,int setValue);
+	int GetRoomStatus(int roomNum,RoomStatus status);
 	void SetGameObjectRandomPos(GameObject* obj);
 	int GetNowRoomNum(VECTOR pos);
 	VECTOR GetRandomRoomRandomPos();
 	void Generate();
 
+	void UnuseObject(StageCell* cell);
+	StageCell* UseObject(ObjectType type);
 
 private:
 	void GenerateStage();

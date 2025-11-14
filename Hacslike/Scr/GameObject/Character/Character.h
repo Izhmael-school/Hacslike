@@ -78,6 +78,7 @@ public:	// ゲッターとセッター
 	inline int GetMaxHp() const { return maxHp; }
 	inline void SetHp(int _hp) { hp = _hp; }
 	inline int GetHp() const { return hp; }
+	void Damage(int rawDamage);
 #pragma endregion
 
 #pragma region Attack
@@ -137,9 +138,7 @@ public:	// ゲッターとセッター
 	inline void SetLv(int _Lv) { Lv = _Lv; }
 #pragma endregion
 
-	inline Character* GetPlayer() const {
-		return Character::player;
-	}
+	inline Character* GetPlayer() const { return Character::player; }
 
 	inline void SetPlayer(Character* _player) { Character::player = _player; }
 
@@ -148,17 +147,14 @@ public:	// ゲッターとセッター
 	// 壁摺りありの壁判定の計算
 	VECTOR CheckWallToWallRubbing(VECTOR dir);
 
-	inline void SetPosition(VECTOR set) override {
-		position = set;
-		/*prevPos = set;
-		wallCheckPos = set;*/
-	}
+	inline void SetPosition(VECTOR set) override { position = set; }
 
 	inline void SetPosition(float x, float y, float z) override {
 		VECTOR set = VGet(x, y, z);
 		position = set;
-		//prevPos = set;
-		//wallCheckPos = set;
 	}
+
+	virtual void IsDead() = 0;
+
 };
 

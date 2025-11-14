@@ -5,10 +5,6 @@
 #include <algorithm>
 #include <iostream>
 
-// ------------------------
-// 静的メンバ初期化
-// ------------------------
-ArtifactManager* ArtifactManager::pInstance = nullptr;
 
 ArtifactManager::ArtifactManager()
 {
@@ -31,32 +27,6 @@ ArtifactManager::~ArtifactManager()
     activeArtifact.clear();
     artifacrPool.clear();
 }
-
-void ArtifactManager::CreateInstance()
-{
-    if (!pInstance) {
-        pInstance = new ArtifactManager();
-    }
-}
-
-ArtifactManager* ArtifactManager::GetInstance()
-{
-    if (!pInstance)
-    {
-        CreateInstance();
-    }
-    return pInstance;
-}
-
-void ArtifactManager::DestroyInstance()
-{
-    if (pInstance)
-    {
-        delete pInstance;
-        pInstance = nullptr;
-    }
-}
-
 
 /// <summary>
 /// ボスを討伐後の選択式アーティファクト

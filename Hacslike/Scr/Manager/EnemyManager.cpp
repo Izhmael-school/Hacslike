@@ -1,6 +1,10 @@
 #include "EnemyManager.h"
 #include "../GameObject/Character/Enemy/Goblin/EnemyGoblin.h"
+#include "../GameObject/Character/Enemy/Spider/EnemySpider.h"
+#include "../GameObject/Character/Enemy/Wolf/EnemyWolf.h"
 #include "../GameObject/Character/Enemy/Enemy.h"
+#include "../GameObject/Character/Enemy/Boss/BossBase.h"
+#include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
 
 EnemyManager::EnemyManager() {
 	Start();
@@ -9,14 +13,30 @@ EnemyManager::EnemyManager() {
 EnemyManager::~EnemyManager() {
 	DeleteAllEnemy();
 	MV1DeleteModel(originGoblinMHandle);
+	MV1DeleteModel(originSpiderMHandle);
+	MV1DeleteModel(originWolfMHandle);
 
 	for (auto g : unuseGoblinArray) {
 		delete g;
 	}
+
+	for (auto s : unuseSpiderArray) {
+		delete s;
+	}
+
+	for (auto w : unuseWolfArray) {
+		delete w;
+	}
+
+	for (auto e : pEnemyArray) {
+		delete e;
+	}
 }
 
 void EnemyManager::Start() {
-	originGoblinMHandle = MV1LoadModel("Res/Model/Enemy/Goblin/goblin.mv1");
+	originGoblinMHandle = MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1");
+	originSpiderMHandle = MV1LoadModel("Res/Model/Enemy/Spider/model.mv1");
+	originWolfMHandle = MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1");
 	pEnemyArray.clear();
 }
 
@@ -35,38 +55,97 @@ void EnemyManager::Render() {
 }
 
 void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
+	Enemy* e = nullptr;
+
 	switch (type) {
 	case Goblin:
 		if (unuseGoblinArray.size() > 0) {
-			Enemy* g = UseEnemy(Goblin);
-			pEnemyArray.push_back(g);
+			e = UseEnemy(Goblin);
 			break;
 		}
 		else {
-			EnemyGoblin* g = new EnemyGoblin();
-			g->SetModelHandleDup(MV1DuplicateModel(originGoblinMHandle));
-			pEnemyArray.push_back(g);
+			e = new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle));
+			break;
+		}
+	case Spider:
+		if (unuseSpiderArray.size() > 0) {
+			e = UseEnemy(Spider);
+			break;
+		}
+		else {
+			e = new EnemySpider(MV1DuplicateModel(originSpiderMHandle));
+			break;
+		}
+	case Wolf:
+		if (unuseWolfArray.size() > 0) {
+			e = UseEnemy(Wolf);
+			break;
+		}
+		else {
+			e = new EnemyWolf(MV1DuplicateModel(originWolfMHandle));
 			break;
 		}
 	}
 
+	pEnemyArray.push_back(e);
 	pEnemyArray[pEnemyArray.size() - 1]->SetPosition(pos);
 }
 
-Enemy* EnemyManager::UseEnemy(EnemyType type) {
+
+void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
+	BossBase* boss = nullptr;
 	switch (type) {
 	case Goblin:
-		Enemy* g = unuseGoblinArray[0];
-		g->SetVisible(true);
-		unuseGoblinArray.erase(unuseGoblinArray.begin());
-		return g;
+		boss = new BossGoblin();
+		break;
 	}
+	boss->SetAppearPos(pos);
+	boss->SetPosition(VGet(pos.x * CellSize, 0, pos.z * CellSize));
+	boss->SetVisible(true);
+	pEnemyArray.push_back(boss);
+}
+
+Enemy* EnemyManager::UseEnemy(EnemyType type) {
+	Enemy* e = nullptr;
+	switch (type) {
+	case Goblin:
+		e = unuseGoblinArray[0];
+		unuseGoblinArray.erase(unuseGoblinArray.begin());
+		break;
+	case Spider:
+		e = unuseSpiderArray[0];
+		unuseSpiderArray.erase(unuseSpiderArray.begin());
+		break;
+
+	case Wolf:
+		e = unuseWolfArray[0];
+		unuseWolfArray.erase(unuseWolfArray.begin());
+		break;
+	}
+
+
+	if (e == nullptr) return nullptr;
+
+	CollisionManager::GetInstance().Register(e->GetCollider());
+	e->SetVisible(true);
+	e->Setup();
+	return e;
 }
 
 void EnemyManager::UnuseEnemy(Enemy* enemy) {
+
+	enemy->SetVisible(false);
+	CollisionManager::GetInstance().UnRegister(enemy->GetCollider());
+
 	switch (enemy->GetType()) {
 	case Goblin:
 		unuseGoblinArray.push_back(enemy);
+		break;
+	case Spider:
+		unuseSpiderArray.push_back(enemy);
+		break;
+	case Wolf:
+		unuseWolfArray.push_back(enemy);
 		break;
 	}
 }
@@ -74,6 +153,7 @@ void EnemyManager::UnuseEnemy(Enemy* enemy) {
 void EnemyManager::UnuseAllEnemy() {
 	while (pEnemyArray.size() > 0) {
 		UnuseEnemy(pEnemyArray[0]);
+		CollisionManager::GetInstance().UnRegister(pEnemyArray[0]->GetCollider());
 		pEnemyArray.erase(pEnemyArray.begin());
 	}
 }
@@ -81,7 +161,7 @@ void EnemyManager::UnuseAllEnemy() {
 void EnemyManager::DeleteEnemy(Enemy* enemy) {
 	for (int i = 0, max = pEnemyArray.size(); i < max; i++) {
 		if (pEnemyArray[i] != enemy) continue;
-
+		CollisionManager::GetInstance().UnRegister(enemy->GetCollider());
 		pEnemyArray.erase(pEnemyArray.begin() + i);
 		delete enemy;
 		enemy = nullptr;

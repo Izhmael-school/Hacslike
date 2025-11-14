@@ -1,26 +1,44 @@
 #include "Enemy.h"
 #include "../../../Manager/TimeManager.h"
+#include "../../../Component/Collider/Collider.h"
+#include "../../../CommonModule.h"
 
 Enemy::Enemy()
 	:rayAngle(45.0f)
 	, rayCount(15)
 	, rayLenght(1000)
 	, raySpan(0.5f)
-	, rayTime(raySpan) 
-	, moveSpeed(1) 
-{
+	, rayTime(raySpan)
+	, moveSpeed(1)
+	, exp(0)
+	, isTouch(false)
+	, isDead(false)
+	, rayAnswer(false)
+	, atkTime(0)
+	, atkSpan(4) {
 	Start();
 }
 
-Enemy::~Enemy() {}
+Enemy::~Enemy() {
+	attackAnimationList.clear();
+	attackAnimationList.shrink_to_fit();
+}
 
 void Enemy::Start() {
 	// タグの設定
 	SetTag("Enemy");
+	isDead = false;
+	isTouch = false;
+	rayAnswer = false;
+}
+
+void Enemy::Setup() {
+	hp = maxHp;
+	SetVisible(true);
 }
 
 void Enemy::Update() {
-	if (!isVisible) return;
+	if (!isVisible || isDead) return;
 
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
@@ -28,11 +46,24 @@ void Enemy::Update() {
 	if (pAnimator != nullptr) {
 		pAnimator->Update();
 	}
+
+	// 攻撃当たり判定の更新
+	for (auto c : attackColliderList) {
+		c->Update();
+
+		if (!c->IsDead()) continue;
+		auto itr = std::find(attackColliderList.begin(), attackColliderList.end(), c);
+		delete c;
+		attackColliderList.erase(itr);
+	}
+
 	// 当たり判定の更新
 	if (pCollider != nullptr) {
 		pCollider->SetMatrix(matrix);
 		pCollider->Update();
 	}
+
+	atkTime += TimeManager::GetInstance().deltaTime;
 }
 
 void Enemy::Render() {
@@ -43,15 +74,58 @@ void Enemy::Render() {
 
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
+}
 
-#if _DEBUG
-	if (pCollider != nullptr)
-		pCollider->Render();
-#endif
+
+
+void Enemy::SetStatusData(int enemyID) {
+	auto enemies = LoadJsonFile("Scr/Data/EnemyData.json");
+
+	for (auto e : enemies) {
+
+		if (e["id"] != enemyID) continue;
+
+		maxHp = e["hp"];
+		atk = e["atk"];
+		def = e["def"];
+		exp = e["exp"];
+		name = e["name"];
+		mPath = e["mPath"];
+		break;
+	}
+}
+
+void Enemy::LoadAnimation() {
+	if (mPath == "") return;
+
+	// アニメーションの読み込み
+	pAnimator->Load(mPath + "idle01.mv1", "idle01", true,true);
+	pAnimator->Load(mPath + "idle02.mv1", "idle02", true,true);
+	pAnimator->Load(mPath + "attack01.mv1", "attack01", false,false);
+	pAnimator->Load(mPath + "attack02.mv1", "attack02", false,false);
+	pAnimator->Load(mPath + "attack03.mv1", "attack03", false,false);
+	pAnimator->Load(mPath + "damage.mv1", "damage", false,false);
+	pAnimator->Load(mPath + "dead.mv1", "dead", false,false);
+	pAnimator->Load(mPath + "walk.mv1", "walk", true,true);
+	pAnimator->Load(mPath + "run.mv1", "run", true,true);
+	pAnimator->Load(mPath + "dropdown.mv1", "dropdown", false,false);
+	pAnimator->Load(mPath + "situp.mv1", "situp", false,false);
+
+	int animNum = pAnimator->GetAnimationIndex("attack01");
+	if (animNum != -1)
+		attackAnimationList.push_back(animNum);
+	animNum = pAnimator->GetAnimationIndex("attack02");
+	if (animNum != -1)
+		attackAnimationList.push_back(animNum);
+	animNum = pAnimator->GetAnimationIndex("attack03");
+	if (animNum != -1)
+		attackAnimationList.push_back(animNum);
 }
 
 void Enemy::IsDead() {
 	if (hp > 0) return;
+
+	isDead = true;
 
 	hp = 0;
 
@@ -150,7 +224,7 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 	float vecLength = sqrtf(pow(vecFanToPoint.x, 2) + pow(vecFanToPoint.z, 2));
 
 	// ベクトルと扇の名側の比較
-	if (fan.length < vecLength) return false; // 当たってない
+	if (fan.length < vecLength) return rayAnswer = false; // 当たってない
 
 	// 扇を２等分する線のベクトルを求める
 	float dirRad = Deg2Rad(fan.directionDegree);
@@ -170,9 +244,9 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 	float fanCos = cosf(Deg2Rad(fan.rangeDegree / 2));
 
 	// 点が扇の範囲内にあるか比較
-	if (fanCos < dot) return false; // 当たってない
+	if (fanCos < dot) return rayAnswer = false; // 当たってない
 
-	return true;
+	return rayAnswer = true;
 }
 
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
@@ -193,8 +267,8 @@ void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 /// 追跡
 /// </summary>
 void Enemy::Tracking() {
+	if (!rayAnswer) return;
 	VECTOR targetPos = GetPlayer()->GetPosition();
-	if (!Vision_Fan(targetPos)) return;
 
 	LookTarget(targetPos);
 
@@ -202,9 +276,36 @@ void Enemy::Tracking() {
 }
 
 void Enemy::Move(VECTOR targetPos) {
-	pAnimator->Play("walk");
+	// プレイヤーと接触していたら動かない
+	if (isTouch || isAttack()) return;
+
+	if (pAnimator->Play("run") == -1)
+		pAnimator->Play("walk");
+
 	VECTOR dir = VSub(targetPos, position);
 	float d = TimeManager::GetInstance().deltaTime;
 	VECTOR pos = VAdd(position, VGet(dir.x * d * moveSpeed, 0, dir.z * d * moveSpeed));
 	SetPosition(pos);
+}
+
+void Enemy::Attack() {
+	if (atkTime >= atkSpan) {
+		atkTime = 0;
+		pAnimator->Play(Random(attackAnimationList[0], attackAnimationList[attackAnimationList.size() - 1]));
+	}
+}
+
+void Enemy::OnTriggerEnter(Collider* _pOther) {
+	if (_pOther->GetGameObject()->CompareTag("Player")) {
+		isTouch = true;
+		pAnimator->Play("idle01");
+	}
+}
+
+void Enemy::OnTriggerStay(Collider* _pOther) {}
+
+void Enemy::OnTriggerExit(Collider* _pOther) {
+	if (_pOther->GetGameObject()->CompareTag("Player")) {
+		isTouch = false;
+	}
 }

@@ -19,11 +19,22 @@ Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed
 	, wallCheckPos(prevPos)
 	, baseAttack(5)
 	, proximityCorrection(1.0)
-	, rangedCorrection(1.0) {}
+	, rangedCorrection(1.0) {
+}
 
 Character::~Character() {
 	delete pAnimator;
 	MV1DeleteModel(modelHandle);
+}
+
+void Character::Damage(int rawDamage) {
+	int damage = rawDamage - def;
+
+	if (damage <= 0) damage = 1;
+
+	hp -= damage;
+
+	IsDead();
 }
 
 void Character::CheckWall() {

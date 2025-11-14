@@ -1,4 +1,5 @@
 #include "StageGenerator.h"
+#include "../Character/Character.h"
 #include <climits>
 
 StageGenerator::StageGenerator()
@@ -23,8 +24,6 @@ StageGenerator::StageGenerator()
 	unuseStair = nullptr;
 	useStair = nullptr;
 
-	test = new StageCell(groundModel, Room, VZero);
-
 	for (int w = 0; w < mapWidth_Large; w++) {
 		for (int h = 0; h < mapHeight_Large; h++) {
 			// 壁にする
@@ -46,7 +45,7 @@ StageGenerator::StageGenerator()
 
 	for (int w = 0; w < RoomStatus::Max; w++) {
 		for (int h = 0; h < RoomMax_Large; h++) {
-			roomStatus[w][h] = false;
+			roomStatus[w][h] = -1;
 		}
 	}
 }
@@ -61,8 +60,6 @@ StageGenerator::~StageGenerator() {
 	delete useStair;
 
 	DeleteGraph(gr);
-
-	delete test;
 
 	for (auto c : cells) {
 		MV1DeleteModel(c->GetModelHandle());
@@ -99,7 +96,6 @@ void StageGenerator::Update() {
 	if (useStair != nullptr)
 		useStair->Update();
 
-	test->Update();
 }
 
 void StageGenerator::Render() {
@@ -107,18 +103,17 @@ void StageGenerator::Render() {
 	for (auto c : cells) {
 
 		// 壁の透過処理
-		TransparencyWall(c);
+		bool fact = TransparencyWall(c);
+
+		if (fact) continue;
 
 		c->Render();
-		SetWriteZBuffer3D(TRUE);
 	}
 
 	if (useStair != nullptr)
 		useStair->Render();
 
 	DrawMap();
-
-	test->Render();
 }
 
 void StageGenerator::ClearStage() {
@@ -151,6 +146,12 @@ void StageGenerator::ClearStage() {
 		}
 	}
 
+	for (int w = 0; w < RoomStatus::Max; w++) {
+		for (int h = 0; h < RoomMax_Large; h++) {
+			roomStatus[w][h] = -1;
+		}
+	}
+
 	EnemyManager::GetInstance().UnuseAllEnemy();
 
 	roomNum = 0;
@@ -171,6 +172,7 @@ void StageGenerator::GenerateStageObject() {
 			// セルの生成
 			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
 			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
+			c->SetDataPos(VGet(nowW, 0, nowH));
 			if (c->GetObjectType() == Stair) {
 				useStair = c;
 			}
@@ -513,6 +515,7 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.id = stageID;
 		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
+		stage.bossType = s["bossType"];
 
 		for (int i = 0; i < mapWidth_Large; i++) {
 			for (int j = 0; j < mapHeight_Large; j++) {
@@ -684,7 +687,7 @@ void StageGenerator::DrawMap() {
 	DrawBox((x * mapSize) + mapOffset.x, (-z * mapSize) + mapOffset.z, (x * mapSize + mapSize) + mapOffset.x, (-z * mapSize + mapSize) + mapOffset.z, red, true);
 }
 
-void StageGenerator::TransparencyWall(StageCell* cell) {
+bool StageGenerator::TransparencyWall(StageCell* cell) {
 	if (cell->GetObjectType() == Wall) {
 		VECTOR pos = cell->GetPosition();
 		VECTOR playerPos = Character::player->GetPosition();
@@ -695,18 +698,11 @@ void StageGenerator::TransparencyWall(StageCell* cell) {
 		if (map[x][z - 1] == (int)Wall) {
 			// プレイヤーの座標から見て±1マス内の壁だったら
 			if (pos.x + NextCellEnd >= playerPos.x && pos.x - NextCellEnd <= playerPos.x &&
-				pos.z + NextCellEnd >= playerPos.z && pos.z + CellEnd <= playerPos.z) {
-				SetWriteZBuffer3D(FALSE);
-				MV1SetOpacityRate(cell->GetModelHandle(), 0.5f);
-				//MV1SetMaterialDrawBlendMode(c->GetModelHandle(), 0, DX_BLENDMODE_ALPHA);
-				//MV1SetMaterialDrawBlendParam(c->GetModelHandle(), 0, 100);
-				/*continue;*/
-			}
-			else {
-				MV1SetOpacityRate(cell->GetModelHandle(), 1.0f);
-			}
+				pos.z + NextCellEnd >= playerPos.z && pos.z + CellEnd <= playerPos.z)
+				return true;
 		}
 	}
+	return false;
 }
 
 void StageGenerator::ChangeObjectTexture(int textureHandle, ObjectType changeObject) {
@@ -754,6 +750,20 @@ int StageGenerator::GetNowRoomNum(VECTOR pos) {
 		// 部屋のステータスを見て部屋番号i番目の部屋だったら
 		if (roomStatus[rx][i] <= pos.x && roomStatus[rx][i] + roomStatus[rw][i] - 1 >= pos.x &&
 			roomStatus[ry][i] <= pos.z && roomStatus[ry][i] + roomStatus[rh][i] - 1 >= pos.z) {
+
+			// 部屋番号を返す
+			return i;
+		}
+	}
+	// 無かったら-1で返す
+	return -1;
+}
+
+int StageGenerator::GetNowRoomNum(int x, int z) {
+	for (int i = 0; i < roomCount; i++) {
+		// 部屋のステータスを見て部屋番号i番目の部屋だったら
+		if (roomStatus[rx][i] <= x && roomStatus[rx][i] + roomStatus[rw][i] - 1 >= x &&
+			roomStatus[ry][i] <= z && roomStatus[ry][i] + roomStatus[rh][i] - 1 >= z) {
 
 			// 部屋番号を返す
 			return i;

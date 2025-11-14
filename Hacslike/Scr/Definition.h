@@ -116,4 +116,19 @@ enum WeaponType {
 
 enum EnemyType {
 	Goblin,
+	Spider,
+	Wolf,
+};
+
+enum RoomStatus {	// 部屋の配列ステータス
+	x,	// マップX座標
+	y,	// マップY座標
+	w,	// 分割した幅
+	h,	// 分割した高さ
+
+	rx,	// 部屋の生成位置
+	ry,	// 部屋の生成位置
+	rw,	// 部屋の幅
+	rh,	// 部屋の高さ
+	Max,
 };

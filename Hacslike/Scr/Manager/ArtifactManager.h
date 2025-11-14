@@ -1,42 +1,18 @@
 #pragma once
 #include"../GameObject/Artifact/ArtifactBase.h"
+#include "../Component/Singleton.h"
 #include <vector>
 #include <memory>
 #include <random>
 class Player;
 
-class ArtifactManager
+class ArtifactManager : public Singleton<ArtifactManager>
 {
-private:
-	static ArtifactManager* pInstance;	//自身のインスタンス
+public:
 
 	ArtifactManager();
 
 	~ArtifactManager();
-
-public:
-	ArtifactManager(const ArtifactManager&) = delete;
-	ArtifactManager& operator=(const ArtifactManager&) = delete;
-	ArtifactManager(ArtifactManager&&) = delete;
-	ArtifactManager& operator=(ArtifactManager&&) = delete;
-
-private:
-	/// <summary>
-	/// インスタンスの作成
-	/// </summary>
-	static void CreateInstance();
-
-public:
-	/// <summary>
-	/// インスタンスの所得
-	/// </summary>
-	/// <returns></returns>
-	static ArtifactManager* GetInstance();
-
-	/// <summary>
-	/// インスタンスの破棄
-	/// </summary>
-	static void DestroyInstance();
 
 private:
 	std::vector<std::shared_ptr<ArtifactBase>> activeArtifact; //現在有効なアーティファクト

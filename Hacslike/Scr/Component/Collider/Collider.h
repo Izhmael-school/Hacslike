@@ -1,12 +1,14 @@
 #pragma once
 #include <DxLib.h>
 #include "../../GameObject/GameObject.h"
+#include "../../GameObject/Character/Character.h"
 
 // 当たり判定の規定クラス
 class Collider {
 protected:
 	bool isEnable;				// 当たり判定の有効無効
 	GameObject* pGameObject;	// 当たり判定を付けるオブジェクト
+	Character* pCharacter;
 	MATRIX matrix;				// 当たり判定を付けるオブジェクトの行列
 
 public:// トラクタ
@@ -28,6 +30,8 @@ public:// Getter // Setter
 	// GameObject
 	inline GameObject* GetGameObject() const { return pGameObject; }
 	inline void* SetGameObject(GameObject* _pObj) { pGameObject = _pObj; }
+	// Character
+	inline Character* GetCharacter() const { return pCharacter; }
 	// matrix
 	inline void SetMatrix(MATRIX _mat) { matrix = _mat; }
 
