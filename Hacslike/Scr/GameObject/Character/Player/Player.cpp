@@ -7,7 +7,9 @@
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
+#include"../../Item/ItemFactory.h"
 #include <math.h>
+#include "../../Item/ItemEquip/ItemEquip.h"
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
@@ -139,6 +141,21 @@ void Player::Start() {
 
 	playerMovement = new PlayerMovement(this);
 	playerAttack = new PlayerAttack(this, pWeapon, playerMovement);
+	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
+	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
+		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
+	);
+
+	// インベントリに追加
+	GetInventory()->AddItem(std::move(stick));
+
+	// 追加されたアイテムは items.back() に入っているので取得
+	
+	Inventory::InventoryItem* lastItem = GetInventory()->GetLastItem();
+
+		// 装備（EquipItem は Use() を内部で呼ぶ）
+		GetInventory()->EquipItem(lastItem->item.get());
+	
 
 	SetSpeed(1);
 }
