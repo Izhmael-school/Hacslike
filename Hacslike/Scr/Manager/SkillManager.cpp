@@ -20,6 +20,7 @@ SkillManager::SkillManager()
         std::make_shared<ItemDropRateUpSkill>(),
         std::make_shared<CriticalHitRateUpSkill>(),
         std::make_shared<CriticalDamageUpSkill>(),
+        std::make_shared<IsDashAttack>(), // これは1回でMAX
     };
 }
 
@@ -33,20 +34,33 @@ SkillManager::~SkillManager()
 }
 
 // ------------------------
-// スキル3つ生成
+// スキル3つ生成（最大段階のスキルは除外）
 // ------------------------
 std::vector<std::shared_ptr<Skill>> SkillManager::GenerateSkillChoices()
 {
+    std::vector<std::shared_ptr<Skill>> candidates;
+
+    // MAX到達していないスキルだけ選ぶ
+    for (auto& s : skillPool)
+    {
+        if (!s->IsMaxLevel())
+            candidates.push_back(s);
+    }
+
+    // 全部MAXだったら選択肢無し
+    if (candidates.empty()) {
+        return {};
+    }
+
+    // ランダム選択
     std::vector<std::shared_ptr<Skill>> choices;
     std::mt19937 rng((unsigned int)time(nullptr));
 
-    // スキルプールをシャッフル
-    std::vector<std::shared_ptr<Skill>> shuffled = skillPool;
-    std::shuffle(shuffled.begin(), shuffled.end(), rng);
+    std::shuffle(candidates.begin(), candidates.end(), rng);
 
-    for (int i = 0; i < 3 && i < (int)shuffled.size(); ++i)
+    for (int i = 0; i < 3 && i < (int)candidates.size(); ++i)
     {
-        choices.push_back(shuffled[i]);
+        choices.push_back(candidates[i]);
     }
     return choices;
 }
@@ -57,20 +71,23 @@ std::vector<std::shared_ptr<Skill>> SkillManager::GenerateSkillChoices()
 void SkillManager::ApplySelectedSkill(Player* player, std::shared_ptr<Skill> skill)
 {
     if (!player || !skill) return;
+
     skill->Apply(player);
     activeSkills.push_back(skill);
 
-    std::cout << "スキル獲得: " << skill->GetName() << std::endl;
+    std::cout << "スキル獲得: " << skill->GetName()
+        << " (Lv." << skill->GetLevel() << "/" << skill->GetMaxLevel() << ")\n";
 }
 
 // ------------------------
-// 全スキル削除
+// 全スキル削除（デバッグ用）
 // ------------------------
 void SkillManager::ClearSkills(Player* player)
 {
     for (auto& s : activeSkills)
     {
-        s->Remove(player);
+        s->ClearLevel();     // レベルを1に戻す
+        s->Remove(player);   // 効果解除
     }
     activeSkills.clear();
 

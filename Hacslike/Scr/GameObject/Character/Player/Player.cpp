@@ -23,7 +23,6 @@ Player::Player(VECTOR _pos)
 	//, slashes()								//	斬撃
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
-	, hitItem(false)
 	, isItemUI(false)
 	, coinValue()
 	, expValue()
@@ -211,7 +210,7 @@ void Player::Update() {
 	if (Exp >= maxExp && !isSelectingSkill) {
 		remainExp = Exp - maxExp;
 		Exp = remainExp;
-		maxExp *= 1.1;
+		//maxExp *= 1.1;
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
 		isSelectingSkill = true;
@@ -427,21 +426,19 @@ void Player::WeaponInput() {
 /// アイテムの取得
 /// </summary>
 void Player::AddItem() {
-	auto& items = ItemDropManager::GetInstance().GetActiveItems();
+	if (!hitItem) return;
 
-	for (auto& item : items) {
-		if (hitItem && (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B))) {
-			hitItem = false;
-			item->SetVisible(false);
-			std::string itemName = item->GetItem()->GetName();
+	if (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
 
-			// インベントリへ追加
-			GetInventory()->AddItem(std::move(item->TakeItem()));
+		hitItem->SetVisible(false);
 
+		// インベントリへ追加
+		GetInventory()->AddItem(std::move(hitItem->TakeItem()));
 
-			ItemDropManager::GetInstance().RemoveItem(item.get());
-			break; // erase後にvectorを操作しないようにbreak
-		}
+		// DropManager から削除
+		ItemDropManager::GetInstance().RemoveItem(hitItem);
+
+		hitItem = nullptr; // 念のため解除
 	}
 }
 
@@ -586,13 +583,13 @@ void Player::AddItemRender()
 	int GoalY = (WINDOW_HEIGHT)-150;
 	int textX = StartX + 80;
 	int textY = StartY + 17;
-	int GHandle;
-	GHandle = LoadGraph("Res/ItemIcon/YButton.png");
 	if (hitItem) {
-		DrawBox(StartX,StartY,GoalX,GoalY, darkGray,TRUE);
+		DrawBox(StartX,StartY,GoalX,GoalY, gray,TRUE);
 		DrawBox(StartX+2, StartY+2, GoalX-2, GoalY-2, white, FALSE);
-		DrawFormatString(textX, textY,white,"Fキー/   :アイテムを取る");
-		DrawExtendGraph(textX + 55, textY,(textX+55)+20 ,textY+15,GHandle, TRUE);
+		DrawFormatString(textX+10, textY,black,"キー/ ボタン:アイテムを取る");
+		DrawFormatString(textX, textY, white, "F");
+		DrawFormatString(textX+53, textY, white , "Y");
+		
 
 	}
 	else return;
@@ -644,7 +641,6 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 				coin.get()->SetVisible(false);
 				coin.get()->SetActive(false);
 				coin.get()->GetCollider()->SetEnable(false);
-				//Coin::GetInstance()->RemoveCoin(coin.get());
 				break; // 削除したのでループを抜ける
 			}
 		}
@@ -658,7 +654,8 @@ void Player::OnTriggerEnter(Collider* _pCol) {
  */
 void Player::OnTriggerStay(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "item") {
-		hitItem = true;
+		// 触れているアイテムを記録
+		hitItem = dynamic_cast<ItemEntity*>(_pCol->GetGameObject());
 	}
 }
 
@@ -669,7 +666,9 @@ void Player::OnTriggerStay(Collider* _pCol) {
  */
 void Player::OnTriggerExit(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "item") {
-		hitItem = false;
-
+		// 離れたアイテムなら解除
+		if (hitItem == _pCol->GetGameObject()) {
+			hitItem = nullptr;
+		}
 	}
 }

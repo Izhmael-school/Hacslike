@@ -12,6 +12,9 @@ protected: //メンバ変数
     std::string description;	//説明
     std::string iconPath; // アイコン画像のパス
 
+    int level = 0;         // 現在のレベル
+    int maxLevel = 5;      // 基本の最大レベルは5段階
+
 public:
     /// <summary>
     /// コンストラク
@@ -19,7 +22,7 @@ public:
     /// <param name="name"></param>
     /// <param name="desc"></param>
     /// <param name="icon"></param>
-    Skill(const std::string& name, const std::string& desc, const std::string& icon);
+    Skill(const std::string& name, const std::string& desc, const std::string& icon ,int maxLv = 5);
 
     /// <summary>
     /// デストラクタ
@@ -30,6 +33,12 @@ public://オーバーライドされる関数達
     virtual void Apply(Player* player) = 0;
     virtual void Remove(Player* player) = 0;
 
+    // --- レベル制御 ---
+    void LevelUp() { if (level < maxLevel) level++; }
+    bool IsMaxLevel() const { return level >= maxLevel; }
+    int GetLevel() const { return level; }
+    int GetMaxLevel() const { return maxLevel; }
+    virtual void ClearLevel() = 0;                      // レベルを1に戻す
 public://ゲッター
     const std::string& GetName() const { return name; }
     const std::string& GetDescription() const { return description; }
@@ -50,6 +59,7 @@ public:
     AttackUpSkill(float boost = 1.2f);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 };
 
 /// <summary>
@@ -62,6 +72,7 @@ public:
     HPUpSkill(int hp = 50);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 };
 
 
@@ -75,6 +86,7 @@ public:
     SpeedUpSkill(float boost = 0.3f);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 };
 
 /// <summary>
@@ -86,6 +98,7 @@ public:
     DefenseUpSkill(int boost = 5);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 
 };
 
@@ -98,7 +111,7 @@ public:
     ProximityCorrectionUpSkill(float boost = 5);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
-
+    void ClearLevel() override;
 
 };
 
@@ -111,6 +124,7 @@ public:
     RangedCorrectionUpSkill(float boost = 5);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 
 };
 
@@ -123,6 +137,7 @@ public:
     ItemDropRateUpSkill(float boost = 0.05);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 };
 
 /// <summary>
@@ -134,15 +149,34 @@ public:
     CriticalHitRateUpSkill(float boost = 10.0f);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
 
 };
 
+/// <summary>
+/// 会心ダメージ
+/// </summary>
 class CriticalDamageUpSkill : public Skill {
     float CriticalDamageBoost;
 public:
-    CriticalDamageUpSkill(float boost = 20.0f);
+    CriticalDamageUpSkill(float boost = 15.0f);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
+    void ClearLevel() override;
+
+};
+
+/// <summary>
+/// ダッシュ攻撃の取得
+/// </summary>
+class IsDashAttack : public Skill {
+    bool isDashAttack;
+public:
+    IsDashAttack();
+    void Apply(Player* player) override;
+    void Remove(Player* player) override;
+    void ClearLevel() override;
+
 
 };
 

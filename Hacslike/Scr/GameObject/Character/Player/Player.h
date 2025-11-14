@@ -61,8 +61,9 @@ private:	//	メンバ変数
 	float hpRate;
 #pragma region インベントリ/アイテム関連
 	Inventory inventory; //アイテムインベントリ
-	bool hitItem;		 //アイテムに当たっているかどうか
+	//bool hitItem;		 //アイテムに当たっているかどうか
 	bool isItemUI;		 //アイテムのUIを開いているかどうか
+	ItemEntity* hitItem = nullptr;
 #pragma endregion
 
 #pragma region アーティファクト/コイン

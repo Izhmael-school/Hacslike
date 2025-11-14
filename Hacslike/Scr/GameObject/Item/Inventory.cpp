@@ -500,7 +500,19 @@ void Inventory::Render()
 
         // 装備中マーク
         if (equippedItem && equippedItem == inv.item.get()) {
-            DrawString(baseX + 3, y + 4, "E", GetColor(0, 255, 255));
+            DrawString(baseX + 3, y + 4, "E", cyan);
+        }
+
+        // ★ 使用中アイテム（効果時間継続）のマーク S を表示 ★
+        bool isActiveEffect = false;
+        for (auto* active : activeItems) {
+            if (active == inv.item.get()) {
+                isActiveEffect = true;
+                break;
+            }
+        }
+        if (isActiveEffect) {
+            DrawString(baseX + 3, y + 4, "S", cyan);   // ← 黄系
         }
 
         // 数量

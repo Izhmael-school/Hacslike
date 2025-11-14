@@ -154,7 +154,6 @@ void AttactPotion::Update()
 	if (!isBoost) return;
 
 	timer -= time->deltaTime;  // 経過時間を減らす
-	printfDx("効果時間%f\n",timer);
 	if (timer <= 0.0f) {
 		// 効果終了
 		Character::player->SetAtk(originAttack);
@@ -175,7 +174,6 @@ void AttactPotion::Use()
 	}
 	originAttack = Character::player->GetAtk();
 	Character::player->SetAtk(originAttack + attactValue);
-	//printfDx("timerセット前: %f\n", timer);
 	timer = duration;
 	isEffectFinished = false;
 	isBoost = true;
@@ -229,7 +227,6 @@ void DefensePotion::Use()
 	}
 	originDefense = Character::player->GetDef();
 	Character::player->SetDef(originDefense + defenseValue);
-	//printfDx("timerセット前: %f\n", timer);
 	timer = duration;
 	isEffectFinished = false;
 	isBoost = true;

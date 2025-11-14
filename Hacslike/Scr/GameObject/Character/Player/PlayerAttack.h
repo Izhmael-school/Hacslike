@@ -26,6 +26,8 @@ private:
 
 	bool isDashAttack;
 
+	bool checkDashAttack; //ダッシュ攻撃が可能かどうか
+
 	bool isCharging;
 	float chargeTime;
 	const float maxChargeTime ;
@@ -70,6 +72,8 @@ public:
 	/// ダッシュアタックしてるかどうか
 	/// </summary>
 	inline bool IsDashAttacking() const { return isDashAttack; }
+
+	inline void SetIsCheckDashAttack(bool _b) { checkDashAttack = _b; }
 
 	/// <summary>
 	/// 武器の設定

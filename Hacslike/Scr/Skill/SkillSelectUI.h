@@ -1,6 +1,6 @@
 #pragma once
 #include"Skill.h"
-
+#include"DxLib.h"
 
 class SkillSelectUI{
 struct FireworkParticle {
@@ -12,12 +12,15 @@ struct FireworkParticle {
     bool exploded;
 };
 
+
+
 private:
     std::vector<FireworkParticle> fireworks;
     int selectedIndex = 0;  //選択用のインデックス
     bool isActive = false;  //表示非表示
     int cardWidth = 260;    //横
     int cardHeight = 360;   //縦
+    int inputCooldown = 0;   // 矢印キー連打防止クールタイム
 
     // --- 出現アニメーション関連 ---
     bool isAppearing = false;  // アニメーション中かどうか
@@ -41,5 +44,6 @@ public:
     void Render(const std::vector<std::shared_ptr<Skill>>& skills);
     bool IsActive() const { return isActive; }
 
+    
 };
 
