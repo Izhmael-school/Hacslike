@@ -121,5 +121,12 @@ public:
 public:
     inline const std::vector<InventoryItem>& GetItems() const { return items; }
 
+    public:
+        InventoryItem* GetLastItem() {
+            if (items.empty()) return nullptr;
+            return &items.back();
+        }
+        // ‚·‚Å‚É‚ ‚é public ŠÖ”‚Å‘•”õ‚Å‚«‚éê‡‚Í‚±‚ê‚ğg‚¤‚¾‚¯‚Å‚àOK
+
 };
 
