@@ -90,7 +90,8 @@ void StageManager::GenerateStage() {
 
 	int SpanwNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 5));
 	for (int i = 0; i < SpanwNum; i++) {
-		EnemyManager::GetInstance().SpawnEnemy(Wolf, GetRandomRoomRandomPos());
+		int spawnEnemyID = floorData.spawnEnemyID[Random(0, floorData.spawnEnemyID.size() - 1)];
+		EnemyManager::GetInstance().SpawnEnemy((EnemyType)spawnEnemyID, GetRandomRoomRandomPos());
 	}
 }
 

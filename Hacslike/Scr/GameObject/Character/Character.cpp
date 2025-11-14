@@ -14,7 +14,7 @@ Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed
 	, criticalHitRate(1.0f)
 	, criticalDamage(1.0f)
 	, Lv(1)
-	, Exp(0)
+	, exp(0)
 	, prevPos(VGet(position.x, position.z, 0))
 	, wallCheckPos(prevPos)
 	, baseAttack(5)

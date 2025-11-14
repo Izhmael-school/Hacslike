@@ -17,7 +17,7 @@ Player* Player::instance = nullptr;
  *	@param[in]	VECTOR _pos		初期化する座標
  */
 Player::Player(VECTOR _pos)
-	: Character(_pos, "Player", Lv, Exp, speed)
+	: Character(_pos, "Player", Lv, exp, speed)
 	, pWeapon(nullptr)
 	, input(&InputManager::GetInstance())
 	//, slashes()								//	斬撃
@@ -36,7 +36,7 @@ Player::Player(VECTOR _pos)
 	hp = maxHp;
 	atk = 5;
 	def = 2;
-	Exp = 0;
+	exp = 0;
 	criticalHitRate = 10;
 	criticalDamage = 100;
 	// コンストラクタでシングルトンの重複生成を防ぐ
@@ -211,9 +211,9 @@ void Player::Update() {
 	}
 
 #pragma region スキル選択
-	if (Exp >= maxExp && !isSelectingSkill) {
-		remainExp = Exp - maxExp;
-		Exp = remainExp;
+	if (exp >= maxExp && !isSelectingSkill) {
+		remainExp = exp - maxExp;
+		exp = remainExp;
 		//maxExp *= 1.1;
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
@@ -294,7 +294,7 @@ void Player::Render() {
 	int expR_inner = 140;  //	内側半径
 	int expSteps = 50;	   //	分割数
 
-	double expPercent = (double)Exp / maxExp * 100;
+	double expPercent = (double)exp / maxExp * 100;
 	double Exp_max_angle = 90.0;
 	double Exp_angle_end = Exp_max_angle * expPercent / 100.0;
 
@@ -607,7 +607,7 @@ void Player::PlayerStatusRender() {
 	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
 	DrawFormatString(930, 20, white, "ステータス");
 	DrawFormatString(930, 60, green, "LV　　　　　 : %d", Lv);
-	DrawFormatString(930, 80, green, "EXP　　　　　: %d", Exp);
+	DrawFormatString(930, 80, green, "EXP　　　　　: %d", exp);
 	DrawFormatString(930, 100, green, "HP　　　　　 : %d / %d", hp, maxHp);
 	DrawFormatString(930, 120, green, "攻撃力　　　 : %d", atk);
 	DrawFormatString(930, 140, green, "防御力　　　 : %d", def);

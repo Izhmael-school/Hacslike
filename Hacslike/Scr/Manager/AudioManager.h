@@ -3,55 +3,15 @@
 #include <list>
 #include <map>
 #include <DxLib.h>
+#include "../Component/Singleton.h"
 
-class AudioManager {
-#pragma region シングルトンのデータ構造
-private:	// 静的メンバ変数
-	static AudioManager* pInstance;	// 自身のインスタンスのアドレスを格納
-
-
-private:	// コンストラクタとデストラクタ
-	/*
-	 * @brief	コンストラクタ
-	 * @tip		外部で生成されないようにアクセス指定子をprivateにする
-	 */
-	AudioManager();
-
-	/*
-	 * @brief	デストラクタ
-	 */
-	~AudioManager();
-
-public:	//コピーと譲渡禁止
-	AudioManager(const AudioManager&) = delete;
-	AudioManager& operator = (const AudioManager&) = delete;
-	AudioManager(AudioManager&&) = delete;
-	AudioManager& operator = (AudioManager&&) = delete;
-
-private:	// 静的メンバ関数
-	/*
-	 * @function	CreateInstance
-	 * @brief		自信のインスタンスを生成する
-	 */
-	static void CreateInstance();
-
-public:	// 静的メンバ関数
-	/*
-	 * @function	GetInstance
-	 * @brief		自信のインスタンスを取得する唯一の手段
-	 * @return		InputManager*	自身のインスタンスのアドレス
-	 */
-	static AudioManager* GetInstance();
-
-	/*
-	 * @function	DestroyInstance
-	 * @brief		自信のインスタンスを破棄する唯一の手段
-	 */
-	static void DestroyInstance();
-#pragma endregion
+class AudioManager :public Singleton<AudioManager>{
 private:
 	std::map<std::string, int> audioResourceMap;	// リソースの連想配列
 	std::list<class Audio*> pAudioList;		// 音の一元管理
+public:
+	AudioManager();
+	~AudioManager();
 
 public:
 	/*

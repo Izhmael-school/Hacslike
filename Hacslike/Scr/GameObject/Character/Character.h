@@ -19,7 +19,7 @@ protected:	// メンバ変数
 	float criticalDamage;
 
 	int Lv;
-	int Exp;
+	int exp;
 
 	VECTOR prevPos;
 	VECTOR wallCheckPos;
@@ -122,13 +122,13 @@ public:	// ゲッターとセッター
 	inline void SetSpeed(float _speed) { speed = _speed; }
 #pragma endregion
 
-#pragma region Exp
+#pragma region exp
 	//	経験値の取得
-	inline int GetExp() const { return Exp; }
+	inline int GetExp() const { return exp; }
 	//	経験値の設定
-	inline void SetExp(int _Exp) { Exp = _Exp; }
+	inline void SetExp(int _Exp) { exp = _Exp; }
 	//	経験値を足す処理
-	inline void AddExp(int _addExp) { Exp += _addExp; }
+	inline void AddExp(int _addExp) { exp += _addExp; }
 #pragma endregion
 
 #pragma region Lv

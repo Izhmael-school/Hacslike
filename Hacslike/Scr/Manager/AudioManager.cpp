@@ -1,9 +1,6 @@
 #include "AudioManager.h"
 #include "../GameObject/Audio/Audio.h"
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
-AudioManager* AudioManager::pInstance = nullptr;
-
 AudioManager::AudioManager() 
 	:audioResourceMap()
 	,pAudioList()
@@ -22,24 +19,6 @@ AudioManager::~AudioManager() {
 	}
 
 	pAudioList.clear();
-}
-
-void AudioManager::CreateInstance() {
-	pInstance = new AudioManager();
-}
-
-AudioManager* AudioManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void AudioManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
 }
 
 void AudioManager::Load(std::string _filePath, std::string _name, bool _is3D) {
