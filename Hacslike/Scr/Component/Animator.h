@@ -3,7 +3,15 @@
 #include <string>
 #include <functional>
 
-template <class T = void, class R = void>
+template <class T = void, class... R>
+
+struct AnimationEvent {
+	std::function<T(R...)> animEvent;	// 指定の時間になった時に発生するイベント
+	float eventTime;			// イベントが発生する時間
+	bool isAction;				// イベントが発生したかどうか
+};
+
+template <class T = void, class... R>
 // アニメーションクリップ構造体
 struct AnimationClip {
 	int animationHandle;	// アニメーションハンドル
@@ -12,12 +20,10 @@ struct AnimationClip {
 	float totalTime;	// アニメーションの終了時間
 	float playTime;		// アニメーションの再生時間
 	bool isLoop;		// ループするかどうか
-	int transition;		// アニメーションが終了した後にセットする番号
+	bool canInterrupt;	// 割り込み可能か
 
 	std::string name;	// アニメーションの名前
-	std::function<R(T)> event;	// 指定の時間になった時に発生するイベント
-	float eventTime;			// イベントが発生する時間
-	bool isAction;				// イベントが発生したかどうか
+	std::vector<AnimationEvent<void>> events;
 
 	
 
@@ -27,26 +33,28 @@ struct AnimationClip {
 	 * @param[in]  bool _isLoop = false
 	 * @param[in]  int _transition
 	 */
-	AnimationClip(int _animHandle, std::string _name, bool _isLoop = false, int _transition = 0)
+	AnimationClip(int _animHandle, std::string _name,bool _canInterrupt, bool _isLoop = false)
 		:animationHandle(_animHandle)
 		, currentAnimationID(0)
 		, playTime(0.0f)
 		, totalTime(0.0f)
 		, playSpeed(1.0f)
+		, canInterrupt(_canInterrupt)
 		, isLoop(_isLoop)
-		, transition(_transition)
 		, name(_name)
-		, event(nullptr)
-		, eventTime(0)
-		, isAction(false) {}
+		, events() {}
 
 	~AnimationClip() {
 		MV1DeleteModel(animationHandle);
 	}
 
-	void SetEvent(std::function<R(T)> _event, float _eventTime) {
-		event = _event;
-		eventTime = _eventTime;
+	// アニメーションイベントの作成
+	void SetEvent(std::function<T(R...)> _event, float _eventTime) {
+		AnimationEvent e;
+		e.animEvent = _event;
+		e.eventTime = _eventTime;
+		e.isAction = false;
+		events.push_back(e);
 	}
 };
 
@@ -56,7 +64,7 @@ struct AnimationClip {
  * @tips  アニメーション毎にファイルが分かれているモデル用
  *
  * 今回はモデルデータとアニメーションデータだけ
- * アニメーションさせる毎にアタッチとでタッチを繰り替えす
+ * アニメーションさせる毎にアタッチとデタッチを繰り返す
  *
  */
  // 1つのモデルに複数のアニメーションを持たせることはできない
@@ -78,7 +86,7 @@ public:
 public:
 	void Update();
 
-	void Load(std::string _filePath, std::string _name, bool _isLoop = false, int _transition = 0);
+	void Load(std::string _filePath, std::string _name,bool _canInterrupt, bool _isLoop = false);
 
 	void Play(int _index, float _speed = 0.3f);
 	int Play(std::string _name, float _speed = 0.3f);
@@ -97,6 +105,7 @@ public:
 	inline void ChangeSpeed(int index, float _speed) { pAnimations[index]->playSpeed = _speed; }
 	float GetTotalTime(std::string animName);
 	int GetAnimationIndex(std::string animName);
+
 
 	inline void SetAnimModelHandle(int handle);
 	VECTOR GetRootMotionDelta();

@@ -11,9 +11,14 @@ private:
 	// “G‚ÌˆêŒ³ŠÇ—
 	std::vector<Enemy*> pEnemyArray;
 	std::vector<Enemy*> unuseGoblinArray;
+	std::vector<Enemy*> unuseSpiderArray;
+	std::vector<Enemy*> unuseWolfArray;
 	
 public:
 	int originGoblinMHandle;
+	int originSpiderMHandle;
+	int originWolfMHandle;
+
 public:
 	EnemyManager();
 	~EnemyManager();

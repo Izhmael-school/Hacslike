@@ -16,6 +16,26 @@
     "hp": 1,
     "atk": 35,
     "def": 10,
-    "exp": 1000
+    "exp": 200
+  },
+
+  {
+    "id": 2,
+    "name": "クモ",
+    "mPath": "Res/Model/Enemy/Spider/",
+    "hp": 1,
+    "atk": 20,
+    "def": 5,
+    "exp": 50
+  },
+
+  {
+    "id": 3,
+    "name": "オオカミ",
+    "mPath": "Res/Model/Enemy/Wolf/",
+    "hp": 1,
+    "atk": 20,
+    "def": 5,
+    "exp": 50
   }
 ]

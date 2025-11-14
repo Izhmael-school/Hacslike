@@ -32,6 +32,27 @@ void StageManager::Render() {
 	DrawFormatString(100, 100, red, "階層 %d 階", floorCount - 1);
 }
 
+void StageManager::LoadFloorData() {
+	auto data = LoadJsonFile("Scr/Data/FloorData.json");
+
+	for (auto d : data) {
+		if (d["startFloor"] - 1 != floorCount) continue;
+
+		floorData.startFloor = d["startFloor"];
+		floorData.endFloor = d["endFloor"];
+		floorData.floorTextureName = d["floorTextureName"];
+
+		// ベクターの初期化
+		floorData.spawnEnemyID.clear();
+		floorData.spawnEnemyID.shrink_to_fit();
+
+		for (int id : d["spawnEnemyID"]) {
+			floorData.spawnEnemyID.push_back(id);
+		}
+		break;
+	}
+}
+
 int StageManager::GetMapData(int x, int y) {
 	return generator->map[x][y];
 }
@@ -49,13 +70,27 @@ void StageManager::GenerateStage() {
 	generator->ClearStage();
 	// 階層の加算
 	floorCount++;
-	//ChangeTexture(floorDifTexture[floor(floorCount / textureChangeFloor)], Room);
+	// テクスチャの張替え
+	//ChangeTexture(floorDifTexture[floor(floorCount - 1 / textureChangeFloor)], Room);
+	// ステージのデータを作る
 	generator->GenerateStageData();
+	// ステージのオブジェクトを置く
 	generator->GenerateStageObject();
+	// プレイヤーの設置
 	SetGameObjectRandomPos(Character::player);
+	// エネミーの削除
+	EnemyManager::GetInstance().UnuseAllEnemy();
+	int canSpawnNum = 0;
+	for (int i = 0; i < RoomMax_Large; i++) {
+		int w = generator->roomStatus[rw][i];
+		int h = generator->roomStatus[rh][i];
 
-	for (int i = 0; i < 10; i++) {
-		EnemyManager::GetInstance().SpawnEnemy(Goblin, GetRandomRoomRandomPos());
+		canSpawnNum += w * h;
+	}
+
+	int SpanwNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 5));
+	for (int i = 0; i < SpanwNum; i++) {
+		EnemyManager::GetInstance().SpawnEnemy(Wolf, GetRandomRoomRandomPos());
 	}
 }
 
@@ -81,6 +116,8 @@ void StageManager::GenerateStage(int stageID) {
 
 void StageManager::Generate() {
 	FadeManager::GetInstance().FadeOut(0.5f);
+
+	LoadFloorData();
 
 	if (floorCount % BossFloorNum == 0) {
 		GenerateStage((int)(floorCount / BossFloorNum));

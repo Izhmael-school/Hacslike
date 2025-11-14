@@ -45,7 +45,7 @@ StageGenerator::StageGenerator()
 
 	for (int w = 0; w < RoomStatus::Max; w++) {
 		for (int h = 0; h < RoomMax_Large; h++) {
-			roomStatus[w][h] = false;
+			roomStatus[w][h] = -1;
 		}
 	}
 }
@@ -143,6 +143,12 @@ void StageGenerator::ClearStage() {
 	for (int w = 0; w < mapWidth_Large; w++) {
 		for (int h = 0; h < mapHeight_Large; h++) {
 			stageMap[w][h] = false;
+		}
+	}
+
+	for (int w = 0; w < RoomStatus::Max; w++) {
+		for (int h = 0; h < RoomMax_Large; h++) {
+			roomStatus[w][h] = -1;
 		}
 	}
 

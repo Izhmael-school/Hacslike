@@ -6,6 +6,13 @@
 #include "EnemyManager.h"
 #include <vector>
 
+struct FloorData {
+	int startFloor;
+	int endFloor;
+	std::string floorTextureName;
+	std::vector<int> spawnEnemyID;
+};
+
 class StageManager :public Singleton<StageManager>{
 #pragma region シングルトンのデータ構造
 public:	// コンストラクタとデストラクタ
@@ -27,10 +34,12 @@ public:
 	std::vector<int> floorNormalTexture;
 	int textureChangeFloor = 10;
 	const int BossFloorNum = 10;
+	FloorData floorData;
 
 public:
 	void Update();
 	void Render();
+	void LoadFloorData();
 
 	int GetMapData(int x,int y);
 	int SetMapData(int x,int y,int setValue);

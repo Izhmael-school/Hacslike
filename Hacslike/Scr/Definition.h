@@ -116,6 +116,8 @@ enum WeaponType {
 
 enum EnemyType {
 	Goblin,
+	Spider,
+	Wolf,
 };
 
 enum RoomStatus {	// 部屋の配列ステータス

@@ -140,8 +140,14 @@
     <ClCompile Include="Scr\Manager\ArtifactManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp">
+      <Filter>GameObject\Character\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp">
+      <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -290,8 +296,17 @@
     <ClInclude Include="Scr\Manager\ArtifactManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h">
+      <Filter>GameObject\Character\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
+      <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\Spider.h" />
+    <ClInclude Include="EnemySpider.h">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -363,6 +378,15 @@
     <Filter Include="GameObject\Character\Enemy\Boss">
       <UniqueIdentifier>{fb92ef34-50ec-4690-9b08-379bd10701ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Character\Enemy\Boss\Goblin">
+      <UniqueIdentifier>{e7c9750c-1cb4-4b04-8b7f-684b5b3374b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Spider">
+      <UniqueIdentifier>{afa069cc-80d8-4d4d-9593-c7fe7e1031b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Wolf">
+      <UniqueIdentifier>{e8f61e93-2e52-4121-acf1-7bf69361c8cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Scr\Data\WeaponsData.json">
@@ -376,6 +400,12 @@
       <Filter>Data</Filter>
     </None>
     <None Include="Scr\Data\BossData.json">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="Scr\Data\EnemyData.json">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="Scr\Data\FloorData.json">
       <Filter>Data</Filter>
     </None>
   </ItemGroup>

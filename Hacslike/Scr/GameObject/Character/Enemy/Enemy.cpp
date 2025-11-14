@@ -8,17 +8,20 @@ Enemy::Enemy()
 	, rayCount(15)
 	, rayLenght(1000)
 	, raySpan(0.5f)
-	, rayTime(raySpan) 
-	, moveSpeed(1) 
-	,exp(0)
-	,isTouch(false)
-	,isDead(false)
-	,rayAnswer(false)
-{
+	, rayTime(raySpan)
+	, moveSpeed(1)
+	, exp(0)
+	, isTouch(false)
+	, isDead(false)
+	, rayAnswer(false)
+	, atkTime(0)
+	, atkSpan(4) {
 	Start();
 }
 
 Enemy::~Enemy() {
+	attackAnimationList.clear();
+	attackAnimationList.shrink_to_fit();
 }
 
 void Enemy::Start() {
@@ -27,6 +30,11 @@ void Enemy::Start() {
 	isDead = false;
 	isTouch = false;
 	rayAnswer = false;
+}
+
+void Enemy::Setup() {
+	hp = maxHp;
+	SetVisible(true);
 }
 
 void Enemy::Update() {
@@ -54,6 +62,8 @@ void Enemy::Update() {
 		pCollider->SetMatrix(matrix);
 		pCollider->Update();
 	}
+
+	atkTime += TimeManager::GetInstance().deltaTime;
 }
 
 void Enemy::Render() {
@@ -66,6 +76,8 @@ void Enemy::Render() {
 	MV1DrawModel(modelHandle);
 }
 
+
+
 void Enemy::SetStatusData(int enemyID) {
 	auto enemies = LoadJsonFile("Scr/Data/EnemyData.json");
 
@@ -73,7 +85,7 @@ void Enemy::SetStatusData(int enemyID) {
 
 		if (e["id"] != enemyID) continue;
 
-		hp = e["hp"];
+		maxHp = e["hp"];
 		atk = e["atk"];
 		def = e["def"];
 		exp = e["exp"];
@@ -87,17 +99,27 @@ void Enemy::LoadAnimation() {
 	if (mPath == "") return;
 
 	// アニメーションの読み込み
-	pAnimator->Load(mPath + "idle01.mv1", "idle01", true);
-	pAnimator->Load(mPath + "idle02.mv1", "idle02", true);
-	pAnimator->Load(mPath + "attack01.mv1", "attack01", false);
-	pAnimator->Load(mPath + "attack02.mv1", "attack02", false);
-	pAnimator->Load(mPath + "attack03.mv1", "attack03", false);
-	pAnimator->Load(mPath + "damage.mv1", "damage", false);
-	pAnimator->Load(mPath + "dead.mv1", "dead", false);
-	pAnimator->Load(mPath + "walk.mv1", "walk", true);
-	pAnimator->Load(mPath + "run.mv1", "run", true);
-	pAnimator->Load(mPath + "dropdown.mv1", "dropdown", false);
-	pAnimator->Load(mPath + "situp.mv1", "situp", false);
+	pAnimator->Load(mPath + "idle01.mv1", "idle01", true,true);
+	pAnimator->Load(mPath + "idle02.mv1", "idle02", true,true);
+	pAnimator->Load(mPath + "attack01.mv1", "attack01", false,false);
+	pAnimator->Load(mPath + "attack02.mv1", "attack02", false,false);
+	pAnimator->Load(mPath + "attack03.mv1", "attack03", false,false);
+	pAnimator->Load(mPath + "damage.mv1", "damage", false,false);
+	pAnimator->Load(mPath + "dead.mv1", "dead", false,false);
+	pAnimator->Load(mPath + "walk.mv1", "walk", true,true);
+	pAnimator->Load(mPath + "run.mv1", "run", true,true);
+	pAnimator->Load(mPath + "dropdown.mv1", "dropdown", false,false);
+	pAnimator->Load(mPath + "situp.mv1", "situp", false,false);
+
+	int animNum = pAnimator->GetAnimationIndex("attack01");
+	if (animNum != -1)
+		attackAnimationList.push_back(animNum);
+	animNum = pAnimator->GetAnimationIndex("attack02");
+	if (animNum != -1)
+		attackAnimationList.push_back(animNum);
+	animNum = pAnimator->GetAnimationIndex("attack03");
+	if (animNum != -1)
+		attackAnimationList.push_back(animNum);
 }
 
 void Enemy::IsDead() {
@@ -255,7 +277,7 @@ void Enemy::Tracking() {
 
 void Enemy::Move(VECTOR targetPos) {
 	// プレイヤーと接触していたら動かない
-	if (isTouch) return;
+	if (isTouch || isAttack()) return;
 
 	if (pAnimator->Play("run") == -1)
 		pAnimator->Play("walk");
@@ -266,9 +288,17 @@ void Enemy::Move(VECTOR targetPos) {
 	SetPosition(pos);
 }
 
+void Enemy::Attack() {
+	if (atkTime >= atkSpan) {
+		atkTime = 0;
+		pAnimator->Play(Random(attackAnimationList[0], attackAnimationList[attackAnimationList.size() - 1]));
+	}
+}
+
 void Enemy::OnTriggerEnter(Collider* _pOther) {
 	if (_pOther->GetGameObject()->CompareTag("Player")) {
 		isTouch = true;
+		pAnimator->Play("idle01");
 	}
 }
 

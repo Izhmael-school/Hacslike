@@ -104,23 +104,23 @@ void Player::Start() {
 
 
 	//	アニメーションの読み込み
-	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle", true);
-	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", "Walk", true);
-	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1", "Atk1");
-	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1", "Atk2");
-	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1", "Atk3");
+	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle",true, true);
+	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", "Walk",true, true);
+	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1", "Atk1",true);
+	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1", "Atk2",true);
+	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1", "Atk3",true);
 	GetAnimator()->Load("Res/PlayerModel/Run.mv1", "Run", true);
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1", "AxeAtk1");
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1", "AxeAtk2");
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1", "AxeAtk3");
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack4.mv1", "AxeAtk4");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1", "GreatAtk1");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3");
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack4.mv1", "GreatAtk4");
-	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1");
-	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2", true);
-	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3");
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1", "AxeAtk1",true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1", "AxeAtk2",true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1", "AxeAtk3",true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack4.mv1", "AxeAtk4",true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1", "GreatAtk1",true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2",true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3",true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack4.mv1", "GreatAtk4",true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1",true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2",true, true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3",true);
 
 	pAnimator->Play(0);
 

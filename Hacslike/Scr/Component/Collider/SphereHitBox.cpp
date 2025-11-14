@@ -9,7 +9,7 @@ SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, fl
 	, radius(_radius)
 	, pCollider(nullptr)
 	, timer(0.0f)
-	, lifeTime(_lifeTime / FPS) {
+	, lifeTime(_lifeTime) {
 	Start();
 }
 

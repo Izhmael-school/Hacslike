@@ -7,7 +7,7 @@ Animator::Animator()
 	, currentAnimation(INVALID)
 	, isPlaying(false)
 	, rootFrameIndex()
-	, prevRootPos(){}
+	, prevRootPos() {}
 
 Animator::~Animator() {
 	for (auto anim : pAnimations) {
@@ -21,7 +21,7 @@ void Animator::Update() {
 		return;
 
 	// 現在のアニメーションを進める
-	AnimationClip<void, void>* pCurrentAnim = GetAnimation(currentAnimation);
+	AnimationClip<void>* pCurrentAnim = GetAnimation(currentAnimation);
 
 	if (pCurrentAnim == nullptr)
 		return;
@@ -30,10 +30,12 @@ void Animator::Update() {
 	pCurrentAnim->playTime += pCurrentAnim->playSpeed;
 
 	// イベントの処理
-	if (pCurrentAnim->event != nullptr) {
-		if (pCurrentAnim->playTime >= pCurrentAnim->eventTime && !pCurrentAnim->isAction) {
-			pCurrentAnim->isAction = true;
-			pCurrentAnim->event();
+	if (pCurrentAnim->events.size() > 0) {
+
+		for (auto& e : pCurrentAnim->events) {
+			if (pCurrentAnim->playTime < e.eventTime || e.isAction) continue;
+			e.isAction = true;
+			e.animEvent();
 		}
 	}
 
@@ -48,7 +50,9 @@ void Animator::Update() {
 			isPlaying = true;
 		}
 		else {
-			Play(pCurrentAnim->transition, pAnimations[pCurrentAnim->transition]->playSpeed);
+			for (auto& e : pCurrentAnim->events) {
+				e.isAction = false;
+			}
 		}
 	}
 
@@ -56,9 +60,9 @@ void Animator::Update() {
 	MV1SetAttachAnimTime(animationModelHandle, 0, pCurrentAnim->playTime);
 }
 
-void Animator::Load(std::string _filePath, std::string _name, bool _isLoop, int _transition) {
+void Animator::Load(std::string _filePath, std::string _name, bool _canInterrupt, bool _isLoop) {
 	// アニメーションの動的確保 + 読み込み
-	AnimationClip<>* pAnimClip = new AnimationClip<>(MV1LoadModel(_filePath.c_str()), _name, _isLoop, _transition);
+	AnimationClip<>* pAnimClip = new AnimationClip<>(MV1LoadModel(_filePath.c_str()), _name, _canInterrupt, _isLoop);
 	// 読み込めてなかったらリターン
 	if (pAnimClip->animationHandle == -1) return;
 	// アニメーション群に追加
@@ -67,7 +71,7 @@ void Animator::Load(std::string _filePath, std::string _name, bool _isLoop, int 
 
 void Animator::Play(int _index, float _speed) {
 	// 現在再生中のアニメーションの場合は処理しない
-	if (_index == currentAnimation)
+	if (_index == currentAnimation /*|| (currentAnimation != -1 && !pAnimations[currentAnimation]->canInterrupt)*/)
 		return;
 
 	// 再生するアニメーション番号に書き換える
@@ -86,7 +90,9 @@ void Animator::Play(int _index, float _speed) {
 	// 再生フラグを建てる
 	isPlaying = true;
 	// イベントフラグの初期化
-	pAnimations[_index]->isAction = false;
+	for (auto& e : pAnimations[_index]->events) {
+		e.isAction = false;
+	}
 }
 
 int Animator::Play(std::string _name, float _speed) {
@@ -117,6 +123,7 @@ int Animator::GetAnimationIndex(std::string animName) {
 		if (pAnimations[i]->name != animName) continue;
 		return i;
 	}
+	return -1;
 }
 
 void Animator::SetAnimModelHandle(int handle) {

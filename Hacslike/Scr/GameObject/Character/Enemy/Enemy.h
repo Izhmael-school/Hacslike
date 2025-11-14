@@ -1,6 +1,7 @@
 #pragma once
 #include "../Character.h"
 #include "../../../Manager/CollisionManager.h"
+#include "../../../Manager/EffectManager.h"
 #include "../../../Component/Collider/SphereHitBox.h"
 
 class Enemy : public Character {
@@ -32,7 +33,7 @@ protected:
 		Unaware,	// –³Œx‰ú
 		Hostile		// “G‘Î
 	};
-public:
+protected:
 	// “G‚ÌŽí—Þ
 	EnemyType type;
 	// ŒoŒ±’l—Ê
@@ -50,6 +51,12 @@ public:
 	bool isDead;
 
 	std::vector<SphereHitBox*> attackColliderList;
+
+	std::vector<int> attackAnimationList;
+
+	float atkTime;
+	float atkSpan;
+
 public:
 	Enemy();
 	~Enemy();
@@ -58,6 +65,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	
+	void Setup();
+
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	virtual void Tracking();
 	virtual void Move(VECTOR targetPos);
