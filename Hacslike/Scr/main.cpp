@@ -87,8 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		CollisionManager::GetInstance().Update();
 		TimeManager::GetInstance().Update();
 		InputManager::GetInstance().Update();
-		AudioManager::GetInstance()->Update();
-
+		
 		// ‰æ–Ê‚ğƒNƒŠƒA‚·‚é
 		ClearDrawScreen();
 

@@ -13,7 +13,7 @@ ItemSword::ItemSword(VECTOR _pos, const std::string& _name, const std::string& _
 
 void ItemSword::Start()
 {
-	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
+	AudioManager::GetInstance().Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void ItemSword::Render()
@@ -22,7 +22,7 @@ void ItemSword::Render()
 
 void ItemSword::Use()
 {
-	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
 	Player::GetInstance()->ChangeWeapon(4);
 	
@@ -45,7 +45,7 @@ ItemAxe::ItemAxe(VECTOR _pos, const std::string& _name, const std::string& _desc
 
 void ItemAxe::Start()
 {
-	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
+	AudioManager::GetInstance().Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void ItemAxe::Render()
@@ -54,7 +54,7 @@ void ItemAxe::Render()
 
 void ItemAxe::Use()
 {
-	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
 	Player::GetInstance()->ChangeWeapon(3);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
@@ -102,7 +102,7 @@ Greatsword::Greatsword(VECTOR _pos, const std::string& _name, const std::string&
 
 void Greatsword::Start()
 {
-	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
+	AudioManager::GetInstance().Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void Greatsword::Render()
@@ -111,7 +111,7 @@ void Greatsword::Render()
 
 void Greatsword::Use()
 {
-	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
 	Player::GetInstance()->ChangeWeapon(9);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
@@ -132,7 +132,7 @@ Spear::Spear(VECTOR _pos, const std::string& _name, const std::string& _desc, in
 
 void Spear::Start()
 {
-	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
+	AudioManager::GetInstance().Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void Spear::Render()
@@ -141,7 +141,7 @@ void Spear::Render()
 
 void Spear::Use()
 {
-	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
 	Player::GetInstance()->ChangeWeapon(2);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);

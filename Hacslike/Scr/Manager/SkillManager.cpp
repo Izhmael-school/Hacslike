@@ -37,7 +37,7 @@ SkillManager::~SkillManager()
 
 void SkillManager::Start()
 {
-    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す10.mp3", "SkillGet", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す10.mp3", "SkillGet", false);
 }
 
 // ------------------------
@@ -45,7 +45,7 @@ void SkillManager::Start()
 // ------------------------
 std::vector<std::shared_ptr<Skill>> SkillManager::GenerateSkillChoices()
 {
-    AudioManager::GetInstance()->PlayOneShot("SkillGet");
+    AudioManager::GetInstance().PlayOneShot("SkillGet");
     std::vector<std::shared_ptr<Skill>> candidates;
 
     // MAX到達していないスキルだけ選ぶ

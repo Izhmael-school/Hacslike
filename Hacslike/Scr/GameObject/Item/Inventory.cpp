@@ -23,7 +23,7 @@ scrollOffset(0),
 menuActive(false),
 menuChoice(0)
 {
-    AudioManager::GetInstance()->Load("Res/SE/ItemGet.mp3", "GetItem", false);
+    AudioManager::GetInstance().Load("Res/SE/ItemGet.mp3", "GetItem", false);
 };
 Inventory::~Inventory() {
     // キャッシュされたグラフィックハンドルを解放（必要なら）
@@ -40,7 +40,7 @@ Inventory::~Inventory() {
 /// </summary>
 void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 {
-    AudioManager::GetInstance()->PlayOneShot("GetItem");
+    AudioManager::GetInstance().PlayOneShot("GetItem");
 #if _DEBUG
     printfDx("[Inventory::AddItem] this=%p BEFORE items.size=%d\n", this, (int)items.size());
 

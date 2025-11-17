@@ -7,8 +7,8 @@ void ArtifactSelectUI::StartSelection()
 {
     selectIndex = 0;
     isActive = true;
-    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
-    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 }
 
 int ArtifactSelectUI::UpdateSelection()
@@ -22,20 +22,20 @@ int ArtifactSelectUI::UpdateSelection()
     {
         selectIndex = (selectIndex + 1) % 3;
         WaitTimer(150);
-        AudioManager::GetInstance()->PlayOneShot("SelectSkill");
+        AudioManager::GetInstance().PlayOneShot("SelectSkill");
     }
     // 右キー → 右回り (0 -> 2 -> 1 -> 0)
     else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT))
     {
         selectIndex = (selectIndex + 3 - 1) % 3; // 安全な -1 の扱い
         WaitTimer(150);
-        AudioManager::GetInstance()->PlayOneShot("SelectSkill");
+        AudioManager::GetInstance().PlayOneShot("SelectSkill");
     }
     // 決定
     else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
     {
         isActive = false;
-        AudioManager::GetInstance()->PlayOneShot("DecisionSkill");
+        AudioManager::GetInstance().PlayOneShot("DecisionSkill");
         return selectIndex;
     }
 
