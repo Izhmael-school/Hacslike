@@ -10,6 +10,7 @@
 #include"../../Item/ItemFactory.h"
 #include <math.h>
 #include "../../Item/ItemEquip/ItemEquip.h"
+#include"../../../Manager/ArtifactManager.h"
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
@@ -200,7 +201,7 @@ void Player::Update() {
 	//アイテムのインベントリ表示非表示
 	//OpenInventory();
 
-	ArtifactManager::GetInstance()->Update(this);
+	ArtifactManager::GetInstance().Update(this);
 	
 	
 
