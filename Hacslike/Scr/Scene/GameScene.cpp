@@ -5,6 +5,7 @@
 #include "../Manager/StageManager.h"
 #include"../Manager/ItemDropManager.h"
 #include"../GameObject/Coin/Coin.h"
+#include"../GameObject/TreasureChest/StartTreasureChest.h"
 
 
 GameScene::GameScene() {
@@ -32,6 +33,8 @@ void GameScene::Start() {
 
 	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 
+	StartTreasureChest* pChest = new StartTreasureChest(VGet(800,0,800));
+	pGameObjectArray.push_back(pChest);
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
 	StageManager::GetInstance().Generate();

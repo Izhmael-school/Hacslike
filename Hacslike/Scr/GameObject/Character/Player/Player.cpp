@@ -11,6 +11,7 @@
 #include <math.h>
 #include "../../Item/ItemEquip/ItemEquip.h"
 #include"../../../Manager/ArtifactManager.h"
+#include "../../TreasureChest/StartTreasureChest.h"
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
@@ -232,7 +233,7 @@ void Player::Update() {
 	if (Exp >= maxExp && !isSelectingSkill) {
 		remainExp = Exp - maxExp;
 		Exp = remainExp;
-		//maxExp *= 1.1;
+		maxExp *= 1.1;
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
 		isSelectingSkill = true;
@@ -252,6 +253,7 @@ void Player::Update() {
 		}
 	}
 #pragma endregion
+	
 	pAnimator->Update();
 
 	GameObject::Update();
@@ -386,7 +388,15 @@ void Player::Render() {
 		skillUI.Render(skillChoices);
 	}
 
+	if(isSelectArtifact){
+		artifactSelectUI.Render(artifactChioces);
+	}
+
 	AddItemRender();
+	if(hitChest){
+		GetArtifactRender();
+	}
+
 #pragma endregion
 }
 
@@ -618,6 +628,67 @@ void Player::AddItemRender()
 	else return;
 }
 
+/// <summary>
+/// アーティファクトの取得
+/// </summary>
+void Player::GetArtifact()
+{
+	if (hitChest) {
+		if (!isSelectArtifact) {
+			if (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
+				artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
+				artifactSelectUI.StartSelection();
+				isSelectArtifact = true;
+			}
+		}
+		else {
+			// ★スキル選択中の処理
+			int Selected = artifactSelectUI.UpdateSelection();
+			if (Selected != -1)
+			{
+
+				if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
+				{
+					ArtifactManager::GetInstance().ApplySelectedArtifact(this, artifactChioces[Selected]);
+					
+					
+				}
+
+				
+			}
+
+		}
+	}
+	else return;
+
+}
+
+void Player::GetArtifactRender()
+{
+	int StartX = (WINDOW_WIDTH / 2) - 200;
+	int StartY = (WINDOW_HEIGHT)-200;
+	int GoalX = (WINDOW_WIDTH / 2) + 200;
+	int GoalY = (WINDOW_HEIGHT)-150;
+	int textX = StartX + 80;
+	int textY = StartY + 17;
+	if (!isSelectArtifact) {
+		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:宝箱を開ける");
+		DrawFormatString(textX, textY, white, "F");
+		DrawFormatString(textX + 53, textY, white, "Y");
+
+
+	}
+	else if(isSelectArtifact){
+		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+		DrawFormatString(textX + 40, textY, black, "中身は空っぽだ");
+		
+	}
+	else return;
+}
+
 
 void Player::PlayerStatusRender() {
 
@@ -625,7 +696,7 @@ void Player::PlayerStatusRender() {
 	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
 	DrawFormatString(930, 20, white, "ステータス");
 	DrawFormatString(930, 60, green, "LV　　　　　 : %d", Lv);
-	DrawFormatString(930, 80, green, "EXP　　　　　: %d", Exp);
+	DrawFormatString(930, 80, green, "EXP　　　　　: %d / %d", Exp , maxExp);
 	DrawFormatString(930, 100, green, "HP　　　　　 : %d / %d", hp, maxHp);
 	DrawFormatString(930, 120, green, "攻撃力　　　 : %d", atk);
 	DrawFormatString(930, 140, green, "防御力　　　 : %d", def);
@@ -679,6 +750,11 @@ void Player::OnTriggerStay(Collider* _pCol) {
 		// 触れているアイテムを記録
 		hitItem = dynamic_cast<ItemEntity*>(_pCol->GetGameObject());
 	}
+	if (_pCol->GetGameObject()->GetTag() == "TreasureChest") {
+		hitChest = true;
+		GetArtifact();
+	
+	}
 }
 
 /*
@@ -692,5 +768,9 @@ void Player::OnTriggerExit(Collider* _pCol) {
 		if (hitItem == _pCol->GetGameObject()) {
 			hitItem = nullptr;
 		}
+	}
+	if (_pCol->GetGameObject()->GetTag() == "TreasureChest") {
+		hitChest = false;
+		
 	}
 }

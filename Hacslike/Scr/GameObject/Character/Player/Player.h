@@ -14,6 +14,7 @@
 #include "PlayerAttack.h"
 #include "PlayerMovement.h"
 #include "../../../Skill/SkillSelectUI.h"
+#include "../../Artifact/ArtifactSelectUI.h"
 
 static enum MenuType {
 	menuInventory = 0,
@@ -73,6 +74,10 @@ private:	//	メンバ変数
 	bool isGetCoin = false;
 	attactPower_raise_GetCoin* coinArtifact;  // コイン取得系のアーティファクト
 	itemDropRateUpwardOnCoinAcquisition* itemArtifact;
+	bool hitChest = false;
+	bool isSelectArtifact = false;
+	ArtifactSelectUI artifactSelectUI;
+	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
 #pragma endregion
 
 #pragma region スキル
@@ -200,6 +205,10 @@ public:		//	メンバ関数
 	/// アイテムを取るキーの描画
 	/// </summary>
 	void AddItemRender();
+
+	void GetArtifact();
+
+	void GetArtifactRender();
 
 	/// <summary>
 	/// プレイヤーステータスの描画

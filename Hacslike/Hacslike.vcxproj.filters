@@ -148,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
+    <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp">
+      <Filter>GameObject\TreasureChest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -307,6 +310,9 @@
       <Filter>GameObject\Character\Enemy\Spider</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
+    <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
+      <Filter>GameObject\TreasureChest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -386,6 +392,9 @@
     </Filter>
     <Filter Include="GameObject\Character\Enemy\Wolf">
       <UniqueIdentifier>{e8f61e93-2e52-4121-acf1-7bf69361c8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\TreasureChest">
+      <UniqueIdentifier>{10acd316-f36c-40a9-88df-843bc15cbb1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
