@@ -1,6 +1,7 @@
 #include "StageCell.h"
 #include "../../Manager/FadeManager.h"
 #include "../../Manager/StageManager.h"
+#include "../../Manager/AudioManager.h"
 #include "../../Component/Collider/Collider.h"
 
 StageCell::StageCell(int _modelHandle, ObjectType _type, VECTOR position)
@@ -32,6 +33,7 @@ void StageCell::Update() {
 
 		if (FadeManager::GetInstance().GetFadeState() != FadeState::FadeEnd) return;
 
+		AudioManager::GetInstance().PlayOneShot("FloorDawn");
 		StageManager::GetInstance().Generate();
 		isTouch = false;
 		return;

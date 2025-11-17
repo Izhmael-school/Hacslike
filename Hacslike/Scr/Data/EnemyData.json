@@ -2,6 +2,7 @@
   {
     "id": 0,
     "name": "ゴブリン",
+    "typeID" : 0,
     "mPath": "Res/Model/Enemy/Goblin/",
     "hp": 1,
     "atk": 10,
@@ -12,6 +13,7 @@
   {
     "id": 1,
     "name": "ゴブリンリーダー",
+    "typeID": 0,
     "mPath": "Res/Model/Enemy/Goblin/",
     "hp": 1,
     "atk": 35,
@@ -22,6 +24,7 @@
   {
     "id": 2,
     "name": "クモ",
+    "typeID": 1,
     "mPath": "Res/Model/Enemy/Spider/",
     "hp": 1,
     "atk": 20,
@@ -32,6 +35,7 @@
   {
     "id": 3,
     "name": "オオカミ",
+    "typeID": 2,
     "mPath": "Res/Model/Enemy/Wolf/",
     "hp": 1,
     "atk": 20,

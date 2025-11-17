@@ -2,6 +2,7 @@
 #include "../../../Manager/TimeManager.h"
 #include "../../../Component/Collider/Collider.h"
 #include "../../../CommonModule.h"
+#include "../../../Manager/ItemDropManager.h"
 
 Enemy::Enemy()
 	:rayAngle(45.0f)
@@ -10,7 +11,6 @@ Enemy::Enemy()
 	, raySpan(0.5f)
 	, rayTime(raySpan)
 	, moveSpeed(1)
-	, exp(0)
 	, isTouch(false)
 	, isDead(false)
 	, rayAnswer(false)
@@ -34,6 +34,7 @@ void Enemy::Start() {
 
 void Enemy::Setup() {
 	hp = maxHp;
+	isDead = false;
 	SetVisible(true);
 }
 
@@ -123,11 +124,17 @@ void Enemy::LoadAnimation() {
 }
 
 void Enemy::IsDead() {
-	if (hp > 0) return;
+	if (hp > 0 || isDead) return;
 
 	isDead = true;
 
 	hp = 0;
+
+	// 経験値の増加
+	Character::player->AddExp(exp);
+	// アイテムのドロップ
+	ItemDropManager* manager = &ItemDropManager::GetInstance();
+	//manager->TryDropItem(manager->GetItemDropRate(), position);
 
 	pAnimator->Play("dead");
 }

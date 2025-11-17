@@ -36,6 +36,12 @@ void EnemyGoblin::Start() {
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
 	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 8);
 	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
+	// 攻撃の効果音
+	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 14);
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 12);
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 24);
+	pAnimator->GetAnimation("attack03")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Impact"); }, 32);
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 30);
 	// 攻撃のエフェクト
 	//pAnimator->GetAnimation("attack01")->SetEvent([this]() { EffectManager::GetInstance().Instantiate("Claw_Vertical", position); }, 14);
 
@@ -68,5 +74,6 @@ void EnemyGoblin::Render() {
 }
 
 void EnemyGoblin::OnTriggerEnter(Collider* _pOther) {
+	if (isDead) return;
 	Enemy::OnTriggerEnter(_pOther);
 }

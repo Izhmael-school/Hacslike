@@ -14,7 +14,9 @@ private:
 	std::vector<Enemy*> unuseSpiderArray;
 	std::vector<Enemy*> unuseWolfArray;
 	
-public:
+	const std::string audioFilePath = "Res/Audio/SE/Enemy/";
+
+private:
 	int originGoblinMHandle;
 	int originSpiderMHandle;
 	int originWolfMHandle;

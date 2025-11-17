@@ -1,9 +1,12 @@
 #include "StageManager.h"
 #include "FadeManager.h"
 #include "../GameObject/Character/Character.h"
+#include "../CommonModule.h"
+#include "AudioManager.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
+	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3","FloorDawn",false);
 }
 
 StageManager::~StageManager() {
@@ -87,10 +90,39 @@ void StageManager::GenerateStage() {
 
 		canSpawnNum += w * h;
 	}
-
+	// 敵の数を決める
 	int SpanwNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 5));
+
+	// 敵データを読み込む
+	auto data = LoadJsonFile("Scr/Data/EnemyData.json");
+
+	int max = floorData.spawnEnemyID.size();
+	std::vector<EnemyData> spawnEnemyDataList;
+
+	// スポーンする可能性のある敵のデータを取得しておく
+	for (int i = 0; i < max; i++) {
+		for (auto d : data) {
+			if (d["id"] != floorData.spawnEnemyID[i]) continue;
+
+			EnemyData eData;
+			eData.id = d["id"];
+			eData.typeID = d["typeID"];
+
+			spawnEnemyDataList.push_back(eData);
+			break;
+		}
+	}
+
 	for (int i = 0; i < SpanwNum; i++) {
-		EnemyManager::GetInstance().SpawnEnemy(Wolf, GetRandomRoomRandomPos());
+		int spawnEnemyID = spawnEnemyDataList[Random(0, spawnEnemyDataList.size() - 1)].id;
+
+		for (auto e : spawnEnemyDataList) {
+			if (e.id != spawnEnemyID) continue;
+
+			EnemyManager::GetInstance().SpawnEnemy((EnemyType)e.typeID, GetRandomRoomRandomPos());
+			break;
+		}
+
 	}
 }
 
@@ -115,6 +147,9 @@ void StageManager::GenerateStage(int stageID) {
 }
 
 void StageManager::Generate() {
+
+	AudioManager::GetInstance().Stop("all");
+
 	FadeManager::GetInstance().FadeOut(0.5f);
 
 	LoadFloorData();
@@ -127,6 +162,10 @@ void StageManager::Generate() {
 	}
 
 	FadeManager::GetInstance().FadeIn(0.5f);
+
+	AudioManager::GetInstance().PlayBGM("NormalFloor");
+	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
+
 }
 
 void StageManager::UnuseObject(StageCell* cell) {

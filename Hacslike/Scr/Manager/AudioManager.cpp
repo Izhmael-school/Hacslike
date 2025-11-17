@@ -1,9 +1,6 @@
 #include "AudioManager.h"
 #include "../GameObject/Audio/Audio.h"
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
-AudioManager* AudioManager::pInstance = nullptr;
-
 AudioManager::AudioManager() 
 	:audioResourceMap()
 	,pAudioList()
@@ -24,30 +21,14 @@ AudioManager::~AudioManager() {
 	pAudioList.clear();
 }
 
-void AudioManager::CreateInstance() {
-	pInstance = new AudioManager();
-}
-
-AudioManager* AudioManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void AudioManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
-}
-
 void AudioManager::Load(std::string _filePath, std::string _name, bool _is3D) {
 	SetCreate3DSoundFlag(_is3D);
 
 	int res = LoadSoundMem(_filePath.c_str());
 
 	auto itr = audioResourceMap.find(_filePath.c_str());
+
+	
 
 	if (itr == audioResourceMap.end()) {
 		// “o˜^
@@ -68,6 +49,22 @@ void AudioManager::ChangeVolume(float _volume, std::string _name) {
 			}
 		}
 	}
+}
+
+void AudioManager::PlayBGM(std::string _name) {
+	int sound = INVALID;
+	if (GetSoundTotalTime(audioResourceMap[_name]) >= 1000 * 60 * 3) {
+		sound = audioResourceMap[_name];
+	}
+	else {
+		sound = DuplicateSoundMem(audioResourceMap[_name]);
+	}
+
+	Audio* pAudioObj = new Audio(sound);
+	pAudioObj->SetTag(_name);
+	pAudioObj->SetLoop(true);
+	pAudioObj->Start();
+	pAudioList.push_back(pAudioObj);
 }
 
 void AudioManager::PlayOneShot(std::string _name) {

@@ -30,6 +30,10 @@ void EnemySpider::Start() {
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 8);
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
+	// UŒ‚‚ÌŒø‰Ê‰¹
+	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SpiderAttack"); }, 14);
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 9);
+
 }
 
 void EnemySpider::Update() {
@@ -59,5 +63,6 @@ void EnemySpider::Render() {
 }
 
 void EnemySpider::OnTriggerEnter(Collider* _pOther) {
+	if (isDead) return;
 	Enemy::OnTriggerEnter(_pOther);
 }

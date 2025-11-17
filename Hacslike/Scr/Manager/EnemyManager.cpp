@@ -5,6 +5,7 @@
 #include "../GameObject/Character/Enemy/Enemy.h"
 #include "../GameObject/Character/Enemy/Boss/BossBase.h"
 #include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
+#include "../Manager/AudioManager.h"
 
 EnemyManager::EnemyManager() {
 	Start();
@@ -38,6 +39,14 @@ void EnemyManager::Start() {
 	originSpiderMHandle = MV1LoadModel("Res/Model/Enemy/Spider/model.mv1");
 	originWolfMHandle = MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1");
 	pEnemyArray.clear();
+
+	AudioManager* manager = &AudioManager::GetInstance();
+	manager->Load(audioFilePath + "SwordSwing.mp3", "SwordSwing", false);
+	manager->Load(audioFilePath + "Impact.mp3", "Impact", false);
+	manager->Load(audioFilePath + "Dawn.mp3", "Dawn", false);
+	manager->Load(audioFilePath + "SpiderAttack.mp3", "SpiderAttack", false);
+	manager->Load(audioFilePath + "Bite1.mp3", "Bite1", false);
+	manager->Load(audioFilePath + "Bite2.mp3", "Bite2", false);
 }
 
 void EnemyManager::Update() {

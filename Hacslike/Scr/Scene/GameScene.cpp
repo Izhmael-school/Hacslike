@@ -31,6 +31,8 @@ void GameScene::Start() {
 
 	pCamera->SetTarget(pPlayer);
 
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/NormalFloor.mp3", "NormalFloor", false);
+	AudioManager::GetInstance().ChangeVolume(0.1f, "NormalFloor");
 	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 
 	StartTreasureChest* pChest = new StartTreasureChest(VGet(800,0,800));
