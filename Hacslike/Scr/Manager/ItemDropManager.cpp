@@ -37,9 +37,12 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
 
 #endif
         AudioManager::GetInstance()->PlayOneShot("DropItem");
-        PlayDropEffect(_pos);
-        // アイテム実体を生成（当たり判定付き）
-        activeItems.push_back(std::make_unique<ItemEntity>(std::move(item), _pos, 50.0f));
+        auto* eff = EffectManager::GetInstance().Instantiate("Item", _pos);
+
+        auto entity = std::make_unique<ItemEntity>(std::move(item), _pos, 50.0f);
+        entity->SetDropEffect(eff);
+
+        activeItems.push_back(std::move(entity));
     }
 }
 
@@ -77,6 +80,11 @@ void ItemDropManager::RemoveItem(ItemEntity* target)
         std::remove_if(activeItems.begin(), activeItems.end(),
             [target](const std::unique_ptr<ItemEntity>& item) {
                 if (item.get() == target) {
+                    // エフェクトを消す
+                    if (item->GetDropEffect()) {
+                        item->GetDropEffect()->Stop();
+                    }
+
                     if (item->GetCollider()) {
                         CollisionManager::GetInstance().UnRegister(item->GetCollider());
                     }
@@ -86,7 +94,7 @@ void ItemDropManager::RemoveItem(ItemEntity* target)
             }),
         activeItems.end());
 
-    
+ 
 }
 
 bool ItemDropManager::RandomChance(float _rate)
@@ -97,8 +105,3 @@ bool ItemDropManager::RandomChance(float _rate)
     return dis(gen) < _rate;
 }
 
-void ItemDropManager::PlayDropEffect(VECTOR _pos)
-{
-    // 生成エフェクトなど
-    pEffe = EffectManager::GetInstance().Instantiate("Item", _pos);
-}

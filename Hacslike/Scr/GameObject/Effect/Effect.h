@@ -35,6 +35,11 @@ public: //メンバ関数
 	void Update() override;
 
 	/// <summary>
+	/// エフェクトの強制終了
+	/// </summary>
+	void Stop(); 
+
+	/// <summary>
 	/// Render
 	/// 描画処理
 	/// </summary>

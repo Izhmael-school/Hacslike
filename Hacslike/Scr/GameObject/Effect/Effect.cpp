@@ -33,6 +33,15 @@ void Effect::Update() {
 	SetPosPlayingEffekseer3DEffect(playingHandle, position.x, position.y, position.z);
 }
 
+void Effect::Stop()
+{
+	if (playingHandle != INVALID) {
+		StopEffekseer3DEffect(playingHandle);
+		playingHandle = INVALID;
+	}
+	isVisible = false;
+}
+
 void Effect::Render() {
 	//”ñ•\Ž¦‚È‚ç•`‰æ‚µ‚È‚¢
 	if (!isVisible)

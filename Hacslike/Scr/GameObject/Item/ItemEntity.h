@@ -5,6 +5,7 @@
 #include"../../Component/Collider/Collider.h"
 #include"../GameObject.h"
 #include"../../Manager/CollisionManager.h"
+#include"../Effect/Effect.h"
 class ItemEntity : public ItemBase
 {
 public: //メンバ変数
@@ -13,7 +14,8 @@ public: //メンバ変数
     float radius;                     //当たり判定の半径
     Collider* pCollider;              //当たり判定のポインタ
     bool isCollected;                 // 取得したかの判定
-
+private:
+    Effect* dropEffect; // ★追加
 
 public://コンストラクタとデストラクタ
     /// <summary>
@@ -64,6 +66,8 @@ public://ゲッターとセッター
     /// <returns></returns>
     inline const std::string& GetName() const { return name; }
 
+    inline void SetDropEffect(Effect* eff) { dropEffect = eff; }
+    inline Effect* GetDropEffect() const { return dropEffect; }
 
 };
 
