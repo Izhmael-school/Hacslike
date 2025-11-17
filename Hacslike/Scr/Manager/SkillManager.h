@@ -27,6 +27,8 @@ private:
     std::vector<std::shared_ptr<Skill>> skillPool;    // 全スキルの候補
 
 public:
+    void Start();
+
     // 候補スキルを3つ生成して返す（重複なし）
     std::vector<std::shared_ptr<Skill>> GenerateSkillChoices();
 

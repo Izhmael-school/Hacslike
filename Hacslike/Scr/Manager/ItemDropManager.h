@@ -32,6 +32,7 @@ public://ƒƒ“ƒo•Ï”
 public: //ƒƒ“ƒoŠÖ”
 	void TryDropItem(float _dropRate, VECTOR _pos = VZero);
 
+    void Start();
 	void Update();
 	void Render();
 	/// <summary>

@@ -4,6 +4,7 @@
 #include <ctime>
 #include <algorithm>
 #include <iostream>
+#include "AudioManager.h"
 
 
 ArtifactManager::ArtifactManager()
@@ -20,6 +21,7 @@ ArtifactManager::ArtifactManager()
         std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>(),
 
     };
+    Start();
 }
 
 ArtifactManager::~ArtifactManager()
@@ -28,12 +30,22 @@ ArtifactManager::~ArtifactManager()
     artifacrPool.clear();
 }
 
+
+void ArtifactManager::Start()
+{
+    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す36.mp3", "ArtifactGet", false);
+}
+
+
 /// <summary>
 /// ボスを討伐後の選択式アーティファクト
 /// </summary>
 /// <param name="artifact"></param>
 std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::GenerateArtifactChoices()
 {
+
+    AudioManager::GetInstance()->PlayOneShot("ArtifactGet");
+
     std::vector<std::shared_ptr<ArtifactBase>> choices;
 
     if (artifacrPool.empty())

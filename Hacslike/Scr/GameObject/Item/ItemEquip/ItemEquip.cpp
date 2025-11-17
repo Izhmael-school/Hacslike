@@ -2,15 +2,18 @@
 #include <iostream>
 #include"../../Character/Character.h"
 #include"../../Character/Player/Player.h"
+#include"../../../Manager/AudioManager.h"
 
 #pragma region “
 ItemSword::ItemSword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
 	: ItemBase(VZero, "item","Sword_Iron", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/sword.png")
 	, attackValue(_effectValue) {
+	Start();
 }
 
 void ItemSword::Start()
 {
+	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void ItemSword::Render()
@@ -19,6 +22,8 @@ void ItemSword::Render()
 
 void ItemSword::Use()
 {
+	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+
 	Player::GetInstance()->ChangeWeapon(4);
 	
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
@@ -35,10 +40,12 @@ void ItemSword::UnEquip()
 ItemAxe::ItemAxe(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
 	: ItemBase(VZero, "item","Axe", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Axe.png")
 	, attackValue(_effectValue) {
+	Start();
 }
 
 void ItemAxe::Start()
 {
+	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void ItemAxe::Render()
@@ -47,6 +54,8 @@ void ItemAxe::Render()
 
 void ItemAxe::Use()
 {
+	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+
 	Player::GetInstance()->ChangeWeapon(3);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 
@@ -88,10 +97,12 @@ void ItemStick::UnEquip()
 Greatsword::Greatsword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
 	: ItemBase(VZero, "item","Greatsword", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
 	, attackValue(_effectValue) {
+	Start();
 }
 
 void Greatsword::Start()
 {
+	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void Greatsword::Render()
@@ -100,6 +111,8 @@ void Greatsword::Render()
 
 void Greatsword::Use()
 {
+	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+
 	Player::GetInstance()->ChangeWeapon(9);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 
@@ -114,10 +127,12 @@ void Greatsword::UnEquip()
 Spear::Spear(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
 	: ItemBase(VZero, "item", "Spear", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/coiled-nail.png")
 	, attackValue(_effectValue) {
+	Start();
 }
 
 void Spear::Start()
 {
+	AudioManager::GetInstance()->Load("Res/SE/UseItem.mp3", "UseEquip", false);
 }
 
 void Spear::Render()
@@ -126,6 +141,8 @@ void Spear::Render()
 
 void Spear::Use()
 {
+	AudioManager::GetInstance()->PlayOneShot("UseEquip");
+
 	Player::GetInstance()->ChangeWeapon(2);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 

@@ -2,6 +2,19 @@
 #include"../GameObject/Effect/Effect.h"
 #include "../Manager/EffectManager.h"
 #include <iostream>
+#include "AudioManager.h"
+
+
+ItemDropManager::ItemDropManager()
+    :pEffe()
+{
+    Start();
+}
+
+ItemDropManager::~ItemDropManager()
+{
+}
+
 
 void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
 {
@@ -23,10 +36,16 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
         std::cout << item->GetName() << " をドロップ！\n";
 
 #endif
+        AudioManager::GetInstance()->PlayOneShot("DropItem");
         PlayDropEffect(_pos);
         // アイテム実体を生成（当たり判定付き）
         activeItems.push_back(std::make_unique<ItemEntity>(std::move(item), _pos, 50.0f));
     }
+}
+
+void ItemDropManager::Start()
+{
+    AudioManager::GetInstance()->Load("Res/SE/itemDrop.mp3", "DropItem", false);
 }
 
 void ItemDropManager::Update()
@@ -82,13 +101,4 @@ void ItemDropManager::PlayDropEffect(VECTOR _pos)
 {
     // 生成エフェクトなど
     pEffe = EffectManager::GetInstance().Instantiate("Item", _pos);
-}
-
-ItemDropManager::ItemDropManager()
-    :pEffe()
-{
-}
-
-ItemDropManager::~ItemDropManager()
-{
 }

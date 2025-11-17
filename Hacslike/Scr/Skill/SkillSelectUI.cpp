@@ -2,6 +2,8 @@
 #include"DxLib.h"
 #include"../Definition.h"
 #include"../Manager/InputManager.h"
+#include "../Manager/AudioManager.h"
+
 
 
 void SkillSelectUI::StartSelection()
@@ -29,6 +31,8 @@ void SkillSelectUI::StartSelection()
         fw.exploded = false;
         fireworks.push_back(fw);
     }
+    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
+    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 }
 
 int SkillSelectUI::UpdateSelection()
@@ -54,15 +58,25 @@ int SkillSelectUI::UpdateSelection()
     else {
         if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
             selectedIndex--;
+            if(selectedIndex <= -1){
+                selectedIndex = 2;
+            }
             inputCooldown = 10;  // 10F = 約0.16秒
+            
+            AudioManager::GetInstance()->PlayOneShot("SelectSkill");
         }
         else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
             selectedIndex++;
+            if (selectedIndex >= 3) {
+                selectedIndex = 0;
+            }
             inputCooldown = 10;
+            AudioManager::GetInstance()->PlayOneShot("SelectSkill");
         }
         else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
         {
             isActive = false;
+            AudioManager::GetInstance()->PlayOneShot("DecisionSkill");
             return selectedIndex;
         }
     }

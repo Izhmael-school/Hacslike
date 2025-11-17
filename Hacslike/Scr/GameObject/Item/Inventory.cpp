@@ -9,10 +9,13 @@
 #include"../../Manager/InputManager.h"
 #include"../Character/Character.h"
 #include"../Character/Player/Player.h"
+#include "../../Manager/AudioManager.h"
+
 
 Inventory::InventoryItem::InventoryItem(std::unique_ptr<ItemBase> _item, int _quantity)
     : item(std::move(_item)), quantity(_quantity)
 {
+   
 }
 
 Inventory::Inventory() : currentIndex(0),
@@ -20,7 +23,7 @@ scrollOffset(0),
 menuActive(false),
 menuChoice(0)
 {
-  
+    AudioManager::GetInstance()->Load("Res/SE/ItemGet.mp3", "GetItem", false);
 };
 Inventory::~Inventory() {
     // キャッシュされたグラフィックハンドルを解放（必要なら）
@@ -37,6 +40,7 @@ Inventory::~Inventory() {
 /// </summary>
 void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 {
+    AudioManager::GetInstance()->PlayOneShot("GetItem");
 #if _DEBUG
     printfDx("[Inventory::AddItem] this=%p BEFORE items.size=%d\n", this, (int)items.size());
 

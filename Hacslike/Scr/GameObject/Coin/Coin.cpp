@@ -3,6 +3,7 @@
 #include"../../Manager/CollisionManager.h"
 #include"../../Component/Collider/Collider.h"
 #include"../Character/Player/Player.h"
+#include "../../Manager/AudioManager.h"
 
 /// 静的メンバ変数（プール本体）
 std::vector<std::unique_ptr<Coin>> Coin::coinPool;
@@ -23,6 +24,7 @@ Coin::Coin(VECTOR _pos, std::string tag, int _value, int _coinValue, int _delete
     , currentCoin(_currentCoin)
     , active(false)
 {
+ 
 }
 
 /// <summary>
@@ -68,6 +70,7 @@ void Coin::Start()
     coinModelHandle = MV1LoadModel("Res/Model/DropObject/coin.mv1");
     coinValue = 1;
     value = coinValue;
+    AudioManager::GetInstance()->Load("Res/SE/coin.mp3", "GetCoin", false);
     UpdateMatrix(); // 初期行列更新
 }
 
@@ -189,7 +192,7 @@ void Coin::SpawnCoin(VECTOR _pos)
 void Coin::ApplyCoin(Player* player)
 {
     if (!player || !active) return;
-
+    AudioManager::GetInstance()->PlayOneShot("GetCoin");
     player->SetCoinValue(player->GetCoinValue() + player->GetCoinAcquisitionValue() + coinValue);
     player->SetIsCoin(false);
 }

@@ -12,6 +12,7 @@
 #include"Manager/EffectManager.h"
 #include <EffekseerForDXLib.h>
 #include "GameObject/Coin/Coin.h"
+#include "Manager/AudioManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -84,6 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		CollisionManager::GetInstance().Update();
 		TimeManager::GetInstance().Update();
 		InputManager::GetInstance().Update();
+		AudioManager::GetInstance()->Update();
 
 		// ‰æ–Ê‚ğƒNƒŠƒA‚·‚é
 		ClearDrawScreen();

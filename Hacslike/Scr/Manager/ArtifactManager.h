@@ -34,6 +34,8 @@ public:
 	/// <param name="_artifact"></param>
 	std::vector<std::shared_ptr<ArtifactBase>> ApplyArtifact();
 
+	void Start();
+
 	void Update(Player* player);
 
 

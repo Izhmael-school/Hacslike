@@ -661,7 +661,6 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 				coin->ApplyCoin(this);
 				GetCoin();  // ← プレイヤー経由で発動
 				GetCoin_Item();
-				coin.get()->SetVisible(false);
 				coin.get()->SetActive(false);
 				coin.get()->GetCollider()->SetEnable(false);
 				break; // 削除したのでループを抜ける

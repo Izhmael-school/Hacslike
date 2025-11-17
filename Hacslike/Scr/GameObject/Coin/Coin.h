@@ -80,10 +80,7 @@ public: //メンバ変数
 
 	void UpdateMatrix();
 
-	/// <summary>
-	/// コインの削除
-	/// </summary>
-	void RemoveCoin(Coin* target);
+	
 
 	/// <summary>
 	/// ステージ上のコインの取得

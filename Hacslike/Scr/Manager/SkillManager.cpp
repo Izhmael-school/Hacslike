@@ -3,6 +3,7 @@
 #include <ctime>
 #include <algorithm>
 #include <iostream>
+#include "AudioManager.h"
 
 // ------------------------
 // コンストラクタ
@@ -22,6 +23,7 @@ SkillManager::SkillManager()
         std::make_shared<CriticalDamageUpSkill>(),
         std::make_shared<IsDashAttack>(), // これは1回でMAX
     };
+    Start();
 }
 
 // ------------------------
@@ -33,11 +35,17 @@ SkillManager::~SkillManager()
     skillPool.clear();
 }
 
+void SkillManager::Start()
+{
+    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す10.mp3", "SkillGet", false);
+}
+
 // ------------------------
 // スキル3つ生成（最大段階のスキルは除外）
 // ------------------------
 std::vector<std::shared_ptr<Skill>> SkillManager::GenerateSkillChoices()
 {
+    AudioManager::GetInstance()->PlayOneShot("SkillGet");
     std::vector<std::shared_ptr<Skill>> candidates;
 
     // MAX到達していないスキルだけ選ぶ
