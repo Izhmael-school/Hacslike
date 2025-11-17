@@ -25,6 +25,8 @@ public:
 
 	void ChangeVolume(float _volume,std::string _name = "");
 
+	void PlayBGM(std::string _name);
+
 	void PlayOneShot(std::string _name);
 
 	void PlayClipAtPoint(std::string _name, VECTOR _pos, float _volume = 1.0f, bool _isLoop = false);

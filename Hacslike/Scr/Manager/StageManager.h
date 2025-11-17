@@ -13,6 +13,11 @@ struct FloorData {
 	std::vector<int> spawnEnemyID;
 };
 
+struct EnemyData {
+	int id;
+	int typeID;
+};
+
 class StageManager :public Singleton<StageManager>{
 #pragma region シングルトンのデータ構造
 public:	// コンストラクタとデストラクタ

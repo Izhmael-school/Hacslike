@@ -28,6 +28,8 @@ void AudioManager::Load(std::string _filePath, std::string _name, bool _is3D) {
 
 	auto itr = audioResourceMap.find(_filePath.c_str());
 
+	
+
 	if (itr == audioResourceMap.end()) {
 		// “o˜^
 		audioResourceMap.emplace(_name.c_str(), res);
@@ -47,6 +49,22 @@ void AudioManager::ChangeVolume(float _volume, std::string _name) {
 			}
 		}
 	}
+}
+
+void AudioManager::PlayBGM(std::string _name) {
+	int sound = INVALID;
+	if (GetSoundTotalTime(audioResourceMap[_name]) >= 1000 * 60 * 3) {
+		sound = audioResourceMap[_name];
+	}
+	else {
+		sound = DuplicateSoundMem(audioResourceMap[_name]);
+	}
+
+	Audio* pAudioObj = new Audio(sound);
+	pAudioObj->SetTag(_name);
+	pAudioObj->SetLoop(true);
+	pAudioObj->Start();
+	pAudioList.push_back(pAudioObj);
 }
 
 void AudioManager::PlayOneShot(std::string _name) {

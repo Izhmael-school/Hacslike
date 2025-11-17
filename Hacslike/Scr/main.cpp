@@ -7,6 +7,7 @@
 #include "Manager/SceneManager.h"
 #include "Manager/StageManager.h"
 #include "Manager/FadeManager.h"
+#include "Manager/AudioManager.h"
 #include"Manager/SkillManager.h"
 #include"Manager/ItemDropManager.h"
 #include"Manager/EffectManager.h"
@@ -81,6 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Effekseer_Sync3DSetting();
 		// XVˆ—
 		SceneManager::GetInstance().Update();
+		AudioManager::GetInstance().Update();
 		CollisionManager::GetInstance().Update();
 		TimeManager::GetInstance().Update();
 		InputManager::GetInstance().Update();
