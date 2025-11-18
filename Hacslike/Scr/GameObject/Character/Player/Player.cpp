@@ -11,6 +11,7 @@
 #include <math.h>
 #include "../../Item/ItemEquip/ItemEquip.h"
 #include"../../../Manager/ArtifactManager.h"
+#include"../../../Manager/SceneManager.h"
 #include "../../TreasureChest/StartTreasureChest.h"
 #include "../../../GameSystem/GameSystem.h"
 
@@ -36,7 +37,8 @@ Player::Player(VECTOR _pos)
 	, weaponData(nullptr)
 	, hpRate()
 	, maxExp()
-	, remainExp() {
+	, remainExp() 
+	, deadTime(){
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
@@ -86,7 +88,14 @@ void Player::DestroyInstance() {
 }
 
 void Player::IsDead() {
-	if (hp > 0) return;
+	deadTime += TimeManager::GetInstance().deltaTime;
+	if (deadTime < 3.85f) {
+		pAnimator->Play("Down1", 0.6);
+	}
+	else {
+		pAnimator->Play("Down2");
+		SceneManager::GetInstance().SetNext(SceneType::Title);
+	}
 }
 
 /*
@@ -107,6 +116,8 @@ void Player::Start() {
 	SetPlayer(this);
 
 	maxExp = 100;
+
+	deadTime = 0;
 
 
 	//	アニメーションの読み込み
@@ -129,6 +140,8 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1", true);
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2", true, true);
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3", true);
+	GetAnimator()->Load("Res/PlayerModel/Down1.mv1", "Down1", false);
+	GetAnimator()->Load("Res/PlayerModel/Down2.mv1", "Down2", true, true);
 
 #pragma endregion
 
@@ -182,6 +195,15 @@ void Player::Update() {
 
 	if (hp > maxHp) {
 		hp = maxHp;
+	}
+
+	if (hp <= 0) {
+		hp = 0;
+		isDead = true;
+	}
+
+	if (isDead) {
+		IsDead();
 	}
 
 	////	攻撃入力・HitBox更新

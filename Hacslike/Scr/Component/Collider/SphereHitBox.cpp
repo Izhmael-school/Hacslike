@@ -2,6 +2,7 @@
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
 #include "../../GameObject/Character/Character.h"
+#include "../../Manager/AudioManager.h"
 
 SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, float _lifeTime)
 	: owner(_owner)
@@ -24,6 +25,7 @@ SphereHitBox::~SphereHitBox() {
 void SphereHitBox::Start() {
 	CreateCollider();
 	character = static_cast<Character*>(owner);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Damage.mp3", "damage", false);
 }
 
 void SphereHitBox::Update() {
@@ -57,6 +59,7 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	//	“–‚½‚Á‚½‘ŠŽè‚Ìƒ^ƒO‚ª "Enemy" ‚© "Player" ‚©‚Â“–‚½‚Á‚½‘ÎÛ‚Æ“–‚½‚è”»’è‚ÌŽ‚¿Žå‚ªˆá‚¤ê‡
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
 		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
+		AudioManager::GetInstance().PlayOneShot("damage");
 	}
 }
 
