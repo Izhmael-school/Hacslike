@@ -151,6 +151,9 @@
     <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp">
       <Filter>GameObject\TreasureChest</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameSystem\GameSystem.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -313,6 +316,9 @@
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
       <Filter>GameObject\TreasureChest</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameSystem\GameSystem.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -395,6 +401,9 @@
     </Filter>
     <Filter Include="GameObject\TreasureChest">
       <UniqueIdentifier>{10acd316-f36c-40a9-88df-843bc15cbb1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystem">
+      <UniqueIdentifier>{6fee0a9f-1d78-4254-a228-054ac0863059}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

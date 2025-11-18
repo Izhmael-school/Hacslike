@@ -3,6 +3,7 @@
 #include "../../../Component/Collider/Collider.h"
 #include "../../../CommonModule.h"
 #include "../../../Manager/ItemDropManager.h"
+#include "../../../GameSystem/GameSystem.h"
 
 Enemy::Enemy()
 	:rayAngle(45.0f)
@@ -39,7 +40,7 @@ void Enemy::Setup() {
 }
 
 void Enemy::Update() {
-	if (!isVisible || isDead) return;
+	if (!isVisible || isDead || !GameSystem::GetInstance()->IsPlayable()) return;
 
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);

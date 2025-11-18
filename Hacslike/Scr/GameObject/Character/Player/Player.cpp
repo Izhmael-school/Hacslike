@@ -12,6 +12,7 @@
 #include "../../Item/ItemEquip/ItemEquip.h"
 #include"../../../Manager/ArtifactManager.h"
 #include "../../TreasureChest/StartTreasureChest.h"
+#include "../../../GameSystem/GameSystem.h"
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
@@ -184,9 +185,10 @@ void Player::Update() {
 	////	攻撃入力・HitBox更新
 	//AttackInput();
 
-
-	playerMovement->Update();
-	playerAttack->Update();
+	if (GameSystem::GetInstance()->IsPlayable()) {
+		playerMovement->Update();
+		playerAttack->Update();
+	}
 
 	//CheckWall();
 
@@ -208,7 +210,9 @@ void Player::Update() {
 
 	selectMenu();
 
+	
 	OpenMenu();
+	
 
 	inventory.Update(this);
 	if(isItemUI) {
@@ -480,15 +484,18 @@ void Player::OpenMenu()
 	// TAB または START でメニュー開閉
 	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
 		isMenuUI = true;
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 	}
 	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isMenuUI) {
 		isMenuUI = false;
 		isItemUI = false;
 		isArtifactUI = false;
 		isMenuSelected = false; // 閉じたときにリセット
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+
 	}
 
-	if (isMenuUI)
+	if (isMenuUI )
 	{
 		// メニュー操作
 		if (!isMenuSelected) // 選択中はカーソル操作を無効に
