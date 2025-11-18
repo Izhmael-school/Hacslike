@@ -692,8 +692,6 @@ void Player::PlayerStatusRender() {
 	DrawFormatString(930, 160, green, "会心率　　　 : %.1f", criticalHitRate);
 	DrawFormatString(930, 180, green, "会心ダメージ : %.1f", criticalDamage);
 	DrawFormatString(930, 200, green, "コイン　　　 : %d", coinValue);
-	DrawFormatString(930, 220, green, "近距離補正　 : %f", proximityCorrection);
-	DrawFormatString(930, 240, green, "遠距離補正　 : %f", rangedCorrection);
 
 
 
