@@ -137,15 +137,30 @@ void Inventory::UseItem(int index)
 void Inventory::DropItemAtIndex(int idx)
 {
     if (idx < 0 || idx >= (int)items.size()) return;
+
     InventoryItem& inv = items[idx];
-    // ここでワールドにドロップする処理を入れることもできます（未実装）
-    inv.quantity--;
+    ItemBase* target = inv.item.get();   // ★ 捨てようとしているアイテムの生ポインタを取得
+
+    // ★★★ 装備中チェック ★★★
+    if (equippedItem == target)
+    {
 #if _DEBUG
-    printfDx("「%s」を捨てた。残り x%d\n", inv.item->GetName().c_str(), inv.quantity);
+        printfDx("装備中のアイテム「%s」は捨てられません！\n", target->GetName().c_str());
+#endif
+        return; // 捨て処理を中断
+    }
+
+    // --- 通常の捨て処理 ---
+    inv.quantity--;
+
+#if _DEBUG
+    printfDx("「%s」を捨てた。残り x%d\n", target->GetName().c_str(), inv.quantity);
 #endif
 
     if (inv.quantity <= 0) {
         items.erase(items.begin() + idx);
+
+        // カーソルが範囲外なら調整
         if (currentIndex >= (int)items.size()) {
             currentIndex = (std::max)(0, (int)items.size() - 1);
         }
