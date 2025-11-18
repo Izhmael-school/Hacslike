@@ -17,10 +17,11 @@ void TitleScene::Start() {
 void TitleScene::Update() {
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 		AudioManager::GetInstance().Stop("Title");
+		StageManager::GetInstance().ResetFloorCount();
 		SceneManager::GetInstance().SetNext(SceneType::Game);
 	}
 }
 
 void TitleScene::Render() {
-	DrawString(600,400,"Hacslike",black);
+	DrawString(600,400,"Hacslike",red);
 }

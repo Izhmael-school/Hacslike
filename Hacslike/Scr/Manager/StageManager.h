@@ -58,10 +58,13 @@ public:
 	void UnuseObject(StageCell* cell);
 	StageCell* UseObject(ObjectType type);
 
+	inline void ResetFloorCount() { floorCount = 0; }
+
 private:
 	void GenerateStage();
 	void GenerateStage(int stageID);
 	void ChangeTexture(int textureHandle, ObjectType changeObject);
+
 
 };
 

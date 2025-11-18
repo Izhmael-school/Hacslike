@@ -157,7 +157,7 @@ void Enemy::IsDead() {
 	Character::player->AddExp(exp);
 	// アイテムのドロップ
 	ItemDropManager* manager = &ItemDropManager::GetInstance();
-	//manager->TryDropItem(manager->GetItemDropRate(), position);
+	manager->TryDropItem(manager->GetItemDropRate(), position);
 
 	pAnimator->Play("dead");
 }
@@ -342,6 +342,9 @@ void Enemy::Tracking() {
 
 	LookTarget(targetPos);
 
+	goalPos = VGet(-1, -1, -1);
+	nextWanderTime = 0;
+
 	if (pAnimator->Play("run") == -1)
 		pAnimator->Play("walk");
 
@@ -352,7 +355,8 @@ void Enemy::Move(VECTOR targetPos) {
 	VECTOR dir = VSub(targetPos, position);
 	float d = TimeManager::GetInstance().deltaTime;
 	VECTOR pos = VAdd(position, VGet(dir.x * d * moveSpeed, 0, dir.z * d * moveSpeed));
-	SetPosition(pos);
+	// 壁の判定を確認して移動する
+	SetPosition(CheckWallToWallRubbing(pos));
 }
 
 void Enemy::Attack() {

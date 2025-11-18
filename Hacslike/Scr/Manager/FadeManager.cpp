@@ -34,8 +34,10 @@ void FadeManager::Render() {
 	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, black, TRUE);
 	// ブレンドモードを元に戻す
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, -1);
+#if _DEBUG
 	DrawFormatString(100, 200, red, "blend : %f", alpha);
 	DrawFormatString(100, 220, red, " time : %f", TimeManager::GetInstance().deltaTime);
+#endif
 }
 
 void FadeManager::FadeStart(FadeState state, float _t) {

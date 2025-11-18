@@ -6,11 +6,10 @@
 
 StageCell::StageCell(int _modelHandle, ObjectType _type, VECTOR position)
 	:modelHandle(_modelHandle)
-	,type(_type)
-	, GameObject(position,"Stage")
-	,isTouch(false)
-	,dataPos()
-{
+	, type(_type)
+	, GameObject(position, "Stage")
+	, isTouch(false)
+	, dataPos() {
 	Start();
 }
 
@@ -21,7 +20,7 @@ StageCell::~StageCell() {
 void StageCell::Start() {
 	if (type != Stair) return;
 
-	pCollider = new SphereCollider(this,VZero,100);
+	pCollider = new SphereCollider(this, VZero, 100);
 }
 
 void StageCell::Update() {
@@ -39,7 +38,7 @@ void StageCell::Update() {
 		return;
 	}
 
-	
+
 
 	if (pCollider != nullptr)
 		pCollider->Update();
@@ -47,6 +46,21 @@ void StageCell::Update() {
 
 void StageCell::Render() {
 	if (modelHandle == -1) return;
+
+	if (isTouch) {
+		int StartX = (WINDOW_WIDTH / 2) - 200;
+		int StartY = (WINDOW_HEIGHT)-200;
+		int GoalX = (WINDOW_WIDTH / 2) + 200;
+		int GoalY = (WINDOW_HEIGHT)-150;
+		int textX = StartX + 80;
+		int textY = StartY + 17;
+
+		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:階層移動する");
+		DrawFormatString(textX, textY, white, "X");
+		DrawFormatString(textX + 53, textY, white, "X");
+	}
 
 	MV1DrawModel(modelHandle);
 

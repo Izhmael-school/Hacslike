@@ -374,8 +374,10 @@ void Player::Render() {
 #pragma endregion		
 
 	playerMovement->Render();
-
+#if _DEBUG
 	DrawFormatString(200, 200, red, "x : %d | z : %d", (int)position.x, (int)position.z);
+#endif
+
 #pragma region プレイヤーの描画
 	// --- 通常モデル描画 ---
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

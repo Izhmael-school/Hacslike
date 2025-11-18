@@ -93,5 +93,6 @@ public:
 	VECTOR GetRandomRoomRandomPos();
 	// 読み込んだステージデータの取得
 	inline StageData GetStageData() { return stage; }
+
 };
 
