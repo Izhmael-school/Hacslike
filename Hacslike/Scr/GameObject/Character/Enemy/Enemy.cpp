@@ -55,8 +55,7 @@ void Enemy::Update() {
 	Wander();
 
 	if (isAttack()) return;
-	if (!rayAnswer)
-		pAnimator->Play("idle01");
+
 	if (rayAnswer && !isTouch)
 		pAnimator->Play("run");
 	if (rayAnswer && isTouch)
@@ -280,10 +279,11 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 }
 
 void Enemy::Wander() {
-	if (rayAnswer) return;
+	if (rayAnswer || isAttack()) return;
 
 	if (nextWanderTime < nextWanderSpan) {
 		nextWanderTime += TimeManager::GetInstance().deltaTime;
+		pAnimator->Play("idle01");
 		return;
 	}
 
@@ -313,6 +313,7 @@ void Enemy::Wander() {
 	if (position.x >= goalPos.x - 50 && position.x < goalPos.x + 50 &&
 		position.z >= goalPos.z - 50 && position.z < goalPos.z + 50) {
 		nextWanderTime = 0;
+		goalPos = VGet(-1, -1, -1);
 	}
 }
 
