@@ -262,7 +262,7 @@ void Player::Update() {
 	if (exp >= maxExp && !isSelectingSkill) {
 		remainExp = exp - maxExp;
 		exp = remainExp;
-		maxExp *= 1.1;
+		maxExp *= 1.78;
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
 		isSelectingSkill = true;
