@@ -52,6 +52,7 @@
     <ClCompile Include="Scr\GameObject\Stage\StageGenerator.cpp" />
     <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp" />
     <ClCompile Include="Scr\GameObject\Weapon\Weapon.cpp" />
+    <ClCompile Include="Scr\GameSystem\GameSystem.cpp" />
     <ClCompile Include="Scr\main.cpp" />
     <ClCompile Include="Scr\Manager\ArtifactManager.cpp" />
     <ClCompile Include="Scr\Manager\AudioManager.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Scr\GameObject\Stage\StageGenerator.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h" />
     <ClInclude Include="Scr\GameObject\Weapon\Weapon.h" />
+    <ClInclude Include="Scr\GameSystem\GameSystem.h" />
     <ClInclude Include="Scr\Manager\ArtifactManager.h" />
     <ClInclude Include="Scr\Manager\AudioManager.h" />
     <ClInclude Include="Scr\Manager\CollisionManager.h" />

@@ -6,6 +6,7 @@
 #include"../Manager/ItemDropManager.h"
 #include"../GameObject/Coin/Coin.h"
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
+#include "../GameSystem/GameSystem.h"
 
 
 GameScene::GameScene() {
@@ -44,7 +45,7 @@ void GameScene::Start() {
 }
 
 void GameScene::Update() {
-
+	
 
 
 #pragma region プロト用スキルとアイテム
@@ -66,7 +67,7 @@ void GameScene::Update() {
 		int Selected = artifactUI.UpdateSelection();
 		if (Selected != -1)
 		{
-			
+
 			// プレイヤー取得
 			Player* player = nullptr;
 			for (auto p : pGameObjectArray)
@@ -84,19 +85,10 @@ void GameScene::Update() {
 		}
 	}
 
-	// ★スキル選択中でなければ通常処理を行う
-	if (!isSelectingSkill)
-	{
-		
+	
 
 		EffectManager::GetInstance().Update();
 		ItemDropManager::GetInstance().Update();
-
-		// --- Hキーでスキル選択画面を開く ---
-		if (input->IsKeyDown(KEY_INPUT_H) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER))
-		{
-			
-		}
 
 		// --- アイテムドロップテスト ---
 		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER))
@@ -113,36 +105,16 @@ void GameScene::Update() {
 			Coin::GetInstance()->SpawnCoin(VGet(spawnPos.x + 70, 5.0f, spawnPos.z + 70));
 
 		}
-		
-	}
-	else
-	{
-		// ★スキル選択中の処理
-		int selected = skillUI.UpdateSelection();
-		if (selected != -1)
-		{
-			// プレイヤー取得
-			Player* player = nullptr;
-			for (auto p : pGameObjectArray)
-			{
-				player = dynamic_cast<Player*>(p);
-				if (player) break;
-			}
 
-			if (player && selected >= 0 && selected < (int)skillChoices.size())
-			{
-				SkillManager::GetInstance().ApplySelectedSkill(player, skillChoices[selected]);
-			}
 
-			isSelectingSkill = false;
-		}
-	}
+		Coin::GetInstance()->UpdateAll();
+
 #pragma endregion
-	
-	Coin::GetInstance()->UpdateAll();
+
 
 	
 }
+
 
 void GameScene::Render() {
 
