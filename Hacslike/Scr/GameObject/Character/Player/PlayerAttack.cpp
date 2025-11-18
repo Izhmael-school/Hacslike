@@ -118,7 +118,7 @@ void PlayerAttack::AttackInput() {
 		attackButtonPressed = true;
 		if (pWeapon->GetType() == 0) {
 			std::string animName = "Atk" + std::to_string(attackIndex + 1);
-			if (!isAttacking && playerMovement->IsDashState()) {
+			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
 				isAttacking = true;
 				isDashAttack = true;
 				attackIndex = 3;
@@ -148,7 +148,7 @@ void PlayerAttack::AttackInput() {
 
 		else if (pWeapon->GetType() == 1) {
 			std::string animName = "GreatAtk" + std::to_string(attackIndex + 1);
-			if (!isAttacking && playerMovement->IsDashState()) {
+			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
 				isAttacking = true;
 				isDashAttack = true;
 				attackIndex = 4;
@@ -177,7 +177,7 @@ void PlayerAttack::AttackInput() {
 
 		else if (pWeapon->GetType() == 2) {
 			std::string animName = "AxeAtk" + std::to_string(attackIndex + 1);
-			if (!isAttacking && playerMovement->IsDashState()) {
+			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
 				isAttacking = true;
 				isDashAttack = true;
 				attackIndex = 4;
