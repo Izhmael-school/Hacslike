@@ -35,7 +35,9 @@ Player::Player(VECTOR _pos)
 	, weaponData(nullptr)
 	, hpRate()
 	, maxExp()
-	, remainExp(){
+	, remainExp()
+	, isDead(false)
+	, deadTime() {
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
@@ -85,7 +87,15 @@ void Player::DestroyInstance() {
 }
 
 void Player::IsDead() {
-	if (hp > 0) return;
+	
+	deadTime += TimeManager::GetInstance().deltaTime;
+	float totalTime = pAnimator->GetTotalTime("Down1");
+	if (deadTime > 7.7f) {
+		pAnimator->Play("Down2");
+	}
+	else {
+		pAnimator->Play("Down1");
+	}
 }
 
 /*
@@ -107,6 +117,8 @@ void Player::Start() {
 
 	maxExp = 100;
 
+	deadTime = 0;
+
 
 	//	アニメーションの読み込み
 	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle",true, true);
@@ -126,6 +138,8 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1",true);
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2",true, true);
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3",true);
+	GetAnimator()->Load("Res/PlayerModel/Down1.mv1", "Down1", false,false);
+	GetAnimator()->Load("Res/PlayerModel/Down2.mv1", "Down2", true, true);
 
 	pAnimator->Play(0);
 
@@ -181,6 +195,14 @@ void Player::Update() {
 		hp = maxHp;
 	}
 
+	if (hp <= 0) {
+		hp = 0;
+		isDead = true;
+	}
+
+	if(isDead)
+		IsDead();
+
 	////	攻撃入力・HitBox更新
 	//AttackInput();
 
@@ -221,7 +243,7 @@ void Player::Update() {
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
 		AddHp(10);
 	}
-	else if (input->IsKeyDown(KEY_INPUT_2)) {
+	else if (input->IsKey(KEY_INPUT_2)) {
 		SubHp(10);
 	}
 
