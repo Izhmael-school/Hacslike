@@ -657,7 +657,7 @@ void Player::GetArtifact() {
 		}
 		else {
 			// ★スキル選択中の処理
-			int Selected = artifactSelectUI.UpdateSelection();
+			int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
 			if (Selected != -1) {
 
 				if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {

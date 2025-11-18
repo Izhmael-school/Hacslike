@@ -63,26 +63,26 @@ void GameScene::Update() {
 		EnemyManager::GetInstance().Update();
 	}
 	else {
-		// ★スキル選択中の処理
-		int Selected = artifactUI.UpdateSelection();
-		if (Selected != -1)
-		{
+		//// ★スキル選択中の処理
+		//int Selected = artifactUI.UpdateSelection();
+		//if (Selected != -1)
+		//{
 
-			// プレイヤー取得
-			Player* player = nullptr;
-			for (auto p : pGameObjectArray)
-			{
-				player = dynamic_cast<Player*>(p);
-				if (player) break;
-			}
+		//	// プレイヤー取得
+		//	Player* player = nullptr;
+		//	for (auto p : pGameObjectArray)
+		//	{
+		//		player = dynamic_cast<Player*>(p);
+		//		if (player) break;
+		//	}
 
-			if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
-			{
-				ArtifactManager::GetInstance().ApplySelectedArtifact(player, artifactChioces[Selected]);
-			}
+		//	if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
+		//	{
+		//		ArtifactManager::GetInstance().ApplySelectedArtifact(player, artifactChioces[Selected]);
+		//	}
 
-			isSelectingArtifact = false;
-		}
+		//	isSelectingArtifact = false;
+		//}
 	}
 
 	

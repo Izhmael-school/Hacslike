@@ -11,28 +11,35 @@ void ArtifactSelectUI::StartSelection()
     AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 }
 
-int ArtifactSelectUI::UpdateSelection()
+int ArtifactSelectUI::UpdateSelection(const std::vector < std::shared_ptr<ArtifactBase>>& artifact)
 {
     InputManager* input = &InputManager::GetInstance();
 
     if (!isActive) return -1;
 
-    // 左キー → 左回り (0 -> 1 -> 2 -> 0)
-    if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT))
+    const int artifactCount = (int)artifact.size();  // ← ※適切な変数に置き換えてください
+
+    // ▼ カーソル操作はアーティファクトが2つ以上あるときのみ
+    if (artifactCount > 1)
     {
-        selectIndex = (selectIndex + 1) % 3;
-        WaitTimer(150);
-        AudioManager::GetInstance().PlayOneShot("SelectSkill");
+        // 左キー → 左回り (0 -> 1 -> 2 -> 0)
+        if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT))
+        {
+            selectIndex = (selectIndex + 1) % artifactCount;
+            WaitTimer(150);
+            AudioManager::GetInstance().PlayOneShot("SelectSkill");
+        }
+        // 右キー → 右回り
+        else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT))
+        {
+            selectIndex = (selectIndex + artifactCount - 1) % artifactCount;
+            WaitTimer(150);
+            AudioManager::GetInstance().PlayOneShot("SelectSkill");
+        }
     }
-    // 右キー → 右回り (0 -> 2 -> 1 -> 0)
-    else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT))
-    {
-        selectIndex = (selectIndex + 3 - 1) % 3; // 安全な -1 の扱い
-        WaitTimer(150);
-        AudioManager::GetInstance().PlayOneShot("SelectSkill");
-    }
-    // 決定
-    else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
+
+    // ▼ 決定
+    if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
     {
         isActive = false;
         AudioManager::GetInstance().PlayOneShot("DecisionSkill");
