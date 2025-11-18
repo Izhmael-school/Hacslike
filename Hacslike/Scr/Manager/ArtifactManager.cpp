@@ -33,7 +33,7 @@ ArtifactManager::~ArtifactManager()
 
 void ArtifactManager::Start()
 {
-    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す36.mp3", "ArtifactGet", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す36.mp3", "ArtifactGet", false);
 }
 
 
@@ -44,7 +44,7 @@ void ArtifactManager::Start()
 std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::GenerateArtifactChoices()
 {
 
-    AudioManager::GetInstance()->PlayOneShot("ArtifactGet");
+    AudioManager::GetInstance().PlayOneShot("ArtifactGet");
 
     std::vector<std::shared_ptr<ArtifactBase>> choices;
 

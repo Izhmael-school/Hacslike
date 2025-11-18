@@ -49,11 +49,13 @@ void PlayerMovement::Start() {
 }
 
 void PlayerMovement::Update() {
-	inputVec = VZero;
-	MoveInput();
-	EvasionInput();
-	UpdateMovement();
-	UpdateBlink();
+	if (!pPlayer->GetIsDead()) {
+		inputVec = VZero;
+		MoveInput();
+		EvasionInput();
+		UpdateMovement();
+		UpdateBlink();
+	}
 	
 }
 

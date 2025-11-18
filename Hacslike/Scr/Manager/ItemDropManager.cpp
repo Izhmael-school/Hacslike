@@ -36,7 +36,7 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
         std::cout << item->GetName() << " をドロップ！\n";
 
 #endif
-        AudioManager::GetInstance()->PlayOneShot("DropItem");
+        AudioManager::GetInstance().PlayOneShot("DropItem");
         auto* eff = EffectManager::GetInstance().Instantiate("Item", _pos);
 
         auto entity = std::make_unique<ItemEntity>(std::move(item), _pos, 50.0f);
@@ -48,7 +48,7 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
 
 void ItemDropManager::Start()
 {
-    AudioManager::GetInstance()->Load("Res/SE/itemDrop.mp3", "DropItem", false);
+    AudioManager::GetInstance().Load("Res/SE/itemDrop.mp3", "DropItem", false);
 }
 
 void ItemDropManager::Update()

@@ -42,7 +42,7 @@ SmallHealItem::SmallHealItem(VECTOR _pos, const std::string& _name, const std::s
 void SmallHealItem::Start()
 {
 	isEffectFinished = false;
-	AudioManager::GetInstance()->Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
+	AudioManager::GetInstance().Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
 }
 
 void SmallHealItem::Update()
@@ -57,7 +57,7 @@ void SmallHealItem::Render()
 void SmallHealItem::Use()
 {
 	Character::player->AddHp(healValue);
-	AudioManager::GetInstance()->PlayOneShot("Heal");
+	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
 
@@ -78,7 +78,7 @@ MiddleHealItem::MiddleHealItem(VECTOR _pos, const std::string& _name, const std:
 void MiddleHealItem::Start()
 {
 	isEffectFinished = false;
-	AudioManager::GetInstance()->Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
+	AudioManager::GetInstance().Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
 
 }
 
@@ -94,7 +94,7 @@ void MiddleHealItem::Update()
 void MiddleHealItem::Use()
 {
 	Character::player->AddHp(healValue);
-	AudioManager::GetInstance()->PlayOneShot("Heal");
+	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
 
@@ -115,7 +115,7 @@ LargeHealItem::LargeHealItem(VECTOR _pos, const std::string& _name, const std::s
 void LargeHealItem::Start()
 {
 	isEffectFinished = false;
-	AudioManager::GetInstance()->Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
+	AudioManager::GetInstance().Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
 
 }
 
@@ -131,7 +131,7 @@ void LargeHealItem::Update()
 void LargeHealItem::Use()
 {
 	Character::player->AddHp(healValue);
-	AudioManager::GetInstance()->PlayOneShot("Heal");
+	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
 #pragma endregion
@@ -150,7 +150,7 @@ AttactPotion::AttactPotion(VECTOR _pos, const std::string& _name, const std::str
 void AttactPotion::Start()
 {
 	isEffectFinished = false;
-	AudioManager::GetInstance()->Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
+	AudioManager::GetInstance().Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
 
 }
 
@@ -179,7 +179,7 @@ void AttactPotion::Update()
 
 void AttactPotion::Use()
 {
-	AudioManager::GetInstance()->PlayOneShot("Heal");
+	AudioManager::GetInstance().PlayOneShot("Heal");
 	// 既に上昇中ならタイマーをリセットする（重ねがけ防止）
 	if (isBoost) {
 		timer = duration;
@@ -207,7 +207,7 @@ DefensePotion::DefensePotion(VECTOR _pos, const std::string& _name, const std::s
 void DefensePotion::Start()
 {
 	isEffectFinished = false;
-	AudioManager::GetInstance()->Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
+	AudioManager::GetInstance().Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
 
 }
 
@@ -236,7 +236,7 @@ void DefensePotion::Update()
 
 void DefensePotion::Use()
 {
-	AudioManager::GetInstance()->PlayOneShot("Heal");
+	AudioManager::GetInstance().PlayOneShot("Heal");
 
 	// 既に上昇中ならタイマーをリセットする（重ねがけ防止）
 	if (isBoost) {

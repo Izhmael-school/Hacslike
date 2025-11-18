@@ -72,9 +72,11 @@ void StartTreasureChest::Render()
 	MV1DrawModel(TreasureChestModel);
 
 	// 当たり判定の描画（デバッグ用）
+#if _DEBUG
    if (pCollider != nullptr) {
 	   pCollider->Render();
    }
+#endif
 }
 
 void StartTreasureChest::OpenTreasureChest()

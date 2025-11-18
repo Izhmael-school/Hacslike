@@ -31,8 +31,8 @@ void SkillSelectUI::StartSelection()
         fw.exploded = false;
         fireworks.push_back(fw);
     }
-    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
-    AudioManager::GetInstance()->Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 }
 
 int SkillSelectUI::UpdateSelection()
@@ -63,7 +63,7 @@ int SkillSelectUI::UpdateSelection()
             }
             inputCooldown = 10;  // 10F = 約0.16秒
             
-            AudioManager::GetInstance()->PlayOneShot("SelectSkill");
+            AudioManager::GetInstance().PlayOneShot("SelectSkill");
         }
         else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
             selectedIndex++;
@@ -71,12 +71,12 @@ int SkillSelectUI::UpdateSelection()
                 selectedIndex = 0;
             }
             inputCooldown = 10;
-            AudioManager::GetInstance()->PlayOneShot("SelectSkill");
+            AudioManager::GetInstance().PlayOneShot("SelectSkill");
         }
         else if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
         {
             isActive = false;
-            AudioManager::GetInstance()->PlayOneShot("DecisionSkill");
+            AudioManager::GetInstance().PlayOneShot("DecisionSkill");
             return selectedIndex;
         }
     }
