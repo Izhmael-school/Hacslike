@@ -65,7 +65,7 @@ int StageManager::SetMapData(int x, int y, int setValue) {
 }
 
 int StageManager::GetRoomStatus(int roomNum, RoomStatus status) {
-	return generator->roomStatus[roomNum][status];
+	return generator->roomStatus[status][roomNum];
 }
 
 void StageManager::GenerateStage() {

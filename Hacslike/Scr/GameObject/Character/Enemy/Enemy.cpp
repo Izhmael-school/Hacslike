@@ -16,7 +16,7 @@ Enemy::Enemy()
 	, rayAnswer(false)
 	, atkTime(0)
 	, atkSpan(4)
-	, goalPos(VZero)
+	, goalPos(VGet(-1,-1,-1))
 	, nextWanderSpan(4)
 	, nextWanderTime(nextWanderSpan) {
 	Start();
@@ -70,6 +70,8 @@ void Enemy::Update() {
 
 	// UŒ‚“–‚½‚è”»’è‚ÌXV
 	for (auto c : attackColliderList) {
+		if (c->GetCollider() == nullptr) continue;
+
 		c->Update();
 
 		if (!c->IsDead()) continue;
@@ -305,6 +307,7 @@ void Enemy::Wander() {
 
 	pAnimator->Play("walk");
 
+	LookTarget(goalPos);
 	Move(goalPos);
 
 	if (position.x >= goalPos.x - 50 && position.x < goalPos.x + 50 &&
