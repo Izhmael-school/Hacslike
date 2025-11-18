@@ -15,7 +15,10 @@ Enemy::Enemy()
 	, isDead(false)
 	, rayAnswer(false)
 	, atkTime(0)
-	, atkSpan(4) {
+	, atkSpan(4)
+	, goalPos(VZero)
+	, nextWanderSpan(4)
+	, nextWanderTime(nextWanderSpan) {
 	Start();
 }
 
@@ -40,10 +43,27 @@ void Enemy::Setup() {
 
 void Enemy::Update() {
 	if (!isVisible || isDead) return;
-
+	// 座標の更新等
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
 
+	// レイの更新
+	Vision_Fan(GetPlayer()->GetPosition());
+	// 追跡行動
+	Tracking();
+	// 徘徊行動
+	Wander();
+
+	if (isAttack()) return;
+	if (!rayAnswer)
+		pAnimator->Play("idle01");
+	if (rayAnswer && !isTouch)
+		pAnimator->Play("run");
+	if (rayAnswer && isTouch)
+		Attack();
+
+
+	// アニメーションの更新
 	if (pAnimator != nullptr) {
 		pAnimator->Update();
 	}
@@ -64,6 +84,7 @@ void Enemy::Update() {
 		pCollider->Update();
 	}
 
+	// 攻撃のリキャスト
 	atkTime += TimeManager::GetInstance().deltaTime;
 }
 
@@ -100,17 +121,17 @@ void Enemy::LoadAnimation() {
 	if (mPath == "") return;
 
 	// アニメーションの読み込み
-	pAnimator->Load(mPath + "idle01.mv1", "idle01", true,true);
-	pAnimator->Load(mPath + "idle02.mv1", "idle02", true,true);
-	pAnimator->Load(mPath + "attack01.mv1", "attack01", false,false);
-	pAnimator->Load(mPath + "attack02.mv1", "attack02", false,false);
-	pAnimator->Load(mPath + "attack03.mv1", "attack03", false,false);
-	pAnimator->Load(mPath + "damage.mv1", "damage", false,false);
-	pAnimator->Load(mPath + "dead.mv1", "dead", false,false);
-	pAnimator->Load(mPath + "walk.mv1", "walk", true,true);
-	pAnimator->Load(mPath + "run.mv1", "run", true,true);
-	pAnimator->Load(mPath + "dropdown.mv1", "dropdown", false,false);
-	pAnimator->Load(mPath + "situp.mv1", "situp", false,false);
+	pAnimator->Load(mPath + "idle01.mv1", "idle01", true, true);
+	pAnimator->Load(mPath + "idle02.mv1", "idle02", true, true);
+	pAnimator->Load(mPath + "attack01.mv1", "attack01", false, false);
+	pAnimator->Load(mPath + "attack02.mv1", "attack02", false, false);
+	pAnimator->Load(mPath + "attack03.mv1", "attack03", false, false);
+	pAnimator->Load(mPath + "damage.mv1", "damage", false, false);
+	pAnimator->Load(mPath + "dead.mv1", "dead", false, false);
+	pAnimator->Load(mPath + "walk.mv1", "walk", true, true);
+	pAnimator->Load(mPath + "run.mv1", "run", true, true);
+	pAnimator->Load(mPath + "dropdown.mv1", "dropdown", false, false);
+	pAnimator->Load(mPath + "situp.mv1", "situp", false, false);
 
 	int animNum = pAnimator->GetAnimationIndex("attack01");
 	if (animNum != -1)
@@ -256,6 +277,42 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 	return rayAnswer = true;
 }
 
+void Enemy::Wander() {
+	if (rayAnswer) return;
+
+	if (nextWanderTime < nextWanderSpan) {
+		nextWanderTime += TimeManager::GetInstance().deltaTime;
+		return;
+	}
+
+	if (goalPos.x == -1 || goalPos.z == -1) {
+
+		int x = std::round(position.x / CellSize);
+		int z = std::round(position.z / CellSize);
+		// 今いる部屋の番号を取得する
+		int roomNum = StageManager::GetInstance().GetNowRoomNum(VGet(x, 0, z));
+		// 部屋の番号から部屋のサイズを取得する
+		int rx = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rx);
+		int ry = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::ry);
+		int rw = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rw);
+		int rh = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rh);
+
+		int moveX = Random(rx, rx + rw);
+		int moveY = Random(ry, ry + rh);
+
+		goalPos = VGet(moveX * CellSize, 0, moveY * CellSize);
+	}
+
+	pAnimator->Play("walk");
+
+	Move(goalPos);
+
+	if (position.x >= goalPos.x - 50 && position.x < goalPos.x + 50 &&
+		position.z >= goalPos.z - 50 && position.z < goalPos.z + 50) {
+		nextWanderTime = 0;
+	}
+}
+
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 	VECTOR dir = VSub(targetPos, position);
 
@@ -274,21 +331,19 @@ void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 /// 追跡
 /// </summary>
 void Enemy::Tracking() {
-	if (!rayAnswer) return;
+	// レイに引っかかってない、プレイヤーに触れている、攻撃中は処理しない
+	if (!rayAnswer || isTouch || isAttack()) return;
 	VECTOR targetPos = GetPlayer()->GetPosition();
 
 	LookTarget(targetPos);
+
+	if (pAnimator->Play("run") == -1)
+		pAnimator->Play("walk");
 
 	Move(targetPos);
 }
 
 void Enemy::Move(VECTOR targetPos) {
-	// プレイヤーと接触していたら動かない
-	if (isTouch || isAttack()) return;
-
-	if (pAnimator->Play("run") == -1)
-		pAnimator->Play("walk");
-
 	VECTOR dir = VSub(targetPos, position);
 	float d = TimeManager::GetInstance().deltaTime;
 	VECTOR pos = VAdd(position, VGet(dir.x * d * moveSpeed, 0, dir.z * d * moveSpeed));

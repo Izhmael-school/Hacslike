@@ -180,6 +180,10 @@ void StageManager::SetGameObjectRandomPos(GameObject* obj) {
 	generator->SetGameObjectRandomPos(obj);
 }
 
+void StageManager::SetGameObject(VECTOR pos, GameObject* obj) {
+	generator->SetGameObject(obj, pos);
+}
+
 void StageManager::ChangeTexture(int textureHandle, ObjectType changeObject) {
 	generator->ChangeObjectTexture(textureHandle, changeObject);
 }

@@ -38,24 +38,6 @@ void EnemySpider::Start() {
 
 void EnemySpider::Update() {
 	Enemy::Update();
-	// 死んでたら更新しない
-	if (isDead) return;
-	// レイの更新
-	Vision_Fan(GetPlayer()->GetPosition());
-	// 追跡行動
-	Tracking();
-
-
-
-
-	if (isAttack()) return;
-	if (!rayAnswer)
-		pAnimator->Play("idle01");
-	if (rayAnswer && !isTouch)
-		pAnimator->Play("walk");
-	if (rayAnswer && isTouch)
-		Attack();
-
 }
 
 void EnemySpider::Render() {

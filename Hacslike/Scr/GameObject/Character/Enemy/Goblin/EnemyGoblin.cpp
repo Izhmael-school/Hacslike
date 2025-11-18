@@ -49,24 +49,6 @@ void EnemyGoblin::Start() {
 
 void EnemyGoblin::Update() {
 	Enemy::Update();
-	// 死んでたら更新しない
-	if (isDead) return;
-	// レイの更新
-	Vision_Fan(GetPlayer()->GetPosition());
-	// 追跡行動
-	Tracking();
-
-
-
-
-	if (isAttack()) return;
-	if (!rayAnswer)
-		pAnimator->Play("idle01");
-	if (rayAnswer && !isTouch)
-		pAnimator->Play("run");
-	if (rayAnswer && isTouch)
-		Attack();
-
 }
 
 void EnemyGoblin::Render() {

@@ -21,7 +21,7 @@ Player* Player::instance = nullptr;
  *	@param[in]	VECTOR _pos		初期化する座標
  */
 Player::Player(VECTOR _pos)
-	: Character(_pos, "Player", Lv, Exp, speed)
+	: Character(_pos, "Player", Lv, exp, speed)
 	, pWeapon(nullptr)
 	, input(&InputManager::GetInstance())
 	//, slashes()								//	斬撃
@@ -35,12 +35,12 @@ Player::Player(VECTOR _pos)
 	, weaponData(nullptr)
 	, hpRate()
 	, maxExp()
-	, remainExp(){
+	, remainExp() {
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
 	def = 2;
-	Exp = 0;
+	exp = 0;
 	criticalHitRate = 10;
 	criticalDamage = 100;
 	// コンストラクタでシングルトンの重複生成を防ぐ
@@ -109,27 +109,29 @@ void Player::Start() {
 
 
 	//	アニメーションの読み込み
-	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle",true, true);
-	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", "Walk",true, true);
-	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1", "Atk1",true);
-	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1", "Atk2",true);
-	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1", "Atk3",true);
+#pragma region Animation
+
+	GetAnimator()->Load("Res/PlayerModel/Neutral.mv1", "Idle", true, true);
+	GetAnimator()->Load("Res/PlayerModel/Walking.mv1", "Walk", true, true);
+	GetAnimator()->Load("Res/PlayerModel/Attack1.mv1", "Atk1", true);
+	GetAnimator()->Load("Res/PlayerModel/Attack2.mv1", "Atk2", true);
+	GetAnimator()->Load("Res/PlayerModel/Attack3.mv1", "Atk3", true);
 	GetAnimator()->Load("Res/PlayerModel/Run.mv1", "Run", true);
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1", "AxeAtk1",true);
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1", "AxeAtk2",true);
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1", "AxeAtk3",true);
-	GetAnimator()->Load("Res/PlayerModel/AxeAttack4.mv1", "AxeAtk4",true);
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1", "GreatAtk1",true);
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2",true);
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3",true);
-	GetAnimator()->Load("Res/PlayerModel/GreatAttack4.mv1", "GreatAtk4",true);
-	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1",true);
-	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2",true, true);
-	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3",true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack1.mv1", "AxeAtk1", true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack3.mv1", "AxeAtk2", true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack2.mv1", "AxeAtk3", true);
+	GetAnimator()->Load("Res/PlayerModel/AxeAttack4.mv1", "AxeAtk4", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack1.mv1", "GreatAtk1", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack2.mv1", "GreatAtk2", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack3.mv1", "GreatAtk3", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatAttack4.mv1", "GreatAtk4", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge1.mv1", "GreatCharge1", true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge2.mv1", "GreatCharge2", true, true);
+	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3", true);
+
+#pragma endregion
 
 	pAnimator->Play(0);
-
-	
 
 	WeaponManager::GetInstance().LoadWeapons("Scr/Data/WeaponsData.json");
 	maxWeaponId = WeaponManager::GetInstance().GetMaxWeaponId();
@@ -156,12 +158,12 @@ void Player::Start() {
 	GetInventory()->AddItem(std::move(stick));
 
 	// 追加されたアイテムは items.back() に入っているので取得
-	
+
 	Inventory::InventoryItem* lastItem = GetInventory()->GetLastItem();
 
-		// 装備（EquipItem は Use() を内部で呼ぶ）
-		GetInventory()->EquipItem(lastItem->item.get());
-	
+	// 装備（EquipItem は Use() を内部で呼ぶ）
+	GetInventory()->EquipItem(lastItem->item.get());
+
 
 	SetSpeed(1);
 }
@@ -203,15 +205,15 @@ void Player::Update() {
 	//OpenInventory();
 
 	ArtifactManager::GetInstance().Update(this);
-	
-	
+
+
 
 	selectMenu();
 
 	OpenMenu();
 
 	inventory.Update(this);
-	if(isItemUI) {
+	if (isItemUI) {
 	}
 
 	if (isArtifactUI) {
@@ -230,9 +232,9 @@ void Player::Update() {
 	}
 
 #pragma region スキル選択
-	if (Exp >= maxExp && !isSelectingSkill) {
-		remainExp = Exp - maxExp;
-		Exp = remainExp;
+	if (exp >= maxExp && !isSelectingSkill) {
+		remainExp = exp - maxExp;
+		exp = remainExp;
 		maxExp *= 1.1;
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
@@ -241,11 +243,9 @@ void Player::Update() {
 	if (isSelectingSkill) {
 		// ★スキル選択中の処理
 		int selected = skillUI.UpdateSelection();
-		if (selected != -1)
-		{
+		if (selected != -1) {
 
-			if (player && selected >= 0 && selected < (int)skillChoices.size())
-			{
+			if (player && selected >= 0 && selected < (int)skillChoices.size()) {
 				SkillManager::GetInstance().ApplySelectedSkill(this, skillChoices[selected]);
 			}
 			isSelectingSkill = false;
@@ -253,7 +253,7 @@ void Player::Update() {
 		}
 	}
 #pragma endregion
-	
+
 	pAnimator->Update();
 
 	GameObject::Update();
@@ -295,7 +295,7 @@ void Player::Render() {
 
 		// 外側頂点
 		int x1o = cx + (int)(r_outer * cos(angle1));
-		int y1o = cy - (int)(r_outer * sin(angle1)); 
+		int y1o = cy - (int)(r_outer * sin(angle1));
 		int x2o = cx + (int)(r_outer * cos(angle2));
 		int y2o = cy - (int)(r_outer * sin(angle2));
 
@@ -314,7 +314,7 @@ void Player::Render() {
 	int expR_inner = 140;  //	内側半径
 	int expSteps = 50;	   //	分割数
 
-	double expPercent = (double)Exp / maxExp * 100;
+	double expPercent = (double)exp / maxExp * 100;
 	double Exp_max_angle = 90.0;
 	double Exp_angle_end = Exp_max_angle * expPercent / 100.0;
 
@@ -338,12 +338,11 @@ void Player::Render() {
 		DrawTriangle(expX1o, expY1o, expX2o, expY2o, expX1i, expY1i, yellow, TRUE);
 		DrawTriangle(expX2o, expY2o, expX2i, expY2i, expX1i, expY1i, yellow, TRUE);
 	}
-		DrawCircle(cx, cy, r_outer, white, FALSE);
-		DrawCircle(cx, cy, r_inner, white, FALSE);
-		DrawCircle(cx, cy, expR_inner, white, FALSE);
+	DrawCircle(cx, cy, r_outer, white, FALSE);
+	DrawCircle(cx, cy, r_inner, white, FALSE);
+	DrawCircle(cx, cy, expR_inner, white, FALSE);
 
 #pragma endregion		
-
 
 	playerMovement->Render();
 
@@ -383,17 +382,16 @@ void Player::Render() {
 
 	inventory.AddItemRender();
 
-	if (isSelectingSkill)
-	{
+	if (isSelectingSkill) {
 		skillUI.Render(skillChoices);
 	}
 
-	if(isSelectArtifact){
+	if (isSelectArtifact) {
 		artifactSelectUI.Render(artifactChioces);
 	}
 
 	AddItemRender();
-	if(hitChest){
+	if (hitChest) {
 		GetArtifactRender();
 	}
 
@@ -475,8 +473,7 @@ void Player::AddItem() {
 	}
 }
 
-void Player::OpenMenu()
-{
+void Player::OpenMenu() {
 	// TAB または START でメニュー開閉
 	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
 		isMenuUI = true;
@@ -488,28 +485,24 @@ void Player::OpenMenu()
 		isMenuSelected = false; // 閉じたときにリセット
 	}
 
-	if (isMenuUI)
-	{
+	if (isMenuUI) {
 		// メニュー操作
 		if (!isMenuSelected) // 選択中はカーソル操作を無効に
 		{
 			// ↑キー
-			if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP))
-			{
+			if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
 				if (menu == MenuType::menuArtifact)
 					menu = MenuType::menuInventory;
 			}
 
 			// ↓キー
-			if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
-			{
+			if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
 				if (menu == MenuType::menuInventory)
 					menu = MenuType::menuArtifact;
 			}
 
 			// Enterで選択
-			if (input->IsKeyUp(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B))
-			{
+			if (input->IsKeyUp(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B)) {
 				isMenuSelected = true;
 				blinkTime = 0.0f;
 				blinkVisible = true;
@@ -517,16 +510,14 @@ void Player::OpenMenu()
 		}
 
 		// Backspaceで解除
-		if (input->IsKeyDown(KEY_INPUT_BACK) || input->IsButtonUp(XINPUT_GAMEPAD_A))
-		{
+		if (input->IsKeyDown(KEY_INPUT_BACK) || input->IsButtonUp(XINPUT_GAMEPAD_A)) {
 			isMenuSelected = false;
 			blinkVisible = true; // 常に表示状態に戻す
 		}
 	}
 
 	// 点滅制御
-	if (isMenuSelected)
-	{
+	if (isMenuSelected) {
 		blinkTime += 1.0f / 60.0f; // 1フレーム1/60秒進む想定
 		if (blinkTime >= 0.3f) // 約0.3秒ごとに切り替え
 		{
@@ -534,17 +525,14 @@ void Player::OpenMenu()
 			blinkTime = 0.0f;
 		}
 	}
-	else
-	{
+	else {
 		blinkVisible = true;
 	}
 }
 
-void Player::selectMenu()
-{
+void Player::selectMenu() {
 	if (isMenuUI == true) {
-		switch (menu)
-		{
+		switch (menu) {
 		case menuInventory:
 			isItemUI = true;
 			isArtifactUI = false;
@@ -560,8 +548,7 @@ void Player::selectMenu()
 	else return;
 }
 
-void Player::DrawMenu()
-{
+void Player::DrawMenu() {
 	if (!isMenuUI) return;
 
 	const int x = 20;
@@ -573,20 +560,17 @@ void Player::DrawMenu()
 	const char* menuNames[] = { "アイテム", "アーティファクト" };
 	const int menuCount = 2;
 
-	for (int i = 0; i < menuCount; i++)
-	{
+	for (int i = 0; i < menuCount; i++) {
 		int boxY = y + i * (height + margin);
 
 		bool isCurrent = (static_cast<int>(menu) == i);
 
 		// 選択中かつ点滅表示がオンの時のみピンク枠
-		if (isCurrent && (!isMenuSelected || (isMenuSelected && blinkVisible)))
-		{
+		if (isCurrent && (!isMenuSelected || (isMenuSelected && blinkVisible))) {
 			DrawBox(x - 4, boxY - 4, x + width + 4, boxY + height + 4, GetColor(255, 0, 255), TRUE);
 			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
 		}
-		else
-		{
+		else {
 			DrawBox(x - 2, boxY - 2, x + width + 2, boxY + height + 2, GetColor(255, 255, 255), FALSE);
 			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
 		}
@@ -596,33 +580,30 @@ void Player::DrawMenu()
 	PlayerStatusRender();
 }
 
-void Player::GetCoin()
-{
+void Player::GetCoin() {
 	if (coinArtifact)
 		coinArtifact->OnGetCoin(this);
 }
 
-void Player::GetCoin_Item()
-{
+void Player::GetCoin_Item() {
 	if (itemArtifact)
 		itemArtifact->OnGetCoin_Item(this);
 }
 
-void Player::AddItemRender()
-{
+void Player::AddItemRender() {
 	int StartX = (WINDOW_WIDTH / 2) - 200;
 	int StartY = (WINDOW_HEIGHT)-200;
-	int GoalX = (WINDOW_WIDTH / 2) +200;
+	int GoalX = (WINDOW_WIDTH / 2) + 200;
 	int GoalY = (WINDOW_HEIGHT)-150;
 	int textX = StartX + 80;
 	int textY = StartY + 17;
 	if (hitItem) {
-		DrawBox(StartX,StartY,GoalX,GoalY, gray,TRUE);
-		DrawBox(StartX+2, StartY+2, GoalX-2, GoalY-2, white, FALSE);
-		DrawFormatString(textX+10, textY,black,"キー/ ボタン:アイテムを取る");
+		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:アイテムを取る");
 		DrawFormatString(textX, textY, white, "F");
-		DrawFormatString(textX+53, textY, white , "Y");
-		
+		DrawFormatString(textX + 53, textY, white, "Y");
+
 
 	}
 	else return;
@@ -631,8 +612,7 @@ void Player::AddItemRender()
 /// <summary>
 /// アーティファクトの取得
 /// </summary>
-void Player::GetArtifact()
-{
+void Player::GetArtifact() {
 	if (hitChest) {
 		if (!isSelectArtifact) {
 			if (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
@@ -644,17 +624,15 @@ void Player::GetArtifact()
 		else {
 			// ★スキル選択中の処理
 			int Selected = artifactSelectUI.UpdateSelection();
-			if (Selected != -1)
-			{
+			if (Selected != -1) {
 
-				if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
-				{
+				if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
 					ArtifactManager::GetInstance().ApplySelectedArtifact(this, artifactChioces[Selected]);
-					
-					
+
+
 				}
 
-				
+
 			}
 
 		}
@@ -663,8 +641,7 @@ void Player::GetArtifact()
 
 }
 
-void Player::GetArtifactRender()
-{
+void Player::GetArtifactRender() {
 	int StartX = (WINDOW_WIDTH / 2) - 200;
 	int StartY = (WINDOW_HEIGHT)-200;
 	int GoalX = (WINDOW_WIDTH / 2) + 200;
@@ -680,11 +657,11 @@ void Player::GetArtifactRender()
 
 
 	}
-	else if(isSelectArtifact){
+	else if (isSelectArtifact) {
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
 		DrawFormatString(textX + 40, textY, black, "中身は空っぽだ");
-		
+
 	}
 	else return;
 }
@@ -696,7 +673,7 @@ void Player::PlayerStatusRender() {
 	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
 	DrawFormatString(930, 20, white, "ステータス");
 	DrawFormatString(930, 60, green, "LV　　　　　 : %d", Lv);
-	DrawFormatString(930, 80, green, "EXP　　　　　: %d / %d", Exp , maxExp);
+	DrawFormatString(930, 80, green, "EXP　　　　　: %d / %d", exp, maxExp);
 	DrawFormatString(930, 100, green, "HP　　　　　 : %d / %d", hp, maxHp);
 	DrawFormatString(930, 120, green, "攻撃力　　　 : %d", atk);
 	DrawFormatString(930, 140, green, "防御力　　　 : %d", def);
@@ -708,7 +685,7 @@ void Player::PlayerStatusRender() {
 
 
 
-	
+
 }
 
 /*
@@ -753,7 +730,7 @@ void Player::OnTriggerStay(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "TreasureChest") {
 		hitChest = true;
 		GetArtifact();
-	
+
 	}
 }
 
@@ -771,6 +748,6 @@ void Player::OnTriggerExit(Collider* _pCol) {
 	}
 	if (_pCol->GetGameObject()->GetTag() == "TreasureChest") {
 		hitChest = false;
-		
+
 	}
 }

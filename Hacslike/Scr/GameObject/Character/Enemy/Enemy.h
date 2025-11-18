@@ -55,6 +55,11 @@ protected:
 	float atkTime;
 	// UŒ‚‚·‚éŠÔŠu
 	float atkSpan;
+	// œpœj‚·‚é‚Æ‚«‚ÉƒS[ƒ‹‚Æ‚·‚éÀ•W
+	VECTOR goalPos;
+	// Ÿœpœj‚·‚é‚Ü‚Å‚ÌŠÔ
+	float nextWanderTime;
+	float nextWanderSpan;
 
 public:
 	Enemy();
@@ -83,6 +88,9 @@ public:
 	virtual bool Vision_Ray();
 	virtual bool Vision_Circle(float r);
 	virtual bool Vision_Fan(VECTOR targetPos);
+	// œpœjs“®
+	virtual void Wander();
+
 
 	inline EnemyType GetType() const { return type; }
 

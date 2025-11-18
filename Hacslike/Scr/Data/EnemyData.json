@@ -4,7 +4,7 @@
     "name": "ゴブリン",
     "typeID" : 0,
     "mPath": "Res/Model/Enemy/Goblin/",
-    "hp": 1,
+    "hp": 30,
     "atk": 10,
     "def": 5,
     "exp": 15
@@ -15,7 +15,7 @@
     "name": "ゴブリンリーダー",
     "typeID": 0,
     "mPath": "Res/Model/Enemy/Goblin/",
-    "hp": 1,
+    "hp": 100,
     "atk": 35,
     "def": 10,
     "exp": 200
@@ -26,7 +26,7 @@
     "name": "クモ",
     "typeID": 1,
     "mPath": "Res/Model/Enemy/Spider/",
-    "hp": 1,
+    "hp": 50,
     "atk": 20,
     "def": 5,
     "exp": 50
@@ -37,7 +37,7 @@
     "name": "オオカミ",
     "typeID": 2,
     "mPath": "Res/Model/Enemy/Wolf/",
-    "hp": 1,
+    "hp": 75,
     "atk": 20,
     "def": 5,
     "exp": 50

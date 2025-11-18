@@ -35,8 +35,9 @@ void GameScene::Start() {
 	AudioManager::GetInstance().ChangeVolume(0.1f, "NormalFloor");
 	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 
-	StartTreasureChest* pChest = new StartTreasureChest(VGet(800,0,800));
+	StartTreasureChest* pChest = new StartTreasureChest();
 	pGameObjectArray.push_back(pChest);
+	StageManager::GetInstance().SetGameObject(VGet(800,0,800),pChest);
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
 	StageManager::GetInstance().Generate();

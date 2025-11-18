@@ -70,7 +70,7 @@ void Coin::Start()
     coinModelHandle = MV1LoadModel("Res/Model/DropObject/coin.mv1");
     coinValue = 1;
     value = coinValue;
-    AudioManager::GetInstance()->Load("Res/SE/coin.mp3", "GetCoin", false);
+    AudioManager::GetInstance().Load("Res/SE/coin.mp3", "GetCoin", false);
     UpdateMatrix(); // ‰Šús—ñXV
 }
 
@@ -192,7 +192,7 @@ void Coin::SpawnCoin(VECTOR _pos)
 void Coin::ApplyCoin(Player* player)
 {
     if (!player || !active) return;
-    AudioManager::GetInstance()->PlayOneShot("GetCoin");
+    AudioManager::GetInstance().PlayOneShot("GetCoin");
     player->SetCoinValue(player->GetCoinValue() + player->GetCoinAcquisitionValue() + coinValue);
     player->SetIsCoin(false);
 }

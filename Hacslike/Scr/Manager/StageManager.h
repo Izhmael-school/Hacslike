@@ -50,6 +50,7 @@ public:
 	int SetMapData(int x,int y,int setValue);
 	int GetRoomStatus(int roomNum,RoomStatus status);
 	void SetGameObjectRandomPos(GameObject* obj);
+	void SetGameObject(VECTOR pos,GameObject* obj);
 	int GetNowRoomNum(VECTOR pos);
 	VECTOR GetRandomRoomRandomPos();
 	void Generate();
