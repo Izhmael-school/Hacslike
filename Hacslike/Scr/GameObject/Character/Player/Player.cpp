@@ -88,9 +88,10 @@ void Player::DestroyInstance() {
 }
 
 void Player::IsDead() {
+	CollisionManager::GetInstance().UnRegister(pCollider);
 	deadTime += TimeManager::GetInstance().deltaTime;
-	if (deadTime < 3.85f) {
-		pAnimator->Play("Down1", 0.6);
+	if (deadTime < 2.56f) {
+		pAnimator->Play("Down1", 0.9);
 	}
 	else {
 		pAnimator->Play("Down2");
