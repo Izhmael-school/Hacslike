@@ -59,6 +59,11 @@ private:	//	メンバ変数
 	WeaponData* weaponData;
 
 	float hpRate;
+
+	bool isDead;
+
+	float deadTime;
+
 #pragma region インベントリ/アイテム関連
 	Inventory inventory; //アイテムインベントリ
 	//bool hitItem;		 //アイテムに当たっているかどうか
@@ -303,10 +308,7 @@ public:		//	Getter と Setter
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
 	inline PlayerMovement* GetPlayerMovement() const { return playerMovement; }
 
-
-	VECTOR GetForward() const {
-		return VNorm(VGet(-sinf(Deg2Rad(rotation.y)), 0.0f, -cosf(Deg2Rad(rotation.y))));
-	}
+	inline bool GetIsDead() const { return isDead; }
 
 
 public:

@@ -41,6 +41,7 @@ void PlayerAttack::Start() {
 /// 更新処理
 /// </summary>
 void PlayerAttack::Update() {
+	if(!pPlayer->GetIsDead())
 	AttackInput();
 }
 
