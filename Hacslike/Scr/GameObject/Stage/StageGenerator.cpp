@@ -663,9 +663,9 @@ void StageGenerator::DrawMap() {
 	for (int w = 0; w < mapWidth_Large; w++) {
 		for (int h = 0; h < mapHeight_Large; h++) {
 			int color = 0;
-#if _RELEASE
+
 			if (!stageMap[w][h]) continue;
-#endif
+
 			switch (map[w][h]) {
 			case Road:
 				color = white;

@@ -38,14 +38,14 @@ void GameScene::Start() {
 
 	StartTreasureChest* pChest = new StartTreasureChest();
 	pGameObjectArray.push_back(pChest);
-	StageManager::GetInstance().SetGameObject(VGet(800,0,800),pChest);
+	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
 	StageManager::GetInstance().Generate();
 }
 
 void GameScene::Update() {
-	
+
 
 
 #pragma region プロト用スキルとアイテム
@@ -57,27 +57,24 @@ void GameScene::Update() {
 			isSelectingArtifact = true;
 		}
 		StageManager::GetInstance().Update();
+		EnemyManager::GetInstance().Update();
 		for (auto pObj : pGameObjectArray) {
 			pObj->Update();
 		}
-		EnemyManager::GetInstance().Update();
 	}
 	else {
 		// ★スキル選択中の処理
 		int Selected = artifactUI.UpdateSelection();
-		if (Selected != -1)
-		{
+		if (Selected != -1) {
 
 			// プレイヤー取得
 			Player* player = nullptr;
-			for (auto p : pGameObjectArray)
-			{
+			for (auto p : pGameObjectArray) {
 				player = dynamic_cast<Player*>(p);
 				if (player) break;
 			}
 
-			if (player && Selected >= 0 && Selected < (int)artifactChioces.size())
-			{
+			if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
 				ArtifactManager::GetInstance().ApplySelectedArtifact(player, artifactChioces[Selected]);
 			}
 
@@ -85,34 +82,33 @@ void GameScene::Update() {
 		}
 	}
 
-	
-
-		EffectManager::GetInstance().Update();
-		ItemDropManager::GetInstance().Update();
-
-		// --- アイテムドロップテスト ---
-		if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER))
-		{
-			VECTOR spawnPos = Character::player->GetPosition();
-			ItemDropManager::GetInstance().TryDropItem(ItemDropManager::GetInstance().GetItemDropRate(), VGet(spawnPos.x, 5.0f, spawnPos.z));
-		}
-		// --- アイテムドロップテスト ---
-		if (input->IsKeyDown(KEY_INPUT_Q))
-		{
-			VECTOR spawnPos = Character::player->GetPosition();
-
-			// コインを生成
-			Coin::GetInstance()->SpawnCoin(VGet(spawnPos.x + 70, 5.0f, spawnPos.z + 70));
-
-		}
 
 
-		Coin::GetInstance()->UpdateAll();
+	EffectManager::GetInstance().Update();
+	ItemDropManager::GetInstance().Update();
+
+#if _DEBUG
+	// --- アイテムドロップテスト ---
+	if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+		VECTOR spawnPos = Character::player->GetPosition();
+		ItemDropManager::GetInstance().TryDropItem(ItemDropManager::GetInstance().GetItemDropRate(), VGet(spawnPos.x, 5.0f, spawnPos.z));
+	}
+	// --- アイテムドロップテスト ---
+	if (input->IsKeyDown(KEY_INPUT_Q)) {
+		VECTOR spawnPos = Character::player->GetPosition();
+
+		// コインを生成
+		Coin::GetInstance()->SpawnCoin(VGet(spawnPos.x + 70, 5.0f, spawnPos.z + 70));
+
+	}
+#endif
+
+	Coin::GetInstance()->UpdateAll();
 
 #pragma endregion
 
 
-	
+
 }
 
 
@@ -127,8 +123,7 @@ void GameScene::Render() {
 
 	Coin::GetInstance()->RenderAll();
 	// ★スキル選択画面の描画
-	if (isSelectingSkill)
-	{
+	if (isSelectingSkill) {
 		skillUI.Render(skillChoices);
 	}
 	if (isSelectingArtifact) {
@@ -137,7 +132,7 @@ void GameScene::Render() {
 	// エフェクトの描画
 	EffectManager::GetInstance().Render();
 
-	
+
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
 	{
