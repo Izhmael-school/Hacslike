@@ -12,6 +12,7 @@
 #include "../../Item/ItemEquip/ItemEquip.h"
 #include"../../../Manager/ArtifactManager.h"
 #include "../../TreasureChest/StartTreasureChest.h"
+#include "../../../GameSystem/GameSystem.h"
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
@@ -186,9 +187,12 @@ void Player::Update() {
 	////	攻撃入力・HitBox更新
 	//AttackInput();
 
-
-	playerMovement->Update();
-	playerAttack->Update();
+	//ゲームシステムクラスで動きを制限
+	if (GameSystem::GetInstance()->IsPlayable()) {
+		playerMovement->Update();
+		playerAttack->Update();
+		pAnimator->Update();
+	}
 
 	//CheckWall();
 
@@ -239,6 +243,7 @@ void Player::Update() {
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
 		isSelectingSkill = true;
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 	}
 	if (isSelectingSkill) {
 		// ★スキル選択中の処理
@@ -249,12 +254,13 @@ void Player::Update() {
 				SkillManager::GetInstance().ApplySelectedSkill(this, skillChoices[selected]);
 			}
 			isSelectingSkill = false;
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 
 		}
 	}
 #pragma endregion
 
-	pAnimator->Update();
+	
 
 	GameObject::Update();
 
@@ -477,12 +483,15 @@ void Player::OpenMenu() {
 	// TAB または START でメニュー開閉
 	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
 		isMenuUI = true;
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 	}
 	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isMenuUI) {
 		isMenuUI = false;
 		isItemUI = false;
 		isArtifactUI = false;
 		isMenuSelected = false; // 閉じたときにリセット
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+
 	}
 
 	if (isMenuUI) {
@@ -619,6 +628,8 @@ void Player::GetArtifact() {
 				artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
 				artifactSelectUI.StartSelection();
 				isSelectArtifact = true;
+				GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+
 			}
 		}
 		else {
@@ -632,6 +643,7 @@ void Player::GetArtifact() {
 
 				}
 
+				GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 
 			}
 
