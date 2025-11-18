@@ -2,6 +2,7 @@
 #include "../../../Component/Collider/SphereHitBox.h"
 #include "../../../Component/Collider/CapsuleHitBox.h"
 #include "PlayerMovement.h"
+#include "../../../Manager/AudioManager.h"
 
 class Player;
 class Weapon;
@@ -31,6 +32,8 @@ private:
 	bool isCharging;
 	float chargeTime;
 	const float maxChargeTime ;
+
+	AudioManager* audio;
 
 public:
 	/// <summary>

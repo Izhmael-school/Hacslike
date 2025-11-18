@@ -35,6 +35,12 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 /// </summary>
 void PlayerAttack::Start() {
 	EffectManager::GetInstance().Load("Res/Effect/ChargeAttackEfk.efk", "ChargeBlad", 50.0f);
+
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/ChargeAttackVoice.mp3", "chargeAttack", false);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Sword.mp3", "Sword", false);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/GreatAttack1.mp3", "GAtk1", false);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/se_furi2.mp3", "furi", false);
+
 }
 
 /// <summary>
@@ -93,14 +99,17 @@ void PlayerAttack::AttackInput() {
 		if (chargeRatio < 0.75f) {
 			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
 			attackIndex = 4;
+			AudioManager::GetInstance().PlayOneShot("chargeAttack");
 		}
 		else if (chargeRatio < 1.2f) {
 			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
 			attackIndex = 4;
+			AudioManager::GetInstance().PlayOneShot("chargeAttack");;
 		}
 		else {
 			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
 			attackIndex = 4;
+			AudioManager::GetInstance().PlayOneShot("chargeAttack");
 		}
 	}
 
@@ -116,6 +125,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 
 				pPlayer->GetAnimator()->Play("Atk3", pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AudioManager::GetInstance().PlayOneShot("Sword");
 			}
 			else if (!isAttacking) {
 				//	1段目攻撃
@@ -124,6 +134,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 				canNextAttack = false;
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
+				AudioManager::GetInstance().PlayOneShot("Sword");
 			}
 			else if (canNextAttack && attackIndex < 3) {
 				//	コンボ入力
@@ -131,6 +142,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 				canNextAttack = false;
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃2→3
+				AudioManager::GetInstance().PlayOneShot("Sword");
 			}
 		}
 
@@ -151,6 +163,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 				canNextAttack = false;
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
+				AudioManager::GetInstance().PlayOneShot("GAtk1");
 			}
 			else if (canNextAttack && attackIndex < 3) {
 				//	コンボ入力
@@ -158,6 +171,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 				canNextAttack = false;
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
 
@@ -170,6 +184,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 
 				pPlayer->GetAnimator()->Play("AxeAtk4", pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 			else if (!isAttacking) {
 				//	1段目攻撃
@@ -178,6 +193,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 				canNextAttack = false;
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1)); // 攻撃1モーション
+				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 			else if (canNextAttack && attackIndex < 3) {
 				//	コンボ入力
@@ -185,6 +201,7 @@ void PlayerAttack::AttackInput() {
 				attackTimer = 0.0f;
 				canNextAttack = false;
 				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
 	}

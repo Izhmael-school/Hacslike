@@ -1,6 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include"../../Artifact/ArtifactBase.h"
+#include "../../../Manager/AudioManager.h"
 
 class Player;
 class PlayerAttack;
@@ -37,6 +38,8 @@ private:
 	PlayerAttack* playerAttack;
 
 	bool dashState;
+
+	AudioManager audio;
 
 	AttackincreasesforSeveralSecondsAfterEvasion* attactArtifact;
 	CriticalHitRateIncreasesForSeveralSecondsAfterEvasion* CriticalArtifact;

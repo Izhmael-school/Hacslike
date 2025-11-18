@@ -1,6 +1,7 @@
 #include "CapsuleHitBox.h"
 #include "../Hacslike/Scr/Manager/TimeManager.h"
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
+#include "../../Manager/AudioManager.h"
 
 CapsuleHitBox::CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR& p2, float _radius, float _life)
 	: owner(_owner)
@@ -9,7 +10,8 @@ CapsuleHitBox::CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR&
 	, radius(_radius)
 	, pCollider(nullptr)
 	, timer(0.0f)
-	, lifeTime(_life) {
+	, lifeTime(_life){
+	Start();
 }
 
 CapsuleHitBox::~CapsuleHitBox() {
@@ -31,7 +33,9 @@ void CapsuleHitBox::CreateCollider() {
 
 
 
-void CapsuleHitBox::Start() {}
+void CapsuleHitBox::Start() {
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Damage.mp3", "damage", false);
+}
 
 void CapsuleHitBox::Update() {
 	timer += TimeManager::GetInstance().deltaTime;
@@ -53,6 +57,7 @@ bool CapsuleHitBox::IsDead() const {
 void CapsuleHitBox::OnTriggerEnter(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
 		_pCol->GetCharacter()->Damage(GetCollider()->GetCharacter()->GetAtk());
+		AudioManager::GetInstance().PlayOneShot("damage");
 	}
 }
 

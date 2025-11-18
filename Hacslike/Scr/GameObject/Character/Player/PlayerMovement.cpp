@@ -16,7 +16,8 @@ PlayerMovement::PlayerMovement(Player* _player)
 	, evasionCooldown(0.0f)
 	, evasionSpeed(1.0f)
 	, inputVec()
-	, dashState(false){
+	, dashState(false)	
+	, audio(){
 	Start();
 }
 
@@ -40,6 +41,7 @@ void PlayerMovement::DestroyInstance()
 }
 
 void PlayerMovement::Start() {
+	audio.GetInstance().Load("Res/Audio/SE/Player/run.mp3", "run", false);
 
 	// 残像データ初期化
 	for (int i = 0; i < AFTIMAGENUM; i++) {
@@ -114,10 +116,12 @@ void PlayerMovement::UpdateMovement() {
 			if (evasionSpeed >= 1.2f) {
 				pPlayer->GetAnimator()->Play(5, 0.5f);
 				dashState = true;
+				audio.PlayOneShot("run");
 			}
 			else {
 				pPlayer->GetAnimator()->Play(1, 1.3f);
 				dashState = false;
+				audio.PlayOneShot("run");
 			}
 		}
 		else {
