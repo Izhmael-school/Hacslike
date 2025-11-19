@@ -56,7 +56,8 @@ void PlayerAttack::Update() {
 /// </summary>
 void PlayerAttack::AttackInput() {
 	//	攻撃入力
-	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X);
+	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X); 
+	bool isButton = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X); 
 
 	//	ため攻撃入力
 	bool isChargeButtonDown = input->IsMouseDown(MOUSE_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
@@ -113,7 +114,7 @@ void PlayerAttack::AttackInput() {
 		}
 	}
 
-	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking()) {
+	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking() && pWeapon->GetType() != 3) {
 		//	ボタンが押された瞬間だけ処理
 		attackButtonPressed = true;
 		if (pWeapon->GetType() == 0) {
@@ -204,6 +205,19 @@ void PlayerAttack::AttackInput() {
 				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
+
+		else if (pWeapon->GetType() == 3) {
+			if (!isAttacking) {
+				isAttacking = true;
+				attackIndex++;
+				attackTimer = 0.0f;
+				canNextAttack = false;
+			}
+		}
+	}
+
+	else if (isButton && pWeapon->GetType() == 3) {
+
 	}
 
 	else if (!isButtonDown) {
@@ -286,6 +300,10 @@ void PlayerAttack::AttackInput() {
 				canNextAttack = false;
 				attackIndex = 0;
 			}
+		}
+
+		else if (pWeapon->GetType() == 3) {
+			if (attackTimer > 0.4f && attackTimer < 1.0f) canNextAttack = true;
 		}
 	}
 

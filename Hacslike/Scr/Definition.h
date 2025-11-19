@@ -112,6 +112,7 @@ enum WeaponType {
 	Sward,
 	Big,
 	Blunt,
+	Gun,
 };
 
 enum EnemyType {
