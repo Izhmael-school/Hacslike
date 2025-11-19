@@ -24,6 +24,9 @@ menuActive(false),
 menuChoice(0)
 {
     AudioManager::GetInstance().Load("Res/SE/ItemGet.mp3", "GetItem", false);
+    AudioManager::GetInstance().Load("Res/SE/ビープ音4.mp3", "NotRemoveItem", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
+    AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 };
 Inventory::~Inventory() {
     // キャッシュされたグラフィックハンドルを解放（必要なら）
@@ -144,6 +147,7 @@ void Inventory::DropItemAtIndex(int idx)
     // ★★★ 装備中チェック ★★★
     if (equippedItem == target)
     {
+        AudioManager::GetInstance().PlayOneShot("NotRemoveItem");
 #if _DEBUG
         printfDx("装備中のアイテム「%s」は捨てられません！\n", target->GetName().c_str());
 #endif
@@ -197,11 +201,13 @@ void Inventory::Update(Player* player)
                     currentIndex = (std::max)(0, currentIndex - 1);
                     // スクロール調整
                     if (currentIndex < scrollOffset) scrollOffset = currentIndex;
+                    AudioManager::GetInstance().PlayOneShot("SelectSkill");
                 }
             }
             else {
                 // メニュー内移動（上下で切り替える）
                 menuChoice = (menuChoice + 1) % 2; // 0/1 切替
+                AudioManager::GetInstance().PlayOneShot("SelectSkill");
             }
         }
 
@@ -215,11 +221,13 @@ void Inventory::Update(Player* player)
                         scrollOffset = currentIndex - (maxVisible - 1);
                         if (scrollOffset < 0) scrollOffset = 0;
                     }
+                    AudioManager::GetInstance().PlayOneShot("SelectSkill");
                 }
             }
             else {
                 // メニュー内移動
                 menuChoice = (menuChoice + 1) % 2;
+                AudioManager::GetInstance().PlayOneShot("SelectSkill");
             }
         }
 
@@ -228,6 +236,7 @@ void Inventory::Update(Player* player)
             if (!menuActive) {
                 // メニューを開く（アイテムが存在するとき）
                 if (!items.empty()) {
+                    AudioManager::GetInstance().PlayOneShot("DecisionSkill");
                     menuActive = true;
                     menuChoice = 0; // デフォルトは Use
                 }
@@ -240,11 +249,15 @@ void Inventory::Update(Player* player)
                     if (menuChoice == 0) {
                         // Use
                         UseItem(currentIndex);
+                       
+
                         
                     }
                     else {
                         // Drop
                         DropItemAtIndex(currentIndex);
+                       
+
                     }
                 }
                 menuActive = false;
@@ -255,15 +268,18 @@ void Inventory::Update(Player* player)
         if (input->IsKeyDown(KEY_INPUT_ESCAPE) || input->IsButtonDown(XINPUT_GAMEPAD_A)) {
             if (menuActive) {
                 menuActive = false;
+                AudioManager::GetInstance().PlayOneShot("DecisionSkill");
             }
         }
 
         // 左右でメニューの切替（EnterでOKする方式の場合は不要だが、対応）
         if (menuActive) {
             if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
+                AudioManager::GetInstance().PlayOneShot("SelectSkill");
                 menuChoice = (std::max)(0, menuChoice - 1);
             }
             if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
+                AudioManager::GetInstance().PlayOneShot("SelectSkill");
                 menuChoice = (std::min)(1, menuChoice + 1);
             }
         }

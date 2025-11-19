@@ -179,6 +179,9 @@ void Player::Start() {
 	// 装備（EquipItem は Use() を内部で呼ぶ）
 	GetInventory()->EquipItem(lastItem->item.get());
 
+	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "Select", false);
+	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "Decision", false);
+
 
 	SetSpeed(1);
 }
@@ -267,6 +270,7 @@ void Player::Update() {
 		skillUI.StartSelection();
 		isSelectingSkill = true;
 		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+		SetMouseDispFlag(TRUE);
 	}
 	if (isSelectingSkill) {
 		// ★スキル選択中の処理
@@ -508,6 +512,7 @@ void Player::OpenMenu() {
 	// TAB または START でメニュー開閉
 	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
 		isMenuUI = true;
+		AudioManager::GetInstance().PlayOneShot("Decision");
 		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 	}
 	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isMenuUI) {
@@ -515,6 +520,7 @@ void Player::OpenMenu() {
 		isItemUI = false;
 		isArtifactUI = false;
 		isMenuSelected = false; // 閉じたときにリセット
+		AudioManager::GetInstance().PlayOneShot("Decision");
 		GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 
 	}
@@ -527,12 +533,14 @@ void Player::OpenMenu() {
 			if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
 				if (menu == MenuType::menuArtifact)
 					menu = MenuType::menuInventory;
+					AudioManager::GetInstance().PlayOneShot("Select");
 			}
 
 			// ↓キー
 			if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
 				if (menu == MenuType::menuInventory)
 					menu = MenuType::menuArtifact;
+					AudioManager::GetInstance().PlayOneShot("Select");
 			}
 
 			// Enterで選択
@@ -540,6 +548,7 @@ void Player::OpenMenu() {
 				isMenuSelected = true;
 				blinkTime = 0.0f;
 				blinkVisible = true;
+				AudioManager::GetInstance().PlayOneShot("Decision");
 			}
 		}
 
@@ -547,6 +556,7 @@ void Player::OpenMenu() {
 		if (input->IsKeyDown(KEY_INPUT_BACK) || input->IsButtonUp(XINPUT_GAMEPAD_A)) {
 			isMenuSelected = false;
 			blinkVisible = true; // 常に表示状態に戻す
+			AudioManager::GetInstance().PlayOneShot("Decision");
 		}
 	}
 

@@ -40,6 +40,77 @@ int SkillSelectUI::UpdateSelection()
     InputManager* input = &InputManager::GetInstance();
     if (!isActive) return -1;
 
+    // 出現アニメ中は無効
+    if (isAppearing)
+    {
+        animTimer++;
+        if (animTimer >= animDuration)
+        {
+            animTimer = animDuration;
+            isAppearing = false;
+        }
+        return -1;
+    }
+
+    //-------------------------------------
+    // ▼ マウスによるカード選択（NEW）
+    //-------------------------------------
+    int mx, my;
+    GetMousePoint(&mx, &my);
+
+    hoverIndex = -1;
+
+    const int startX = 200;
+    const int startY = 180;
+    const int gap = 300;
+
+    // 出現アニメ補間（Render と同じ計算）
+    float t = animTimer / animDuration;
+    if (t > 1.0f) t = 1.0f;
+    float easeOut = 1 - pow(1 - t, 3);
+    float scale = 0.5f + easeOut * 0.5f;
+    float offsetY = -200 + easeOut * 200;
+
+    for (int i = 0; i < 3; i++)
+    {
+        int x = startX + i * gap;
+        int y = startY + (int)offsetY;
+
+        int cx = x + cardWidth / 2;
+        int cy = y + cardHeight / 2;
+        int halfW = (int)(cardWidth * 0.5f * scale);
+        int halfH = (int)(cardHeight * 0.5f * scale);
+
+        int left = cx - halfW;
+        int right = cx + halfW;
+        int top = cy - halfH;
+        int bottom = cy + halfH;
+
+        if (mx >= left && mx <= right && my >= top && my <= bottom)
+        {
+            hoverIndex = i;
+        }
+    }
+
+    // ★ マウスがカードの上にある場合、選択カーソルを移動
+    if (hoverIndex != -1)
+    {
+        if (selectedIndex != hoverIndex)
+        {
+            selectedIndex = hoverIndex;
+            AudioManager::GetInstance().PlayOneShot("SelectSkill");
+        }
+
+        // ★ 左クリックで決定
+        if (input->IsMouseDown(MOUSE_INPUT_LEFT))
+        {
+            isActive = false;
+            AudioManager::GetInstance().PlayOneShot("DecisionSkill");
+            SetMouseDispFlag(FALSE);
+            return selectedIndex;
+        }
+    }
+    
     // 出現演出中は入力無効
     if (isAppearing)
     {
@@ -77,6 +148,8 @@ int SkillSelectUI::UpdateSelection()
         {
             isActive = false;
             AudioManager::GetInstance().PlayOneShot("DecisionSkill");
+            SetMouseDispFlag(FALSE);
+
             return selectedIndex;
         }
     }
