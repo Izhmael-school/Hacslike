@@ -16,12 +16,6 @@
 #include "Manager/AudioManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-
-	//if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
-	//{
-	//	return -1;			// エラーが起きたら直ちに終了
-	//}
-
 #pragma region // DxLibの初期化処理　触るべからず
 	// ウィンドウのサイズを変更する
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
@@ -82,6 +76,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//マウスの非表示
 	SetMouseDispFlag(FALSE);
+	SceneManager::GetInstance().ChangeScene(SceneType::Title);
 	// ゲームのメインループ
 	while (true) {
 		//DxLibのカメラとEffekseerのカメラを同期する

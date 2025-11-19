@@ -88,16 +88,10 @@ void Player::DestroyInstance() {
 }
 
 void Player::IsDead() {
-	CollisionManager::GetInstance().UnRegister(pCollider);
-	deadTime += TimeManager::GetInstance().deltaTime;
-	if (deadTime < 2.56f) {
-		pAnimator->Play("Down1", 0.9);
-	}
-	else {
-		pAnimator->Play("Down2");
-		SceneManager::GetInstance().SetNext(SceneType::Title);
-	}
+	if (hp > 0 || isDead) return;
+	pAnimator->Play("Down1", 0.9);
 }
+
 
 /*
  *	@function	Start
@@ -182,6 +176,10 @@ void Player::Start() {
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "Select", false);
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "Decision", false);
 
+	pAnimator->GetAnimation("Down1")->SetEvent([this]() {pAnimator->Play("Down2"); }, pAnimator->GetTotalTime("Down1"));
+	pAnimator->GetAnimation("Down2")->SetEvent([this]() {SceneManager::GetInstance().ChangeScene(SceneType::Title); }, 0);
+	pAnimator->GetAnimation("Down2")->SetEvent([this]() {CollisionManager::GetInstance().UnRegister(pCollider); }, 0);
+
 
 	SetSpeed(1);
 }
@@ -196,15 +194,6 @@ void Player::Update() {
 		return;
 
 	hpRate = (float)hp / (float)maxHp;
-
-	if (hp > maxHp) {
-		hp = maxHp;
-	}
-
-	if (hp <= 0) {
-		hp = 0;
-		isDead = true;
-	}
 
 	if (isDead) {
 		IsDead();

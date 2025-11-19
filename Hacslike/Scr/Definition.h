@@ -87,12 +87,7 @@ const unsigned int palegreen = GetColor(144, 238, 144); // ”–‚¢—Î
 enum class SceneType {
 	Title,
 	Game,
-	Clear,
-	HowTo,
-
-	Sekino,
-	Saito,
-	Tanaka,
+	Max,
 };
 
 enum class FadeState {

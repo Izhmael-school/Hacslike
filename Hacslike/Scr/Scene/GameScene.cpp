@@ -41,7 +41,6 @@ void GameScene::Start() {
 	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
-	StageManager::GetInstance().Generate();
 }
 
 void GameScene::Update() {
@@ -116,10 +115,10 @@ void GameScene::Render() {
 
 
 	StageManager::GetInstance().Render();
+	EnemyManager::GetInstance().Render();
 	for (auto pObj : pGameObjectArray) {
 		pObj->Render();
 	}
-	EnemyManager::GetInstance().Render();
 
 	Coin::GetInstance()->RenderAll();
 	// ★スキル選択画面の描画
@@ -182,4 +181,14 @@ void GameScene::Render() {
 		}
 	}
 #endif
+}
+
+void GameScene::Setup() {
+	StageManager::GetInstance().ResetFloorCount();
+	StageManager::GetInstance().NoFadeGenerate();
+}
+
+void GameScene::Teardown() {
+	EnemyManager::GetInstance().UnuseAllEnemy();
+	AudioManager::GetInstance().Stop("all");
 }
