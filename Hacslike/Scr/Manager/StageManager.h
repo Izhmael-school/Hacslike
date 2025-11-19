@@ -41,6 +41,8 @@ public:
 	const int BossFloorNum = 10;
 	FloorData floorData;
 
+
+
 public:
 	void Update();
 	void Render();

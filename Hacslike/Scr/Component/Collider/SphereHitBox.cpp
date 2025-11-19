@@ -25,7 +25,7 @@ SphereHitBox::~SphereHitBox() {
 void SphereHitBox::Start() {
 	CreateCollider();
 	character = static_cast<Character*>(owner);
-	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Damage.mp3", "damage", false);
+
 }
 
 void SphereHitBox::Update() {
@@ -47,7 +47,7 @@ bool SphereHitBox::IsDead() const {
 
 void SphereHitBox::CreateCollider() {
 	if (pCollider == nullptr) {
-		SetPosition(owner->GetPosition());
+		SetPosition(VAdd(owner->GetPosition(),offset));
 		pCollider = new SphereCollider(this, offset, radius);
 		pCollider->SetEnable(true);
 	}

@@ -10,7 +10,7 @@ StageGenerator::StageGenerator()
 	, roomCount(0)
 	, line(0)
 	, mapSize(4)
-	, mapOffset(VGet(950, 0, 800))
+	, mapOffset(VGet(950, 0, 64 * 4))
 	, stage() {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
@@ -173,11 +173,16 @@ void StageGenerator::GenerateStageObject() {
 			StageCell* c = UseObject((ObjectType)map[nowW][nowH]);
 			c->SetPosition(VGet(defaultPos.x + nowW * CellSize, 0, defaultPos.z + nowH * CellSize));
 			c->SetDataPos(VGet(nowW, 0, nowH));
-			if (c->GetObjectType() == Stair) {
-				useStair = c;
-			}
-			else {
+
+			switch (c->GetObjectType()) {
+			case Road:
+			case Room:
+			case Wall:
 				cells.push_back(c);
+				break;
+			case Stair:
+				useStair = c;
+				break;
 			}
 		}
 	}
@@ -644,9 +649,9 @@ void StageGenerator::DrawMap() {
 			// 部屋のステータスを見て部屋番号i番目の部屋だったら
 			if (roomStatus[rx][i] <= x && roomStatus[rx][i] + roomStatus[rw][i] >= x &&
 				roomStatus[ry][i] <= z && roomStatus[ry][i] + roomStatus[rh][i] >= z) {
-
-				for (int w = roomStatus[rx][i], wMax = roomStatus[rx][i] + roomStatus[rw][i]; w < wMax; w++) {
-					for (int h = roomStatus[ry][i], hMax = roomStatus[ry][i] + roomStatus[rh][i]; h < hMax; h++) {
+				// 部屋全てを表示する
+				for (int w = roomStatus[rx][i] - 1, wMax = roomStatus[rx][i] + roomStatus[rw][i] + 1; w < wMax; w++) {
+					for (int h = roomStatus[ry][i] - 1, hMax = roomStatus[ry][i] + roomStatus[rh][i] + 1; h < hMax; h++) {
 						stageMap[w][h] = true;
 					}
 				}

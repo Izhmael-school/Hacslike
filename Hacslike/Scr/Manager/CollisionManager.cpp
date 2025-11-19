@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include "AudioManager.h"
 #include "../Component/Collider/Collider.h"
 /*
  * @function	CheckHit
@@ -190,7 +191,9 @@ bool CollisionManager::CheckHit(Collider* _pCol1, Collider* _pCol2) {
 CollisionManager::CollisionManager()
 	:pColliderArray()
 	, prevs()
-	, currents() {}
+	, currents() {
+	Start();
+}
 
 CollisionManager::~CollisionManager() {
 	for (auto pCol : pColliderArray) {
@@ -206,6 +209,10 @@ CollisionManager::~CollisionManager() {
 	prevs.shrink_to_fit();
 	currents.clear();
 	currents.shrink_to_fit();
+}
+
+void CollisionManager::Start() {
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Damage.mp3", "damage", false);
 }
 
 void CollisionManager::Update() {

@@ -13,8 +13,8 @@
       [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
     ],
     "playerSpawnPos": [ 4, 2 ],
-    "bossSpawnPos": [ -1, -1 ],
-    "bossType" :  -1
+    "bossSpawnPos": [ 4, 1 ],
+    "bossType" :  0
   },
 
   {

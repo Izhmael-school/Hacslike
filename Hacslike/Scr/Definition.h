@@ -101,6 +101,7 @@ enum ObjectType {
 	Wall,
 	Road,
 	Stair,
+	Chest
 };
 
 enum WeaponType {

@@ -116,7 +116,7 @@ void StageManager::GenerateStage() {
 		}
 	}
 
-	for (int i = 0; i < SpanwNum; i++) {
+	for (int i = 0; i < 1; i++) {
 		int spawnEnemyID = spawnEnemyDataList[Random(0, spawnEnemyDataList.size() - 1)].id;
 
 		for (auto e : spawnEnemyDataList) {

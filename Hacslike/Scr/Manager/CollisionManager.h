@@ -18,6 +18,8 @@ public:		// ƒƒ“ƒoŠÖ”
 	CollisionManager();
 	~CollisionManager();
 
+	void Start();
+
 	void Update();
 
 	void Render();

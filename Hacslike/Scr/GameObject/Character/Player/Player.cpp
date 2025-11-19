@@ -89,6 +89,7 @@ void Player::DestroyInstance() {
 
 void Player::IsDead() {
 	if (hp > 0 || isDead) return;
+	isDead = true;
 	pAnimator->Play("Down1", 0.9);
 }
 
@@ -195,10 +196,6 @@ void Player::Update() {
 
 	hpRate = (float)hp / (float)maxHp;
 
-	if (isDead) {
-		IsDead();
-	}
-
 	////	攻撃入力・HitBox更新
 	//AttackInput();
 
@@ -243,7 +240,7 @@ void Player::Update() {
 		AddHp(10);
 	}
 	else if (input->IsKeyDown(KEY_INPUT_2)) {
-		SubHp(10);
+		Damage(10);
 	}
 
 	if (input->IsKeyDown(KEY_INPUT_3)) {

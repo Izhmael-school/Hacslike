@@ -102,6 +102,13 @@ void Enemy::Update() {
 void Enemy::Render() {
 	if (!isVisible) return;
 
+	// 攻撃当たり判定の更新
+	for (auto c : attackColliderList) {
+		if (c->GetCollider() == nullptr) continue;
+
+		c->Render();
+	}
+
 	// アニメーターの更新
 	pAnimator->Update();
 
