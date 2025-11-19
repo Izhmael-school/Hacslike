@@ -17,16 +17,19 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
-	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
-	{
-		return -1;			// エラーが起きたら直ちに終了
-	}
+	//if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
+	//{
+	//	return -1;			// エラーが起きたら直ちに終了
+	//}
 
 #pragma region // DxLibの初期化処理　触るべからず
 	// ウィンドウのサイズを変更する
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	// 起動時のウィンドウのモードの設定
 	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
+
+	
+
 	// 背景色の設定
 #if _DEBUG
 	SetBackgroundColor(196, 196, 196);
@@ -77,6 +80,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	std::mt19937_64 mt(rd());
 	SRand(mt());
 
+	//マウスの非表示
+	SetMouseDispFlag(FALSE);
 	// ゲームのメインループ
 	while (true) {
 		//DxLibのカメラとEffekseerのカメラを同期する

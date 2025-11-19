@@ -21,6 +21,7 @@ private:
     int cardWidth = 260;    //横
     int cardHeight = 360;   //縦
     int inputCooldown = 0;   // 矢印キー連打防止クールタイム
+    int hoverIndex = -1;
 
     // --- 出現アニメーション関連 ---
     bool isAppearing = false;  // アニメーション中かどうか
