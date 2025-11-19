@@ -21,7 +21,7 @@ void Skill::ClearLevel(){}
 //   攻撃力増加
 // =============================
 AttackUpSkill::AttackUpSkill(float boost)
-    : Skill("攻撃力アップ", "攻撃力が上昇する", "Res/SkillIcon/attack_up.png", 5)
+    : Skill("攻撃力アップ", "攻撃力が20％上昇する", "Res/SkillIcon/attack_up.png", 5)
     , attackBoost(boost)
 {
 }
@@ -49,7 +49,7 @@ void AttackUpSkill::ClearLevel()
 //   HP 上限増加
 // =============================
 HPUpSkill::HPUpSkill(int hp)
-    : Skill("HP上限アップ", "HP上限が上昇する", "Res/SkillIcon/hp_up.png", 5)
+    : Skill("HP上限アップ", "HP上限を50上昇する", "Res/SkillIcon/hp_up.png", 5)
     , hpIncrease(hp)
 {
 }
@@ -76,7 +76,7 @@ void HPUpSkill::ClearLevel()
 //   移動速度上昇
 // =============================
 SpeedUpSkill::SpeedUpSkill(float boost)
-    : Skill("移動速度アップ", "移動速度が上昇する", "Res/SkillIcon/speed_up.png", 5)
+    : Skill("移動速度アップ", "移動速度が30％上昇する", "Res/SkillIcon/speed_up.png", 5)
     , speedBoost(boost)
 {
 }
@@ -103,7 +103,7 @@ void SpeedUpSkill::ClearLevel()
 //   防御力上昇
 // =============================
 DefenseUpSkill::DefenseUpSkill(int boost)
-    : Skill("防御力アップ", "防御力が上昇する", "Res/SkillIcon/Defense_up.png", 5)
+    : Skill("防御力アップ", "防御力が5上昇する", "Res/SkillIcon/Defense_up.png", 5)
     , defenseBoost(boost)
 {
 }
@@ -130,7 +130,7 @@ void DefenseUpSkill::ClearLevel()
 //   近距離補正 UP
 // =============================
 ProximityCorrectionUpSkill::ProximityCorrectionUpSkill(float boost)
-    : Skill("近距離攻撃力アップ", "近距離攻撃力が上昇する", "Res/SkillIcon/ProximityCorrectionUp.png", 5)
+    : Skill("近距離攻撃力アップ", "近距離攻撃力が5上昇する", "Res/SkillIcon/ProximityCorrectionUp.png", 5)
     , ProximityCorrectionBoost(boost)
 {
 }
@@ -157,7 +157,7 @@ void ProximityCorrectionUpSkill::ClearLevel()
 //   遠距離補正 UP
 // =============================
 RangedCorrectionUpSkill::RangedCorrectionUpSkill(float boost)
-    : Skill("遠距離攻撃力アップ", "遠距離攻撃力が上昇する", "Res/SkillIcon/RangedCorrectionUp.png", 5)
+    : Skill("遠距離攻撃力アップ", "遠距離攻撃力が5上昇する", "Res/SkillIcon/RangedCorrectionUp.png", 5)
     , RangedCorrectionBoost(boost)
 {
 }
@@ -184,7 +184,7 @@ void RangedCorrectionUpSkill::ClearLevel()
 //   アイテムドロップ率
 // =============================
 ItemDropRateUpSkill::ItemDropRateUpSkill(float boost)
-    : Skill("アイテムドロップ率アップ", "アイテムドロップ率が上昇する", "Res/SkillIcon/ItemDropRate.png", 5)
+    : Skill("アイテムドロップ率アップ", "アイテムドロップ率が\n10%上昇する", "Res/SkillIcon/ItemDropRate.png", 5)
     , rateBoost(boost)
 {
 }
@@ -213,7 +213,7 @@ void ItemDropRateUpSkill::ClearLevel()
 //   会心率 UP
 // =============================
 CriticalHitRateUpSkill::CriticalHitRateUpSkill(float boost)
-    : Skill("会心率アップ", "会心率が上昇する", "Res/SkillIcon/CriticalUP.png", 5)
+    : Skill("会心率アップ", "会心率が10上昇する", "Res/SkillIcon/CriticalUP.png", 5)
     , CriticalHitRateBoost(boost)
 {
 }
@@ -240,7 +240,7 @@ void CriticalHitRateUpSkill::ClearLevel()
 //   会心ダメージ UP
 // =============================
 CriticalDamageUpSkill::CriticalDamageUpSkill(float boost)
-    : Skill("会心ダメージアップ", "会心ダメージが上昇する", "Res/SkillIcon/CriticalDamageUP.png", 5)
+    : Skill("会心ダメージアップ", "会心ダメージが15上昇する", "Res/SkillIcon/CriticalDamageUP.png", 5)
     , CriticalDamageBoost(boost)
 {
 }
