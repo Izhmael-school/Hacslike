@@ -9,5 +9,7 @@ public:
 	void Start() override;
 	void Update() override;
 	void Render() override;
+	void Setup() override;
+	void Teardown() override;
 };
 

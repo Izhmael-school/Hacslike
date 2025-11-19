@@ -11,17 +11,24 @@ TitleScene::~TitleScene() {}
 
 void TitleScene::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/BGM/Title/TitleBGM.mp3", "Title", false);
-	AudioManager::GetInstance().PlayBGM("Title");
 }
 
 void TitleScene::Update() {
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
-		AudioManager::GetInstance().Stop("Title");
-		StageManager::GetInstance().ResetFloorCount();
-		SceneManager::GetInstance().SetNext(SceneType::Game);
+
+		SceneManager::GetInstance().ChangeScene(SceneType::Game);
 	}
 }
 
 void TitleScene::Render() {
-	DrawString(600,400,"Hacslike",red);
+	DrawString(600,200,"Hacslike",red);
+	DrawString(600, 600, "左クリックかAボタン",red);
+}
+
+void TitleScene::Setup() {
+	AudioManager::GetInstance().PlayBGM("Title");
+}
+
+void TitleScene::Teardown() {
+	AudioManager::GetInstance().Stop("Title");
 }

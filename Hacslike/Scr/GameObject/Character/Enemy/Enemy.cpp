@@ -4,6 +4,7 @@
 #include "../../../CommonModule.h"
 #include "../../../Manager/ItemDropManager.h"
 #include "../../../GameSystem/GameSystem.h"
+#include "../../Coin/Coin.h"
 
 Enemy::Enemy()
 	:rayAngle(45.0f)
@@ -17,7 +18,7 @@ Enemy::Enemy()
 	, rayAnswer(false)
 	, atkTime(0)
 	, atkSpan(4)
-	, goalPos(VGet(-1,-1,-1))
+	, goalPos(VGet(-1, -1, -1))
 	, nextWanderSpan(4)
 	, nextWanderTime(nextWanderSpan) {
 	Start();
@@ -73,11 +74,19 @@ void Enemy::Update() {
 		if (c->GetCollider() == nullptr) continue;
 
 		c->Update();
+	}
 
-		if (!c->IsDead()) continue;
-		auto itr = std::find(attackColliderList.begin(), attackColliderList.end(), c);
+	// 攻撃当たり判定の削除
+	for (auto itr = attackColliderList.begin(); itr != attackColliderList.end(); ) {
+		SphereHitBox* c = *itr;
+		if (!c->IsDead()) {
+			++itr;
+			continue;
+		}
+
+		CollisionManager::GetInstance().UnRegister(c->GetCollider());
 		delete c;
-		attackColliderList.erase(itr);
+		itr = attackColliderList.erase(itr); // eraseの戻り値を使って次の要素へ
 	}
 
 	// 当たり判定の更新
@@ -158,6 +167,7 @@ void Enemy::IsDead() {
 	// アイテムのドロップ
 	ItemDropManager* manager = &ItemDropManager::GetInstance();
 	manager->TryDropItem(manager->GetItemDropRate(), position);
+	Coin::GetInstance()->SpawnCoin(VGet(position.x , 5.0f, position.z));
 
 	pAnimator->Play("dead");
 }

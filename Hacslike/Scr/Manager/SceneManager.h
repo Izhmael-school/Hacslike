@@ -6,22 +6,28 @@ class SceneManager : public Singleton<SceneManager> {
 
 private:
 	class BaseScene* pCurrentScene;	// 今のシーン
-	SceneType Current;
-	SceneType next;
-	bool changed;
+	class BaseScene* pSceneList[(int)SceneType::Max];
 
+private:
+	void Start();
 public:
 	SceneManager();
-	~SceneManager() = default;
+	~SceneManager();
 
+	/// <summary>
+	/// シーンの更新処理
+	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// シーンの描画処理
+	/// </summary>
 	void Render();
 
-	void LoadScene();
-
-public:
-	void SetNext(SceneType _next);
-
+	/// <summary>
+	/// シーンの変更
+	/// </summary>
+	/// <param name="_next">変更するシーン</param>
+	void ChangeScene(SceneType _next);
 };
 

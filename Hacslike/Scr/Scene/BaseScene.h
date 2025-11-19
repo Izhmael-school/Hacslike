@@ -3,6 +3,7 @@
 #include "../GameObject/GameObject.h"
 #include "../Manager/CollisionManager.h"
 #include "../Manager/EffectManager.h"
+#include "../Manager/FadeManager.h"
 #include "../GameObject/Weapon/Weapon.h"
 /*
  * @brief シーンクラス
@@ -41,4 +42,13 @@ public:		// メンバ関数
 	 */
 	virtual void Render() = 0;
 
+	/// <summary>
+	/// 使用前処理
+	/// </summary>
+	virtual void Setup() = 0;
+
+	/// <summary>
+	/// 使用後処理
+	/// </summary>
+	virtual void Teardown() = 0;
 };

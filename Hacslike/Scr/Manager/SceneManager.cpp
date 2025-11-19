@@ -1,41 +1,29 @@
 #include "SceneManager.h"
-#include "../Manager/FadeManager.h"
-#include "../Scene/SekinoScene.h"
 #include "../Scene/GameScene.h"
 #include "../Scene/TitleScene.h"
 
-SceneManager::SceneManager() 
+SceneManager::SceneManager()
 	:pCurrentScene(nullptr)
-	,next(SceneType::Title)
-	,Current((SceneType)INVALID)
-	,changed(false)
-{
-	switch (next) {
-	case SceneType::Title:
-		pCurrentScene = new TitleScene();
-		break;
+	, pSceneList() {
+	Start();
+}
 
-	case SceneType::Game:
-		pCurrentScene = new GameScene();
-		break;
+SceneManager::~SceneManager() {
+	pCurrentScene = nullptr;
 
-	default:
-		pCurrentScene = nullptr;
-		break;
+	for (auto scene : pSceneList) {
+		delete scene;
+		scene = nullptr;
 	}
+}
 
-	Current = next;
+void SceneManager::Start() {
+	pSceneList[(int)SceneType::Title] = new TitleScene();
+	pSceneList[(int)SceneType::Game] = new GameScene();
 }
 
 
 void SceneManager::Update() {
-
-	//if (FadeManager::GetInstance().GetFadeState() != FadeState::FadeEnd) return;
-
-	// シーンの切り替えがあれば遷移を行う
-	if (Current != next)
-		LoadScene();
-
 	if (pCurrentScene == nullptr)
 		return;
 
@@ -49,31 +37,11 @@ void SceneManager::Render() {
 	pCurrentScene->Render();
 }
 
-void SceneManager::LoadScene() {
-	// 現在のシーン番号を書き換える
-	Current = next;
-
-	delete pCurrentScene;
-	pCurrentScene = nullptr;
-
-	switch (next) {
-	case SceneType::Title:
-		pCurrentScene = new TitleScene();
-		break;
-
-	case SceneType::Game:
-		pCurrentScene = new GameScene();
-		break;
-	default:
-		pCurrentScene = nullptr;
-		break;
-	}
-
-}
-
-void SceneManager::SetNext(SceneType _next) {
-	next = _next;
-	//changed = true;
-
-	//FadeManager::GetInstance()->FadeIn();
+void SceneManager::ChangeScene(SceneType _next) {
+	FadeManager::GetInstance().FadeOut(0.5f);
+	if (pCurrentScene != nullptr)
+		pCurrentScene->Teardown();
+	pCurrentScene = pSceneList[(int)_next];
+	pCurrentScene->Setup();
+	FadeManager::GetInstance().FadeIn(0.5f);
 }

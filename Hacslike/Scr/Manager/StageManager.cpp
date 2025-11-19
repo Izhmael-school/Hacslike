@@ -57,6 +57,9 @@ void StageManager::LoadFloorData() {
 }
 
 int StageManager::GetMapData(int x, int y) {
+
+	if (x < 0 || y < 0 || x > mapWidth_Large || y > mapHeight_Large) return -1;
+
 	return generator->map[x][y];
 }
 
@@ -91,7 +94,7 @@ void StageManager::GenerateStage() {
 		canSpawnNum += w * h;
 	}
 	// “G‚Ì”‚ğŒˆ‚ß‚é
-	int SpanwNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 5));
+	int SpanwNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 3));
 
 	// “Gƒf[ƒ^‚ğ“Ç‚İ‚Ş
 	auto data = LoadJsonFile("Scr/Data/EnemyData.json");
@@ -161,11 +164,27 @@ void StageManager::Generate() {
 		GenerateStage();
 	}
 
-	FadeManager::GetInstance().FadeIn(0.5f);
-
 	AudioManager::GetInstance().PlayBGM("NormalFloor");
 	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
 
+	FadeManager::GetInstance().FadeIn(0.5f);
+
+}
+
+void StageManager::NoFadeGenerate() {
+	AudioManager::GetInstance().Stop("all");
+
+	LoadFloorData();
+
+	if (floorCount % BossFloorNum == 0) {
+		GenerateStage((int)(floorCount / BossFloorNum));
+	}
+	else {
+		GenerateStage();
+	}
+
+	AudioManager::GetInstance().PlayBGM("NormalFloor");
+	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
 }
 
 void StageManager::UnuseObject(StageCell* cell) {

@@ -25,6 +25,7 @@ public:		// ƒƒ“ƒoŠÖ”
 	void Register(class Collider* _pCol);
 
 	void UnRegister(class Collider* _pCol);
+	void UnRegisterAll();
 
 	/*
 	 * @function	CheckHit

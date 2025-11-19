@@ -54,6 +54,7 @@ public:
 	int GetNowRoomNum(VECTOR pos);
 	VECTOR GetRandomRoomRandomPos();
 	void Generate();
+	void NoFadeGenerate();
 
 	void UnuseObject(StageCell* cell);
 	StageCell* UseObject(ObjectType type);

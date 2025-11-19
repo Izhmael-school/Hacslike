@@ -19,8 +19,7 @@ Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed
 	, wallCheckPos(prevPos)
 	, baseAttack(5)
 	, proximityCorrection(1.0)
-	, rangedCorrection(1.0) {
-}
+	, rangedCorrection(1.0) {}
 
 Character::~Character() {
 	delete pAnimator;
@@ -63,8 +62,13 @@ VECTOR Character::CheckWallToWallRubbing(VECTOR dir) {
 	// 現在いるマス目を取得
 	int x = (int)((int)(dir.x + CellCorrection + correntionX) / CellSize);
 	int z = (int)((int)(dir.z + CellCorrection + correntionZ) / CellSize);
+
+	int d = StageManager::GetInstance().GetMapData(x, z);
+
+	if (d == -1) return VZero;
+
 	// 進む先が壁じゃなかったら
-	if (StageManager::GetInstance().GetMapData(x, z) != ObjectType::Wall) {
+	if (d != ObjectType::Wall) {
 		// 値をそのまま返す
 		return dir;
 	}

@@ -56,19 +56,6 @@ void FadeManager::Fade(FadeState state, float _t) {
 		SceneManager::GetInstance().Update();
 		SceneManager::GetInstance().Render();
 	}
-	//if (fadeState == FadeState::FadeOut)
-	//	screenGraph = MakeScreen(WINDOW_WIDTH, WINDOW_HEIGHT, TRUE);
-
-	//// ’¼‘O‚ÌƒQ[ƒ€‰æ–Ê‚ğ‰æ‘œ‚Æ‚µ‚Ä•Û‚·‚é
-	//if (screenGraph != -1) {
-	//	SetDrawScreen(screenGraph);
-	//	ClearDrawScreen();
-
-	//	SceneManager::GetInstance().Render();
-
-	//	SetDrawScreen(DX_SCREEN_BACK);
-	//	GetDrawScreenGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, screenGraph, FALSE);
-	//}
 
 	while (1) {
 		TimeManager::GetInstance().Update();
