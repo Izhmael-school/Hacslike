@@ -705,17 +705,14 @@ void Player::PlayerStatusRender() {
 	DrawBox(920, 20, WINDOW_WIDTH, 280, black, TRUE);
 	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
 	DrawFormatString(930, 20, white, "ステータス");
-	DrawFormatString(930, 60, green, "LV　　　　　 : %d", Lv);
-	DrawFormatString(930, 80, green, "EXP　　　　　: %d / %d", exp, maxExp);
-	DrawFormatString(930, 100, green, "HP　　　　　 : %d / %d", hp, maxHp);
-	DrawFormatString(930, 120, green, "攻撃力　　　 : %d", atk);
-	DrawFormatString(930, 140, green, "防御力　　　 : %d", def);
-	DrawFormatString(930, 160, green, "会心率　　　 : %.1f", criticalHitRate);
-	DrawFormatString(930, 180, green, "会心ダメージ : %.1f", criticalDamage);
-	DrawFormatString(930, 200, green, "コイン　　　 : %d", coinValue);
-
-
-
+	DrawFormatString(930, 60,  white, "LV　　　　　 : %d", Lv);
+	DrawFormatString(930, 80,  white, "EXP　　　　　: %d / %d", exp, maxExp);
+	DrawFormatString(930, 100, white, "HP　　　　　 : %d / %d", hp, maxHp);
+	DrawFormatString(930, 120, white, "攻撃力　　　 : %d", atk);
+	DrawFormatString(930, 140, white, "防御力　　　 : %d", def);
+	DrawFormatString(930, 160, white, "会心率　　　 : %.1f", criticalHitRate);
+	DrawFormatString(930, 180, white, "会心ダメージ : %.1f", criticalDamage);
+	DrawFormatString(930, 200, white, "コイン　　　 : %d", coinValue);
 
 }
 

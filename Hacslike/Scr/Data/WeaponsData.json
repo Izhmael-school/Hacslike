@@ -105,8 +105,8 @@
     "modelPath": "Res/Model/Weapon/Pistol.mv1",
     "type": 3,
     "attackSpeed": [ 1, 1, 1, 1 ],
-    "colLength": [ 100, 100, 0 ],
-    "colRadius": [ 100, 100, 50 ]
+    "colLength": [ 100, 100, 100 ],
+    "colRadius": [ 100, 100, 100 ]
   }
 
 ]

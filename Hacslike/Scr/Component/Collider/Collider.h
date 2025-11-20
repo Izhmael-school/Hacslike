@@ -97,6 +97,7 @@ public:// オーバーライドしたメンバ関数
 	void Render() override;
 public:
 	inline float GetRadius() const { return radius; }
+	inline void SetRadius(float r) { radius = r; }
 	inline VECTOR GetCenter() const { return worldCenter; }
 };
 

@@ -154,6 +154,9 @@
     <ClCompile Include="Scr\GameSystem\GameSystem.cpp">
       <Filter>GameSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Bullet\BulletPool.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -319,6 +322,9 @@
     <ClInclude Include="Scr\GameSystem\GameSystem.h">
       <Filter>GameSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Bullet\BulletPool.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -404,6 +410,9 @@
     </Filter>
     <Filter Include="GameSystem">
       <UniqueIdentifier>{6fee0a9f-1d78-4254-a228-054ac0863059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Bullet">
+      <UniqueIdentifier>{d5eaa3f7-5b1a-4058-9762-585cbc7cc67e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

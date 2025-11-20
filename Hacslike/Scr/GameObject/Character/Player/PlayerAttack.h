@@ -3,6 +3,7 @@
 #include "../../../Component/Collider/CapsuleHitBox.h"
 #include "PlayerMovement.h"
 #include "../../../Manager/AudioManager.h"
+#include "../../Bullet/BulletPool.h"
 
 class Player;
 class Weapon;
@@ -35,6 +36,8 @@ private:
 
 	AudioManager* audio;
 
+	BulletPool* pBulletPool;
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -53,6 +56,8 @@ public:
 	/// 更新処理
 	/// </summary>
 	void Update();
+
+	void Render();
 
 	/// <summary>
 	/// 攻撃入力・HitBox更新
@@ -77,6 +82,9 @@ public:
 	inline bool IsDashAttacking() const { return isDashAttack; }
 
 	inline void SetIsCheckDashAttack(bool _b) { checkDashAttack = _b; }
+
+	void CreateRangedHitBox();
+
 
 	/// <summary>
 	/// 武器の設定
