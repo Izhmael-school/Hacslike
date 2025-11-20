@@ -27,6 +27,7 @@
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactSelectUI.cpp" />
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp" />
     <ClCompile Include="Scr\GameObject\Audio\Audio.cpp" />
+    <ClCompile Include="Scr\GameObject\Bullet\BulletPool.cpp" />
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="Scr\GameObject\Artifact\ArtifactSelectUI.h" />
     <ClInclude Include="Scr\GameObject\Artifact\ArtifactUI.h" />
     <ClInclude Include="Scr\GameObject\Audio\Audio.h" />
+    <ClInclude Include="Scr\GameObject\Bullet\BulletPool.h" />
     <ClInclude Include="Scr\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />

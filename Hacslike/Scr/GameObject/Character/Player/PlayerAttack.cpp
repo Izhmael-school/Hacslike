@@ -26,7 +26,9 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, isDashAttack(false)
 	, isCharging(false)
 	, chargeTime(0.0f)
-	, maxChargeTime(3.0f) {
+	, maxChargeTime(3.0f)
+	, pBulletPool(nullptr){
+	pBulletPool = &BulletPool::GetInstance();
 	Start();
 }
 
@@ -47,8 +49,28 @@ void PlayerAttack::Start() {
 /// 更新処理
 /// </summary>
 void PlayerAttack::Update() {
-	if(!pPlayer->GetIsDead())
-	AttackInput();
+
+	if (!pPlayer->GetIsDead())
+		AttackInput();
+
+	// 弾プールの更新
+	pBulletPool->Update();
+
+	// CapsuleHitBox 更新
+	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
+		CapsuleHitBox* h = *it;
+		h->Update();
+		if (h->IsDead()) {
+			delete h;
+			it = CapsuleHitboxes.erase(it);
+		}
+		else ++it;
+	}
+}
+
+void PlayerAttack::Render() {
+	// 弾プールの描画
+	pBulletPool->Render();
 }
 
 /// <summary>
@@ -57,7 +79,7 @@ void PlayerAttack::Update() {
 void PlayerAttack::AttackInput() {
 	//	攻撃入力
 	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X); 
-	bool isButton = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X); 
+	bool isButton = input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButton(XINPUT_GAMEPAD_X); 
 
 	//	ため攻撃入力
 	bool isChargeButtonDown = input->IsMouseDown(MOUSE_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
@@ -114,7 +136,7 @@ void PlayerAttack::AttackInput() {
 		}
 	}
 
-	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking() && pWeapon->GetType() != 3) {
+	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking()) {
 		//	ボタンが押された瞬間だけ処理
 		attackButtonPressed = true;
 		if (pWeapon->GetType() == 0) {
@@ -209,9 +231,11 @@ void PlayerAttack::AttackInput() {
 		else if (pWeapon->GetType() == 3) {
 			if (!isAttacking) {
 				isAttacking = true;
-				attackIndex++;
+				attackIndex = 1;
 				attackTimer = 0.0f;
 				canNextAttack = false;
+
+				CreateRangedHitBox();   // ★ここを追加！
 			}
 		}
 	}
@@ -328,6 +352,15 @@ void PlayerAttack::AttackInput() {
 		}
 		else ++it;
 	}
+
+	if (isAttacking) {
+		if (!pPlayer->GetAnimator()->IsPlaying()) {   // もしくは IsEnd("Atk1") など
+			isAttacking = false;
+			attackIndex = 0;
+			canNextAttack = false;
+		}
+	}
+	
 }
 
 ///<summary>
@@ -335,35 +368,35 @@ void PlayerAttack::AttackInput() {
 ///</summary>
 ///<param name="length"></param>
 ///<param name="radius"></param>
-void PlayerAttack::CreateAttackHitbox(float length, float radius) {
-	//	Unity座標系の前方
-	VECTOR forward = VNorm(VGet(
-		-sinf(Deg2Rad(pPlayer->GetRotation().y)),
-		0.0f,
-		-cosf(Deg2Rad(pPlayer->GetRotation().y))
-	));
+void PlayerAttack::CreateRangedHitBox() {
+	VECTOR pos = VAdd(pPlayer->GetPosition(), VScale(pPlayer->GetForward(), 50.0f));
+	VECTOR forward = pPlayer->GetForward();
+	VECTOR vel = VScale(forward, 30.0f);
+	float radius = 30.0f;
+	float life = 1.5f;
 
-	VECTOR start, end;
-	float life = 0.20f;
+	SphereHitBox* bullet = pBulletPool->Spawn(pPlayer, pos, vel, radius, life);
+	if (!bullet) return;
+
+	bullet->SetVelocity(vel);
+	isAttacking = false;
+}
+
+void PlayerAttack::CreateAttackHitbox(float length, float radius) {
+	VECTOR forward = pPlayer->GetForward();
+	float life = 0.2f;
 
 	if (attackIndex < 3) {
-		//	1～2段目 前方カプセル
-		start = VAdd(pPlayer->GetPosition(), VScale(forward, 20.0f));
-		end = VAdd(start, VScale(forward, length));
-		CapsuleHitBox* CapHit = new CapsuleHitBox(pPlayer, start, end, radius, life);
-		CapHit->CreateCollider();
-		CapsuleHitboxes.push_back(CapHit);
+		VECTOR start = VAdd(pPlayer->GetPosition(), VScale(forward, 20.0f));
+		VECTOR end = VAdd(start, VScale(forward, length));
+		CapsuleHitBox* capHit = new CapsuleHitBox(pPlayer, start, end, radius, life);
+		capHit->CreateCollider();
+		CapsuleHitboxes.push_back(capHit);
 	}
 	else {
-		//	3段目 周囲攻撃（球状に近いカプセル）
-		life = 0.25f;
-
-		//	SphereHitBox を生成
-		float life = 0.25f;
-		VECTOR offset = VAdd(VScale(forward, 70.0f), VGet(0.0f, 100.0f, 0.0f));
-
-		SphereHitBox* Shit = new SphereHitBox(pPlayer, offset, radius, life);
-		SphereHitboxes.push_back(Shit);
+		VECTOR forward = pPlayer->GetForward();
+		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 70.0f), VGet(0, 100, 0)));
+		SphereHitBox* bullet = pBulletPool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), radius, 0.25f);
+		if (bullet) bullet->SetVelocity(VGet(0, 0, 0));
 	}
-
 }

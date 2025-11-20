@@ -8,18 +8,23 @@
 
 class SphereHitBox : public GameObject{
 private:
+
+
 	GameObject* owner;
 	Character* character;
-
 	VECTOR offset;
+	VECTOR position;
+	VECTOR velocity;
 	float radius;
+	float lifeTime;
+	float timer;
+	bool active;
 
 	SphereCollider* pCollider;
-	float timer;
-	float lifeTime;
 
 public:
 	SphereHitBox(GameObject* _ownwr, VECTOR _offset,float _radius, float _lifeTime);
+	SphereHitBox();
 	~SphereHitBox();
 
 	void Start() override;
@@ -30,6 +35,17 @@ public:
 	void CreateCollider();
 
 	SphereCollider* GetCollider() const { return pCollider; }
+
+	void Move(const VECTOR& vel);
+
+	void SetVelocity(const VECTOR& v) { velocity = v; }
+
+	void Reset(GameObject* _owner, const VECTOR& startPos, const VECTOR& _velocity,
+		float _radius, float _life);
+
+	inline bool GetActive()const { return active; }
+
+	inline void SetActive(bool _active) { active = _active; }
 
 public:		//	オーバーライドした衝突検知
 	/*

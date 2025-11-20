@@ -319,6 +319,14 @@ public:		//	Getter と Setter
 
 	inline bool GetIsDead() const { return isDead; }
 
+	inline VECTOR GetForward() const {
+		return VNorm(VGet(
+			-sinf(Deg2Rad(rotation.y)),
+			0.0f,
+			-cosf(Deg2Rad(rotation.y))
+		));
+	}
+
 
 public:
 	// 🔹 シングルトン関連
