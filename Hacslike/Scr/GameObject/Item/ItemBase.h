@@ -4,6 +4,22 @@
 
 class Player;
 
+enum class ItemType
+{
+    Invaled = -1,
+    Heal,          // 回復
+    AttackPotion,  // 攻撃UP
+    DefensePotion, // 防御UP
+    Grenade        // グレネード
+};
+
+enum class HealSize {
+    Invaled = -1,
+    Small,
+    Medium,
+    Large
+};
+
 class ItemBase : public GameObject
 {
 protected: //メンバ変数
@@ -75,5 +91,8 @@ public://ゲッター
     inline const std::string& GetItemIcon() const { return itemIcon; }
 
     inline const std::string& GetID() const { return id; }
+
+    virtual ItemType GetItemType() const = 0;  // 派生クラスで返す
+    virtual HealSize GetHealType() const =0;
 };
 

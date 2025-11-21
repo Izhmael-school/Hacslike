@@ -70,6 +70,7 @@ private:	//	メンバ変数
 	//bool hitItem;		 //アイテムに当たっているかどうか
 	bool isItemUI;		 //アイテムのUIを開いているかどうか
 	ItemEntity* hitItem = nullptr;
+	float prevHP = -1.0f;
 #pragma endregion
 
 #pragma region アーティファクト/コイン

@@ -34,6 +34,10 @@ public:
    /// </summary>
    /// <returns></returns>
 	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
+
 };
 #pragma endregion
 
@@ -64,6 +68,9 @@ public:
    /// </summary>
    /// <returns></returns>
 	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
 
 };
 #pragma endregion
@@ -95,6 +102,9 @@ public:
    /// </summary>
    /// <returns></returns>
 	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
 
 
 
@@ -128,6 +138,9 @@ public:
    /// </summary>
    /// <returns></returns>
 	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
 
 };
 #pragma endregion
@@ -158,6 +171,9 @@ public:
    /// </summary>
    /// <returns></returns>
 	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
 
 }; 
 #pragma endregion

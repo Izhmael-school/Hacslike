@@ -61,6 +61,8 @@ void SmallHealItem::Use()
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
 
+
+
 /// <summary>
 /// 回復（中）
 /// </summary>
@@ -98,6 +100,8 @@ void MiddleHealItem::Use()
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
 
+
+
 /// <summary>
 /// 回復(大)
 /// </summary>
@@ -134,6 +138,7 @@ void LargeHealItem::Use()
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
+
 #pragma endregion
 
 #pragma region バフ系

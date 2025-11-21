@@ -66,6 +66,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
             printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
             #endif  
             OnItemGained(it->item.get(), it->quantity);
+            AssignToShortcut(&(*it));
             return;
         }
     }
@@ -75,6 +76,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
     
     InventoryItem& addedItem = items.back();
     OnItemGained(addedItem.item.get(), addedItem.quantity);
+    AssignToShortcut(&addedItem);
 #if _DEBUG
     printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
     printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());
@@ -700,4 +702,218 @@ void Inventory::AddItemRender()
         std::remove_if(gainedItems.begin(), gainedItems.end(),
             [](const GainedItemInfo& g) { return g.timer <= 0; }),
         gainedItems.end());
+}
+
+void Inventory::UseItemShortcutUpdate()
+{
+    InputManager* input = &InputManager::GetInstance();
+    if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP))    UseSlot(slotUp);
+    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) UseSlot(slotRight);
+    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT))  UseSlot(slotLeft);
+    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))  UseSlot(slotDown);
+}
+
+void Inventory::UseSlot(Slot& slot)
+{
+    if (slot.itemID.empty()) return;
+
+    // ★ 並び替えてもここで現在の位置を見つけられる
+    InventoryItem* inv = FindItemByID(slot.itemID);
+    if (!inv) {
+#if _DEBUG
+        printfDx("ショートカット [%s] がインベントリに存在しません\n",
+            slot.itemID.c_str());
+#endif
+        slot.itemID = "";
+        return;
+    }
+
+    ItemBase* item = inv->item.get();
+
+    // ---- 効果中チェック ----
+    if (item->GetType() == "Consumable")
+    {
+        for (auto* active : activeItems)
+        {
+            if (active->GetID() == item->GetID())
+            {
+                AudioManager::GetInstance().PlayOneShot("NotRemoveItem");
+                return;
+            }
+        }
+    }
+
+    // ---- 使用 ----
+    if (item->GetType() == "Consumable")
+    {
+        item->Use();
+        activeItems.push_back(item);
+
+        inv->quantity--;
+
+        if (inv->quantity < 0) 
+        {
+            inv->quantity = 0;
+            RemoveItemByID(item->GetID());
+            slot.itemID.clear();      // ← 0個になったらショートカット解除
+        }
+    }
+    else if (item->GetType() == "Equipment")
+    {
+        EquipItem(item);
+    }
+}
+
+void Inventory::UseItemShortcutRender()
+{
+    int x = WINDOW_WIDTH-130, y = WINDOW_HEIGHT-100; // 右下の中心位置
+    int s = 48;
+
+    DrawSlot(slotUp, x, y - 60, s);
+    DrawSlot(slotRight, x + 60, y, s);
+    DrawSlot(slotLeft, x - 60, y, s);
+    DrawSlot(slotDown, x, y + 60, s);
+}
+
+void Inventory::DrawSlot(const Slot& slot, int x, int y, int size)
+{
+    DrawBox(x - size / 2, y - size / 2, x + size / 2, y + size / 2, GetColor(80, 80, 80), FALSE);
+
+    if (slot.itemID.empty()) return;
+
+    InventoryItem* inv = FindItemByID(slot.itemID);
+    if (!inv) return;
+
+    // アイコン
+    int iconHandle = -1;
+
+    std::string iconPath = inv->item->GetItemIcon();
+    if (!iconPath.empty()) {
+        auto itc = iconCache.find(iconPath);
+        if (itc != iconCache.end()) {
+            iconHandle = itc->second;
+        }
+        else {
+            int h = LoadGraph(iconPath.c_str());
+            if (h >= 0) {
+                iconCache.emplace(iconPath, h);
+                iconHandle = h;
+            }
+            else {
+                iconCache.emplace(iconPath, -1);
+                iconHandle = -1;
+            }
+        }
+    }
+    DrawExtendGraph(x - size/2, y - size/2, x + size/2, y + size/2, iconHandle, TRUE);
+
+    // 残数（右下）
+    DrawFormatString(x + size/2 - 12, y + size/2 - 12, GetColor(255,255,255), "%d", inv->quantity);
+    bool isActiveEffect = false;
+    for (auto* active : activeItems) {
+        if (active == inv->item.get()) {
+            isActiveEffect = true;
+            break;
+        }
+    }
+    if (isActiveEffect) {
+        DrawString(x + size / 2 - 45, y + size / 2 - 12, "S", cyan);   // ← 黄系
+    }
+}
+
+void Inventory::AssignToShortcut(InventoryItem* invItem)
+{
+    const std::string id = invItem->item->GetID();   // ← ItemBase の一意なID
+
+    if (invItem->item->GetItemType() == ItemType::Heal) {
+        HealSize need = GetRequiredHealSize();
+        InventoryItem* best = FindHealBySize(need);
+
+        if (best) {
+            slotUp.itemID = best->item->GetID();
+        }
+        else {
+            // 該当サイズがない場合 → 今持っている回復の中で一番大きいのを使うなど
+            slotUp.itemID = invItem->item->GetID();
+        }
+        return;
+    }
+    else if (invItem->item->GetItemType() == ItemType::AttackPotion) {
+        slotRight.itemID = id;
+    }
+    else if (invItem->item->GetItemType() == ItemType::DefensePotion) {
+        slotLeft.itemID = id;
+    }
+    else if (invItem->item->GetItemType() == ItemType::Grenade) {
+        slotDown.itemID = id;
+    }
+}
+
+Inventory::InventoryItem* Inventory::FindItemByID(const std::string& id)
+{
+    for (auto& item : items)
+    {
+        if (item.item->GetID() == id)
+            return &item;
+    }
+    return nullptr;
+}
+
+void Inventory::RemoveItemByID(const std::string& id)
+{
+    for (size_t i = 0; i < items.size(); i++)
+    {
+        if (items[i].item->GetID() == id)
+        {
+            items.erase(items.begin() + i);
+            return;
+        }
+    }
+}
+
+HealSize Inventory::GetRequiredHealSize()
+{
+    
+    float hpRate = static_cast<float>(Player::GetInstance()->GetHp()) / Player::GetInstance()->GetMaxHp();
+
+    if (hpRate < 0.30f)  return HealSize::Large;
+    if (hpRate < 0.65f)  return HealSize::Medium;
+    return HealSize::Small;
+}
+
+Inventory::InventoryItem* Inventory::FindHealBySize(HealSize size)
+{
+    for (auto& inv : items)
+    {
+        if (!inv.item) continue;
+        if (inv.item->GetItemType() != ItemType::Heal) continue;
+
+        if (inv.item->GetHealType() == size && inv.quantity > 0)
+            return &inv;
+    }
+    return nullptr;
+}
+
+void Inventory::RefreshHealShortcut()
+{
+    HealSize need = GetRequiredHealSize();
+    InventoryItem* best = FindHealBySize(need);
+
+    if (best) {
+        slotUp.itemID = best->item->GetID();
+    }
+    else {
+        // fallback: 所持している中で最大回復を使う
+        InventoryItem* largest = nullptr;
+        for (auto& inv : items) {
+            if (!inv.item) continue;
+            if (inv.item->GetItemType() != ItemType::Heal) continue;
+
+            if (!largest || inv.item->GetHealType() > largest->item->GetHealType())
+                largest = &inv;
+        }
+
+        if (largest)
+            slotUp.itemID = largest->item->GetID();
+    }
 }

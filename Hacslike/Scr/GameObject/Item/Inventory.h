@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "ItemBase.h"
 #include <unordered_map>
-
+#include"ItemHeal/ItemHeal.h"
 
 class Inventory
 {
@@ -31,6 +31,18 @@ public:
     struct ActiveItem {
         ItemBase* item; // Inventoryが持つポインタを指すだけ
     };
+    
+    /// <summary>
+    /// ショートカット用アイテムスロット
+    /// </summary>
+    struct Slot {
+        std::string itemID = "";  // ← これだけを保存
+    };
+
+    Slot slotUp;      // 回復
+    Slot slotRight;   // 攻撃ポーション
+    Slot slotLeft;    // 防御ポーション
+    Slot slotDown;    // グレネード
 private:
     std::vector<InventoryItem> items;
     const int baseX = 250;               // インベントリウィンドウ左上X
@@ -118,6 +130,60 @@ public:
     /// </summary>
     void AddItemRender();
 
+    /// <summary>
+    /// ゲーム中に行われるアイテム使用ショートカットの更新
+    /// </summary>
+    void UseItemShortcutUpdate();
+
+    void UseSlot(Slot& slot);
+
+    /// <summary>
+    /// ゲーム中に行われるアイテム使用ショートカットの描画
+    /// </summary>
+    void UseItemShortcutRender();
+
+    /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="slot"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="size"></param>
+    void DrawSlot(const Slot& slot, int x, int y, int size);
+
+    /// <summary>
+    /// ショートカットスロットに入れる
+    /// </summary>
+    /// <param name="invItem"></param>
+    void AssignToShortcut(InventoryItem* invItem);
+
+    /// <summary>
+    /// IDの取得
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    InventoryItem* FindItemByID(const std::string& id);
+
+    /// <summary>
+    /// 消す
+    /// </summary>
+    /// <param name="id"></param>
+    void RemoveItemByID(const std::string& id);
+
+    /// <summary>
+    /// HPの取得
+    /// </summary>
+    /// <returns></returns>
+    HealSize GetRequiredHealSize();
+
+    /// <summary>
+    /// IDの取得
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    InventoryItem* FindHealBySize(HealSize size);
+
+    void RefreshHealShortcut();
 public:
     inline const std::vector<InventoryItem>& GetItems() const { return items; }
 

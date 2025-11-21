@@ -1,5 +1,8 @@
 #pragma once
 #include "../ItemBase.h"
+
+
+
 class ItemHeal : public ItemBase
 {
 private://メンバ変数
@@ -49,6 +52,9 @@ public://メンバ関数
 	void Use()override;
 	inline bool IsEffectFinished() const { return isEffectFinished; }
 
+	ItemType GetItemType() const override { return ItemType::Heal; }
+
+	HealSize GetHealType() const override { return HealSize::Small; }
 };
 
 /// <summary>
@@ -76,6 +82,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	inline bool IsEffectFinished() const { return isEffectFinished; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Medium; }
 
 };
 
@@ -103,7 +111,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	inline bool IsEffectFinished() const { return isEffectFinished; }
-
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Large; }
 };
 #pragma endregion
 
@@ -137,6 +146,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	inline bool IsEffectFinished() const { return isEffectFinished; }
+	ItemType GetItemType() const override { return ItemType::AttackPotion; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
 
 };
 
@@ -169,6 +180,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	inline bool IsEffectFinished() const { return isEffectFinished; }
+	ItemType GetItemType() const override { return ItemType::DefensePotion; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
 
 };
 
