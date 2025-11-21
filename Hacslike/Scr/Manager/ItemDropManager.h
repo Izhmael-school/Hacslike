@@ -26,7 +26,7 @@ public://メンバ変数
 	std::vector<std::unique_ptr<ItemEntity>> activeItems;
 
 	Effect* pEffe;
-    float itemDropRate = 0.05f;
+    float itemDropRate = 1.0f;
 
 
 public: //メンバ関数
@@ -42,7 +42,7 @@ public: //メンバ関数
 	void RemoveItem(ItemEntity* target);
 private://メンバ関数
 	bool RandomChance(float _rate);
-	void PlayDropEffect(VECTOR _pos = VZero);
+	
 
 public:
 	// ★ 外部からアイテム一覧を取得できる関数を追加

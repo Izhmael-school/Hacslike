@@ -69,5 +69,9 @@ public://ゲッターとセッター
     inline void SetDropEffect(Effect* eff) { dropEffect = eff; }
     inline Effect* GetDropEffect() const { return dropEffect; }
 
+    ItemType GetItemType() const override { return ItemType::Invaled; }
+    HealSize GetHealType() const override { return HealSize::Invaled; }
+
+
 };
 

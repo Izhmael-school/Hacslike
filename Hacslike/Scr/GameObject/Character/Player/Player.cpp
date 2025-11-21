@@ -115,6 +115,7 @@ void Player::Start() {
 
 	deadTime = 0;
 
+	prevHP = GetHp();
 
 	//	アニメーションの読み込み
 #pragma region Animation
@@ -229,8 +230,20 @@ void Player::Update() {
 	OpenMenu();
 
 	inventory.Update(this);
-	if (isItemUI) {
+	if (GameSystem::GetInstance()->IsPlayable()){
+		inventory.UseItemShortcutUpdate();
+		
 	}
+
+	float currentHP = GetHp();
+
+	// HPが変化したか？
+	if (currentHP != prevHP)
+	{
+		GetInventory()->RefreshHealShortcut();
+	}
+
+	prevHP = currentHP;
 
 	if (isArtifactUI) {
 		artifactUI.Update();
@@ -402,6 +415,8 @@ void Player::Render() {
 	}
 
 	inventory.AddItemRender();
+
+	inventory.UseItemShortcutRender();
 
 	if (isSelectingSkill) {
 		skillUI.Render(skillChoices);
