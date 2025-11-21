@@ -326,5 +326,5 @@ public:
 	static Player* GetInstance();
 	static void DestroyInstance();
 
-	void IsDead() override;
+	void DeadExecute() override;
 };

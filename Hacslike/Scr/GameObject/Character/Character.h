@@ -154,7 +154,16 @@ public:	// ゲッターとセッター
 		position = set;
 	}
 
-	virtual void IsDead() = 0;
+	/// <summary>
+	/// 死んだかどうか
+	/// </summary>
+	/// <returns></returns>
+	inline virtual bool IsDead() { return hp <= 0; }
+
+	/// <summary>
+	/// 死んだときの処理
+	/// </summary>
+	virtual void DeadExecute() = 0;
 
 };
 

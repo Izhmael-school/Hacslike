@@ -16,8 +16,8 @@ void BossGoblin::Start() {
 	int i = modelHandle;
 
 	// 当たり判定の設定
-	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 150, 0), 30);
-	SetScale(VGet(0.3f, 0.3f, 0.3f));
+	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
+	SetScale(VGet(0.2f, 0.2f, 0.2f));
 	type = Goblin;
 
 	// アニメーションの設定

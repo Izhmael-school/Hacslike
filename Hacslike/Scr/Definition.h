@@ -57,6 +57,8 @@
 #define RoomMax_Middle (10)
 #define RoomMax_Large (12)
 
+#define EnemyMax (75)
+
 //	•ŠíŠÖ˜A
 #define ATTACK_SPEED_NUM (4)
 #define DEFAULT_ATTACK_SPEED std::array<float, ATTACK_SPEED_NUM>{1.0f, 1.0f, 1.0f, 1.0f}

@@ -44,7 +44,6 @@ void Camera::Update() {
 	position = sphere;
 
 
-
 	GameObject::Update();
 
 	//ƒJƒƒ‰‚ÌˆÊ’u‚Æ‰ñ“]‚ğİ’è‚·‚é

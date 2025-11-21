@@ -37,9 +37,9 @@ void BossBase::Render() {
 	Enemy::Render();
 }
 
-void BossBase::IsDead() {
+void BossBase::DeadExecute() {
 	if (hp > 0) return;
-	Enemy::IsDead();
+	Enemy::DeadExecute();
 
 	AppearStair();
 }

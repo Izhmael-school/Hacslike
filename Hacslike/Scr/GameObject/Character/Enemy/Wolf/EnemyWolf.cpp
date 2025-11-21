@@ -53,6 +53,6 @@ void EnemyWolf::Render() {
 }
 
 void EnemyWolf::OnTriggerEnter(Collider* _pOther) {
-	if (isDead) return;
+	if (IsDead()) return;
 	Enemy::OnTriggerEnter(_pOther);
 }

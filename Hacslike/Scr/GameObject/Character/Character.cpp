@@ -33,7 +33,8 @@ void Character::Damage(int rawDamage) {
 
 	hp -= damage;
 
-	IsDead();
+	if (IsDead())
+		DeadExecute();
 }
 
 void Character::CheckWall() {

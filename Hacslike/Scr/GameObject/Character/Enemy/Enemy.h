@@ -7,16 +7,20 @@
 
 class Enemy : public Character {
 protected:
-	// Ray系
-	float rayLenght;	// レイの長さ
-	float rayAngle;		// レイの角度
-	int rayCount;			// レイの数
-	float raySpan;		// レイが更新される間隔
-	float rayTime;			// レイが更新される時間
+
+	struct Ray_Fan {
+		float rayLenght = 1000.0f;	// レイの長さ
+		float rayAngle = 100.0f;		// レイの角度
+		int rayCount = 30;			// レイの数
+		float raySpan = 0.1f;		// レイが更新される間隔
+		float rayTime = raySpan;	// レイが更新される時間
+	};
 
 	struct Point {
 		VECTOR position;
 	};
+
+	Point point;
 
 	struct Fan {
 		VECTOR position;		// 中心
@@ -25,13 +29,8 @@ protected:
 		float directionDegree;	// 方向
 	};
 
-	Point point;
 	Fan fan;
 
-	enum HostileState {
-		Unaware,	// 無警戒
-		Hostile		// 敵対
-	};
 protected:
 	// 敵の種類
 	EnemyType type;
@@ -45,8 +44,6 @@ protected:
 	bool rayAnswer;
 	// プレイヤーと接触しているか
 	bool isTouch;
-	// 死んでいるかどうか
-	bool isDead;
 	// 攻撃判定更新用
 	std::vector<SphereHitBox*> attackColliderList;
 	// 攻撃アニメーションIDリスト
@@ -60,6 +57,8 @@ protected:
 	// 次徘徊するまでの時間
 	float nextWanderTime;
 	float nextWanderSpan;
+	// 視界
+	Ray_Fan vision;
 
 public:
 	Enemy();
@@ -68,9 +67,18 @@ public:
 	virtual void Start() override;
 	virtual void Update() override;
 	virtual void Render() override;
-	
+
 	// 再使用時の初期化
 	void Setup();
+	// 死んだかどうか
+	void DeadExecute() override;
+	// Jsonファイルからステータスを持ってくる
+	void SetStatusData(int enemyID);
+	// アニメーションのロード
+	void LoadAnimation();
+	// 敵の種類を取得
+	inline EnemyType GetType() const { return type; }
+private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// 追跡行動
 	virtual void Tracking();
@@ -78,22 +86,18 @@ public:
 	virtual void Move(VECTOR targetPos);
 	// 攻撃行動
 	void Attack();
-	// Jsonファイルからステータスを持ってくる
-	void SetStatusData(int enemyID);
-	// アニメーションのロード
-	void LoadAnimation();
-	// 死んだかどうか
-	void IsDead() override;
 	// 視界
 	virtual bool Vision_Ray();
 	virtual bool Vision_Circle(float r);
 	virtual bool Vision_Fan(VECTOR targetPos);
+	// 壁に遮られる視界
+	virtual bool WallDetectionVision_Fan(VECTOR targetPos);
+	// Vision_Fanのデバッグ表示
+	void DrawVisionFanDebug();
 	// 徘徊行動
 	virtual void Wander();
 
-
-	inline EnemyType GetType() const { return type; }
-
+public:
 	// 入ったとき
 	virtual void OnTriggerEnter(Collider* _pOther) override;
 	// 入っているとき

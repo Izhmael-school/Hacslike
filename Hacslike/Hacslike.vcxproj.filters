@@ -146,13 +146,17 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp" />
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
     <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp">
       <Filter>GameObject\TreasureChest</Filter>
     </ClCompile>
     <ClCompile Include="Scr\GameSystem\GameSystem.cpp">
       <Filter>GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
+      <Filter>GameObject\Character\Enemy\Wolf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,17 +312,19 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\Spider.h" />
-    <ClInclude Include="EnemySpider.h">
-      <Filter>GameObject\Character\Enemy\Spider</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
       <Filter>GameObject\TreasureChest</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameSystem\GameSystem.h">
       <Filter>GameSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
+      <Filter>GameObject\Character\Enemy\Wolf</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\ExpansionMethod.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

@@ -45,6 +45,6 @@ void EnemySpider::Render() {
 }
 
 void EnemySpider::OnTriggerEnter(Collider* _pOther) {
-	if (isDead) return;
+	if (IsDead()) return;
 	Enemy::OnTriggerEnter(_pOther);
 }
