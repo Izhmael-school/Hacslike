@@ -63,12 +63,10 @@ bool SphereHitBox::IsDead() const {
 }
 
 void SphereHitBox::CreateCollider() {
-<<<<<<< HEAD
 	if (pCollider == nullptr) {
-		SetPosition(VAdd(owner->GetPosition(),offset));
-=======
+		SetPosition(VAdd(owner->GetPosition(), offset));
+	}
 	if (!pCollider) {
->>>>>>> TT
 		pCollider = new SphereCollider(this, offset, radius);
 		pCollider->SetEnable(true);
 		CollisionManager::GetInstance().Register(pCollider);
@@ -91,7 +89,7 @@ void SphereHitBox::Reset(GameObject* _owner, const VECTOR& startPos,
 
 	if (!pCollider) CreateCollider();
 	pCollider->SetEnable(true);
-	pCollider->SetRadius(radius); 
+	pCollider->SetRadius(radius);
 }
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {

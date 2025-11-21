@@ -18,7 +18,7 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Audio\Audio.cpp">
-      <Filter>GameObject\Audio</Filter>
+      <Filter>GameObject\Item\Audio</Filter>
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp">
       <Filter>GameObject\Camera</Filter>
@@ -176,7 +176,7 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Audio\Audio.h">
-      <Filter>GameObject\Audio</Filter>
+      <Filter>GameObject\Item\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Camera\Camera.h">
       <Filter>GameObject\Camera</Filter>
@@ -336,9 +336,6 @@
     <Filter Include="GameObject">
       <UniqueIdentifier>{3f15e8f0-8302-4070-849a-2e2fbd369c94}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Audio">
-      <UniqueIdentifier>{5ffde05c-23c3-4b06-8528-b1f874195b5b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Camera">
       <UniqueIdentifier>{8aae9422-8e3a-4268-bd49-db208677d067}</UniqueIdentifier>
     </Filter>
@@ -413,6 +410,9 @@
     </Filter>
     <Filter Include="GameObject\Bullet">
       <UniqueIdentifier>{d5eaa3f7-5b1a-4058-9762-585cbc7cc67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item\Audio">
+      <UniqueIdentifier>{5ffde05c-23c3-4b06-8528-b1f874195b5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

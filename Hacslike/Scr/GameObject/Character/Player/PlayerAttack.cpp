@@ -70,7 +70,7 @@ void PlayerAttack::Update() {
 
 void PlayerAttack::Render() {
 	// 弾プールの描画
-	pBulletPool->Render();
+	//pBulletPool->Render();
 }
 
 /// <summary>
@@ -87,7 +87,7 @@ void PlayerAttack::AttackInput() {
 	bool isChargeButtonUp = input->IsMouseUp(MOUSE_INPUT_RIGHT) || input->IsButtonUp(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 
 	//	チャージ開始
-	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking()) {
+	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking() && pWeapon->GetType() != 3) {
 		isAttacking = true;
 		if (pWeapon->GetType() == 1) {
 			chargeTime = 0.0f;
@@ -241,7 +241,15 @@ void PlayerAttack::AttackInput() {
 	}
 
 	else if (isButton && pWeapon->GetType() == 3) {
+		if (!isAttacking) {
+			isAttacking = true;
+			attackIndex = 1;
+			attackTimer = 0.0f;
+			canNextAttack = false;
+			pPlayer->Damage(3);
 
+			CreateRangedHitBox();   // ★ここを追加！
+		}
 	}
 
 	else if (!isButtonDown) {
@@ -373,7 +381,7 @@ void PlayerAttack::CreateRangedHitBox() {
 	VECTOR forward = pPlayer->GetForward();
 	VECTOR vel = VScale(forward, 30.0f);
 	float radius = 30.0f;
-	float life = 1.5f;
+	float life = 0.5f;
 
 	SphereHitBox* bullet = pBulletPool->Spawn(pPlayer, pos, vel, radius, life);
 	if (!bullet) return;
