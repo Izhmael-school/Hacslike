@@ -26,7 +26,7 @@ public://ƒƒ“ƒo•Ï”
 	std::vector<std::unique_ptr<ItemEntity>> activeItems;
 
 	Effect* pEffe;
-    float itemDropRate = 1.0f;
+    float itemDropRate = 0.05f;
 
 
 public: //ƒƒ“ƒoŠÖ”
