@@ -56,6 +56,6 @@ void EnemyGoblin::Render() {
 }
 
 void EnemyGoblin::OnTriggerEnter(Collider* _pOther) {
-	if (isDead) return;
+	if (IsDead()) return;
 	Enemy::OnTriggerEnter(_pOther);
 }

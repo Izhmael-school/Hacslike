@@ -94,7 +94,9 @@ void StageManager::GenerateStage() {
 		canSpawnNum += w * h;
 	}
 	// “G‚Ì”‚ğŒˆ‚ß‚é
-	int SpanwNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 3));
+	int spawnNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 3));
+
+	if (spawnNum > EnemyMax) spawnNum = EnemyMax;
 
 	// “Gƒf[ƒ^‚ğ“Ç‚İ‚Ş
 	auto data = LoadJsonFile("Scr/Data/EnemyData.json");
@@ -116,7 +118,7 @@ void StageManager::GenerateStage() {
 		}
 	}
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < spawnNum; i++) {
 		int spawnEnemyID = spawnEnemyDataList[Random(0, spawnEnemyDataList.size() - 1)].id;
 
 		for (auto e : spawnEnemyDataList) {

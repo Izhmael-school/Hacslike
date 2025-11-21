@@ -87,7 +87,7 @@ void Player::DestroyInstance() {
 	instance = nullptr;
 }
 
-void Player::IsDead() {
+void Player::DeadExecute() {
 	if (hp > 0 || isDead) return;
 	isDead = true;
 	pAnimator->Play("Down1", 0.9);

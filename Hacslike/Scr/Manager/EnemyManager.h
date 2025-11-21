@@ -34,7 +34,6 @@ public:
 	Enemy* UseEnemy(EnemyType type);
 	void UnuseEnemy(Enemy* enemy);
 	void UnuseAllEnemy();
-	void RemoveEnemy(Enemy* enemy);
 
 	void DeleteEnemy(Enemy* enemy);
 	void DeleteAllEnemy();

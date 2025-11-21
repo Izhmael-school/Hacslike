@@ -55,8 +55,11 @@ bool CapsuleHitBox::IsDead() const {
 }
 
 void CapsuleHitBox::OnTriggerEnter(Collider* _pCol) {
-	if (_pCol->GetGameObject()->GetTag() == "Enemy") {
-		_pCol->GetCharacter()->Damage(GetCollider()->GetCharacter()->GetAtk());
+	Character* pTarget = _pCol->GetCharacter();
+
+	//	“–‚½‚Á‚½‘ŠŽè‚Ìƒ^ƒO‚ª "Enemy" ‚© "Player" ‚©‚Â“–‚½‚Á‚½‘ÎÛ‚Æ“–‚½‚è”»’è‚ÌŽ‚¿Žå‚ªˆá‚¤ê‡
+	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
+		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
 		AudioManager::GetInstance().PlayOneShot("damage");
 	}
 }

@@ -2,24 +2,19 @@
 #include "../../../Manager/TimeManager.h"
 #include "../../../Component/Collider/Collider.h"
 #include "../../../CommonModule.h"
+#include "../../../ExpansionMethod.h"
 #include "../../../Manager/ItemDropManager.h"
 #include "../../../GameSystem/GameSystem.h"
 #include "../../Coin/Coin.h"
 
 Enemy::Enemy()
-	:rayAngle(45.0f)
-	, rayCount(15)
-	, rayLenght(1000)
-	, raySpan(0.5f)
-	, rayTime(raySpan)
-	, moveSpeed(1)
+	: moveSpeed(1)
 	, isTouch(false)
-	, isDead(false)
 	, rayAnswer(false)
 	, atkTime(0)
 	, atkSpan(4)
 	, goalPos(VGet(-1, -1, -1))
-	, nextWanderSpan(4)
+	, nextWanderSpan(Random(1,4))
 	, nextWanderTime(nextWanderSpan) {
 	Start();
 }
@@ -32,25 +27,24 @@ Enemy::~Enemy() {
 void Enemy::Start() {
 	// タグの設定
 	SetTag("Enemy");
-	isDead = false;
 	isTouch = false;
 	rayAnswer = false;
 }
 
 void Enemy::Setup() {
 	hp = maxHp;
-	isDead = false;
 	SetVisible(true);
+	rotation.y = Random(0, 359);
 }
 
 void Enemy::Update() {
-	if (!isVisible || isDead || !GameSystem::GetInstance()->IsPlayable()) return;
+	if (!isVisible || IsDead() || !GameSystem::GetInstance()->IsPlayable()) return;
 	// 座標の更新等
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
 
 	// レイの更新
-	Vision_Fan(GetPlayer()->GetPosition());
+	WallDetectionVision_Fan(GetPlayer()->GetPosition());
 	// 追跡行動
 	Tracking();
 	// 徘徊行動
@@ -112,6 +106,10 @@ void Enemy::Render() {
 	// アニメーターの更新
 	pAnimator->Update();
 
+#if _DEBUG
+	DrawVisionFanDebug();
+#endif
+
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
 }
@@ -162,10 +160,8 @@ void Enemy::LoadAnimation() {
 		attackAnimationList.push_back(animNum);
 }
 
-void Enemy::IsDead() {
-	if (hp > 0 || isDead) return;
-
-	isDead = true;
+void Enemy::DeadExecute() {
+	if (!IsDead()) return;
 
 	hp = 0;
 
@@ -174,7 +170,7 @@ void Enemy::IsDead() {
 	// アイテムのドロップ
 	ItemDropManager* manager = &ItemDropManager::GetInstance();
 	manager->TryDropItem(manager->GetItemDropRate(), position);
-	Coin::GetInstance()->SpawnCoin(VGet(position.x , 5.0f, position.z));
+	Coin::GetInstance()->SpawnCoin(VGet(position.x, 5.0f, position.z));
 
 	pAnimator->Play("dead");
 }
@@ -185,17 +181,17 @@ void Enemy::IsDead() {
 /// </summary>
 bool Enemy::Vision_Ray() {
 	// レイの更新
-	if (rayTime >= raySpan)
-		rayTime = 0;
+	if (vision.rayTime >= vision.raySpan)
+		vision.rayTime = 0;
 	else {
-		rayTime += TimeManager::GetInstance().deltaTime;
+		vision.rayTime += TimeManager::GetInstance().deltaTime;
 		return false;
 	}
 
-	float startAngle = -rayAngle / 2;
-	float angleStep = rayAngle / (rayCount - 1);
+	float startAngle = -vision.rayAngle / 2;
+	float angleStep = vision.rayAngle / (vision.rayCount - 1);
 
-	for (int i = 0; i < rayCount; i++) {
+	for (int i = 0; i < vision.rayCount; i++) {
 		// 今の角度を求める
 		float currentAngle = startAngle + (angleStep * i);
 		// キャラが回転しても正面に出す
@@ -203,7 +199,7 @@ bool Enemy::Vision_Ray() {
 		VECTOR start = position;
 		float rad = Deg2Rad(totalAngle);
 		VECTOR dir = VGet(sinf(rad), 0, cosf(rad));
-		VECTOR end = VAdd(start, VScale(dir, rayLenght));
+		VECTOR end = VAdd(start, VScale(dir, vision.rayLenght));
 
 		MV1_COLL_RESULT_POLY ray = MV1CollCheck_Line(PLAYER_MODEL_HANDLE, -1, start, end);
 
@@ -227,10 +223,10 @@ bool Enemy::Vision_Ray() {
 /// <param name="r">半径</param>
 bool Enemy::Vision_Circle(float r) {
 	// レイの更新
-	if (rayTime >= raySpan)
-		rayTime = 0;
+	if (vision.rayTime >= vision.raySpan)
+		vision.rayTime = 0;
 	else {
-		rayTime += TimeManager::GetInstance().deltaTime;
+		vision.rayTime += TimeManager::GetInstance().deltaTime;
 		return false;
 	}
 
@@ -244,21 +240,14 @@ bool Enemy::Vision_Circle(float r) {
 	}
 	return false;
 }
-bool Enemy::Vision_Fan(VECTOR targetPos) {
-	// レイの更新
-	//if (rayTime >= raySpan)
-	//	rayTime = 0;
-	//else {
-	//	rayTime += TimeManager::GetInstance()->deltaTime;
-	//	return false;
-	//}
 
+bool Enemy::Vision_Fan(VECTOR targetPos) {
 	point.position = targetPos;
 
 	fan.position = position;
 	fan.directionDegree = rotation.y;
-	fan.length = rayLenght;
-	fan.rangeDegree = rayAngle;
+	fan.length = vision.rayLenght;
+	fan.rangeDegree = vision.rayAngle;
 
 	// 点と扇のベクトル
 	VECTOR vecFanToPoint = {
@@ -275,7 +264,7 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 
 	// 扇を２等分する線のベクトルを求める
 	float dirRad = Deg2Rad(fan.directionDegree);
-	VECTOR fanDir = VGet(cosf(dirRad), 0, sinf(dirRad));
+	VECTOR fanDir = VGet(sinf(dirRad), 0, cosf(dirRad));
 
 	// 扇と点のベクトルを単位ベクトルにする
 	VECTOR normalFanToPoint = {
@@ -291,8 +280,49 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 	float fanCos = cosf(Deg2Rad(fan.rangeDegree / 2));
 
 	// 点が扇の範囲内にあるか比較
-	if (fanCos < dot) return rayAnswer = false; // 当たってない
+	if (fanCos > dot) return rayAnswer = false; // 当たってない
 
+	return rayAnswer = true;
+}
+
+bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
+	// まず扇形の視界判定。視界外なら即 false
+	if (!Vision_Fan(targetPos)) return false;
+
+	// 座標をマップデータの座標に変換
+	VECTOR targetMapPos = ChangeMapPos(targetPos);
+	VECTOR myMapPos = ChangeMapPos(position);
+
+	// 始点と終点の整数座標を取得
+	int x0 = (int)myMapPos.x;
+	int z0 = (int)myMapPos.z;
+	int x1 = (int)targetMapPos.x;
+	int z1 = (int)targetMapPos.z;
+
+	// Bresenham の直線アルゴリズム用の差分と進行方向
+	VECTOR dir = VGet(abs(x1 - x0), 0, abs(z1 - z0));
+	VECTOR scale = VGet((x0 < x1) ? 1 : -1, 0, (z0 < z1) ? 1 : -1);
+	int err = dir.x - dir.z;           // 誤差項
+
+	StageManager* manager = &StageManager::GetInstance();
+
+	while (true) {
+		// 通過するタイルが壁なら視界は遮られている
+		if ((ObjectType)manager->GetMapData(x0, z0) == Wall) {
+			return rayAnswer = false;
+		}
+
+		// ターゲット位置に到達したら終了
+		if (x0 == x1 && z0 == z1) 
+			break;
+
+		// Bresenham の誤差計算で次のセルへ進む
+		int e2 = 2 * err;
+		if (e2 > -dir.z) { err -= dir.z; x0 += scale.x; }
+		if (e2 < dir.x) { err += dir.x; z0 += scale.z; }
+	}
+
+	// 最後まで壁に当たらなければ true
 	return rayAnswer = true;
 }
 
@@ -317,8 +347,8 @@ void Enemy::Wander() {
 		int rw = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rw);
 		int rh = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rh);
 
-		int moveX = Random(rx, rx + rw);
-		int moveY = Random(ry, ry + rh);
+		int moveX = Random(rx, rx + rw - 1);
+		int moveY = Random(ry, ry + rh - 1);
 
 		goalPos = VGet(moveX * CellSize, 0, moveY * CellSize);
 	}
@@ -336,17 +366,15 @@ void Enemy::Wander() {
 }
 
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
-	VECTOR dir = VSub(targetPos, position);
+	//VECTOR dir = VSub(targetPos, position);
+	//VECTOR nDir = Normalize(dir);
+	//VECTOR nAxis = Normalize(axis);
+	//float dot = Dot(nAxis, nDir);
+	//float theta = acosf(dot);
+	//VECTOR cross = Cross(nAxis, nDir);
+	//cross = Normalize(cross);
 
-	rotation.y = Rad2Deg(atan2f(dir.x, dir.z));
-
-	return;
-
-	float dot = Dot(axis, dir);
-	float theta = acosf(dot);
-	VECTOR cross = Cross(axis, targetPos);
-	cross = Normalize(cross);
-	theta = theta / 2;
+	//rotation.y += Rad2Deg(theta) * (cross.y >= 0 ? 1 : -1);
 }
 
 /// <summary>
@@ -374,6 +402,48 @@ void Enemy::Move(VECTOR targetPos) {
 	VECTOR pos = VAdd(position, VGet(dir.x * d * moveSpeed, 0, dir.z * d * moveSpeed));
 	// 壁の判定を確認して移動する
 	SetPosition(CheckWallToWallRubbing(pos));
+}
+
+void Enemy::DrawVisionFanDebug() {
+	float halfAngle = Deg2Rad(vision.rayAngle / 2.0f);
+	float dirRad = Deg2Rad(rotation.y);
+
+	// 中心方向ベクトル
+	VECTOR dir = VGet(sinf(dirRad), 0, cosf(dirRad));
+
+	// 左右の端方向ベクトル
+	VECTOR leftDir = VGet(sinf(dirRad - halfAngle), 0, cosf(dirRad - halfAngle));
+	VECTOR rightDir = VGet(sinf(dirRad + halfAngle), 0, cosf(dirRad + halfAngle));
+
+	// 先端座標
+	VECTOR centerEnd = VAdd(position, VScale(dir, vision.rayLenght));
+	VECTOR leftEnd = VAdd(position, VScale(leftDir, vision.rayLenght));
+	VECTOR rightEnd = VAdd(position, VScale(rightDir, vision.rayLenght));
+
+	// 色
+	unsigned int col = GetColor(255, 255, 0); // 黄色
+
+	// 中心線
+	DrawLine3D(position, centerEnd, col);
+
+	// 左右の扇端
+	DrawLine3D(position, leftEnd, col);
+	DrawLine3D(position, rightEnd, col);
+
+	// 扇の外周（円弧）を描画
+	const int div = 20; // 円弧の分割数
+	for (int i = 0; i < div; i++) {
+		float a1 = (float)i / div;
+		float a2 = (float)(i + 1) / div;
+
+		float rad01 = dirRad - halfAngle + vision.rayAngle * a1 * DX_PI_F / 180.0f;
+		float rad02 = dirRad - halfAngle + vision.rayAngle * a2 * DX_PI_F / 180.0f;
+
+		VECTOR p1 = VAdd(position, VScale(VGet(sinf(rad01), 0, cosf(rad01)), vision.rayLenght));
+		VECTOR p2 = VAdd(position, VScale(VGet(sinf(rad02), 0, cosf(rad02)), vision.rayLenght));
+
+		DrawLine3D(p1, p2, col);
+	}
 }
 
 void Enemy::Attack() {

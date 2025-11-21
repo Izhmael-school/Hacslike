@@ -51,7 +51,7 @@ void EnemyManager::Start() {
 
 void EnemyManager::Update() {
 	for (auto e : pEnemyArray) {
-		if (e == nullptr) continue;
+		if (e == nullptr || !e->IsVisible()) continue;
 		e->Update();
 	}
 }
@@ -61,6 +61,8 @@ void EnemyManager::Render() {
 		if (e == nullptr) continue;
 		e->Render();
 	}
+
+	DrawFormatString(100, 300, red, "c“G”:%d‘Ì", pEnemyArray.size());
 }
 
 void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
@@ -97,6 +99,7 @@ void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 	}
 
 	pEnemyArray.push_back(e);
+	e->Setup();
 	pEnemyArray[pEnemyArray.size() - 1]->SetPosition(pos);
 }
 
@@ -111,6 +114,7 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 	boss->SetAppearPos(pos);
 	boss->SetPosition(VGet(pos.x * CellSize, 0, pos.z * CellSize));
 	boss->SetVisible(true);
+	boss->Setup();
 	pEnemyArray.push_back(boss);
 }
 
@@ -137,7 +141,7 @@ Enemy* EnemyManager::UseEnemy(EnemyType type) {
 
 	CollisionManager::GetInstance().Register(e->GetCollider());
 	e->SetVisible(true);
-	e->Setup();
+
 	return e;
 }
 

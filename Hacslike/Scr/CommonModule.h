@@ -37,9 +37,16 @@ inline float Dot(VECTOR dir1, VECTOR dir2) {
     return (dir1.x * dir2.x) + (dir1.y * dir2.y) + (dir1.z * dir2.z);
 }
 
+/// <summary>
+/// äOêœ
+/// </summary>
+/// <param name="dir1"></param>
+/// <param name="dir2"></param>
+/// <returns></returns>
 inline VECTOR Cross(VECTOR dir1, VECTOR dir2) {
     float x = dir1.y * dir2.z - dir1.z * dir2.y;
     float y = dir1.x * dir2.z - dir1.z * dir2.x;
     float z = dir1.x * dir2.y - dir1.y * dir2.x;
     return VGet(x, y, z);
 }
+

@@ -21,6 +21,8 @@ void Effect::Update() {
 	if (!isVisible)
 		return;
 
+	
+
 	//エフェクトの再生
 	if (playingHandle == INVALID)
 		playingHandle = PlayEffekseer3DEffect(resourceHandle);
