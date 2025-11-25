@@ -4,6 +4,8 @@
 #include"../../Character/Player/Player.h"
 #include "../../../Manager/TimeManager.h"
 #include "../../../Manager/AudioManager.h"
+#include"../../../Component/Collider/SphereHitBox.h"
+#include"../../../Component/Collider/CapsuleHitBox.h"
 
 
 ItemHeal::ItemHeal(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
@@ -253,5 +255,83 @@ void DefensePotion::Use()
 	timer = duration;
 	isEffectFinished = false;
 	isBoost = true;
+}
+#pragma endregion
+
+#pragma region グレネード
+Grenade::Grenade(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
+	:ItemBase(VZero, "item", "DefensePotion", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/defensePotion.png") 
+	,timer(0.0f)
+	,damage(_effectValue)
+	,grenadeModel(INVALID)
+	,isExploded(false){
+	Start();
+}
+
+void Grenade::Start()
+{
+	SetTag("Grenade");
+	
+	grenadeModel = MV1LoadModel("Res/Model/DropObject/Grenade.mv1");
+
+}
+
+void Grenade::Render()
+{
+	if (grenadeModel == INVALID) return;
+
+	MATRIX mat = MGetIdent();
+	mat = MMult(mat, MGetTranslate(position));
+
+	MV1SetMatrix(grenadeModel, mat);
+	MV1DrawModel(grenadeModel);
+}
+
+void Grenade::Update()
+{
+	TimeManager* time = &TimeManager::GetInstance();
+	if (isExploded) return;
+
+	// 経過時間
+	timer += time->deltaTime;   // ← 毎フレームの経過秒数
+
+	// 3秒経過で爆発
+	if (timer >= 3.0f)
+	{
+		Explode();
+	}
+}
+
+void Grenade::Explode()
+{
+	isExploded = true;
+
+	// 爆発エフェクトを表示
+	//EffectManager::GetInstance().Play("Explosion", pos);
+
+	// 爆発音
+	//AudioManager::GetInstance().PlaySE("explosion");
+
+	  // --- 爆発ダメージの当たり判定を一瞬生成（0.1秒） ---
+	float explosionRadius = 1000.0f;
+	float lifeTime = 0.1f;
+	Player::GetInstance()->GetPlayerAttack()->CreateAttackHitbox(lifeTime, explosionRadius);
+	
+	isEffectFinished = true;  // ★Playerが削除できるように
+	
+}
+
+void Grenade::Use()
+{
+	isEffectFinished = false;
+	VECTOR p = Player::GetInstance()->GetPosition();
+
+	// 少しだけ地面に落とす
+	position = VGet(p.x, p.y + 2.0f, p.z);
+
+	MATRIX mat = MGetIdent();
+	mat = MMult(mat, MGetTranslate(position)); // 現在のGrenadeの位置へ
+	MV1SetMatrix(grenadeModel, mat);
+
 }
 #pragma endregion

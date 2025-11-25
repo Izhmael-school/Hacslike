@@ -1,5 +1,6 @@
 #pragma once
 #include "../ItemBase.h"
+#include"../../Bullet/BulletPool.h"
 
 
 
@@ -185,4 +186,36 @@ public://メンバ関数
 
 };
 
+#pragma endregion
+
+#pragma region グレネード
+class Grenade : public ItemBase {
+private:
+	float timer;			//爆発するまでの時間
+	int damage;			//爆発ダメージ
+	int grenadeModel;	//グレネードのモデル
+	bool isExploded;    // 爆発済み
+	BulletPool* pBulletPool;
+public:
+	Grenade(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0);
+public://メンバ関数
+
+	void Start()override;
+
+	void Render()override;
+
+	void Update()override;
+
+	void Explode();
+
+	/// <summary>
+	/// アイテムを使用した時の効果
+	/// </summary>
+	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
+	ItemType GetItemType() const override { return ItemType::Grenade; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
+
+};
 #pragma endregion

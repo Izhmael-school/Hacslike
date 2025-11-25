@@ -152,3 +152,34 @@ void Spear::UnEquip()
 {
 }
 #pragma endregion
+
+#pragma region e
+gun::gun(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
+	: ItemBase(VZero, "item", "Gun", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Gun.png")
+	, attackValue(_effectValue) {
+	Start();
+}
+
+void gun::Start()
+{
+	AudioManager::GetInstance().Load("Res/SE/UseItem.mp3", "UseEquip", false);
+
+}
+
+void gun::Render()
+{
+}
+
+void gun::Use()
+{
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
+
+	Player::GetInstance()->ChangeWeapon(11);
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetRangedCorrection() + attackValue);
+
+}
+
+void gun::UnEquip()
+{
+}
+#pragma endregion

@@ -294,6 +294,8 @@ void Inventory::Update(Player* player)
         if (item)
         {
             item->Update(); // 効果時間を進める
+           
+
 
             // 効果終了判定
             if (item->IsEffectFinished())
@@ -363,11 +365,13 @@ static const std::unordered_map<std::string, std::string> itemEffectMap = {
     {"ポーション(大)", "回復量"},
     {"攻撃のポーション","効力"},
     {"防御のポーション","効力"},
+    {"グレネード","威力"},
     {"剣", "攻撃力"},
     {"斧", "攻撃力"},
     {"木の棒","攻撃力"},
     {"グレートソード","攻撃力"},
     {"槍","攻撃力"},
+    {"銃","攻撃力"},
     // ここに増やすだけでOK！
 };
 
@@ -378,11 +382,13 @@ static const std::vector<std::string> itemOrder = {
     "ポーション(大)",
     "攻撃のポーション",
     "防御のポーション",
+    "グレネード",
     "木の棒",
     "剣",
     "斧",
     "グレートソード",
-    "槍"
+    "槍",
+    "銃",
 };
 
 /// <summary>
@@ -406,8 +412,15 @@ void Inventory::SortItemsByOrder()
 /// </summary>
 void Inventory::Render()
 {
-    
+    for (int i = 0; i < (int)activeItems.size(); i++ )
+    {
+        ItemBase* item = activeItems[i];
+        if (item)
+        {
 
+            item->Render();
+        }
+    }
     // レイアウト定数
     const int iconX = baseX + padding + 20;
     const int textX = iconX + iconSize + 4;

@@ -70,6 +70,11 @@ void ItemFactory::InitializeDefaultItems()
         "–hŒä‚Ìƒ|[ƒVƒ‡ƒ“", "2•ªŠÔ–hŒä—Í‚ğã‚°‚é", 110, 5, 120.0f);
         });
 
+    RegisterItem("Grenade", []() {
+        return std::make_unique<Grenade>(VGet(0, 0, 0),
+        "ƒOƒŒƒl[ƒh", "3•bŒã‚É”š”­‚·‚é", 110, 80);
+        });
+
     RegisterItem("Sword_Iron", []() {
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
         "Œ•", "•’Ê‚ÌŒ•", 150, GetRand(20) + 10 ,"MeleeWeapon");
@@ -77,7 +82,7 @@ void ItemFactory::InitializeDefaultItems()
 
     RegisterItem("Axe", []() {
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
-        "•€", "•’Ê‚Ì•€", 200, GetRand(30) + 10, "RangedWeapon");
+        "•€", "•’Ê‚Ì•€", 200, GetRand(30) + 10, "MeleeWeapon");
         });
 
     RegisterItem("Stick", []() {
@@ -93,5 +98,10 @@ void ItemFactory::InitializeDefaultItems()
     RegisterItem("Spear", []() {
         return std::make_unique<Spear>(VGet(0, 0, 0),
         "‘„", "‘„", 230, GetRand(80) + 40, "MeleeWeapon");
+        });
+
+    RegisterItem("Gun", []() {
+        return std::make_unique<gun>(VGet(0, 0, 0),
+        "e", "e", 160, GetRand(100) + 40, "RangedWeapon");
         });
 }

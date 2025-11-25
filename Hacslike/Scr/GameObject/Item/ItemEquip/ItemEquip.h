@@ -177,3 +177,37 @@ public:
 
 }; 
 #pragma endregion
+
+#pragma region 銃
+class gun : public ItemBase {
+
+	int attackValue; //攻撃力
+	std::string weaponType;  //武器の種類
+public://コンストラクタ
+
+	gun(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0, const std::string& _weaponType = "");
+
+public://メンバ関数
+
+	void Start()override;
+
+	void Render()override;
+
+	/// <summary>
+	/// アイテムを使用した時の効果
+	/// </summary>
+	void Use()override;
+	void UnEquip()override;
+public:
+	/// <summary>
+   /// 武器の種類
+   /// </summary>
+   /// <returns></returns>
+	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+
+
+};
+#pragma endregion
+
