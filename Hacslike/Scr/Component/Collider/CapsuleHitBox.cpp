@@ -3,17 +3,31 @@
 #include "../Hacslike/Scr/Manager/CollisionManager.h"
 #include "../../Manager/AudioManager.h"
 
-CapsuleHitBox::CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR& p2, float _radius, float _life)
+CapsuleHitBox::CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR& p2,
+	float _radius, float _life)
 	: owner(_owner)
-	, startPos(p1)
-	, endPos(p2)
+	, startPos(p1)  // ← 相対座標を保存
+	, endPos(p2)    // ← 相対座標を保存
 	, radius(_radius)
 	, pCollider(nullptr)
 	, timer(0.0f)
-	, lifeTime(_life){
+	, lifeTime(_life)
+	, velocity(VGet(0, 0, 0))
+	, active(false) {
 	Start();
 }
 
+CapsuleHitBox::CapsuleHitBox()
+	: owner(nullptr)
+	, startPos()
+	, endPos()
+	, radius(0)
+	, pCollider(nullptr)
+	, timer(0)
+	, lifeTime(0)
+	, velocity()
+	, active(false) {
+}
 CapsuleHitBox::~CapsuleHitBox() {
 	if (pCollider) {
 		CollisionManager::GetInstance().UnRegister(pCollider);
@@ -22,25 +36,39 @@ CapsuleHitBox::~CapsuleHitBox() {
 	}
 }
 
-void CapsuleHitBox::CreateCollider() {
-	if (!pCollider) {
-		SetPosition(owner->GetPosition());
-		pCollider = new CapsuleCollider(this, startPos, endPos, radius);
-		pCollider->SetEnable(true);
-		//CollisionManager::GetInstance().Register(pCollider);
-	}
+\
+
+void CapsuleHitBox::Move(const VECTOR& vel) {
+	position = VAdd(position, vel);
 }
 
 
 
 void CapsuleHitBox::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Damage.mp3", "damage", false);
+
+	CreateCollider();
+	character = static_cast<Character*>(owner);
 }
 
 void CapsuleHitBox::Update() {
+	if (!active) return;
+
 	timer += TimeManager::GetInstance().deltaTime;
-	if (pCollider && pCollider->IsEnable()) {
+
+	// owner の座標に追従
+	VECTOR base = owner ? owner->GetPosition() : VGet(0, 0, 0);
+	VECTOR worldStart = VAdd(base, startPos);
+	VECTOR worldEnd = VAdd(base, endPos);
+
+	if (pCollider) {
+		pCollider->GetGameObject()->SetPosition(position); // ←追加
 		pCollider->Update();
+	}
+
+	if (timer >= lifeTime) {
+		active = false;
+		if (pCollider) pCollider->SetEnable(false);
 	}
 }
 
@@ -52,6 +80,44 @@ void CapsuleHitBox::Render() {
 
 bool CapsuleHitBox::IsDead() const {
 	return timer >= lifeTime;
+}
+
+void CapsuleHitBox::CreateCollider() {
+	if (!pCollider) {
+
+		pCollider = new CapsuleCollider(this, startPos, endPos, radius);
+		pCollider->SetEnable(true);
+
+		CollisionManager::GetInstance().Register(pCollider);
+	}
+}
+
+void CapsuleHitBox::Reset(GameObject* _owner, const VECTOR& p1, const VECTOR& p2,
+	const VECTOR& _velocity, float _radius, float _life) {
+
+	owner = _owner;
+
+	startPos = p1;  // ローカル
+	endPos = p2;  // ローカル
+
+	velocity = _velocity;
+	radius = _radius;
+	lifeTime = _life;
+	timer = 0.0f;
+	active = true;
+
+	// HitBox 自身の position は owner に合わせる（コライダーの transform 更新用）
+	position = owner ? owner->GetPosition() : VGet(0, 0, 0);
+
+	if (!pCollider) CreateCollider();
+
+	// コライダーの GameObject の位置もここで合わせる
+	pCollider->GetGameObject()->SetPosition(position);
+
+	// 必要なら回転も合わせる（owner に回転情報があれば）
+	// pCollider->GetGameObject()->SetRotation(owner->GetRotation());
+
+	pCollider->SetEnable(true);
 }
 
 void CapsuleHitBox::OnTriggerEnter(Collider* _pCol) {

@@ -4,20 +4,20 @@
 
 class BulletPool {
 public:
-    static BulletPool& GetInstance() {
-        static BulletPool instance(128); // 初期プール数
-        return instance;
-    }
+	static BulletPool& GetInstance() {
+		static BulletPool instance(128); // 初期プール数
+		return instance;
+	}
 
-    SphereHitBox* Spawn(GameObject* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life);
-    void Update();
-    void Render();
+	SphereHitBox* Spawn(GameObject* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life);
+	void Update();
+	void Render();
 
 private:
-    BulletPool(int poolSize);
-    ~BulletPool();
-    BulletPool(const BulletPool&) = delete;
-    BulletPool& operator=(const BulletPool&) = delete;
+	BulletPool(int poolSize);
+	~BulletPool();
+	BulletPool(const BulletPool&) = delete;
+	BulletPool& operator=(const BulletPool&) = delete;
 
-    std::vector<SphereHitBox*> pool;
+	std::vector<SphereHitBox*> pool;
 };

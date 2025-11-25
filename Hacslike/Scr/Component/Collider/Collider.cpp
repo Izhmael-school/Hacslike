@@ -146,8 +146,8 @@ void CapsuleCollider::Update() {
 	localPoint2 = VTransform(originPoint2, rotXYZ);
 
 	// 線分のワールド座標を求める
-	worldPoint1 = VAdd(localPoint1, trans);
-	worldPoint2 = VAdd(localPoint2, trans);
+	worldPoint1 = VAdd(pGameObject->GetPosition(), localPoint1);
+	worldPoint2 = VAdd(pGameObject->GetPosition(), localPoint2);
 
 	// 見た目だけだから当たり判定の計算は回転前のAABBで行う 
 

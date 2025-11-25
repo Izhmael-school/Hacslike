@@ -157,6 +157,9 @@
     <ClCompile Include="Scr\GameObject\Bullet\BulletPool.cpp">
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp">
+      <Filter>GameObject\HitPool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -325,6 +328,9 @@
     <ClInclude Include="Scr\GameObject\Bullet\BulletPool.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\HitPool\CapsuleHitPool.h">
+      <Filter>GameObject\HitPool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -413,6 +419,9 @@
     </Filter>
     <Filter Include="GameObject\Item\Audio">
       <UniqueIdentifier>{5ffde05c-23c3-4b06-8528-b1f874195b5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\HitPool">
+      <UniqueIdentifier>{536cda0b-462c-4d97-a4ff-26691146aa76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
