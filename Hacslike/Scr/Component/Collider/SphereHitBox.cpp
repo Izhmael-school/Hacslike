@@ -19,7 +19,17 @@ SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, fl
 }
 
 
-SphereHitBox::SphereHitBox(){
+SphereHitBox::SphereHitBox()
+	: owner()
+	, offset()
+	, radius()
+	, pCollider(nullptr)
+	, timer(0.0f)
+	, lifeTime()
+	, velocity()
+	, active(false)
+	, character()
+	, position(){
 }
 
 SphereHitBox::~SphereHitBox() {

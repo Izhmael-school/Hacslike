@@ -133,4 +133,5 @@ public:
 	inline VECTOR GetworldPoint2() const { return worldPoint2; }
 
 	inline float GetRadius() const { return radius; }
+	inline void SetRadius(float r) { radius = r; }
 };

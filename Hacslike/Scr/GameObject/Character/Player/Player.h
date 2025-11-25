@@ -33,11 +33,11 @@ private:
 private:	//	メンバ変数
 	//bool isAttacking;	//	攻撃中
 
-	Weapon* pWeapon;
+	Weapon* pWeapon;	//	武器
 
 	/*VECTOR inputVec;*/
 
-	InputManager* input;
+	InputManager* input;	//	入力
 
 	//std::vector<Slash*> slashes;
 
@@ -46,24 +46,24 @@ private:	//	メンバ変数
 	int maxWeaponId;                // 武器の最大ID（JSONの数に合わせる）
 
 
-	int coinValue;
+	int coinValue;			//	コイン枚数
 
-	int expValue;
+	int expValue;			//	Exp量
 
-	float criticalHitRate;
+	float criticalHitRate;	//	会心率
 
-	float criticalDamage;
+	float criticalDamage;	//	会心ダメ
+	
+	PlayerAttack* playerAttack;		//	プレイヤーの攻撃
+	PlayerMovement* playerMovement;	//	プレイヤーの移動
 
-	PlayerAttack* playerAttack;
-	PlayerMovement* playerMovement;
+	WeaponData* weaponData;			//	武器データ
 
-	WeaponData* weaponData;
+	float hpRate;	//	HP量
 
-	float hpRate;
+	bool isDead;	//	死んでるかどうか	
 
-	bool isDead;
-
-	float deadTime;
+	float deadTime;	//	死んでからの時間
 
 #pragma region インベントリ/アイテム関連
 	Inventory inventory; //アイテムインベントリ

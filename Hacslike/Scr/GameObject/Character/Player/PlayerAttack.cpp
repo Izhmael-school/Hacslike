@@ -27,8 +27,11 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, isCharging(false)
 	, chargeTime(0.0f)
 	, maxChargeTime(3.0f)
-	, pBulletPool(nullptr){
-	pBulletPool = &BulletPool::GetInstance();
+	, pSpherePool(nullptr)
+	, pCapsulePool(nullptr)
+	, addRadius() {
+	pSpherePool = &BulletPool::GetInstance();
+	pCapsulePool = &CapsuleHitPool::GetInstance();
 	Start();
 }
 
@@ -54,18 +57,10 @@ void PlayerAttack::Update() {
 		AttackInput();
 
 	// 弾プールの更新
-	pBulletPool->Update();
+	pSpherePool->Update();
 
-	// CapsuleHitBox 更新
-	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
-		CapsuleHitBox* h = *it;
-		h->Update();
-		if (h->IsDead()) {
-			delete h;
-			it = CapsuleHitboxes.erase(it);
-		}
-		else ++it;
-	}
+	//	Capsuleプール更新
+	pCapsulePool->Update();
 }
 
 void PlayerAttack::Render() {
@@ -79,13 +74,14 @@ void PlayerAttack::Render() {
 void PlayerAttack::AttackInput() {
 	//	攻撃入力
 	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X); 
-	bool isButton = input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButton(XINPUT_GAMEPAD_X); 
+	bool isButton = input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButton(XINPUT_GAMEPAD_X);
+	bool isButtonUp = input->IsMouseUp(MOUSE_INPUT_LEFT) || input->IsButtonUp(XINPUT_GAMEPAD_X);
 
 	//	ため攻撃入力
 	bool isChargeButtonDown = input->IsMouseDown(MOUSE_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 	bool isChargeButton = input->IsMouse(MOUSE_INPUT_RIGHT) || input->IsButton(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 	bool isChargeButtonUp = input->IsMouseUp(MOUSE_INPUT_RIGHT) || input->IsButtonUp(XINPUT_GAMEPAD_RIGHT_SHOULDER);
-
+#pragma region ため攻撃処理
 	//	チャージ開始
 	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking() && pWeapon->GetType() != 3) {
 		isAttacking = true;
@@ -135,7 +131,9 @@ void PlayerAttack::AttackInput() {
 			AudioManager::GetInstance().PlayOneShot("chargeAttack");
 		}
 	}
+#pragma endregion
 
+#pragma region コンボ処理
 	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking()) {
 		//	ボタンが押された瞬間だけ処理
 		attackButtonPressed = true;
@@ -227,20 +225,11 @@ void PlayerAttack::AttackInput() {
 				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
-
-		else if (pWeapon->GetType() == 3) {
-			if (!isAttacking) {
-				isAttacking = true;
-				attackIndex = 1;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-
-				CreateRangedHitBox();   // ★ここを追加！
-			}
-		}
 	}
+#pragma endregion
 
-	else if (isButton && pWeapon->GetType() == 3) {
+	//	遠距離武器
+	else if (isButtonUp && pWeapon->GetType() == 3) {
 		if (!isAttacking) {
 			isAttacking = true;
 			attackIndex = 1;
@@ -257,11 +246,19 @@ void PlayerAttack::AttackInput() {
 		attackButtonPressed = false;
 	}
 
+	if (isButton && pWeapon->GetType() == 3) {
+		addRadius += TimeManager::GetInstance().deltaTime;  // ★加算にする！
+	}
+	else {
+		addRadius = 0.0f;  // 離したらリセットする場合
+	}
+
+
 	//	攻撃中のタイマー管理
 	if (isAttacking && !isCharging && !playerMovement->IsBlinking()) {
 		attackTimer += TimeManager::GetInstance().deltaTime;
 
-
+#pragma region 攻撃判定生成
 		if (pWeapon->GetType() == 0) {
 
 			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
@@ -338,6 +335,7 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.4f && attackTimer < 1.0f) canNextAttack = true;
 		}
 	}
+#pragma endregion
 
 	// ヒットボックス更新
 	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
@@ -376,35 +374,38 @@ void PlayerAttack::AttackInput() {
 ///</summary>
 ///<param name="length"></param>
 ///<param name="radius"></param>
+#pragma region 攻撃判定処理
 void PlayerAttack::CreateRangedHitBox() {
 	VECTOR pos = VAdd(pPlayer->GetPosition(), VScale(pPlayer->GetForward(), 50.0f));
 	VECTOR forward = pPlayer->GetForward();
 	VECTOR vel = VScale(forward, 30.0f);
-	float radius = 30.0f;
+	float radius = 30.0f + addRadius * 100;
 	float life = 0.5f;
 
-	SphereHitBox* bullet = pBulletPool->Spawn(pPlayer, pos, vel, radius, life);
+	SphereHitBox* bullet = pSpherePool->Spawn(pPlayer, pos, vel, radius, life);
 	if (!bullet) return;
 
 	bullet->SetVelocity(vel);
 	isAttacking = false;
 }
 
-void PlayerAttack::CreateAttackHitbox(float length, float radius) {
+void PlayerAttack::CreateHitBox(VECTOR _pos, float _radius) {
+	SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, _pos, VGet(0, 0, 0), _radius, 0.25f);
+}
+
+void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 	VECTOR forward = pPlayer->GetForward();
 	float life = 0.2f;
 
 	if (attackIndex < 3) {
 		VECTOR start = VAdd(pPlayer->GetPosition(), VScale(forward, 20.0f));
-		VECTOR end = VAdd(start, VScale(forward, length));
-		CapsuleHitBox* capHit = new CapsuleHitBox(pPlayer, start, end, radius, life);
-		capHit->CreateCollider();
-		CapsuleHitboxes.push_back(capHit);
+		VECTOR end = VAdd(start, VScale(forward, _length));
+		CapsuleHitBox* capsuleBox = pCapsulePool->Spawn(pPlayer, start, end, VGet(0, 0, 0), _radius, 0.25f);
 	}
 	else {
 		VECTOR forward = pPlayer->GetForward();
 		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 70.0f), VGet(0, 100, 0)));
-		SphereHitBox* bullet = pBulletPool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), radius, 0.25f);
-		if (bullet) bullet->SetVelocity(VGet(0, 0, 0));
+		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
 	}
 }
+#pragma endregion

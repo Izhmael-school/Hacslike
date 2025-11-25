@@ -18,7 +18,6 @@ SphereHitBox* BulletPool::Spawn(GameObject* owner, const VECTOR& pos, const VECT
 		if (!b->GetActive()) {
 			b->Reset(owner, pos, vel, radius, life);
 			return b;
-			printfDx("SphereHitBox Constructor Called!\n");
 		}
 	}
 	// プール枯渇 → 必要なら拡張可能

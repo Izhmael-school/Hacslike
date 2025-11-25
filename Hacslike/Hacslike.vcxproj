@@ -42,6 +42,7 @@
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp" />
     <ClCompile Include="Scr\GameObject\Effect\Effect.cpp" />
     <ClCompile Include="Scr\GameObject\GameObject.cpp" />
+    <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp" />
     <ClCompile Include="Scr\GameObject\Item\Inventory.cpp" />
     <ClCompile Include="Scr\GameObject\Item\ItemBase.cpp" />
     <ClCompile Include="Scr\GameObject\Item\ItemEntity.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Scr\GameObject\Coin\Coin.h" />
     <ClInclude Include="Scr\GameObject\Effect\Effect.h" />
     <ClInclude Include="Scr\GameObject\GameObject.h" />
+    <ClInclude Include="Scr\GameObject\HitPool\CapsuleHitPool.h" />
     <ClInclude Include="Scr\GameObject\Item\Inventory.h" />
     <ClInclude Include="Scr\GameObject\Item\ItemBase.h" />
     <ClInclude Include="Scr\GameObject\Item\ItemEntity.h" />

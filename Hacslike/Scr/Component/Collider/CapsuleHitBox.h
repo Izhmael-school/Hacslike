@@ -10,12 +10,19 @@ private:
     VECTOR endPos;
     float radius;
 
+	Character* character;
+
     CapsuleCollider* pCollider;
     float timer;
     float lifeTime;
 
+	VECTOR velocity;
+
+	bool active;
+
 public:
     CapsuleHitBox(GameObject* _owner, const VECTOR& p1, const VECTOR& p2, float _radius, float _lifeTime);
+    CapsuleHitBox();
     ~CapsuleHitBox();
 
 	void Start() override;
@@ -23,9 +30,18 @@ public:
     void Render() override;
     bool IsDead() const;
 
-    void CreateCollider();
-
     CapsuleCollider* GetCollider() const { return pCollider; }
+
+	void CreateCollider();
+
+	void Move(const VECTOR& vel);
+
+	void Reset(GameObject* _owner, const VECTOR& p1, const VECTOR& p2,
+		const VECTOR& _velocity, float _radius, float _life);
+
+	inline bool GetActive()const { return active; }
+
+	inline void SetActive(bool _active) { active = _active; }
 
 public:		//	オーバーライドした衝突検知
 	/*

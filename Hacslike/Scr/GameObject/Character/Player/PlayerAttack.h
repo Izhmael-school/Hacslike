@@ -4,6 +4,7 @@
 #include "PlayerMovement.h"
 #include "../../../Manager/AudioManager.h"
 #include "../../Bullet/BulletPool.h"
+#include "../../HitPool/CapsuleHitPool.h"
 
 class Player;
 class Weapon;
@@ -30,13 +31,17 @@ private:
 
 	bool checkDashAttack; //ダッシュ攻撃が可能かどうか
 
-	bool isCharging;
-	float chargeTime;
-	const float maxChargeTime ;
+	bool isCharging;			//	ためてるかどうか
+	float chargeTime;			//	ためてる時間
+	const float maxChargeTime ;	//	最大溜め
 
-	AudioManager* audio;
+	AudioManager* audio;		//	音
 
-	BulletPool* pBulletPool;
+	BulletPool* pSpherePool;	//	Sphereのプール
+
+	CapsuleHitPool* pCapsulePool;	//	Capsuleのプール	
+
+	float addRadius;			//	半径を足す
 
 public:
 	/// <summary>
@@ -69,7 +74,7 @@ public:
 	///</summary>
 	///<param name="length"></param>
 	///<param name="radius"></param>
-	void CreateAttackHitbox(float length, float radius);
+	void CreateAttackHitbox(float _length, float _radius);
 
 	/// <summary>
 	/// アタック中かどうか
@@ -84,6 +89,8 @@ public:
 	inline void SetIsCheckDashAttack(bool _b) { checkDashAttack = _b; }
 
 	void CreateRangedHitBox();
+
+	void CreateHitBox(VECTOR _pos, float _radius);
 
 
 	/// <summary>
