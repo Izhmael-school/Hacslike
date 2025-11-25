@@ -260,7 +260,7 @@ void DefensePotion::Use()
 
 #pragma region グレネード
 Grenade::Grenade(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", "DefensePotion", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/defensePotion.png") 
+	:ItemBase(VZero, "item", "Grenade", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/grenade.png") 
 	,timer(0.0f)
 	,damage(_effectValue)
 	,grenadeModel(INVALID)
@@ -294,11 +294,12 @@ void Grenade::Update()
 
 	// 経過時間
 	timer += time->deltaTime;   // ← 毎フレームの経過秒数
-
+	printfDx("残り時間%f\n",timer);
 	// 3秒経過で爆発
 	if (timer >= 3.0f)
 	{
 		Explode();
+		isEffectFinished = true;  // ★Playerが削除できるように
 	}
 }
 
@@ -313,16 +314,18 @@ void Grenade::Explode()
 	//AudioManager::GetInstance().PlaySE("explosion");
 
 	  // --- 爆発ダメージの当たり判定を一瞬生成（0.1秒） ---
-	float explosionRadius = 1000.0f;
+	float explosionRadius = 100.0f;
 	float lifeTime = 0.1f;
-	Player::GetInstance()->GetPlayerAttack()->CreateAttackHitbox(lifeTime, explosionRadius);
+	Player::GetInstance()->GetPlayerAttack()->CreateHitBox(position, explosionRadius);
 	
-	isEffectFinished = true;  // ★Playerが削除できるように
 	
 }
 
 void Grenade::Use()
 {
+	isExploded = false;
+	timer = 0.0f;
+	printfDx("時間セット%f\n", timer);
 	isEffectFinished = false;
 	VECTOR p = Player::GetInstance()->GetPosition();
 

@@ -407,10 +407,7 @@ void Inventory::SortItemsByOrder()
         });
 }
 
-/// <summary>
-/// 描画処理
-/// </summary>
-void Inventory::Render()
+void Inventory::ItemDropRender()
 {
     for (int i = 0; i < (int)activeItems.size(); i++ )
     {
@@ -421,6 +418,13 @@ void Inventory::Render()
             item->Render();
         }
     }
+}
+
+/// <summary>
+/// 描画処理
+/// </summary>
+void Inventory::Render()
+{
     // レイアウト定数
     const int iconX = baseX + padding + 20;
     const int textX = iconX + iconSize + 4;

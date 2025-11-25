@@ -117,6 +117,8 @@ public:
     /// </summary>
     void SortItemsByOrder();
 
+    void ItemDropRender();
+
     void Render();
     /// <summary>
     /// “üŽè‚µ‚½ƒAƒCƒeƒ€‚ÌŽæ“¾

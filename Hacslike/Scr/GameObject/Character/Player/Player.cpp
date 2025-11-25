@@ -404,6 +404,7 @@ void Player::Render() {
 #pragma endregion
 
 #pragma region アイテムのインベントリ表示
+	inventory.ItemDropRender();
 	if (isMenuUI) {
 		DrawMenu();
 	}
