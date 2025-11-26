@@ -136,6 +136,8 @@ public:	// ゲッターとセッター
 	inline int GetLv() const { return Lv; }
 	//	レベルの設定
 	inline void SetLv(int _Lv) { Lv = _Lv; }
+	//	レベルアップ
+	inline void LvUp(int _Lv) { Lv += _Lv; }
 #pragma endregion
 
 	inline Character* GetPlayer() const { return Character::player; }

@@ -134,4 +134,6 @@ public:
 
 	inline float GetRadius() const { return radius; }
 	inline void SetRadius(float r) { radius = r; }
+
+	void Reset(const VECTOR& p1, const VECTOR& p2, float r);
 };

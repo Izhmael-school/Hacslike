@@ -398,12 +398,13 @@ void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 	float life = 0.2f;
 
 	if (attackIndex < 3) {
-		VECTOR start = VAdd(pPlayer->GetPosition(), VScale(forward, 20.0f));
-		VECTOR end = VAdd(start, VScale(forward, _length));
-		CapsuleHitBox* capsuleBox = pCapsulePool->Spawn(pPlayer, start, end, VGet(0, 0, 0), _radius, 0.25f);
+		VECTOR startLocal = VScale(forward, 20.0f);           // ローカル座標
+		VECTOR endLocal = VScale(forward, 20.0f + _length); // ローカル座標
+		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 70.0f), VGet(0, 100, 0)));
+		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
+		//CapsuleHitBox* capsuleBox = pCapsulePool->Spawn(pPlayer, startLocal, endLocal, VGet(0, 0, 0), _radius, 0.25f);
 	}
 	else {
-		VECTOR forward = pPlayer->GetForward();
 		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 70.0f), VGet(0, 100, 0)));
 		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
 	}

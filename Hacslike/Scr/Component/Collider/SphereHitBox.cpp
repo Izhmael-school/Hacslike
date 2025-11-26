@@ -13,7 +13,7 @@ SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, fl
 	, lifeTime(_lifeTime)
 	, velocity()
 	, active(false) {
-	
+
 	position = VAdd(owner ? owner->GetPosition() : VGet(0, 0, 0), offset); // ©‚±‚±‚Å‰ŠúˆÊ’u‚ðŒˆ’è
 	Start();
 }
@@ -29,7 +29,7 @@ SphereHitBox::SphereHitBox()
 	, velocity()
 	, active(false)
 	, character()
-	, position(){
+	, position() {
 }
 
 SphereHitBox::~SphereHitBox() {
@@ -59,7 +59,10 @@ void SphereHitBox::Update() {
 
 	if (timer >= lifeTime) {
 		active = false;
-		if (pCollider) pCollider->SetEnable(false);
+		if (pCollider) {
+			pCollider->SetEnable(false);
+			CollisionManager::GetInstance().UnRegister(pCollider);
+		}
 		return;
 	}
 }
@@ -97,9 +100,16 @@ void SphereHitBox::Reset(GameObject* _owner, const VECTOR& startPos,
 	timer = 0.0f;
 	active = true;
 
-	if (!pCollider) CreateCollider();
-	pCollider->SetEnable(true);
-	pCollider->SetRadius(radius);
+	if (!pCollider) {
+		CreateCollider();
+	}
+	else {
+		// Ä“o˜^
+		CollisionManager::GetInstance().Register(pCollider);
+		pCollider->SetEnable(true);
+		pCollider->SetRadius(radius);
+	}
+
 }
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
@@ -111,8 +121,6 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 		AudioManager::GetInstance().PlayOneShot("damage");
 	}
 }
-
-
 
 void SphereHitBox::OnTriggerStay(Collider* _pCol) {}
 
