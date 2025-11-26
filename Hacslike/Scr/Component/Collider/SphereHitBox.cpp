@@ -50,20 +50,24 @@ void SphereHitBox::Update() {
 	if (!active) return;
 
 	timer += TimeManager::GetInstance().deltaTime;
-	position = VAdd(position, velocity); // SphereHitBox の座標更新
 
-	if (pCollider && pCollider->IsEnable()) {
-		pCollider->GetGameObject()->SetPosition(position); // ←追加
-		pCollider->Update();
-	}
-
+	// 生存時間が来たら消す
 	if (timer >= lifeTime) {
-		active = false;
+
 		if (pCollider) {
 			pCollider->SetEnable(false);
 			CollisionManager::GetInstance().UnRegister(pCollider);
 		}
+		active = false;
 		return;
+	}
+
+	// まだ生きてる → 位置更新
+	position = VAdd(position, velocity);
+
+	if (pCollider && pCollider->IsEnable()) {
+		pCollider->GetGameObject()->SetPosition(position);
+		pCollider->Update();
 	}
 }
 
@@ -76,9 +80,9 @@ bool SphereHitBox::IsDead() const {
 }
 
 void SphereHitBox::CreateCollider() {
-	if (pCollider == nullptr) {
-		SetPosition(VAdd(owner->GetPosition(), offset));
-	}
+	//if (pCollider == nullptr) {
+	//	SetPosition(VAdd(owner->GetPosition(), offset));
+	//}
 	if (!pCollider) {
 		pCollider = new SphereCollider(this, offset, radius);
 		pCollider->SetEnable(true);
@@ -95,20 +99,21 @@ void SphereHitBox::Reset(GameObject* _owner, const VECTOR& startPos,
 	owner = _owner;
 	position = startPos;
 	velocity = _velocity;
-	radius = _radius;   // ←必ずここで更新
+	radius = _radius;
 	lifeTime = _life;
 	timer = 0.0f;
 	active = true;
 
-	if (!pCollider) {
-		CreateCollider();
-	}
-	else {
-		// 再登録
-		CollisionManager::GetInstance().Register(pCollider);
+	if (pCollider) {
+		CollisionManager::GetInstance().UnRegister(pCollider);
 		pCollider->SetEnable(true);
 		pCollider->SetRadius(radius);
 	}
+	else {
+		CreateCollider();
+	}
+
+	CollisionManager::GetInstance().Register(pCollider);
 
 }
 
@@ -118,7 +123,7 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	//	当たった相手のタグが "Enemy" か "Player" かつ当たった対象と当たり判定の持ち主が違う場合
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
 		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
-		AudioManager::GetInstance().PlayOneShot("damage");
+		//AudioManager::GetInstance().PlayOneShot("damage");
 	}
 }
 
