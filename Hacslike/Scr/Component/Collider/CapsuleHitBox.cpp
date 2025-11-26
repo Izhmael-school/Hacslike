@@ -36,8 +36,6 @@ CapsuleHitBox::~CapsuleHitBox() {
 	}
 }
 
-\
-
 void CapsuleHitBox::Move(const VECTOR& vel) {
 	position = VAdd(position, vel);
 }
@@ -55,13 +53,9 @@ void CapsuleHitBox::Update() {
 	if (!active) return;
 
 	timer += TimeManager::GetInstance().deltaTime;
+	position = VAdd(position, velocity); // SphereHitBox の座標更新
 
-	// owner の座標に追従
-	VECTOR base = owner ? owner->GetPosition() : VGet(0, 0, 0);
-	VECTOR worldStart = VAdd(base, startPos);
-	VECTOR worldEnd = VAdd(base, endPos);
-
-	if (pCollider) {
+	if (pCollider && pCollider->IsEnable()) {
 		pCollider->GetGameObject()->SetPosition(position); // ←追加
 		pCollider->Update();
 	}
@@ -69,8 +63,10 @@ void CapsuleHitBox::Update() {
 	if (timer >= lifeTime) {
 		active = false;
 		if (pCollider) pCollider->SetEnable(false);
+		return;
 	}
 }
+
 
 void CapsuleHitBox::Render() {
 	if (pCollider) {
@@ -83,11 +79,12 @@ bool CapsuleHitBox::IsDead() const {
 }
 
 void CapsuleHitBox::CreateCollider() {
+	if (pCollider == nullptr) {
+		SetPosition(owner->GetPosition());
+	}
 	if (!pCollider) {
-
 		pCollider = new CapsuleCollider(this, startPos, endPos, radius);
 		pCollider->SetEnable(true);
-
 		CollisionManager::GetInstance().Register(pCollider);
 	}
 }
@@ -96,28 +93,18 @@ void CapsuleHitBox::Reset(GameObject* _owner, const VECTOR& p1, const VECTOR& p2
 	const VECTOR& _velocity, float _radius, float _life) {
 
 	owner = _owner;
-
 	startPos = p1;  // ローカル
 	endPos = p2;  // ローカル
-
 	velocity = _velocity;
 	radius = _radius;
 	lifeTime = _life;
 	timer = 0.0f;
 	active = true;
 
-	// HitBox 自身の position は owner に合わせる（コライダーの transform 更新用）
-	position = owner ? owner->GetPosition() : VGet(0, 0, 0);
-
 	if (!pCollider) CreateCollider();
 
-	// コライダーの GameObject の位置もここで合わせる
-	pCollider->GetGameObject()->SetPosition(position);
-
-	// 必要なら回転も合わせる（owner に回転情報があれば）
-	// pCollider->GetGameObject()->SetRotation(owner->GetRotation());
-
 	pCollider->SetEnable(true);
+	pCollider->SetRadius(radius);
 }
 
 void CapsuleHitBox::OnTriggerEnter(Collider* _pCol) {

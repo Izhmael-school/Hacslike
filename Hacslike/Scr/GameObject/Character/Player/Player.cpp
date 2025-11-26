@@ -256,15 +256,16 @@ void Player::Update() {
 		Damage(10);
 	}
 
-	if (input->IsKeyDown(KEY_INPUT_3)) {
-		AddExp(15);
+	if (input->IsKey(KEY_INPUT_3)) {
+		AddExp(10000);
 	}
 
 #pragma region スキル選択
 	if (exp >= maxExp && !isSelectingSkill) {
 		remainExp = exp - maxExp;
 		exp = remainExp;
-		maxExp *= 1.78;
+		maxExp *= 2.01f;
+		LvUp(1);
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
 		isSelectingSkill = true;

@@ -130,27 +130,27 @@ CapsuleCollider::CapsuleCollider(GameObject* _pObj, VECTOR _p1, VECTOR _p2, floa
 {}
 
 void CapsuleCollider::Update() {
-	if (!isEnable)
-		return;
+	if (!isEnable) return;
 
-	// 回転行列を取得する
-	//MATRIX rotY = MGetRotY(Deg2Rad(pGameObject->GetPosition().y));
-	MATRIX rotXYZ = MGetRotElem(matrix);
+	MATRIX mat = pGameObject->GetMatrix();
 
-	// 原点からの平行移動行列を取得する
-	//MATRIX trans = MGetTranslate(pGameObject->GetPosition());
-	VECTOR trans = MGetTranslateElem(matrix);
+	// 回転・移動を行列から取得
+	MATRIX rot = MGetRotElem(mat);
+	VECTOR trans = MGetTranslateElem(mat);
 
-	// 線分のローカル座標を求める
-	localPoint1 = VTransform(originPoint1, rotXYZ);
-	localPoint2 = VTransform(originPoint2, rotXYZ);
+	// ローカル → ワールド変換
+	localPoint1 = VTransform(originPoint1, rot);
+	localPoint2 = VTransform(originPoint2, rot);
 
-	// 線分のワールド座標を求める
-	worldPoint1 = VAdd(pGameObject->GetPosition(), localPoint1);
-	worldPoint2 = VAdd(pGameObject->GetPosition(), localPoint2);
+	worldPoint1 = VAdd(localPoint1, trans);
+	worldPoint2 = VAdd(localPoint2, trans);
 
-	// 見た目だけだから当たり判定の計算は回転前のAABBで行う 
+}
 
+void CapsuleCollider::Reset(const VECTOR& p1, const VECTOR& p2, float r) {
+	originPoint1 = p1;
+	originPoint2 = p2;
+	radius = r;
 }
 
 void CapsuleCollider::Render() {
