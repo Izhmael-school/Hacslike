@@ -10,7 +10,7 @@ class SphereHitBox : public GameObject{
 private:
 
 
-	GameObject* owner;
+	Character* owner;
 	Character* character;
 	VECTOR offset;
 	VECTOR position;
@@ -23,7 +23,7 @@ private:
 	SphereCollider* pCollider;
 
 public:
-	SphereHitBox(GameObject* _ownwr, VECTOR _offset,float _radius, float _lifeTime);
+	SphereHitBox(Character* _ownwr, VECTOR _offset,float _radius, float _lifeTime);
 	SphereHitBox();
 	~SphereHitBox();
 
@@ -40,7 +40,7 @@ public:
 
 	void SetVelocity(const VECTOR& v) { velocity = v; }
 
-	void Reset(GameObject* _owner, const VECTOR& startPos, const VECTOR& _velocity,
+	void Reset(Character* _owner, const VECTOR& startPos, const VECTOR& _velocity,
 		float _radius, float _life);
 
 	inline bool GetActive()const { return active; }

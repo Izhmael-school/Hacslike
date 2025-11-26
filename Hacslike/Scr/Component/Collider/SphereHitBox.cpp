@@ -4,7 +4,7 @@
 #include "../../GameObject/Character/Character.h"
 #include "../../Manager/AudioManager.h"
 
-SphereHitBox::SphereHitBox(GameObject* _owner, VECTOR _offset, float _radius, float _lifeTime)
+SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, float _lifeTime)
 	: owner(_owner)
 	, offset(_offset)
 	, radius(_radius)
@@ -28,7 +28,6 @@ SphereHitBox::SphereHitBox()
 	, lifeTime()
 	, velocity()
 	, active(false)
-	, character()
 	, position() {
 }
 
@@ -57,6 +56,7 @@ void SphereHitBox::Update() {
 		if (pCollider) {
 			pCollider->SetEnable(false);
 			CollisionManager::GetInstance().UnRegister(pCollider);
+			
 		}
 		active = false;
 		return;
@@ -94,41 +94,46 @@ void SphereHitBox::Move(const VECTOR& vel) {
 	position = VAdd(position, vel);
 }
 
-void SphereHitBox::Reset(GameObject* _owner, const VECTOR& startPos,
+void SphereHitBox::Reset(Character* _owner, const VECTOR& startPos,
 	const VECTOR& _velocity, float _radius, float _life) {
-	owner = _owner;
-	position = startPos;
-	velocity = _velocity;
-	radius = _radius;
-	lifeTime = _life;
-	timer = 0.0f;
-	active = true;
+	 owner = _owner;
+    position = startPos;
+    velocity = _velocity;
+    radius = _radius;
+    lifeTime = _life;
+    timer = 0.0f;
+    active = true;
 
-	if (pCollider) {
-		CollisionManager::GetInstance().UnRegister(pCollider);
-		pCollider->SetEnable(true);
-		pCollider->SetRadius(radius);
-	}
-	else {
-		CreateCollider();
-	}
+    if (pCollider) {
+        CollisionManager::GetInstance().UnRegister(pCollider);
+        pCollider->SetEnable(true);
+        pCollider->SetRadius(radius);
 
-	CollisionManager::GetInstance().Register(pCollider);
+        // ★★ここを追加：位置を更新しないと前の位置の当たり判定が残る
+        pCollider->GetGameObject()->SetPosition(position);
+    }
+    else {
+        CreateCollider();
+        pCollider->GetGameObject()->SetPosition(position);
+    }
+	
+    CollisionManager::GetInstance().Register(pCollider);
 
 }
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	Character* pTarget = _pCol->GetCharacter();
 	if (!pTarget) {
-		printfDx("Hit: Character = NULL (owner = %s)\n", owner->GetTag().c_str());
+		//printfDx("Hit: Character = NULL (owner = %s)\n", owner->GetTag().c_str());
 		return;
 	}
 
 	// デバッグ出力
+#if _DEBUG
 	printfDx("Hit: owner=%s  ->  target=%s\n",
 		owner->GetTag().c_str(),
 		pTarget->GetTag().c_str());
-
+#endif
 	// 当たり判定処理
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
 		owner->GetTag() != pTarget->GetTag())
@@ -137,7 +142,7 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 			owner->GetTag().c_str(),
 			pTarget->GetTag().c_str());
 
-		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
+		_pCol->GetCharacter()->Damage(owner->GetAtk());
 		//AudioManager::GetInstance().PlayOneShot("damage");
 	}
 	//Character* pTarget = _pCol->GetCharacter();

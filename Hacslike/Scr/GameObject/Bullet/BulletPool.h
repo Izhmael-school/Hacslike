@@ -9,7 +9,7 @@ public:
 		return instance;
 	}
 
-	SphereHitBox* Spawn(GameObject* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life);
+	SphereHitBox* Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life);
 	void Update();
 	void Render();
 
