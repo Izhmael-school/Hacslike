@@ -22,6 +22,7 @@ public: //メンバ変数
 	int maxCoin;			 //出現するコインの上限
 	int currentCoin;		 //現在出現してるコインの数
 	bool active;
+	//SphereHitBox* hitBox;
 
 public: //コンストラクタとデストラクタ
 	/// <summary>
