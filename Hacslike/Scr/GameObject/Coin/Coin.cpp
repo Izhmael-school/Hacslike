@@ -66,7 +66,6 @@ void Coin::DestroyInstance()
 void Coin::Start()
 {
     SetCollider(new SphereCollider(this, VZero, 30));
-    //CollisionManager::GetInstance().Register(pCollider);
     coinModelHandle = MV1LoadModel("Res/Model/DropObject/coin.mv1");
     coinValue = 1;
     value = coinValue;
@@ -137,9 +136,9 @@ void Coin::Render()
     MV1DrawModel(coinModelHandle);
 
     // 当たり判定の描画（デバッグ用）
-    /*if (pCollider != nullptr) {
+    if (pCollider != nullptr) {
         pCollider->Render();
-    }*/
+    }
 }
 
 /// <summary>

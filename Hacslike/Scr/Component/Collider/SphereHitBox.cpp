@@ -104,11 +104,18 @@ void SphereHitBox::Reset(GameObject* _owner, const VECTOR& startPos,
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	Character* pTarget = _pCol->GetCharacter();
+	if (!pTarget) return; // キャラクターでないなら無視
 
 	//	当たった相手のタグが "Enemy" か "Player" かつ当たった対象と当たり判定の持ち主が違う場合
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
+		
+		printfDx("Damage: owner=%s  target=%s \n",
+			owner->GetTag().c_str(),
+			pTarget->GetTag().c_str());
+		
 		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
 		AudioManager::GetInstance().PlayOneShot("damage");
+		
 	}
 }
 

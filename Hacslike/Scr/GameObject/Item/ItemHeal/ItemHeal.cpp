@@ -299,7 +299,7 @@ void Grenade::Update()
 	if (timer >= 3.0f)
 	{
 		Explode();
-		isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
+		
 	}
 }
 
@@ -318,6 +318,7 @@ void Grenade::Explode()
 	float lifeTime = 0.1f;
 	Player::GetInstance()->GetPlayerAttack()->CreateHitBox(position, explosionRadius);
 	
+	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
 	
 }
 
