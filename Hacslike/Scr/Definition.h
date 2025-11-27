@@ -34,8 +34,6 @@
 // DxLibの読み込みエラ-
 #define INVALID (-1)
 
-#define EnemyMax (10)
-
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/maya_Player.mv1"))
 
 // ステージ関連
@@ -57,7 +55,7 @@
 #define RoomMax_Middle (10)
 #define RoomMax_Large (12)
 
-#define EnemyMax (75)
+#define EnemyMax (50)
 
 //	武器関連
 #define ATTACK_SPEED_NUM (4)
