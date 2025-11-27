@@ -107,7 +107,7 @@ void Enemy::Render() {
 	pAnimator->Update();
 
 #if _DEBUG
-	DrawVisionFanDebug();
+	//DrawVisionFanDebug();
 #endif
 
 	MV1SetMatrix(modelHandle, matrix);
@@ -366,15 +366,20 @@ void Enemy::Wander() {
 }
 
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
-	//VECTOR dir = VSub(targetPos, position);
-	//VECTOR nDir = Normalize(dir);
-	//VECTOR nAxis = Normalize(axis);
-	//float dot = Dot(nAxis, nDir);
-	//float theta = acosf(dot);
-	//VECTOR cross = Cross(nAxis, nDir);
-	//cross = Normalize(cross);
+	VECTOR dir = VSub(targetPos, position);
+	float angle = atan2f(dir.x, dir.z);
+	rotation.y = Rad2Deg(angle);
 
-	//rotation.y += Rad2Deg(theta) * (cross.y >= 0 ? 1 : -1);
+	return;
+
+	dir = Normalize(dir);
+	axis = Normalize(axis);
+	float dot = Dot(axis, dir);
+	float theta = acosf(dot);
+	VECTOR cross = Cross(axis, dir);
+	cross = Normalize(cross);
+
+	rotation.y += Rad2Deg(theta) * (cross.y >= 0 ? 1 : -1);
 }
 
 /// <summary>
@@ -399,7 +404,8 @@ void Enemy::Tracking() {
 void Enemy::Move(VECTOR targetPos) {
 	VECTOR dir = VSub(targetPos, position);
 	float d = TimeManager::GetInstance().deltaTime;
-	VECTOR pos = VAdd(position, VGet(dir.x * d * moveSpeed, 0, dir.z * d * moveSpeed));
+	VECTOR velocity = VGet(dir.x * moveSpeed, 0, dir.z * moveSpeed);
+	VECTOR pos = VAdd(position,VScale(velocity,d));
 	// •Ç‚Ì”»’è‚ðŠm”F‚µ‚ÄˆÚ“®‚·‚é
 	SetPosition(CheckWallToWallRubbing(pos));
 }

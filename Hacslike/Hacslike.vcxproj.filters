@@ -157,6 +157,7 @@
     <ClCompile Include="Scr\GameObject\Bullet\BulletPool.cpp">
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\UI\Gauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -311,10 +312,6 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\Spider.h" />
-    <ClInclude Include="EnemySpider.h">
-      <Filter>GameObject\Character\Enemy\Spider</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
       <Filter>GameObject\TreasureChest</Filter>
@@ -325,6 +322,9 @@
     <ClInclude Include="Scr\GameObject\Bullet\BulletPool.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\ExpansionMethod.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
+    <ClInclude Include="Scr\UI\Gauge.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -413,6 +413,9 @@
     </Filter>
     <Filter Include="GameObject\Item\Audio">
       <UniqueIdentifier>{5ffde05c-23c3-4b06-8528-b1f874195b5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{38838ca9-11a9-45f4-bb14-7b0276757094}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
