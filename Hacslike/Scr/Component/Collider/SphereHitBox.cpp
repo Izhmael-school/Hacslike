@@ -12,7 +12,7 @@ SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, flo
 	, timer(0.0f)
 	, lifeTime(_lifeTime)
 	, velocity()
-	, active(false) {
+	, active(true) {
 
 	position = VAdd(owner ? owner->GetPosition() : VGet(0, 0, 0), offset); // ←ここで初期位置を決定
 	Start();
@@ -27,8 +27,9 @@ SphereHitBox::SphereHitBox()
 	, timer(0.0f)
 	, lifeTime()
 	, velocity()
-	, active(false)
+	, active(true)
 	, position() {
+	Start();
 }
 
 SphereHitBox::~SphereHitBox() {
@@ -122,6 +123,8 @@ void SphereHitBox::Reset(Character* _owner, const VECTOR& startPos,
 }
 
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
+	if (owner == nullptr) return;
+
 	Character* pTarget = _pCol->GetCharacter();
 	if (!pTarget) {
 		//printfDx("Hit: Character = NULL (owner = %s)\n", owner->GetTag().c_str());
@@ -130,20 +133,20 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 
 	// デバッグ出力
 #if _DEBUG
-	printfDx("Hit: owner=%s  ->  target=%s\n",
-		owner->GetTag().c_str(),
-		pTarget->GetTag().c_str());
+	//printfDx("Hit: owner=%s  ->  target=%s\n",
+	//	owner->GetTag().c_str(),
+	//	pTarget->GetTag().c_str());
 #endif
 	// 当たり判定処理
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
 		owner->GetTag() != pTarget->GetTag())
 	{
-		printfDx("Damage: owner=%s  target=%s  atk=%d\n",
+		/*printfDx("Damage: owner=%s  target=%s  atk=%d\n",
 			owner->GetTag().c_str(),
-			pTarget->GetTag().c_str());
+			pTarget->GetTag().c_str());*/
 
 		_pCol->GetCharacter()->Damage(owner->GetAtk());
-		//AudioManager::GetInstance().PlayOneShot("damage");
+		AudioManager::GetInstance().PlayOneShot("damage");
 	}
 	//Character* pTarget = _pCol->GetCharacter();
 	//if (!pTarget) {

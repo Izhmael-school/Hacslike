@@ -47,6 +47,8 @@ public:
 
 	inline void SetActive(bool _active) { active = _active; }
 
+	inline void SetOwner(Character* _owner) { owner = _owner; }
+
 public:		//	オーバーライドした衝突検知
 	/*
 	 *	@function	OnTriggerEnter
