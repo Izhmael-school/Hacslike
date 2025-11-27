@@ -15,6 +15,7 @@
 #include "../../TreasureChest/StartTreasureChest.h"
 #include "../../../GameSystem/GameSystem.h"
 
+
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
 
@@ -48,7 +49,9 @@ Player::Player(VECTOR _pos)
 	criticalDamage = 100;
 	// コンストラクタでシングルトンの重複生成を防ぐ
 	if (instance != nullptr) {
+#if _DEBUG
 		printfDx("[Error] Player instance already exists!\n");
+#endif
 	}
 	else {
 		instance = this;
@@ -598,6 +601,8 @@ void Player::selectMenu() {
 void Player::DrawMenu() {
 	if (!isMenuUI) return;
 
+	
+
 	const int x = 20;
 	const int y = 50;
 	const int width = 200;
@@ -649,7 +654,7 @@ void Player::AddItemRender() {
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
 		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:アイテムを取る");
 		DrawFormatString(textX, textY, white, "F");
-		DrawFormatString(textX + 53, textY, white, "Y");
+		DrawFormatString(textX + 53, textY, white, "B");
 
 
 	}
@@ -703,7 +708,7 @@ void Player::GetArtifactRender() {
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
 		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:宝箱を開ける");
 		DrawFormatString(textX, textY, white, "F");
-		DrawFormatString(textX + 53, textY, white, "Y");
+		DrawFormatString(textX + 53, textY, white, "B");
 
 
 	}
