@@ -35,6 +35,8 @@ void GameScene::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/NormalFloor.mp3", "NormalFloor", false);
 	AudioManager::GetInstance().ChangeVolume(0.1f, "NormalFloor");
 	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
+	EffectManager::GetInstance().Load("Res/Effect/Explosion.efkefc", "Explosion", 20.0f);
+
 
 	StartTreasureChest* pChest = new StartTreasureChest();
 	pGameObjectArray.push_back(pChest);

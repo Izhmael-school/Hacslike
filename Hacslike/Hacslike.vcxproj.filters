@@ -160,6 +160,24 @@
     <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp">
       <Filter>GameObject\HitPool</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\SaveFile\PlayerData.cpp">
+      <Filter>SaveFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\SaveFile\ArtifactData.cpp">
+      <Filter>SaveFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\SaveFile\SaveFile.cpp">
+      <Filter>SaveFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\SaveManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\SaveFile\SaveSlotUI.cpp">
+      <Filter>SaveFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\SaveFile\SkillData.cpp">
+      <Filter>SaveFile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -314,10 +332,6 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\Spider.h" />
-    <ClInclude Include="EnemySpider.h">
-      <Filter>GameObject\Character\Enemy\Spider</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
       <Filter>GameObject\TreasureChest</Filter>
@@ -330,6 +344,29 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\HitPool\CapsuleHitPool.h">
       <Filter>GameObject\HitPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\ExpansionMethod.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
+    <ClInclude Include="Scr\SaveFile\PlayerData.h">
+      <Filter>SaveFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\SaveFile\ArtifactData.h">
+      <Filter>SaveFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\SaveFile\SaveFile.h">
+      <Filter>SaveFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\SaveManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\SaveFile\SaveMeta.h">
+      <Filter>SaveFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\SaveFile\SaveSlotUI.h">
+      <Filter>SaveFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\SaveFile\SkillData.h">
+      <Filter>SaveFile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,6 +459,9 @@
     </Filter>
     <Filter Include="GameObject\HitPool">
       <UniqueIdentifier>{536cda0b-462c-4d97-a4ff-26691146aa76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SaveFile">
+      <UniqueIdentifier>{41906fea-3342-43cb-b0bb-93b02c014e48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

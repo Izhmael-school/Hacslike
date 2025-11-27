@@ -6,6 +6,7 @@
 #include "../../../Manager/AudioManager.h"
 #include"../../../Component/Collider/SphereHitBox.h"
 #include"../../../Component/Collider/CapsuleHitBox.h"
+#include"../../../Manager/EffectManager.h"
 
 
 ItemHeal::ItemHeal(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
@@ -264,16 +265,16 @@ Grenade::Grenade(VECTOR _pos, const std::string& _name, const std::string& _desc
 	,timer(0.0f)
 	,damage(_effectValue)
 	,grenadeModel(INVALID)
-	,isExploded(false){
+	,isExploded(false)
+	,pEffe(){
 	Start();
 }
 
 void Grenade::Start()
 {
 	SetTag("Grenade");
-	
+	AudioManager::GetInstance().Load("Res/Audio/SE/Item/打撃3.mp3", "explosion", false);
 	grenadeModel = MV1LoadModel("Res/Model/DropObject/Grenade.mv1");
-
 }
 
 void Grenade::Render()
@@ -294,7 +295,6 @@ void Grenade::Update()
 
 	// 経過時間
 	timer += time->deltaTime;   // ← 毎フレームの経過秒数
-	printfDx("残り時間%f\n",timer);
 	// 3秒経過で爆発
 	if (timer >= 3.0f)
 	{
@@ -308,10 +308,11 @@ void Grenade::Explode()
 	isExploded = true;
 
 	// 爆発エフェクトを表示
-	//EffectManager::GetInstance().Play("Explosion", pos);
+	auto* eff = EffectManager::GetInstance().Instantiate("Explosion", position);
+
 
 	// 爆発音
-	//AudioManager::GetInstance().PlaySE("explosion");
+	AudioManager::GetInstance().PlayOneShot("explosion");
 
 	  // --- 爆発ダメージの当たり判定を一瞬生成（0.1秒） ---
 	float explosionRadius = 100.0f;
@@ -326,7 +327,6 @@ void Grenade::Use()
 {
 	isExploded = false;
 	timer = 0.0f;
-	printfDx("時間セット%f\n", timer);
 	isEffectFinished = false;
 	VECTOR p = Player::GetInstance()->GetPosition();
 

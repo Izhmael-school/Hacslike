@@ -20,7 +20,7 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
 {
     if (!RandomChance(_dropRate)) return;
 
-    std::vector<std::string> itemIds = { "Potion_Small","Potion_Middle","Potion_Large","AttactPotion","DefensePotion","Grenade"/*, "Sword_Iron","Axe","Greatsword", "Spear","Gun"*/};
+    std::vector<std::string> itemIds = { "Potion_Small","Potion_Middle","Potion_Large","AttactPotion","DefensePotion","Grenade", "Sword_Iron","Axe","Greatsword", "Spear","Gun"};
 
     static std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<> dis(0, static_cast<int>(itemIds.size()) - 1);

@@ -1,6 +1,7 @@
 #pragma once
 #include "../ItemBase.h"
 #include"../../Bullet/BulletPool.h"
+#include"../../Effect/Effect.h"
 
 
 
@@ -196,6 +197,7 @@ private:
 	int grenadeModel;	//グレネードのモデル
 	bool isExploded;    // 爆発済み
 	BulletPool* pBulletPool;
+	Effect* pEffe;
 public:
 	Grenade(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0);
 public://メンバ関数

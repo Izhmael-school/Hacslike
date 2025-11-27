@@ -138,9 +138,11 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
 		owner->GetTag() != pTarget->GetTag())
 	{
+#if _DEBUG
 		printfDx("Damage: owner=%s  target=%s  atk=%d\n",
 			owner->GetTag().c_str(),
 			pTarget->GetTag().c_str());
+#endif
 
 		_pCol->GetCharacter()->Damage(owner->GetAtk());
 		//AudioManager::GetInstance().PlayOneShot("damage");
