@@ -19,6 +19,7 @@
 static enum MenuType {
 	menuInventory = 0,
 	menuArtifact = 1,
+	menuSave = 2,
 };
 
 
@@ -99,6 +100,12 @@ private:	//	メンバ変数
 	bool isMenuSelected = false;   // メニュー項目が選択中かどうか
 	float blinkTime = 0.0f;       // 点滅用のタイマー
 	bool blinkVisible = true;      // 現在表示中かどうか
+	bool isSaveUI = false;
+	int menuIndex = 0;
+	// 最大メニュー数（増えてもここを変えるだけ）
+	const int MENU_COUNT = 3;
+
+	
 #pragma endregion
 
 	int maxExp;

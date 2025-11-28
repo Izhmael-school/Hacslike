@@ -46,11 +46,9 @@ void GameScene::Start() {
 }
 
 void GameScene::Update() {
-
-
-
 #pragma region プロト用スキルとアイテム
 	InputManager* input = &InputManager::GetInstance();
+
 	if (!isSelectingArtifact) {
 		if (input->IsKeyDown(KEY_INPUT_Y)) {
 			artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
@@ -115,7 +113,7 @@ void GameScene::Update() {
 
 void GameScene::Render() {
 
-
+	
 	StageManager::GetInstance().Render();
 	EnemyManager::GetInstance().Render();
 	for (auto pObj : pGameObjectArray) {

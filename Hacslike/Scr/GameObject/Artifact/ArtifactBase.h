@@ -12,13 +12,14 @@ class PlayerMovement;
 class ArtifactBase
 {
 protected://メンバ変数
+	int id;
 	std::string name;			//名前
 	std::string description;	//説明
 	std::string iconPath;		//アイコン画像のパス
 	int iconHandle = -1;
 
 public:	//コンストラクタとデストラクタ
-	ArtifactBase(const std::string& _name, const std::string& _desc, const std::string& _icon);
+	ArtifactBase(const int _id ,const std::string& _name, const std::string& _desc, const std::string& _icon);
 
 	virtual ~ArtifactBase() = default;
 
@@ -28,6 +29,7 @@ public:	//オーバーライドするメンバ関数
 	virtual void Remove(Player* player) = 0;
 
 public:
+	const int GetID() const { return id; }
 	const std::string& GetName() const { return name; }
 	const std::string& GetDescription() const { return description; }
 	const std::string& GetIconPath() const { return iconPath; }

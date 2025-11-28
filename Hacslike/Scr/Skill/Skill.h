@@ -8,6 +8,7 @@ class Player;
 
 class Skill{
 protected: //メンバ変数
+    int id;
     std::string name;			//名前
     std::string description;	//説明
     std::string iconPath; // アイコン画像のパス
@@ -22,7 +23,7 @@ public:
     /// <param name="name"></param>
     /// <param name="desc"></param>
     /// <param name="icon"></param>
-    Skill(const std::string& name, const std::string& desc, const std::string& icon ,int maxLv = 5);
+    Skill(const int id,const std::string& name, const std::string& desc, const std::string& icon ,int maxLv = 5);
 
     /// <summary>
     /// デストラクタ
@@ -40,6 +41,7 @@ public://オーバーライドされる関数達
     int GetMaxLevel() const { return maxLevel; }
     virtual void ClearLevel() = 0;                      // レベルを1に戻す
 public://ゲッター
+    const int GetID() const { return id; }
     const std::string& GetName() const { return name; }
     const std::string& GetDescription() const { return description; }
     const std::string& GetIconPath() const { return iconPath; }

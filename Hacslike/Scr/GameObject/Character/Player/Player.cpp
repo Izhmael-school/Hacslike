@@ -418,6 +418,9 @@ void Player::Render() {
 	if (isArtifactUI) {
 		artifactUI.Render();
 	}
+	if (isSaveUI) {
+		//saveUI.Draw();
+	}
 
 	inventory.AddItemRender();
 
@@ -537,16 +540,18 @@ void Player::OpenMenu() {
 		{
 			// ↑キー
 			if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
-				if (menu == MenuType::menuArtifact)
-					menu = MenuType::menuInventory;
-					AudioManager::GetInstance().PlayOneShot("Select");
+				menuIndex--;
+				if (menuIndex < 0)
+					menuIndex = MENU_COUNT - 1;   // 上に行きすぎたらループ
+				AudioManager::GetInstance().PlayOneShot("Select");
 			}
 
 			// ↓キー
 			if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) {
-				if (menu == MenuType::menuInventory)
-					menu = MenuType::menuArtifact;
-					AudioManager::GetInstance().PlayOneShot("Select");
+				menuIndex++;
+				if (menuIndex >= MENU_COUNT)
+					menuIndex = 0;                // 下に行きすぎたらループ
+				AudioManager::GetInstance().PlayOneShot("Select");
 			}
 
 			// Enterで選択
@@ -582,15 +587,21 @@ void Player::OpenMenu() {
 
 void Player::selectMenu() {
 	if (isMenuUI == true) {
-		switch (menu) {
-		case menuInventory:
+		switch (menuIndex) {
+		case 0:
 			isItemUI = true;
 			isArtifactUI = false;
+			isSaveUI = false;
 			break;
-		case menuArtifact:
+		case 1:
 			isItemUI = false;
 			isArtifactUI = true;
+			isSaveUI = false;
 			break;
+		case 2:
+			isItemUI = false;
+			isArtifactUI = false;
+			isSaveUI = true;
 		default:
 			break;
 		}
@@ -601,34 +612,37 @@ void Player::selectMenu() {
 void Player::DrawMenu() {
 	if (!isMenuUI) return;
 
-	
-
 	const int x = 20;
 	const int y = 50;
 	const int width = 200;
 	const int height = 40;
 	const int margin = 10;
 
-	const char* menuNames[] = { "アイテム", "アーティファクト" };
-	const int menuCount = 2;
+	// ← ここにメニューを好きなだけ並べるだけで増やせる！
+	const char* menuNames[] = { "アイテム", "アーティファクト", "セーブ" };
+	const int menuCount = sizeof(menuNames) / sizeof(menuNames[0]);
 
 	for (int i = 0; i < menuCount; i++) {
 		int boxY = y + i * (height + margin);
 
-		bool isCurrent = (static_cast<int>(menu) == i);
+		// ★ 選択中かどうか判定（menuIndex を使う）
+		bool isCurrent = (menuIndex == i);
 
-		// 選択中かつ点滅表示がオンの時のみピンク枠
 		if (isCurrent && (!isMenuSelected || (isMenuSelected && blinkVisible))) {
+			// 選択中：ピンク枠 + 中黒
 			DrawBox(x - 4, boxY - 4, x + width + 4, boxY + height + 4, GetColor(255, 0, 255), TRUE);
 			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
 		}
 		else {
+			// 未選択：白枠 + 中黒
 			DrawBox(x - 2, boxY - 2, x + width + 2, boxY + height + 2, GetColor(255, 255, 255), FALSE);
 			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
 		}
 
+		// 文字
 		DrawString(x + 40, boxY + 10, menuNames[i], GetColor(255, 255, 255));
 	}
+
 	PlayerStatusRender();
 }
 

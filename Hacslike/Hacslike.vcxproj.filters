@@ -172,12 +172,10 @@
     <ClCompile Include="Scr\Manager\SaveManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\SaveFile\SaveSlotUI.cpp">
-      <Filter>SaveFile</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\SaveFile\SkillData.cpp">
       <Filter>SaveFile</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\UI\Gauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -359,15 +357,10 @@
     <ClInclude Include="Scr\Manager\SaveManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\SaveFile\SaveMeta.h">
-      <Filter>SaveFile</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\SaveFile\SaveSlotUI.h">
-      <Filter>SaveFile</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\SaveFile\SkillData.h">
       <Filter>SaveFile</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\UI\Gauge.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

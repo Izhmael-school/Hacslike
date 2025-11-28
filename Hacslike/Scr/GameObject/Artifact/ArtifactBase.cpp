@@ -3,8 +3,9 @@
 #include"../../Manager/TimeManager.h"
 #include"../Character/Player/PlayerMovement.h"
 
-ArtifactBase::ArtifactBase(const std::string& _name, const std::string& _desc, const std::string& _icon)
-    :name(_name)
+ArtifactBase::ArtifactBase(const int _id,const std::string& _name, const std::string& _desc, const std::string& _icon)
+    :id(_id)
+    ,name(_name)
     , description(_desc)
     , iconPath(_icon)
     , iconHandle(-1) {
@@ -23,7 +24,7 @@ void ArtifactBase::Remove(Player* player)
 
 #pragma region HPが一定値以上だと攻撃力上昇
 conditional_attack_power_raise_HP::conditional_attack_power_raise_HP(float boost)
-    :ArtifactBase("不屈の印章", "HPが7割り以上の時攻撃力上昇", "Res/ArtifactIcon/Attact_HP.png")
+    :ArtifactBase(1,"不屈の印章", "HPが7割り以上の時攻撃力上昇", "Res/ArtifactIcon/Attact_HP.png")
     , attackBoost(boost)
     , isBoosted(false) {
 }
@@ -65,7 +66,7 @@ void conditional_attack_power_raise_HP::Remove(Player* player)
 
 #pragma region HP上限上昇
 Hp_Max_Raise::Hp_Max_Raise(int boost)
-    :ArtifactBase("生命の宝珠", "HP上限が大幅上昇", "Res/ArtifactIcon/Max_HP_Raise.png")
+    :ArtifactBase(2,"生命の宝珠", "HP上限が大幅上昇", "Res/ArtifactIcon/Max_HP_Raise.png")
     , MaxHpBoost(boost) {
 
 }
@@ -91,7 +92,7 @@ void Hp_Max_Raise::Remove(Player* player)
 
 #pragma region コインの取得量上昇
 CoinValue_raise::CoinValue_raise(int value)
-    :ArtifactBase("富豪への道", "コインの取得量上昇", "Res/ArtifactIcon/Coin.png")
+    :ArtifactBase(3,"富豪への道", "コインの取得量上昇", "Res/ArtifactIcon/Coin.png")
     , UpValue(value) {
 }
 
@@ -112,7 +113,7 @@ void CoinValue_raise::Remove(Player* player)
 
 #pragma region HPが一定値以下だと防御力上昇
 conditional_defense_power_raise_HP::conditional_defense_power_raise_HP(float boost)
-    :ArtifactBase("鋼の意志", "HPが半分以下だと防御力上昇", "Res/ArtifactIcon/Defense_HP.png")
+    :ArtifactBase(4,"鋼の意志", "HPが半分以下だと防御力上昇", "Res/ArtifactIcon/Defense_HP.png")
     , defenseBoost(boost)
     , isDefBoosted(false) {
 }
@@ -154,7 +155,7 @@ void conditional_defense_power_raise_HP::Remove(Player* player)
 
 #pragma region コイン取得時に攻撃力が少し上昇
 attactPower_raise_GetCoin::attactPower_raise_GetCoin(float boost, float time)
-    :ArtifactBase("金の力", "コイン取得時攻撃力上昇", "Res/ArtifactIcon/UpAttact_Coin.png")
+    :ArtifactBase(5,"金の力", "コイン取得時攻撃力上昇", "Res/ArtifactIcon/UpAttact_Coin.png")
     , boostAmount(boost)
     , duration(time)
     , timer(0.0f)
@@ -209,7 +210,7 @@ void attactPower_raise_GetCoin::Remove(Player* player)
 
 #pragma region コイン取得時にアイテムドロップ率が上昇
 itemDropRateUpwardOnCoinAcquisition::itemDropRateUpwardOnCoinAcquisition(float boost, float time)
-    :ArtifactBase("強運の連鎖", "コイン取得時\nアイテムドロップ率上昇", "Res/ArtifactIcon/DropRateUpwaed.png")
+    :ArtifactBase(6,"強運の連鎖", "コイン取得時\nアイテムドロップ率上昇", "Res/ArtifactIcon/DropRateUpwaed.png")
     , dropRateUpward(boost)
     , duration(time)
     , isBoost(false)
@@ -263,7 +264,7 @@ void itemDropRateUpwardOnCoinAcquisition::Remove(Player* player)
 
 #pragma region  回避時攻撃力上昇
 AttackincreasesforSeveralSecondsAfterEvasion::AttackincreasesforSeveralSecondsAfterEvasion(float boost, float time)
-    :ArtifactBase("刹那の指輪", "回避後数秒間攻撃上昇", "Res/ArtifactIcon/Attack_UP.png")
+    :ArtifactBase(7,"刹那の指輪", "回避後数秒間攻撃上昇", "Res/ArtifactIcon/Attack_UP.png")
     , attackPowerUp(boost)
     , duration(time)
     , isBoost(false)
@@ -327,7 +328,7 @@ void AttackincreasesforSeveralSecondsAfterEvasion::Remove(Player* player)
 
 #pragma region  回避時攻撃力上昇
 CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::CriticalHitRateIncreasesForSeveralSecondsAfterEvasion(float boost, float time)
-    :ArtifactBase("時流の指輪", "回避後数秒間会心率上昇", "Res/ArtifactIcon/Critical_UP.png")
+    :ArtifactBase(8,"時流の指輪", "回避後数秒間会心率上昇", "Res/ArtifactIcon/Critical_UP.png")
     , CriticalUp(boost)
     , duration(time)
     , isBoost(false)
