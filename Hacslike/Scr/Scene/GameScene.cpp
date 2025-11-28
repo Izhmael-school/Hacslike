@@ -186,6 +186,7 @@ void GameScene::Render() {
 void GameScene::Setup() {
 	StageManager::GetInstance().ResetFloorCount();
 	StageManager::GetInstance().NoFadeGenerate();
+	Player::GetInstance()->PlayerSetUp();
 }
 
 void GameScene::Teardown() {

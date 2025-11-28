@@ -220,6 +220,11 @@ public:		//	メンバ関数
 	/// プレイヤーステータスの描画
 	/// </summary>
 	void PlayerStatusRender();
+	
+	/// <summary>
+	/// プレイヤーのセットアップ
+	/// </summary>
+	void PlayerSetUp();
 
 public:		//	Getter と Setter
 	/*
@@ -327,6 +332,8 @@ public:		//	Getter と Setter
 			-cosf(Deg2Rad(rotation.y))
 		));
 	}
+
+	float RuneCost(int L);
 
 
 public:
