@@ -2,15 +2,18 @@
 #include "../Manager/SceneManager.h"
 #include "../Manager/AudioManager.h"
 
-TitleScene::TitleScene() 
-{
+TitleScene::TitleScene()
+	:teamLogoHandle(-1) {
 	Start();
 }
 
-TitleScene::~TitleScene() {}
+TitleScene::~TitleScene() {
+	DeleteGraph(teamLogoHandle);
+}
 
 void TitleScene::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/BGM/Title/TitleBGM.mp3", "Title", false);
+	teamLogoHandle = LoadGraph("Res/Logo/TeamLogo.png");
 }
 
 void TitleScene::Update() {
@@ -21,8 +24,10 @@ void TitleScene::Update() {
 }
 
 void TitleScene::Render() {
-	DrawString(600,200,"Hacslike",red);
-	DrawString(600, 600, "左クリックかAボタン",red);
+	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, black, true);
+	DrawString(600, 200, "Hacslike", red);
+	DrawString(600, 600, "左クリックかAボタン", red);
+	DrawExtendGraph(WINDOW_WIDTH - 150, WINDOW_HEIGHT - 60, WINDOW_WIDTH - 10, WINDOW_HEIGHT - 10, teamLogoHandle, true);
 }
 
 void TitleScene::Setup() {

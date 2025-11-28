@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 class TitleScene : public BaseScene {
+	int teamLogoHandle;
 
 public:
 	TitleScene();
