@@ -126,45 +126,14 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	if (owner == nullptr) return;
 
 	Character* pTarget = _pCol->GetCharacter();
-	if (!pTarget) {
-		//printfDx("Hit: Character = NULL (owner = %s)\n", owner->GetTag().c_str());
-		return;
-	}
 
-	// デバッグ出力
-#if _DEBUG
-	//printfDx("Hit: owner=%s  ->  target=%s\n",
-	//	owner->GetTag().c_str(),
-	//	pTarget->GetTag().c_str());
-#endif
 	// 当たり判定処理
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
 		owner->GetTag() != pTarget->GetTag())
 	{
-		/*printfDx("Damage: owner=%s  target=%s  atk=%d\n",
-			owner->GetTag().c_str(),
-			pTarget->GetTag().c_str());*/
-
 		_pCol->GetCharacter()->Damage(owner->GetAtk());
 		AudioManager::GetInstance().PlayOneShot("damage");
 	}
-	//Character* pTarget = _pCol->GetCharacter();
-	//if (!pTarget) {
-	//	printfDx("%sが当たった", !pTarget->GetTag().c_str());
-	//}; // キャラクターでないなら無視
-
-	////	当たった相手のタグが "Enemy" か "Player" かつ当たった対象と当たり判定の持ち主が違う場合
-	//if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
-	//	
-
-	//	printfDx("Damage: owner=%s  target=%s \n",
-	//		owner->GetTag().c_str(),
-	//		_pCol->GetGameObject()->GetTag().c_str());
-	//	
-	//	_pCol->GetCharacter()->Damage(pTarget->GetAtk());
-	//	AudioManager::GetInstance().PlayOneShot("damage");
-	//	
-	//}
 	  
 }
 
