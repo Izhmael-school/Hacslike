@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 #include <random>
-#include "../SaveFile/ArtifactData.h"
+
 class Player;
 
 class ArtifactManager : public Singleton<ArtifactManager>
@@ -53,7 +53,5 @@ public:
 
 	const std::vector<std::shared_ptr<ArtifactBase>>& GetObtainedArtifacts() const { return obtainedArtifacts; }
 
-	void SaveToArtifactData(ArtifactData& outData);
-	void LoadFromArtifactData(const ArtifactData& data);
 };
 

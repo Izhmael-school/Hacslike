@@ -129,3 +129,9 @@ enum RoomStatus {	// 部屋の配列ステータス
 	rh,	// 部屋の高さ
 	Max,
 };
+
+enum MenuType {
+	menuInventory = 0,
+	menuArtifact = 1,
+	menuSave = 2,
+};

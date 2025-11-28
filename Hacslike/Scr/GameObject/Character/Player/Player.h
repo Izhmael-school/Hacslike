@@ -16,11 +16,7 @@
 #include "../../../Skill/SkillSelectUI.h"
 #include "../../Artifact/ArtifactSelectUI.h"
 
-static enum MenuType {
-	menuInventory = 0,
-	menuArtifact = 1,
-	menuSave = 2,
-};
+
 
 
 /*

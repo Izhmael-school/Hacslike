@@ -70,10 +70,7 @@
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
     <ClCompile Include="Scr\Manager\TimeManager.cpp" />
     <ClCompile Include="Scr\Manager\WeaponManager.cpp" />
-    <ClCompile Include="Scr\SaveFile\ArtifactData.cpp" />
-    <ClCompile Include="Scr\SaveFile\PlayerData.cpp" />
-    <ClCompile Include="Scr\SaveFile\SaveFile.cpp" />
-    <ClCompile Include="Scr\SaveFile\SkillData.cpp" />
+    <ClCompile Include="Scr\SaveFile\SaveData.cpp" />
     <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
     <ClCompile Include="Scr\Scene\TitleScene.cpp" />
@@ -136,10 +133,7 @@
     <ClInclude Include="Scr\Manager\StageManager.h" />
     <ClInclude Include="Scr\Manager\TimeManager.h" />
     <ClInclude Include="Scr\Manager\WeaponManager.h" />
-    <ClInclude Include="Scr\SaveFile\ArtifactData.h" />
-    <ClInclude Include="Scr\SaveFile\PlayerData.h" />
-    <ClInclude Include="Scr\SaveFile\SaveFile.h" />
-    <ClInclude Include="Scr\SaveFile\SkillData.h" />
+    <ClInclude Include="Scr\SaveFile\SaveData.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
