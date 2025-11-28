@@ -3,6 +3,8 @@
 #include"../Manager/SkillManager.h"
 #include"../Skill/SkillSelectUI.h"
 #include "../GameObject/Artifact/ArtifactSelectUI.h"
+#include"../Manager/SaveManager.h"
+
 class GameScene : public BaseScene {
 protected:
 	SkillSelectUI skillUI;
@@ -11,7 +13,6 @@ protected:
 	ArtifactSelectUI artifactUI;
 	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
 	bool isSelectingArtifact = false;
-	
 private:
 
 public:

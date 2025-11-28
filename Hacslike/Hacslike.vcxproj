@@ -73,7 +73,6 @@
     <ClCompile Include="Scr\SaveFile\ArtifactData.cpp" />
     <ClCompile Include="Scr\SaveFile\PlayerData.cpp" />
     <ClCompile Include="Scr\SaveFile\SaveFile.cpp" />
-    <ClCompile Include="Scr\SaveFile\SaveSlotUI.cpp" />
     <ClCompile Include="Scr\SaveFile\SkillData.cpp" />
     <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
@@ -140,8 +139,6 @@
     <ClInclude Include="Scr\SaveFile\ArtifactData.h" />
     <ClInclude Include="Scr\SaveFile\PlayerData.h" />
     <ClInclude Include="Scr\SaveFile\SaveFile.h" />
-    <ClInclude Include="Scr\SaveFile\SaveMeta.h" />
-    <ClInclude Include="Scr\SaveFile\SaveSlotUI.h" />
     <ClInclude Include="Scr\SaveFile\SkillData.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\GameScene.h" />
