@@ -5,7 +5,7 @@
 class BulletPool {
 public:
 	static BulletPool& GetInstance() {
-		static BulletPool instance(128); // 初期プール数
+		static BulletPool instance(30); // 初期プール数
 		return instance;
 	}
 

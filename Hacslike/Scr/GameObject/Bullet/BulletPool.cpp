@@ -7,6 +7,7 @@ BulletPool::BulletPool(int poolSize) {
 		SphereHitBox* b = new SphereHitBox();
 		b->SetActive(false);
 		pool.push_back(b);
+		CollisionManager::GetInstance().UnRegister(b->GetCollider());
 	}
 }
 
@@ -38,7 +39,7 @@ static void CleanupColliderForBullet(SphereHitBox* b) {
 
 SphereHitBox* BulletPool::Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life) {
 	for (auto b : pool) {
-		if (!b->GetActive()) {
+		if (b->GetActive()) continue;
 			// --- 再利用前に古いコライダーの残滓がないか安全にクリーンアップ ---
 			CleanupColliderForBullet(b);
 
@@ -59,10 +60,12 @@ SphereHitBox* BulletPool::Spawn(Character* owner, const VECTOR& pos, const VECTO
 
 			// デバッグログ（必要なら有効化）
 			// printfDx("BulletPool::Spawn -> ptr=%p owner=%s pos=(%f,%f,%f) radius=%f life=%f\n", b, owner ? owner->GetTag().c_str() : "NULL", pos.x, pos.y, pos.z, radius, life);
+			b->SetOwner(owner);
 
 			return b;
-		}
 	}
+
+
 	// プール枯渇 → 必要なら拡張可能
 	return nullptr;
 }

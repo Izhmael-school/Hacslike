@@ -164,6 +164,7 @@ void Enemy::DeadExecute() {
 	if (!IsDead()) return;
 
 	hp = 0;
+	isDead = true;
 
 	// ŒoŒ±’l‚Ì‘‰Á
 	Character::player->AddExp(exp);
