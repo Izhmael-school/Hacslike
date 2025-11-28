@@ -19,6 +19,7 @@ private:
 	float lifeTime;
 	float timer;
 	bool active;
+	int chain;
 
 	SphereCollider* pCollider;
 
@@ -42,6 +43,8 @@ public:
 
 	void Reset(Character* _owner, const VECTOR& startPos, const VECTOR& _velocity,
 		float _radius, float _life);
+
+	void BulletReset(Character* _owner, const VECTOR& startPos, const VECTOR& _velocity, float _radius, float _life, int _chain);
 
 	inline bool GetActive()const { return active; }
 

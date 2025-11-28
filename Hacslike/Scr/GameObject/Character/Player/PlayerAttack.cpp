@@ -252,9 +252,6 @@ void PlayerAttack::AttackInput() {
 
 	if (isButton && pWeapon->GetType() == 3) {
 		addRadius += TimeManager::GetInstance().deltaTime;  // ★加算にする！
-		if (addRadius > 1) {
-			spherebox->SetChaining(true);
-		}
 	}
 	else {
 		addRadius = 0.0f;  // 離したらリセットする場合
@@ -395,10 +392,6 @@ void PlayerAttack::CreateRangedHitBox() {
 	if (!bullet) return;
 
 	bullet->SetVelocity(vel);
-
-	if (addRadius > 1.0f) {
-		bullet->SetChaining(true);
-	}
 
 	isAttacking = false;
 }

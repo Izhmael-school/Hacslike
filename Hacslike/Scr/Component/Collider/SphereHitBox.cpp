@@ -14,10 +14,7 @@ SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, flo
 	, lifeTime(_lifeTime)
 	, velocity()
 	, active(false)
-	, chain()
-	, enemies()
-	, hitEnemies()
-	, isChain(false){
+	, chain(){
 
 	position = VAdd(owner ? owner->GetPosition() : VGet(0, 0, 0), offset); // ←ここで初期位置を決定
 	Start();
@@ -65,12 +62,6 @@ void SphereHitBox::Update() {
 		}
 		active = false;
 		return;
-	}
-
-	// ターゲットが設定されていれば追従
-	if (target) {
-		VECTOR dir = VNorm(VSub(target->GetPosition(), position));
-		velocity = VScale(dir, 50);
 	}
 
 	// まだ生きてる → 位置更新
@@ -171,23 +162,15 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 #endif
 	// 当たり判定処理
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
-<<<<<<< HEAD
-		owner->GetTag() != pTarget->GetTag())
-	{
-=======
 		owner->GetTag() != pTarget->GetTag()) {
->>>>>>> TT
 #if _DEBUG
-		printfDx("Damage: owner=%s  target=%s  atk=%d\n",
-			owner->GetTag().c_str(),
-			pTarget->GetTag().c_str());
+			printfDx("Damage: owner=%s  target=%s  atk=%d\n",
+				owner->GetTag().c_str(),
+				pTarget->GetTag().c_str());
 #endif
-<<<<<<< HEAD
 
-=======
->>>>>>> TT
-		_pCol->GetCharacter()->Damage(owner->GetAtk());
-		//AudioManager::GetInstance().PlayOneShot("damage");
+			_pCol->GetCharacter()->Damage(owner->GetAtk());
+			//AudioManager::GetInstance().PlayOneShot("damage");
 	}
 	//Character* pTarget = _pCol->GetCharacter();
 	//if (!pTarget) {
@@ -206,46 +189,7 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 	//	AudioManager::GetInstance().PlayOneShot("damage");
 	//	
 	//}
-	if (isChain) {
-		// まだリストにない場合だけ追加
-		if (std::find(hitEnemies.begin(), hitEnemies.end(), pTarget) == hitEnemies.end() && !(pTarget->CompareTag("Player"))) {
-			hitEnemies.push_back(pTarget);
-			ChainToNext(pTarget);
-		}
-	}
 
-}
-
-float SphereHitBox::DistanceSquared(const VECTOR& a, const VECTOR& b) {
-	float dx = a.x - b.x;
-	float dy = a.y - b.y;
-	float dz = a.z - b.z;
-	return dx * dx + dy * dy + dz * dz;
-}
-
-void SphereHitBox::ChainToNext(Character* lastHit) {
-	if (!lastHit) return;
-
-	Character* nextTarget = nullptr;
-	float minDistSq = FLT_MAX;
-	VECTOR lastPos = lastHit->GetPosition();
-
-	for (auto enemy : enemies) {
-		if (std::find(hitEnemies.begin(), hitEnemies.end(), enemy) != hitEnemies.end()) continue;
-
-		float distSq = DistanceSquared(lastPos, enemy->GetPosition());
-		if (distSq < minDistSq) {
-			minDistSq = distSq;
-			nextTarget = enemy;
-		}
-	}
-
-	if (nextTarget) {
-		hitEnemies.push_back(nextTarget);
-		target = nextTarget;
-		VECTOR dir = VNorm(VSub(target->GetPosition(), position));
-		velocity = VScale(dir, 50);
-	}
 }
 
 void SphereHitBox::OnTriggerStay(Collider* _pCol) {}
