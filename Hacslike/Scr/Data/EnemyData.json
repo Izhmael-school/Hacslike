@@ -4,9 +4,9 @@
     "name": "ゴブリン",
     "typeID" : 0,
     "mPath": "Res/Model/Enemy/Goblin/",
-    "hp": 30,
+    "hp": 1,
     "atk": 10,
-    "def": 5,
+    "def": 0,
     "exp": 15
   },
 
