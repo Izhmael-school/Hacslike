@@ -53,6 +53,7 @@ void Animator::Update() {
 			for (auto& e : pCurrentAnim->events) {
 				e.isAction = false;
 			}
+			return;
 		}
 	}
 
