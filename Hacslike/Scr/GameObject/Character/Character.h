@@ -27,6 +27,7 @@ protected:	// メンバ変数
 	int baseAttack;			//	基礎攻撃力
 	float proximityCorrection;	//	近接攻撃力補正
 	float rangedCorrection;		//	遠距離攻撃力補正
+	bool isDead;
 
 public:
 	static Character* player;
@@ -160,7 +161,7 @@ public:	// ゲッターとセッター
 	/// 死んだかどうか
 	/// </summary>
 	/// <returns></returns>
-	inline virtual bool IsDead() { return hp <= 0; }
+	inline virtual bool IsDead() { return isDead; }
 
 	/// <summary>
 	/// 死んだときの処理

@@ -19,13 +19,7 @@ private:
 	float lifeTime;
 	float timer;
 	bool active;
-	int chain;
 
-	std::vector<Character*> enemies;	// 全ての敵リスト
-	std::vector<Character*> hitEnemies;	// 当たった敵のリスト
-	Character* target;
-
-	bool isChain;
 	SphereCollider* pCollider;
 
 public:
@@ -49,18 +43,11 @@ public:
 	void Reset(Character* _owner, const VECTOR& startPos, const VECTOR& _velocity,
 		float _radius, float _life);
 
-	void BulletReset(Character* _owner, const VECTOR& startPos, const VECTOR& _velocity, float _radius, float _life, int chain);
-
-	float DistanceSquared(const VECTOR& a, const VECTOR& b);
-
-	void ChainToNext(Character* lastHit);
-
 	inline bool GetActive()const { return active; }
 
 	inline void SetActive(bool _active) { active = _active; }
 
-	void SetChaining(bool _chain) { isChain = _chain; }
-	bool GetChaining() const { return isChain; }
+	inline void SetOwner(Character* _owner) { owner = _owner; }
 
 public:		//	オーバーライドした衝突検知
 	/*
