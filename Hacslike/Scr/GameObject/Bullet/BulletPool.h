@@ -10,6 +10,7 @@ public:
 	}
 
 	SphereHitBox* Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life);
+	SphereHitBox* BulletSpawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life, int chain);
 	void Update();
 	void Render();
 

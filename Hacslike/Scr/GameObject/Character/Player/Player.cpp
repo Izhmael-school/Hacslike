@@ -14,6 +14,7 @@
 #include"../../../Manager/SceneManager.h"
 #include "../../TreasureChest/StartTreasureChest.h"
 #include "../../../GameSystem/GameSystem.h"
+#include <cmath>
 
 
 // シングルトンインスタンスの初期化
@@ -40,13 +41,7 @@ Player::Player(VECTOR _pos)
 	, maxExp()
 	, remainExp() 
 	, deadTime(){
-	maxHp = 100;
-	hp = maxHp;
-	atk = 5;
-	def = 2;
-	exp = 0;
-	criticalHitRate = 10;
-	criticalDamage = 100;
+	
 	// コンストラクタでシングルトンの重複生成を防ぐ
 	if (instance != nullptr) {
 #if _DEBUG
@@ -73,6 +68,7 @@ Player::~Player() {
 
 	MV1DeleteModel(PLAYER_MODEL_HANDLE);
 }
+
 
 Player* Player::CreateInstance(VECTOR _pos) {
 	if (!instance) {
@@ -113,6 +109,14 @@ void Player::Start() {
 	pAnimator->SetModelHandle(modelHandle);
 
 	SetPlayer(this);
+
+	maxHp = 100;
+	hp = maxHp;
+	atk = 5;
+	def = 2;
+	exp = 0;
+	criticalHitRate = 10;
+	criticalDamage = 100;
 
 	maxExp = 100;
 
@@ -259,15 +263,15 @@ void Player::Update() {
 		Damage(10);
 	}
 
-	if (input->IsKey(KEY_INPUT_3)) {
-		AddExp(10000);
+	if (input->IsKeyDown(KEY_INPUT_3)) {
+		AddExp(maxExp);
 	}
 
 #pragma region スキル選択
 	if (exp >= maxExp && !isSelectingSkill) {
 		remainExp = exp - maxExp;
 		exp = remainExp;
-		maxExp *= 2.01f;
+		RuneCost(Lv);
 		LvUp(1);
 		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
 		skillUI.StartSelection();
@@ -736,6 +740,27 @@ void Player::PlayerStatusRender() {
 	DrawFormatString(930, 180, white, "会心ダメージ : %.1f", criticalDamage);
 	DrawFormatString(930, 200, white, "コイン　　　 : %d", coinValue);
 
+}
+
+void Player::PlayerSetUp() {
+	maxHp = 100;
+	hp = maxHp;
+	atk = 5;
+	def = 2;
+	exp = 0;
+	maxExp = 100;
+	Lv = 1;
+	criticalHitRate = 10;
+	criticalDamage = 100;
+	SetSpeed(1);
+	CollisionManager::GetInstance().Register(pCollider);
+	isDead = false;
+}
+
+float Player::RuneCost(int L) {
+	long k = std::max<long>(L - 6, 5);   // 下限 5 (L<=11 のとき a=0.1 に対応)
+	long t = L + 81;
+	return  maxExp = (float)(k * t * t) / 50 + 1;  // 整数除算で floor 相当
 }
 
 /*

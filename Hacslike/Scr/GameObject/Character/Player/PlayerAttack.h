@@ -25,6 +25,8 @@ private:
 	std::vector<CapsuleHitBox*> CapsuleHitboxes;	//	当たり判定(カプセル)
 	std::vector<SphereHitBox*> SphereHitboxes;		//	当たり判定(スフィア)
 
+	SphereHitBox* spherebox;
+
 	PlayerMovement* playerMovement;	//	プレイヤーの移動処理
 
 	bool isDashAttack;
@@ -42,6 +44,9 @@ private:
 	CapsuleHitPool* pCapsulePool;	//	Capsuleのプール	
 
 	float addRadius;			//	半径を足す
+
+	int currentChainCount;		//　現在のチェイン回数
+	int maxChainCount;			//	チェインの最大回数
 
 public:
 	/// <summary>
@@ -91,7 +96,6 @@ public:
 	void CreateRangedHitBox();
 
 	void CreateHitBox(VECTOR _pos, float _radius);
-
 
 	/// <summary>
 	/// 武器の設定

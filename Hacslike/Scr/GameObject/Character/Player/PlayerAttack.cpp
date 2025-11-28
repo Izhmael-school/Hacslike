@@ -29,7 +29,9 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, maxChargeTime(3.0f)
 	, pSpherePool(nullptr)
 	, pCapsulePool(nullptr)
-	, addRadius() {
+	, addRadius()
+	, currentChainCount()
+	, maxChainCount() {
 	pSpherePool = &BulletPool::GetInstance();
 	pCapsulePool = &CapsuleHitPool::GetInstance();
 	Start();
@@ -45,6 +47,8 @@ void PlayerAttack::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Sword.mp3", "Sword", false);
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/GreatAttack1.mp3", "GAtk1", false);
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/se_furi2.mp3", "furi", false);
+
+	spherebox = new SphereHitBox();
 
 }
 
@@ -73,7 +77,7 @@ void PlayerAttack::Render() {
 /// </summary>
 void PlayerAttack::AttackInput() {
 	//	攻撃入力
-	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X); 
+	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X);
 	bool isButton = input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButton(XINPUT_GAMEPAD_X);
 	bool isButtonUp = input->IsMouseUp(MOUSE_INPUT_LEFT) || input->IsButtonUp(XINPUT_GAMEPAD_X);
 
@@ -95,10 +99,10 @@ void PlayerAttack::AttackInput() {
 	//	チャージ中
 	if (isCharging) {
 		chargeTime += TimeManager::GetInstance().deltaTime;
-			Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
+		Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
 		//	溜め中アニメーションに切り替え
-		if(chargeTime >= 0.65f)
-		pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
+		if (chargeTime >= 0.65f)
+			pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
 
 		//	最大チャージで自動リリース
 		if (chargeTime >= maxChargeTime) {
@@ -248,10 +252,15 @@ void PlayerAttack::AttackInput() {
 
 	if (isButton && pWeapon->GetType() == 3) {
 		addRadius += TimeManager::GetInstance().deltaTime;  // ★加算にする！
+		if (addRadius > 1) {
+			spherebox->SetChaining(true);
+		}
 	}
 	else {
 		addRadius = 0.0f;  // 離したらリセットする場合
 	}
+
+	
 
 
 	//	攻撃中のタイマー管理
@@ -366,7 +375,7 @@ void PlayerAttack::AttackInput() {
 			canNextAttack = false;
 		}
 	}
-	
+
 }
 
 ///<summary>
@@ -379,13 +388,18 @@ void PlayerAttack::CreateRangedHitBox() {
 	VECTOR pos = VAdd(pPlayer->GetPosition(), VScale(pPlayer->GetForward(), 50.0f));
 	VECTOR forward = pPlayer->GetForward();
 	VECTOR vel = VScale(forward, 30.0f);
-	float radius = 30.0f + addRadius * 100;
+	float radius = 30.0f;
 	float life = 0.5f;
 
-	SphereHitBox* bullet = pSpherePool->Spawn(pPlayer, pos, vel, radius, life);
+	SphereHitBox* bullet = pSpherePool->BulletSpawn(pPlayer, pos, vel, radius, life, maxChainCount);
 	if (!bullet) return;
 
 	bullet->SetVelocity(vel);
+
+	if (addRadius > 1.0f) {
+		bullet->SetChaining(true);
+	}
+
 	isAttacking = false;
 }
 
