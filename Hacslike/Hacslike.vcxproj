@@ -64,13 +64,11 @@
     <ClCompile Include="Scr\Manager\FadeManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\Manager\ItemDropManager.cpp" />
-    <ClCompile Include="Scr\Manager\SaveManager.cpp" />
     <ClCompile Include="Scr\Manager\SceneManager.cpp" />
     <ClCompile Include="Scr\Manager\SkillManager.cpp" />
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
     <ClCompile Include="Scr\Manager\TimeManager.cpp" />
     <ClCompile Include="Scr\Manager\WeaponManager.cpp" />
-    <ClCompile Include="Scr\SaveFile\SaveData.cpp" />
     <ClCompile Include="Scr\Scene\GameScene.cpp" />
     <ClCompile Include="Scr\Scene\SekinoScene.cpp" />
     <ClCompile Include="Scr\Scene\TitleScene.cpp" />
@@ -127,13 +125,11 @@
     <ClInclude Include="Scr\Manager\FadeManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
     <ClInclude Include="Scr\Manager\ItemDropManager.h" />
-    <ClInclude Include="Scr\Manager\SaveManager.h" />
     <ClInclude Include="Scr\Manager\SceneManager.h" />
     <ClInclude Include="Scr\Manager\SkillManager.h" />
     <ClInclude Include="Scr\Manager\StageManager.h" />
     <ClInclude Include="Scr\Manager\TimeManager.h" />
     <ClInclude Include="Scr\Manager\WeaponManager.h" />
-    <ClInclude Include="Scr\SaveFile\SaveData.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
