@@ -161,6 +161,12 @@
       <Filter>GameObject\HitPool</Filter>
     </ClCompile>
     <ClCompile Include="Scr\UI\Gauge.cpp" />
+    <ClCompile Include="Scr\Manager\SaveManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\UI\MenuSaveLoad.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -331,6 +337,18 @@
     <ClInclude Include="Scr\ExpansionMethod.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
     <ClInclude Include="Scr\UI\Gauge.h" />
+    <ClInclude Include="Scr\Save\SaveFormat.h">
+      <Filter>Save</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\SaveManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Save\SaveIO.h">
+      <Filter>Save</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\MenuSaveLoad.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -425,6 +443,12 @@
     </Filter>
     <Filter Include="SaveFile">
       <UniqueIdentifier>{41906fea-3342-43cb-b0bb-93b02c014e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Save">
+      <UniqueIdentifier>{0c515826-4ced-463d-929f-88d06569b4e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{29d66693-ee73-4dea-a05a-4a7b0cbca8f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

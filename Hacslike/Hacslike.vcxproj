@@ -64,6 +64,7 @@
     <ClCompile Include="Scr\Manager\FadeManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\Manager\ItemDropManager.cpp" />
+    <ClCompile Include="Scr\Manager\SaveManager.cpp" />
     <ClCompile Include="Scr\Manager\SceneManager.cpp" />
     <ClCompile Include="Scr\Manager\SkillManager.cpp" />
     <ClCompile Include="Scr\Manager\StageManager.cpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="Scr\Skill\Skill.cpp" />
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
     <ClCompile Include="Scr\UI\Gauge.cpp" />
+    <ClCompile Include="Scr\UI\MenuSaveLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\CommonModule.h" />
@@ -125,11 +127,14 @@
     <ClInclude Include="Scr\Manager\FadeManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
     <ClInclude Include="Scr\Manager\ItemDropManager.h" />
+    <ClInclude Include="Scr\Manager\SaveManager.h" />
     <ClInclude Include="Scr\Manager\SceneManager.h" />
     <ClInclude Include="Scr\Manager\SkillManager.h" />
     <ClInclude Include="Scr\Manager\StageManager.h" />
     <ClInclude Include="Scr\Manager\TimeManager.h" />
     <ClInclude Include="Scr\Manager\WeaponManager.h" />
+    <ClInclude Include="Scr\Save\SaveFormat.h" />
+    <ClInclude Include="Scr\Save\SaveIO.h" />
     <ClInclude Include="Scr\Scene\BaseScene.h" />
     <ClInclude Include="Scr\Scene\GameScene.h" />
     <ClInclude Include="Scr\Scene\SekinoScene.h" />
@@ -137,6 +142,7 @@
     <ClInclude Include="Scr\Skill\Skill.h" />
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
     <ClInclude Include="Scr\UI\Gauge.h" />
+    <ClInclude Include="Scr\UI\MenuSaveLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

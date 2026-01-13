@@ -13,6 +13,10 @@
 #include "../../../Manager/SceneManager.h"
 #include "../../../Manager/TimeManager.h"
 #include "../../../GameObject/Weapon/Weapon.h"
+#include "../../../Save/SaveFormat.h"
+#include"../../../Save/SaveIO.h"
+#include"../../../Manager/SaveManager.h"
+#include"../../../Manager/SaveManager.h"
 #include <math.h>
 #include <cmath>
 
@@ -40,7 +44,8 @@ Player::Player(VECTOR _pos)
 	, hpRate()
 	, maxExp()
 	, remainExp() 
-	, deadTime(){
+	, deadTime()
+	{
 	
 	// コンストラクタでシングルトンの重複生成を防ぐ
 	if (instance != nullptr) {
@@ -94,6 +99,54 @@ void Player::DeadExecute() {
 	if (hp > 0 || isDead) return;
 	isDead = true;
 	pAnimator->Play("Down1", 0.9);
+}
+
+void Player::SaveTo(BinaryWriter& w) 
+{
+	// 基本の数値
+	w.WritePOD(Lv);
+	w.WritePOD(exp);
+	w.WritePOD(maxExp);
+	w.WritePOD(hp);
+	w.WritePOD(maxHp);
+	w.WritePOD(atk);
+	w.WritePOD(def);
+	w.WritePOD(criticalHitRate);
+	w.WritePOD(criticalDamage);
+	w.WritePOD(coinValue);
+	// position
+	float px = GetPosition().x;
+	float py = GetPosition().y;
+	w.WritePOD(px);
+	w.WritePOD(py);
+	
+}
+
+void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion)
+{
+	r.ReadPOD(Lv);
+	r.ReadPOD(exp);
+	r.ReadPOD(maxExp);
+	r.ReadPOD(hp);
+	r.ReadPOD(maxHp);
+	r.ReadPOD(atk);
+	r.ReadPOD(def);
+	r.ReadPOD(criticalHitRate);
+	r.ReadPOD(criticalDamage);
+	r.ReadPOD(coinValue);
+	float px, py;
+	r.ReadPOD(px);
+	r.ReadPOD(py);
+	SetPosition(VECTOR{ px, py });
+	uint32_t itemCount;
+	r.ReadPOD(itemCount);
+	
+	// スキル・アーティファクトの復元も同様に
+}
+
+uint32_t Player::GetFloorForSave() const
+{
+	return 0;
 }
 
 
@@ -178,8 +231,6 @@ void Player::Start() {
 	// インベントリに追加
 	GetInventory()->AddItem(std::move(stick));
 
-	// 追加されたアイテムは items.back() に入っているので取得
-
 	Inventory::InventoryItem* lastItem = GetInventory()->GetLastItem();
 
 	// 装備（EquipItem は Use() を内部で呼ぶ）
@@ -215,7 +266,9 @@ void Player::Update() {
 
 	MV1SetMatrix(modelHandle, matrix);
 
+#if _DEBUG
 	WeaponInput();
+#endif
 
 	//アイテムの取得
 	AddItem();
@@ -246,6 +299,24 @@ void Player::Update() {
 
 	if (isArtifactUI) {
 		artifactUI.Update();
+	}
+
+	// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
+	if (isSaveUI) {
+		if (!pSaveMenu) {
+			// menuIndex によって Save/Load を切り替えたいならここで判定
+			pSaveMenu = new MenuSaveLoad(MenuSaveLoad::SaveMode);
+			pSaveMenu->Open();
+		}
+		// メニューの入力処理等を行う
+		pSaveMenu->Update();
+	}
+	else {
+		// メニューを閉じたら破棄して状態をリセット
+		if (pSaveMenu) {
+			delete pSaveMenu;
+			pSaveMenu = nullptr;
+		}
 	}
 
 #if _DEBUG
@@ -409,7 +480,10 @@ void Player::Render() {
 		artifactUI.Render();
 	}
 	if (isSaveUI) {
-		//saveUI.Draw();
+		// ここでセーブメニューの描画を呼ぶ
+		if (pSaveMenu) {
+			pSaveMenu->Render();
+		}
 	}
 
 	inventory.AddItemRender();
@@ -570,6 +644,7 @@ void Player::OpenMenu() {
 			blinkTime = 0.0f;
 		}
 	}
+	
 	else {
 		blinkVisible = true;
 	}
@@ -635,7 +710,7 @@ void Player::DrawMenu() {
 		// 文字
 		DrawString(x + 40, boxY + 10, menuNames[i], GetColor(255, 255, 255));
 	}
-
+	
 	PlayerStatusRender();
 }
 
