@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/AudioManager.h"
+#include "../GameObject/Character/Player/player.h"
 
 TitleScene::TitleScene() 
 {
@@ -16,6 +17,10 @@ void TitleScene::Start() {
 void TitleScene::Update() {
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 
+		if (Character::player->IsDead()) {
+			Player* player = dynamic_cast<Player*>(Character::player);
+			player->PlayerSetUp();
+		}
 		SceneManager::GetInstance().ChangeScene(SceneType::Game);
 	}
 }
