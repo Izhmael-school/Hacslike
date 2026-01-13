@@ -28,6 +28,30 @@ inline VECTOR Normalize(VECTOR dir) {
 }
 
 /// <summary>
+/// Œü‚«
+/// </summary>
+/// <param name="pos1"></param>
+/// <param name="pos2"></param>
+/// <returns></returns>
+inline VECTOR Dir(VECTOR pos1, VECTOR pos2) {
+    return VSub(pos1,pos2);
+}
+
+/// <summary>
+/// ³‹K‰»•t‚«Œü‚«ŒvZ
+/// </summary>
+/// <param name="pos1"></param>
+/// <param name="pos2"></param>
+/// <returns></returns>
+inline VECTOR NormDir(VECTOR pos1, VECTOR pos2) {
+    return Normalize(VSub(pos1, pos2));
+}
+
+inline VECTOR Velocity(VECTOR dir,float speed) {
+
+}
+
+/// <summary>
 /// “àÏ
 /// </summary>
 /// <param name="dir1"></param>

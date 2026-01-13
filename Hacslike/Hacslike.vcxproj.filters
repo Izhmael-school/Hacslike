@@ -146,8 +146,6 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp" />
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
     <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp">
       <Filter>GameObject\TreasureChest</Filter>
     </ClCompile>
@@ -160,6 +158,14 @@
     <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp">
       <Filter>GameObject\HitPool</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\UI\Gauge.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
+      <Filter>GameObject\Character\Enemy\Wolf</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -314,11 +320,6 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\Spider.h" />
-    <ClInclude Include="EnemySpider.h">
-      <Filter>GameObject\Character\Enemy\Spider</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
       <Filter>GameObject\TreasureChest</Filter>
     </ClInclude>
@@ -331,6 +332,15 @@
     <ClInclude Include="Scr\GameObject\HitPool\CapsuleHitPool.h">
       <Filter>GameObject\HitPool</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\ExpansionMethod.h" />
+    <ClInclude Include="Scr\UI\Gauge.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
+      <Filter>GameObject\Character\Enemy\Wolf</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
