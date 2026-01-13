@@ -19,7 +19,8 @@ Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed
 	, wallCheckPos(prevPos)
 	, baseAttack(5)
 	, proximityCorrection(1.0)
-	, rangedCorrection(1.0) {}
+	, rangedCorrection(1.0) {
+}
 
 Character::~Character() {
 	delete pAnimator;
@@ -33,8 +34,7 @@ void Character::Damage(int rawDamage) {
 
 	hp -= damage;
 
-	if (IsDead())
-		DeadExecute();
+	DeadExecute();
 }
 
 void Character::CheckWall() {

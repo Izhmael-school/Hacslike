@@ -1,9 +1,9 @@
 ﻿#include "PlayerAttack.h"
 #include "Player.h"
-#include "../../../Manager/TimeManager.h"
 #include "../../Weapon/Weapon.h"
+#include "../../../Manager/TimeManager.h"
+#include "../../../Manager/EffectManager.h"
 #include "DxLib.h"
-#include "../Hacslike/Scr/Manager/EffectManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -47,9 +47,6 @@ void PlayerAttack::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Sword.mp3", "Sword", false);
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/GreatAttack1.mp3", "GAtk1", false);
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/se_furi2.mp3", "furi", false);
-
-	spherebox = new SphereHitBox();
-
 }
 
 /// <summary>
@@ -67,15 +64,18 @@ void PlayerAttack::Update() {
 	pCapsulePool->Update();
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void PlayerAttack::Render() {
-	// 弾プールの描画
-	//pBulletPool->Render();
+
 }
 
 /// <summary>
 /// 攻撃入力・HitBox更新
 /// </summary>
 void PlayerAttack::AttackInput() {
+#pragma region 入力処理
 	//	攻撃入力
 	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_X);
 	bool isButton = input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButton(XINPUT_GAMEPAD_X);
@@ -85,6 +85,8 @@ void PlayerAttack::AttackInput() {
 	bool isChargeButtonDown = input->IsMouseDown(MOUSE_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 	bool isChargeButton = input->IsMouse(MOUSE_INPUT_RIGHT) || input->IsButton(XINPUT_GAMEPAD_RIGHT_SHOULDER);
 	bool isChargeButtonUp = input->IsMouseUp(MOUSE_INPUT_RIGHT) || input->IsButtonUp(XINPUT_GAMEPAD_RIGHT_SHOULDER);
+#pragma endregion
+
 #pragma region ため攻撃処理
 	//	チャージ開始
 	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking() && pWeapon->GetType() != 3) {
@@ -232,6 +234,7 @@ void PlayerAttack::AttackInput() {
 	}
 #pragma endregion
 
+#pragma region 遠距離武器
 	//	遠距離武器
 	else if (isButtonUp && pWeapon->GetType() == 3) {
 		if (!isAttacking) {
@@ -256,9 +259,7 @@ void PlayerAttack::AttackInput() {
 	else {
 		addRadius = 0.0f;  // 離したらリセットする場合
 	}
-
-	
-
+#pragma endregion
 
 	//	攻撃中のタイマー管理
 	if (isAttacking && !isCharging && !playerMovement->IsBlinking()) {
@@ -343,6 +344,7 @@ void PlayerAttack::AttackInput() {
 	}
 #pragma endregion
 
+#pragma region ヒットボックス更新
 	// ヒットボックス更新
 	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
 		CapsuleHitBox* h = *it;
@@ -364,6 +366,7 @@ void PlayerAttack::AttackInput() {
 		}
 		else ++it;
 	}
+#pragma endregion
 
 	if (isAttacking) {
 		if (!pPlayer->GetAnimator()->IsPlaying()) {   // もしくは IsEnd("Atk1") など
