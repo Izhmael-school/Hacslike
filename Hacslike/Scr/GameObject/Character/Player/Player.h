@@ -15,6 +15,8 @@
 #include "PlayerMovement.h"
 #include "../../../Skill/SkillSelectUI.h"
 #include "../../Artifact/ArtifactSelectUI.h"
+#include "../../../Manager/SaveManager.h"
+#include "../../../UI/MenuSaveLoad.h"
 
 
 
@@ -60,7 +62,6 @@ private:	//	メンバ変数
 
 #pragma region インベントリ/アイテム関連
 	Inventory inventory; //アイテムインベントリ
-	//bool hitItem;		 //アイテムに当たっているかどうか
 	bool isItemUI;		 //アイテムのUIを開いているかどうか
 	ItemEntity* hitItem = nullptr;
 	float prevHP = -1.0f;
@@ -96,7 +97,9 @@ private:	//	メンバ変数
 	int menuIndex = 0;
 	// 最大メニュー数（増えてもここを変えるだけ）
 	const int MENU_COUNT = 3;
-
+	// セーブメニュー表示用ポインタ（インベントリやアーティファクトと同様に管理する）
+	MenuSaveLoad* pSaveMenu = nullptr;
+	int saveLoadChoice = 0; // 0: セーブ, 1: ロード
 	
 #pragma endregion
 
@@ -356,4 +359,12 @@ public:
 	static void DestroyInstance();
 
 	void DeadExecute() override;
+
+public:
+	// セーブ/ロード用の API（SaveManager 経由で呼ばれる）
+	void SaveTo(BinaryWriter& w) ;
+	void LoadFrom(BinaryReader& r, uint32_t saveVersion);
+	// メタ情報更新（セーブ時にメタへ書き込むため）
+	uint32_t GetLevelForSave() const { return (uint32_t)Lv; }
+	uint32_t GetFloorForSave() const; // ステージ管理クラスと相談して実装
 };

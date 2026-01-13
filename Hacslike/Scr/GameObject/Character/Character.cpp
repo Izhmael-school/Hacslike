@@ -13,7 +13,7 @@ Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed
 	, speed(_speed)
 	, criticalHitRate(1.0f)
 	, criticalDamage(1.0f)
-	, Lv(1)
+	, Lv(10)
 	, exp(0)
 	, prevPos(VGet(position.x, position.z, 0))
 	, wallCheckPos(prevPos)
