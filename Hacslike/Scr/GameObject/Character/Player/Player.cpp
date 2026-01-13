@@ -1,29 +1,29 @@
 ﻿#include "Player.h"
-#include "../../../Manager/FadeManager.h"
-#include"../../../Manager/SkillManager.h"
+#include "../../../Definition.h"
 #include "../../Camera/Camera.h"
 #include "../../../Component/Collider/Collider.h"
-#include "../../../Definition.h"
-#include "../Hacslike/Scr/Manager/CollisionManager.h"
-#include "../Hacslike/Scr/Manager/TimeManager.h"
-#include "../Hacslike/Scr/GameObject/Weapon/Weapon.h"
-#include"../../Item/ItemFactory.h"
-#include <math.h>
+#include "../../Item/ItemFactory.h"
 #include "../../Item/ItemEquip/ItemEquip.h"
-#include"../../../Manager/ArtifactManager.h"
-#include"../../../Manager/SceneManager.h"
 #include "../../TreasureChest/StartTreasureChest.h"
 #include "../../../GameSystem/GameSystem.h"
+#include "../../../Manager/FadeManager.h"
+#include "../../../Manager/SkillManager.h"
+#include "../../../Manager/CollisionManager.h"
+#include "../../../Manager/ArtifactManager.h"
+#include "../../../Manager/SceneManager.h"
+#include "../../../Manager/TimeManager.h"
+#include "../../../GameObject/Weapon/Weapon.h"
+#include <math.h>
 #include <cmath>
 
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
 
-/*
- *	@brief		コンストラクタ
- *	@param[in]	VECTOR _pos		初期化する座標
- */
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_pos"></param>
 Player::Player(VECTOR _pos)
 	: Character(_pos, "Player", Lv, exp, speed)
 	, pWeapon(nullptr)
@@ -55,9 +55,9 @@ Player::Player(VECTOR _pos)
 
 }
 
-/*
- *	@breif		デストラクタ
- */
+/// <summary>
+/// デストラクタ
+/// </summary>
 Player::~Player() {
 	delete pWeapon;
 	pWeapon = nullptr;
@@ -69,7 +69,7 @@ Player::~Player() {
 	MV1DeleteModel(PLAYER_MODEL_HANDLE);
 }
 
-
+#pragma region シングルトン関連
 Player* Player::CreateInstance(VECTOR _pos) {
 	if (!instance) {
 		instance = new Player(_pos);
@@ -85,7 +85,11 @@ void Player::DestroyInstance() {
 	delete instance;
 	instance = nullptr;
 }
+#pragma endregion
 
+/// <summary>
+/// 死亡処理
+/// </summary>
 void Player::DeadExecute() {
 	if (hp > 0 || isDead) return;
 	isDead = true;
@@ -93,10 +97,9 @@ void Player::DeadExecute() {
 }
 
 
-/*
- *	@function	Start
- *	@breif		初期化処理
- */
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Player::Start() {
 	//	非表示だったら初期化しない
 	if (!isVisible)
@@ -193,10 +196,9 @@ void Player::Start() {
 	SetSpeed(1);
 }
 
-/*
- *	@function	Update
- *	@breif		更新処理
- */
+/// <summary>
+/// 更新処理
+/// </summary>
 void Player::Update() {
 	//	非表示だったら更新しない
 	if (!isVisible)
@@ -204,20 +206,12 @@ void Player::Update() {
 
 	hpRate = (float)hp / (float)maxHp;
 
-	////	攻撃入力・HitBox更新
-	//AttackInput();
-
 	//ゲームシステムクラスで動きを制限
 	if (GameSystem::GetInstance()->IsPlayable()) {
 		playerMovement->Update();
 		playerAttack->Update();
 		pAnimator->Update();
 	}
-
-	//CheckWall();
-
-	//	斬撃更新
-	//UpdateSlash();
 
 	MV1SetMatrix(modelHandle, matrix);
 
@@ -229,8 +223,6 @@ void Player::Update() {
 	//OpenInventory();
 
 	ArtifactManager::GetInstance().Update(this);
-
-
 
 	selectMenu();
 
@@ -256,6 +248,7 @@ void Player::Update() {
 		artifactUI.Update();
 	}
 
+#if _DEBUG
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
 		AddHp(10);
 	}
@@ -266,6 +259,7 @@ void Player::Update() {
 	if (input->IsKeyDown(KEY_INPUT_3)) {
 		AddExp(maxExp);
 	}
+#endif
 
 #pragma region スキル選択
 	if (exp >= maxExp && !isSelectingSkill) {
@@ -310,10 +304,9 @@ void Player::Update() {
 }
 
 
-/*
- *	@function	Render
- *	@breif		描画処理
- */
+/// <summary>
+/// 描画処理
+/// </summary>
 void Player::Render() {
 	//	非表示だったら描画しない
 	if (!isVisible)
@@ -385,6 +378,7 @@ void Player::Render() {
 #pragma endregion		
 
 	playerMovement->Render();
+
 #if _DEBUG
 	DrawFormatString(200, 200, red, "x : %d | z : %d", (int)position.x, (int)position.z);
 #endif
@@ -395,14 +389,6 @@ void Player::Render() {
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
 #pragma endregion
-
-	//#pragma region Slash描画
-	//	for (auto s : slashes) {
-	//		s->Render();
-	//	}
-	//#pragma endregion
-	//
-	//#pragma endregion
 
 #pragma region 武器の描画
 	//	武器の描画
@@ -602,6 +588,9 @@ void Player::selectMenu() {
 	else return;
 }
 
+/// <summary>
+/// メニューの描画
+/// </summary>
 void Player::DrawMenu() {
 	if (!isMenuUI) return;
 
@@ -725,7 +714,9 @@ void Player::GetArtifactRender() {
 	else return;
 }
 
-
+/// <summary>
+/// プレイヤーステータスの描画
+/// </summary>
 void Player::PlayerStatusRender() {
 
 	DrawBox(920, 20, WINDOW_WIDTH, 280, black, TRUE);
@@ -742,6 +733,9 @@ void Player::PlayerStatusRender() {
 
 }
 
+/// <summary>
+/// プレイヤーのセットアップ
+/// </summary>
 void Player::PlayerSetUp() {
 	maxHp = 100;
 	hp = maxHp;
@@ -763,11 +757,10 @@ float Player::RuneCost(int L) {
 	return  maxExp = (float)(k * t * t) / 50 + 1;  // 整数除算で floor 相当
 }
 
-/*
- *	@function	OnTriggerEnter
- *	@brief		当たった瞬間
- *	@param[in]	Collider* _pCol
- */
+/// <summary>
+/// 当たった瞬間
+/// </summary>
+/// <param name="_pCol"></param>
 void Player::OnTriggerEnter(Collider* _pCol) {
 	//	当たった相手のタグが "Goblin" だったら
 	if (_pCol->GetGameObject()->GetTag() == "Goblin") {
@@ -792,11 +785,10 @@ void Player::OnTriggerEnter(Collider* _pCol) {
 	}
 }
 
-/*wsa
- *	@function	OnTriggerSaty
- *	@brief		当たっている間
- *	@param[in]	Collider* _pCol
- */
+/// <summary>
+/// 当たっている間
+/// </summary>
+/// <param name="_pCol"></param>
 void Player::OnTriggerStay(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "item") {
 		// 触れているアイテムを記録
@@ -809,11 +801,10 @@ void Player::OnTriggerStay(Collider* _pCol) {
 	}
 }
 
-/*
- *	@function	OnTriggerExit
- *	@brief		離れた瞬間
- *	@param[in]	Collider* _pCol
- */
+/// <summary>
+/// 離れた瞬間
+/// </summary>
+/// <param name="_pCol"></param>
 void Player::OnTriggerExit(Collider* _pCol) {
 	if (_pCol->GetGameObject()->GetTag() == "item") {
 		// 離れたアイテムなら解除

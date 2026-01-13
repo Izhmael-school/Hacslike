@@ -161,7 +161,7 @@ void Enemy::LoadAnimation() {
 }
 
 void Enemy::DeadExecute() {
-	if (!IsDead()) return;
+	if (IsDead()) return;
 
 	hp = 0;
 	isDead = true;

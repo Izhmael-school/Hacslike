@@ -1,6 +1,10 @@
 #include "BulletPool.h"
-#include "../Hacslike/Scr/Manager/CollisionManager.h" // CollisionManager を使うので include
+#include "../../Manager/CollisionManager.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="poolSize"></param>
 BulletPool::BulletPool(int poolSize) {
 	pool.reserve(poolSize);
 	for (int i = 0; i < poolSize; i++) {
@@ -11,6 +15,9 @@ BulletPool::BulletPool(int poolSize) {
 	}
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BulletPool::~BulletPool() {
 	// プール破棄時に登録解除しておく（安全策）
 	for (auto b : pool) {
@@ -37,6 +44,15 @@ static void CleanupColliderForBullet(SphereHitBox* b) {
 	}
 }
 
+/// <summary>
+/// 出現処理
+/// </summary>
+/// <param name="owner"></param>
+/// <param name="pos"></param>
+/// <param name="vel"></param>
+/// <param name="radius"></param>
+/// <param name="life"></param>
+/// <returns></returns>
 SphereHitBox* BulletPool::Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life) {
 	for (auto b : pool) {
 		if (b->GetActive()) continue;
@@ -70,6 +86,16 @@ SphereHitBox* BulletPool::Spawn(Character* owner, const VECTOR& pos, const VECTO
 	return nullptr;
 }
 
+/// <summary>
+/// 弾用の出現処理
+/// </summary>
+/// <param name="owner"></param>
+/// <param name="pos"></param>
+/// <param name="vel"></param>
+/// <param name="radius"></param>
+/// <param name="life"></param>
+/// <param name="chain"></param>
+/// <returns></returns>
 SphereHitBox* BulletPool::BulletSpawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life, int chain) {
 	for (auto b : pool) {
 		if (!b->GetActive()) {
@@ -100,6 +126,9 @@ SphereHitBox* BulletPool::BulletSpawn(Character* owner, const VECTOR& pos, const
 	return nullptr;
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
 void BulletPool::Update() {
 	// 各弾を更新。Update の中で寿命切れなどで SetActive(false) になった場合は即座にコライダーを解除する
 	for (auto b : pool) {
@@ -114,6 +143,9 @@ void BulletPool::Update() {
 	}
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void BulletPool::Render() {
 	for (auto b : pool) if (b->GetActive()) b->Render();
 }

@@ -3,13 +3,13 @@
 #include "../Character.h"
 #include "../../Weapon/Weapon.h"
 #include "../../Slash/Slash.h"
-#include"../../Item/Inventory.h"
-#include"../../Item/ItemBase.h"
-#include"../../../Manager/ItemDropManager.h" 
-#include"../../Coin/Coin.h"
-#include"../../Artifact/ArtifactUI.h"
-#include"../../Artifact/ArtifactBase.h"
-#include "../Hacslike/Scr/Manager/WeaponManager.h"
+#include "../../Item/Inventory.h"
+#include "../../Item/ItemBase.h"
+#include "../../Coin/Coin.h"
+#include "../../Artifact/ArtifactUI.h"
+#include "../../Artifact/ArtifactBase.h"
+#include "../../../Manager/ItemDropManager.h" 
+#include "../../../Manager/WeaponManager.h"
 
 #include "PlayerAttack.h"
 #include "PlayerMovement.h"
@@ -22,48 +22,44 @@ static enum MenuType {
 };
 
 
-/*
- *	@brief	プレイヤークラス
- *	@tips	Characterクラスの派生クラス
- */
+/// <summary>
+/// プレイヤークラス
+/// </summary>
 class Player : public Character {
 private:
 	static Player* instance; // シングルトン用
 #pragma region メンバ変数
 private:	//	メンバ変数
-	//bool isAttacking;	//	攻撃中
 
-	Weapon* pWeapon;	//	武器
-
-	/*VECTOR inputVec;*/
-
+#pragma region クラス関連
+	Weapon* pWeapon;		//	武器
 	InputManager* input;	//	入力
-
-	//std::vector<Slash*> slashes;
-
-	int currentWeaponId;            // 初期武器ID
-	bool changeWeaponButtonPressed; // ボタン押下フラグ
-	int maxWeaponId;                // 武器の最大ID（JSONの数に合わせる）
-
-
-	int coinValue;			//	コイン枚数
-
-	int expValue;			//	Exp量
-
-	float criticalHitRate;	//	会心率
-
-	float criticalDamage;	//	会心ダメ
-	
 	PlayerAttack* playerAttack;		//	プレイヤーの攻撃
 	PlayerMovement* playerMovement;	//	プレイヤーの移動
-
 	WeaponData* weaponData;			//	武器データ
+#pragma endregion
 
+#pragma region 武器関連
+	int currentWeaponId;            // 初期武器ID
+	int maxWeaponId;                // 武器の最大ID（JSONの数に合わせる）
+#pragma endregion
+
+#pragma region プレイヤーステータス関連
 	float hpRate;	//	HP量
+	int coinValue;			//	コイン枚数
+	float criticalHitRate;	//	会心率
+	float criticalDamage;	//	会心ダメ
+	int expValue;			//	Exp量
+	int maxExp;
+	int remainExp;
+#pragma endregion
 
+#pragma region 死亡処理関連
 	bool isDead;	//	死んでるかどうか	
-
 	float deadTime;	//	死んでからの時間
+#pragma endregion
+
+	bool changeWeaponButtonPressed; // ボタン押下フラグ
 
 #pragma region インベントリ/アイテム関連
 	Inventory inventory; //アイテムインベントリ
@@ -101,70 +97,64 @@ private:	//	メンバ変数
 	bool blinkVisible = true;      // 現在表示中かどうか
 #pragma endregion
 
-	int maxExp;
-
-	int remainExp;
 
 #pragma endregion
 
 #pragma region コンストラクタとデストラクタ
 public:		//	コンストラクタとデストラクタ
 
-	/*
-	 *	@brief		コンストラクタ
-	 *	@param[in]	VECTOR _pos		初期化する座標
-	 */
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="_pos"></param>
 	Player(VECTOR _pos = VZero);
 
-	/*
-	 *	@breif		デストラクタ
-	 */
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Player();
 #pragma endregion
 
 #pragma region	オーバーライドしたメンバ関数
 public:		//	オーバーライドしたメンバ関数
-	/*
-	 *	@function	Start
-	 *	@breif		初期化処理
-	 */
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	virtual void Start() override;
 
-	/*
-	 *	@function	Update
-	 *	@breif		更新処理
-	 */
+	/// <summary>
+	/// 更新処理
+	/// </summary>
 	virtual void Update() override;
 
-	/*
-	 *	@function	Render
-	 *	@breif		描画処理
-	 */
+	/// <summary>
+	/// 描画処理
+	/// </summary>
 	virtual void Render() override;
 
 public:		//	オーバーライドした衝突検知
-	/*
-	 *	@function	OnTriggerEnter
-	 *	@brief		当たった瞬間
-	 *	@param[in]	Collider* _pCol
-	 */
+	/// <summary>
+	/// 当たった瞬間
+	/// </summary>
+	/// <param name="_pCol"></param>
 	void OnTriggerEnter(Collider* _pCol) override;
 
-	/*
-	 *	@function	OnTriggerEnter
-	 *	@brief		当たっている間
-	 *	@param[in]	Collider* _pCol
-	 */
+	/// <summary>
+	/// 当たっている間
+	/// </summary>
+	/// <param name="_pCol"></param>
 	void OnTriggerStay(Collider* _pCol) override;
 
-	/*
-	 *	@function	OnTriggerEnter
-	 *	@brief		離れた瞬間
-	 *	@param[in]	Collider* _pCol
-	 */
+	/// <summary>
+	/// 離れた瞬間
+	/// </summary>
+	/// <param name="_pCol"></param>
 	void OnTriggerExit(Collider* _pCol) override;
+#pragma endregion
 
 
+#pragma region メンバ関数
 public:		//	メンバ関数
 	/// <summary>
 	/// 武器切り替え
@@ -200,7 +190,7 @@ public:		//	メンバ関数
 	/// <summary>
 	/// コイン取得時の処理
 	/// </summary>
-	void GetCoin(); 
+	void GetCoin();
 
 	/// <summary>
 	/// コイン取得時の処理
@@ -220,12 +210,14 @@ public:		//	メンバ関数
 	/// プレイヤーステータスの描画
 	/// </summary>
 	void PlayerStatusRender();
-	
+
 	/// <summary>
 	/// プレイヤーのセットアップ
 	/// </summary>
 	void PlayerSetUp();
+#pragma endregion
 
+#pragma region GetterとSetter
 public:		//	Getter と Setter
 	/*
 	 *	@function	GetWeapon
@@ -264,7 +256,7 @@ public:		//	Getter と Setter
 	/// </summary>
 	/// <returns></returns>
 	inline int GetCoinAcquisitionValue() const { return coin_acquisition_value; }
-	
+
 	/// <summary>
 	/// 入手コインの設定
 	/// </summary>
@@ -320,11 +312,28 @@ public:		//	Getter と Setter
 	/// <param name="_criticalDamage"></param>
 	inline void SetCriticalDamage(float _criticalDamage) { criticalDamage = _criticalDamage; }
 
+	/// <summary>
+	/// プレイヤーの攻撃処理の取得
+	/// </summary>
+	/// <returns></returns>
 	inline PlayerAttack* GetPlayerAttack() const { return playerAttack; }
+
+	/// <summary>
+	/// プレイヤーの移動処理の所得
+	/// </summary>
+	/// <returns></returns>
 	inline PlayerMovement* GetPlayerMovement() const { return playerMovement; }
 
+	/// <summary>
+	/// 死んでるかどうか
+	/// </summary>
+	/// <returns></returns>
 	inline bool GetIsDead() const { return isDead; }
 
+	/// <summary>
+	/// プレイヤーの前方向の取得
+	/// </summary>
+	/// <returns></returns>
 	inline VECTOR GetForward() const {
 		return VNorm(VGet(
 			-sinf(Deg2Rad(rotation.y)),
@@ -332,6 +341,7 @@ public:		//	Getter と Setter
 			-cosf(Deg2Rad(rotation.y))
 		));
 	}
+#pragma endregion
 
 	float RuneCost(int L);
 

@@ -1,12 +1,34 @@
 #include "PlayerMovement.h"
-#include "../Hacslike/Scr/Manager/InputManager.h"
 #include "Player.h"
 #include "PlayerAttack.h"
 #include "../../Camera/Camera.h"
 #include "../../../Manager/TimeManager.h"
+#include "../../../Manager/InputManager.h"
 
 PlayerMovement* PlayerMovement::instance = nullptr;
 
+#pragma region シングルトン関連
+PlayerMovement* PlayerMovement::CreateInstance(Player* _player) {
+	if (!instance) {
+		instance = new PlayerMovement(_player);
+	}
+	return instance;
+}
+
+PlayerMovement* PlayerMovement::GetInstance() {
+	return instance;
+}
+
+void PlayerMovement::DestroyInstance() {
+	delete instance;
+	instance = nullptr;
+}
+#pragma endregion
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_player"></param>
 PlayerMovement::PlayerMovement(Player* _player)
 	: pPlayer(_player)
 	, input(&InputManager::GetInstance())
@@ -16,30 +38,15 @@ PlayerMovement::PlayerMovement(Player* _player)
 	, evasionCooldown(0.0f)
 	, evasionSpeed(1.0f)
 	, inputVec()
-	, dashState(false)	
-	, audio(){
+	, dashState(false)
+	, audio() {
 	Start();
 }
 
-PlayerMovement* PlayerMovement::CreateInstance(Player* _player)
-{
-	if (!instance) {
-		instance = new PlayerMovement(_player);
-	}
-	return instance;
-}
 
-PlayerMovement* PlayerMovement::GetInstance()
-{
-	return instance;
-}
-
-void PlayerMovement::DestroyInstance()
-{
-	delete instance;
-	instance = nullptr;
-}
-
+/// <summary>
+/// 初期化処理
+/// </summary>
 void PlayerMovement::Start() {
 	audio.GetInstance().Load("Res/Audio/SE/Player/run.mp3", "run", false);
 
@@ -50,6 +57,9 @@ void PlayerMovement::Start() {
 	}
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
 void PlayerMovement::Update() {
 	if (!pPlayer->GetIsDead()) {
 		inputVec = VZero;
@@ -58,9 +68,11 @@ void PlayerMovement::Update() {
 		UpdateMovement();
 		UpdateBlink();
 	}
-	
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void PlayerMovement::Render() {
 	// --- 残像描画 ---
 	if (isBlinking && !pPlayer->GetPlayerAttack()->IsAttacking()) {
@@ -79,8 +91,6 @@ void PlayerMovement::Render() {
 			MV1DrawModel(pPlayer->GetModelHandle());
 		}
 	}
-	
-	
 }
 
 /// <summary>
@@ -181,13 +191,13 @@ void PlayerMovement::EvasionInput() {
 /// 回避
 /// </summary>
 void PlayerMovement::Evasion() {
-	
+
 	pPlayer->GetCollider()->SetEnable(false);
 
 	// 瞬間移動
 	evasionSpeed = 6;
 
-	if(attactArtifact)
+	if (attactArtifact)
 		attactArtifact->OnBlinking(this);
 	if (CriticalArtifact)
 		CriticalArtifact->OnBlinking(this);
