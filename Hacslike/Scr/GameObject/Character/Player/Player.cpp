@@ -117,8 +117,10 @@ void Player::SaveTo(BinaryWriter& w)
 	// position
 	float px = GetPosition().x;
 	float py = GetPosition().y;
+	float pz = GetPosition().z;
 	w.WritePOD(px);
 	w.WritePOD(py);
+	w.WritePOD(pz);
 	
 }
 
@@ -134,10 +136,11 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 	r.ReadPOD(criticalHitRate);
 	r.ReadPOD(criticalDamage);
 	r.ReadPOD(coinValue);
-	float px, py;
+	float px,  py, pz ;
 	r.ReadPOD(px);
 	r.ReadPOD(py);
-	SetPosition(VECTOR{ px, py });
+	r.ReadPOD(pz);
+	SetPosition(VECTOR{ px, py,pz });
 	uint32_t itemCount;
 	r.ReadPOD(itemCount);
 	
