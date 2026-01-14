@@ -8,38 +8,79 @@
 
 
 #include "../Manager/InputManager.h"
-MenuSaveLoad::MenuSaveLoad(Mode m) : mode(m), selectedSlot(0) {}
+
+MenuSaveLoad::MenuSaveLoad(Mode m) : mode(m), selectedSlot(0), menuActive(false), menuChoice(0) {}
 
 void MenuSaveLoad::Open() {
     selectedSlot = 0;
+    menuActive = false;
+    menuChoice = 0;
 }
 
 void MenuSaveLoad::Update() {
     InputManager* input = &InputManager::GetInstance();
     auto& slots = SaveManager::GetInstance().GetSlots();
-    // 簡易入力処理（上/下/決定）
+    // 上下移動
     if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) selectedSlot = (selectedSlot + 9) % 10;
     if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) selectedSlot = (selectedSlot + 1) % 10;
+
+    // Enter: スロット選択 -> ポップアップ開閉 or ポップアップ実行
     if (input->IsKeyUp(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B)) {
-        if (mode == SaveMode) {
-            // セーブ前に Player などからメタ情報をセットする
-            // 例: SaveManager::GetInstance().GetSlots()[selectedSlot].playerLevel = player->GetLevelForSave();
-            SaveManager::GetInstance().Save(selectedSlot);
+        if (!menuActive) {
+            // ポップアップを開く
+            menuActive = true;
+            menuChoice = 0;
         }
         else {
-            SaveManager::GetInstance().Load(selectedSlot);
+            // ポップアップ内で選択を実行
+            switch (menuChoice) {
+            case 0: // セーブ
+                SaveManager::GetInstance().Save(selectedSlot);
+                break;
+            case 1: // ロード
+                // 存在チェックなどは SaveManager 内で行われる想定
+                SaveManager::GetInstance().Load(selectedSlot);
+                break;
+            case 2: // 削除
+            {
+                SaveManager::GetInstance().Delete(selectedSlot);
+               
+#ifdef _DEBUG
+                printfDx("Slot %d を削除しました (exists=false)\n", selectedSlot + 1);
+#endif
+            }
+            break;
+            default:
+                break;
+            }
+            menuActive = false;
         }
     }
-    
+
+    // ポップアップが開いているときは、メニュー内の左右で選択を切り替える
+    if (menuActive) {
+        if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
+            menuChoice = (menuChoice + 3 - 1) % 3;
+        }
+        if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
+            menuChoice = (menuChoice + 1) % 3;
+        }
+
+        // Esc: キャンセル
+        if (input->IsKeyDown(KEY_INPUT_ESCAPE) || input->IsButtonDown(XINPUT_GAMEPAD_A)) {
+            menuActive = false;
+        }
+    }
 }
 
 void MenuSaveLoad::Render() {
     const auto& slots = SaveManager::GetInstance().GetSlots();
     int baseX = 250;
     int baseY = 16;
-    int BaseY = baseY + 20;
-    int boxW = 400;
-    int boxH = 250;
+    int BaseX = baseX + 10;
+    int BaseY = baseY + 30;
+    int boxW = 430;
+    int boxH = 280;
     int lineHeight = 24;
     int padding = 6;
     int titleHeight = 22;
@@ -51,26 +92,22 @@ void MenuSaveLoad::Render() {
     DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, borderColor, FALSE);
 
     // タイトル
-    const char* title = "セーブ";
+    const char* title = "セーブ / ロード";
     DrawString(baseX + padding, baseY + 2, title, white);
-
-
 
     for (int i = 0; i < 10; ++i) {
         const auto& s = slots[i];
 
-        // 時刻文字列の作成（スレッド安全な localtime を使う）
+        // 時刻文字列作成
         char timestr[64] = "";
         if (s.exists) {
 #ifdef _MSC_VER
             std::tm tmBuf;
-            // localtime_s(出力先, 入力元)
             if (localtime_s(&tmBuf, &s.timestamp) == 0) {
                 std::strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M", &tmBuf);
             }
 #else
             std::tm tmBuf;
-            // localtime_r(入力元, 出力先)
             if (localtime_r(&s.timestamp, &tmBuf) != nullptr) {
                 std::strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M", &tmBuf);
             }
@@ -79,7 +116,6 @@ void MenuSaveLoad::Render() {
 
         const char* stateText = s.exists ? "USED" : "EMPTY";
 
-        // バッファはここで一度だけ宣言（再定義を避ける）
         char linebuf[256];
 #ifdef _MSC_VER
         sprintf_s(linebuf, sizeof(linebuf),
@@ -100,10 +136,26 @@ void MenuSaveLoad::Render() {
 #endif
 
         int y = BaseY + i * lineHeight;
-        // 選択中スロットは色を変える
         unsigned int color = (i == selectedSlot) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
-        DrawString(baseX, y, linebuf, color);
+        DrawString(BaseX, y, linebuf, color);
     }
 
-    // 選択カーソルなど追加描画があればここに
+    // ポップアップメニュー描画 (開いているとき)
+    if (menuActive) {
+        const int popupW = 280;
+        const int popupH = 96;
+        int px = baseX + 10;
+        int py = BaseY + selectedSlot * lineHeight + 25; // 選択行の下あたりに表示
+
+        DrawBox(px, py, px + popupW, py + popupH - 20, GetColor(40, 40, 40), TRUE);
+        DrawBox(px, py, px + popupW, py + popupH - 20, GetColor(200, 200, 200), FALSE);
+
+        // メニューオプション
+        const char* opts[3] = { "セーブ", "ロード", "削除" };
+        for (int i = 0; i < 3; ++i) {
+            int col = (i == menuChoice) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
+            DrawString(px + 12 + i * 100, py + 12, opts[i], col);
+        }
+        DrawString(px + 8, py + popupH - 50, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180));
+    }
 }

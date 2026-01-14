@@ -481,10 +481,7 @@ void Player::Render() {
 		artifactUI.Render();
 	}
 	if (isSaveUI) {
-		// ここでセーブメニューの描画を呼ぶ
-		if (pSaveMenu) {
-			pSaveMenu->Render();
-		}
+		pSaveMenu->Render();
 	}
 
 	inventory.AddItemRender();
@@ -593,6 +590,7 @@ void Player::OpenMenu() {
 		isMenuUI = false;
 		isItemUI = false;
 		isArtifactUI = false;
+		isSaveUI = false;
 		isMenuSelected = false; // 閉じたときにリセット
 		AudioManager::GetInstance().PlayOneShot("Decision");
 		GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);

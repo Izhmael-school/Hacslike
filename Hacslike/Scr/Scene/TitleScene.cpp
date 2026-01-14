@@ -1,7 +1,7 @@
 #include "TitleScene.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/AudioManager.h"
-#include "../GameObject/Character/Player/player.h"
+#include "../Manager/SaveManager.h"
 
 TitleScene::TitleScene() 
 {
@@ -12,15 +12,12 @@ TitleScene::~TitleScene() {}
 
 void TitleScene::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/BGM/Title/TitleBGM.mp3", "Title", false);
+	SaveManager::GetInstance().RegisterSavers();
 }
 
 void TitleScene::Update() {
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 
-		if (Character::player->IsDead()) {
-			Player* player = dynamic_cast<Player*>(Character::player);
-			player->PlayerSetUp();
-		}
 		SceneManager::GetInstance().ChangeScene(SceneType::Game);
 	}
 }
