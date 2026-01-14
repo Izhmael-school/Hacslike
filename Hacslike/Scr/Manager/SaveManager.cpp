@@ -44,7 +44,7 @@ void SaveManager::LoadMeta() {
 }
 
 void SaveManager::SaveMeta() {
-    //EnsureSaveDir();
+    EnsureSaveDir();
     const auto path = SlotMetaFile();
     std::ofstream out(path, std::ios::binary | std::ios::trunc);
     for (int i = 0; i < 10; ++i) {
@@ -65,21 +65,22 @@ void SaveManager::RegisterLoadHandler(const std::function<void(BinaryReader&, ui
 
 void SaveManager::RegisterSavers()
 {
-    auto& sm = SaveManager::GetInstance();
-    Player* p ;
-    sm.RegisterSaveHandler([p](BinaryWriter& w) {
-        // 先頭に各セクションの識別子や長さを付けても良い
-        p->SaveTo(w);
+    RegisterSaveHandler([](BinaryWriter& w) {
+        if (Player::GetInstance()) {
+            Player::GetInstance()->SaveTo(w);
+        }
         });
-    sm.RegisterLoadHandler([p](BinaryReader& r, uint32_t ver) {
-        p->LoadFrom(r, ver);
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        if (Player::GetInstance()) {
+            Player::GetInstance()->LoadFrom(r, ver);
+        }
         });
 
 }
 
 bool SaveManager::Save(int slotIndex) {
     if (slotIndex < 0 || slotIndex >= 10) return false;
-    //EnsureSaveDir();
+    EnsureSaveDir();
     std::string tmp = SlotFileName(slotIndex) + ".tmp";
     std::ofstream out(tmp, std::ios::binary | std::ios::trunc);
     if (!out) return false;
@@ -124,6 +125,11 @@ bool SaveManager::Load(int slotIndex) {
     }
     in.close();
     return true;
+}
+
+bool SaveManager::Delete(int slotIndex)
+{
+    return false;
 }
 
 const std::array<SaveSlotMeta, 10>& SaveManager::GetSlots() const

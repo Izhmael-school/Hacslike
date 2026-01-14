@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/AudioManager.h"
+#include "../Manager/SaveManager.h"
 
 TitleScene::TitleScene() 
 {
@@ -11,6 +12,7 @@ TitleScene::~TitleScene() {}
 
 void TitleScene::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/BGM/Title/TitleBGM.mp3", "Title", false);
+	SaveManager::GetInstance().RegisterSavers();
 }
 
 void TitleScene::Update() {

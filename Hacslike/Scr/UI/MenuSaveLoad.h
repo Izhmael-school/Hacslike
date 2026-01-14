@@ -10,5 +10,7 @@ public:
 public:
     Mode mode;
     int selectedSlot;
+    bool menuActive = false;
+    int menuChoice = 0; // 0=セーブ,1=ロード,2=削除
 };
 

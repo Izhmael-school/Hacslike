@@ -18,6 +18,7 @@ public:
     // セーブ・ロード（slotIndex: 0..9）
     bool Save(int slotIndex);
     bool Load(int slotIndex);
+    bool Delete(int slotIndex);
 
     // メタデータ参照（メニュー用）
     const std::array<SaveSlotMeta, 10>& GetSlots() const;
