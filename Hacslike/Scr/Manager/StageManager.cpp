@@ -3,6 +3,7 @@
 #include "../GameObject/Character/Character.h"
 #include "../CommonModule.h"
 #include "AudioManager.h"
+#include"../Save/SaveIO.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -208,6 +209,7 @@ void StageManager::SetGameObject(VECTOR pos, GameObject* obj) {
 void StageManager::ChangeTexture(int textureHandle, ObjectType changeObject) {
 	generator->ChangeObjectTexture(textureHandle, changeObject);
 }
+
 
 int StageManager::GetNowRoomNum(VECTOR pos) {
 	return generator->GetNowRoomNum(pos);

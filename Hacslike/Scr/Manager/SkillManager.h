@@ -22,7 +22,7 @@ public:
 
 
     // ======== スキル関連処理 ========
-private:
+public:
     std::vector<std::shared_ptr<Skill>> activeSkills; // 現在有効なスキル
     std::vector<std::shared_ptr<Skill>> skillPool;    // 全スキルの候補
 
@@ -39,5 +39,7 @@ public:
     void ClearSkills(Player* player);
 
     const std::vector<std::shared_ptr<Skill>>& GetActiveSkills() const { return activeSkills; }
+
+
 };
 

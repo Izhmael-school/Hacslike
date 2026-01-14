@@ -101,6 +101,7 @@ void Player::DeadExecute() {
 	pAnimator->Play("Down1", 0.9);
 }
 
+#pragma region セーブとロード
 void Player::SaveTo(BinaryWriter& w) 
 {
 	// 基本の数値
@@ -146,6 +147,7 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 	
 	// スキル・アーティファクトの復元も同様に
 }
+#pragma endregion
 
 uint32_t Player::GetFloorForSave() const
 {
@@ -323,6 +325,9 @@ void Player::Update() {
 		}
 	}
 
+	if (input->IsKeyDown(KEY_INPUT_3)) {
+		AddExp(maxExp);
+	}
 #if _DEBUG
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
 		AddHp(10);
@@ -331,9 +336,6 @@ void Player::Update() {
 		Damage(10);
 	}
 
-	if (input->IsKeyDown(KEY_INPUT_3)) {
-		AddExp(maxExp);
-	}
 #endif
 
 #pragma region スキル選択

@@ -15,6 +15,8 @@
 #include <sys/types.h>
 #endif
 
+#include "StageManager.h"
+
 static void EnsureSaveDir() {
 #ifdef _WIN32
     _mkdir("saves");
@@ -75,7 +77,7 @@ void SaveManager::RegisterSavers()
             Player::GetInstance()->LoadFrom(r, ver);
         }
         });
-
+   
 }
 
 bool SaveManager::Save(int slotIndex) {
@@ -129,7 +131,19 @@ bool SaveManager::Load(int slotIndex) {
 
 bool SaveManager::Delete(int slotIndex)
 {
-    return false;
+    if (slotIndex < 0 || slotIndex >= 10) return false;
+    std::string fname = SlotFileName(slotIndex);
+    if (std::remove(fname.c_str()) != 0) {
+        // 削除失敗（ファイルが存在しない場合もある）
+        // それでもメタを更新しておく
+    }
+    slots[slotIndex].exists = false;
+    slots[slotIndex].timestamp = 0;
+    slots[slotIndex].playerLevel = 0;
+    slots[slotIndex].floor = 0;
+    std::memset(slots[slotIndex].desc, 0, sizeof(slots[slotIndex].desc));
+    SaveMeta();
+    return true;
 }
 
 const std::array<SaveSlotMeta, 10>& SaveManager::GetSlots() const

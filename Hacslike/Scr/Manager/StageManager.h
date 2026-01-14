@@ -2,6 +2,7 @@
 #include "../GameObject/Stage/StageCell.h"
 #include "../GameObject/Stage/StageGenerator.h"
 #include "../Definition.h"
+#include"SaveManager.h"
 
 #include "EnemyManager.h"
 #include <vector>
@@ -68,6 +69,9 @@ private:
 	void GenerateStage(int stageID);
 	void ChangeTexture(int textureHandle, ObjectType changeObject);
 
-
+public:
+	// セーブ/ロード用の API（SaveManager 経由で呼ばれる）
+	void SaveTo(BinaryWriter& w);
+	void LoadFrom(BinaryReader& r, uint32_t saveVersion);
 };
 

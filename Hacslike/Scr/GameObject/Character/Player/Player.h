@@ -366,5 +366,5 @@ public:
 	void LoadFrom(BinaryReader& r, uint32_t saveVersion);
 	// メタ情報更新（セーブ時にメタへ書き込むため）
 	uint32_t GetLevelForSave() const { return (uint32_t)Lv; }
-	uint32_t GetFloorForSave() const; // ステージ管理クラスと相談して実装
+	uint32_t GetFloorForSave() const; 
 };

@@ -1,6 +1,8 @@
 #include "StageGenerator.h"
 #include "../Character/Character.h"
+#include"../../Save/SaveIO.h"
 #include <climits>
+
 
 StageGenerator::StageGenerator()
 	:roomMinNum(3)
@@ -48,6 +50,7 @@ StageGenerator::StageGenerator()
 			roomStatus[w][h] = -1;
 		}
 	}
+	
 }
 
 StageGenerator::~StageGenerator() {
@@ -85,6 +88,7 @@ StageGenerator::~StageGenerator() {
 	MV1DeleteModel(groundModel);
 	MV1DeleteModel(roadModel);
 	MV1DeleteModel(stairModel);
+	
 }
 
 void StageGenerator::Update() {
@@ -786,6 +790,7 @@ VECTOR StageGenerator::GetRandomRoomRandomPos() {
 
 	return VGet(defaultPos.x + x * CellSize, 0, defaultPos.z + y * CellSize);
 }
+
 
 
 /// <summary>

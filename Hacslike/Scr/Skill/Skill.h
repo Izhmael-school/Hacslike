@@ -46,6 +46,7 @@ public://ÉQÉbÉ^Å[
     const std::string& GetDescription() const { return description; }
     const std::string& GetIconPath() const { return iconPath; }
 
+  
 
 };
 

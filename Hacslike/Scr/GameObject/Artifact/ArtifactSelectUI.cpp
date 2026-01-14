@@ -39,7 +39,7 @@ int ArtifactSelectUI::UpdateSelection(const std::vector < std::shared_ptr<Artifa
     }
 
     // ¥ Œˆ’è
-    if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(XINPUT_GAMEPAD_B))
+    if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B))
     {
         isActive = false;
         AudioManager::GetInstance().PlayOneShot("DecisionSkill");

@@ -86,12 +86,12 @@ void GameScene::Update() {
 	EffectManager::GetInstance().Update();
 	ItemDropManager::GetInstance().Update();
 
-#if _DEBUG アイテムドロップテスト
 	// --- アイテムドロップテスト ---
 	if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 		VECTOR spawnPos = Character::player->GetPosition();
-		ItemDropManager::GetInstance().TryDropItem(ItemDropManager::GetInstance().GetItemDropRate(), VGet(spawnPos.x, 5.0f, spawnPos.z));
+		ItemDropManager::GetInstance().TryDropItem(10, VGet(spawnPos.x, 5.0f, spawnPos.z));
 	}
+#if _DEBUG アイテムドロップテスト
 	// --- アイテムドロップテスト ---
 	if (input->IsKeyDown(KEY_INPUT_Q)) {
 		VECTOR spawnPos = Character::player->GetPosition();

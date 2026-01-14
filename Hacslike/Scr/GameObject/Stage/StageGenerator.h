@@ -4,6 +4,8 @@
 #include <random>
 #include <list>
 #include "../../CommonModule.h"
+#include"../../Manager/SaveManager.h"
+
 
 class StageCell;
 
@@ -36,6 +38,7 @@ private:
 	VECTOR mapOffset;
 
 	StageData stage;
+
 public:
 	
 	int map[mapWidth_Large][mapHeight_Large];	// マップ管理配列
@@ -93,6 +96,7 @@ public:
 	VECTOR GetRandomRoomRandomPos();
 	// 読み込んだステージデータの取得
 	inline StageData GetStageData() { return stage; }
+	
 
 };
 

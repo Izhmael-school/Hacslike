@@ -5,8 +5,9 @@
 // =============================
 //   Skill Šî’êƒNƒ‰ƒX
 // =============================
-Skill::Skill(const int id,const std::string& name, const std::string& desc, const std::string& icon, int maxLv)
-    : name(name)
+Skill::Skill(const int id, const std::string& name, const std::string& desc, const std::string& icon, int maxLv)
+    : id(id)
+    , name(name)
     , description(desc)
     , iconPath(icon)
     , maxLevel(maxLv)
@@ -16,6 +17,7 @@ Skill::Skill(const int id,const std::string& name, const std::string& desc, cons
 void Skill::Apply(Player* player) {}
 void Skill::Remove(Player* player) {}
 void Skill::ClearLevel(){}
+
 
 // =============================
 //   UŒ‚—Í‘‰Á

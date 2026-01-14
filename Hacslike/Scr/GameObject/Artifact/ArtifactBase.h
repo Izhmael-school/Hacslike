@@ -47,7 +47,7 @@ class conditional_attack_power_raise_HP : public ArtifactBase {
 	float attackBoost;
 	bool isBoosted;
 public:
-	conditional_attack_power_raise_HP(float boost = 1.3f);
+	conditional_attack_power_raise_HP(float boost = 2.0f);
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;

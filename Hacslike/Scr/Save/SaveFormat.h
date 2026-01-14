@@ -22,6 +22,7 @@ struct SaveSlotMeta {
     std::time_t timestamp = 0;
     // optional short description
     char desc[128] = { 0 };
+
 };
 
 inline std::string SlotFileName(int slotIndex) {

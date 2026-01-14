@@ -5,6 +5,7 @@
 #include <iostream>
 #include "AudioManager.h"
 
+
 // ------------------------
 // コンストラクタ
 // ------------------------
@@ -101,3 +102,5 @@ void SkillManager::ClearSkills(Player* player)
 
     std::cout << "スキルを全てリセットしました。\n";
 }
+
+
