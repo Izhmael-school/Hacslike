@@ -2,11 +2,11 @@
   {
     "id": 0,
     "name": "ゴブリン",
-    "typeID" : 0,
+    "typeID": 0,
     "mPath": "Res/Model/Enemy/Goblin/",
-    "hp": 30,
+    "hp": 1,
     "atk": 10,
-    "def": 5,
+    "def": 0,
     "exp": 15
   },
 
@@ -41,5 +41,49 @@
     "atk": 20,
     "def": 5,
     "exp": 50
+  },
+
+  {
+    "id": 4,
+    "name": "トロール",
+    "typeID": 3,
+    "mPath": "Res/Model/Enemy/Troll/",
+    "hp": 150,
+    "atk": 30,
+    "def": 15,
+    "exp": 150
+  },
+
+  {
+    "id": 5,
+    "name": "ゾンビ",
+    "typeID": 4,
+    "mPath": "Res/Model/Enemy/Zombie/",
+    "hp": 100,
+    "atk": 60,
+    "def": 0,
+    "exp": 70
+  },
+
+  {
+    "id": 6,
+    "name": "ハウンド",
+    "typeID": 5,
+    "mPath": "Res/Model/Enemy/HellHound/",
+    "hp": 200,
+    "atk": 30,
+    "def": 10,
+    "exp": 70
+  },
+
+  {
+    "id": 7,
+    "name": "オーガ",
+    "typeID": 6,
+    "mPath": "Res/Model/Enemy/Ouger/",
+    "hp": 200,
+    "atk": 30,
+    "def": 10,
+    "exp": 70
   }
 ]

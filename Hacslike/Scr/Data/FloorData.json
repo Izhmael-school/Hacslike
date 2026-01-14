@@ -9,7 +9,7 @@
     "startFloor": 1,
     "endFloor": 10,
     "floorTextureName": "",
-    "spawnEnemyID": [ 0 ]
+    "spawnEnemyID": [ 7 ]
   },
   {
     "startFloor": 11,

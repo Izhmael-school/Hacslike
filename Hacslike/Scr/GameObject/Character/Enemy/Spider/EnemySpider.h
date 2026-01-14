@@ -1,5 +1,7 @@
 #pragma once
 #include "../Enemy.h"
+#include "SpiderBullet.h"
+
 class EnemySpider : public Enemy {
 public:
 	EnemySpider(int mHandle);
@@ -13,5 +15,9 @@ public:
 public:
 	void OnTriggerEnter(Collider* _pOther) override;
 
+	void ShotBullet();
+
+private:
+	SpiderBullet* bullet;
 
 };

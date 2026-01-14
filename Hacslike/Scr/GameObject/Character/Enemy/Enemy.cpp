@@ -50,14 +50,6 @@ void Enemy::Update() {
 	// 徘徊行動
 	Wander();
 
-	if (isAttack()) return;
-
-	if (rayAnswer && !isTouch)
-		pAnimator->Play("run");
-	if (rayAnswer && isTouch)
-		Attack();
-
-
 	// アニメーションの更新
 	if (pAnimator != nullptr) {
 		pAnimator->Update();
@@ -89,6 +81,16 @@ void Enemy::Update() {
 		pCollider->Update();
 	}
 
+	if (isAttack()) return;
+
+	if (rayAnswer && !isTouch)
+		pAnimator->Play("run");
+	if (rayAnswer && isTouch)
+		Attack();
+
+
+
+
 	// 攻撃のリキャスト
 	atkTime += TimeManager::GetInstance().deltaTime;
 }
@@ -102,9 +104,6 @@ void Enemy::Render() {
 
 		c->Render();
 	}
-
-	// アニメーターの更新
-	pAnimator->Update();
 
 #if _DEBUG
 	//DrawVisionFanDebug();
