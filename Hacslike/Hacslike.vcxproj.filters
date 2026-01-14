@@ -167,6 +167,19 @@
     <ClCompile Include="Scr\UI\MenuSaveLoad.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.cpp">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -348,6 +361,19 @@
     </ClInclude>
     <ClInclude Include="Scr\UI\MenuSaveLoad.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.h">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h">
+      <Filter>GameObject\Character\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
