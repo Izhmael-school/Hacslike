@@ -202,6 +202,7 @@ void Player::Start() {
 	GetAnimator()->Load("Res/PlayerModel/GreatCharge3.mv1", "GreatCharge3", true);
 	GetAnimator()->Load("Res/PlayerModel/Down1.mv1", "Down1", false);
 	GetAnimator()->Load("Res/PlayerModel/Down2.mv1", "Down2", true, true);
+	GetAnimator()->Load("Res/PlayerModel/LanceDA.mv1", "LanceAtk1", true);
 
 #pragma endregion
 
