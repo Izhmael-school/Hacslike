@@ -24,7 +24,7 @@ void SpiderBullet::Start()
 void SpiderBullet::Update()
 {
 	GameObject::Update();
-	position += moveDir * TimeManager::GetInstance().deltaTime;
+	//position += moveDir * TimeManager::GetInstance().deltaTime;
 }
 
 void SpiderBullet::Render()
