@@ -13,13 +13,21 @@ private:
 	std::vector<Enemy*> unuseGoblinArray;
 	std::vector<Enemy*> unuseSpiderArray;
 	std::vector<Enemy*> unuseWolfArray;
-	
+	std::vector<Enemy*> unuseTrollArray;	
+	std::vector<Enemy*> unuseZombieArray;
+	std::vector<Enemy*> unuseHellHoundArray;
+	std::vector<Enemy*> unuseOugerArray;
+
 	const std::string audioFilePath = "Res/Audio/SE/Enemy/";
 
 private:
 	int originGoblinMHandle;
 	int originSpiderMHandle;
 	int originWolfMHandle;
+	int originTrollMHandle;
+	int originZombieMHandle;
+	int originHellHoundMHandle;
+	int originOugerMHandle;
 
 public:
 	EnemyManager();

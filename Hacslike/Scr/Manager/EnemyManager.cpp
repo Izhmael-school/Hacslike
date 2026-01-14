@@ -2,6 +2,10 @@
 #include "../GameObject/Character/Enemy/Goblin/EnemyGoblin.h"
 #include "../GameObject/Character/Enemy/Spider/EnemySpider.h"
 #include "../GameObject/Character/Enemy/Wolf/EnemyWolf.h"
+#include "../GameObject/Character/Enemy/Troll/EnemyTroll.h"
+#include "../GameObject/Character/Enemy/Zombie/EnemyZombie.h"
+#include "../GameObject/Character/Enemy/HellHound/EnemyHellHound.h"
+#include "../GameObject/Character/Enemy/Ouger/EnemyOuger.h"
 #include "../GameObject/Character/Enemy/Enemy.h"
 #include "../GameObject/Character/Enemy/Boss/BossBase.h"
 #include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
@@ -16,6 +20,10 @@ EnemyManager::~EnemyManager() {
 	MV1DeleteModel(originGoblinMHandle);
 	MV1DeleteModel(originSpiderMHandle);
 	MV1DeleteModel(originWolfMHandle);
+	MV1DeleteModel(originTrollMHandle);
+	MV1DeleteModel(originZombieMHandle);
+	MV1DeleteModel(originHellHoundMHandle);
+	MV1DeleteModel(originOugerMHandle);
 
 	for (auto g : unuseGoblinArray) {
 		delete g;
@@ -29,6 +37,22 @@ EnemyManager::~EnemyManager() {
 		delete w;
 	}
 
+	for (auto t : unuseTrollArray) {
+		delete t;
+	}
+
+	for (auto z : unuseZombieArray) {
+		delete z;
+	}
+
+	for (auto h : unuseHellHoundArray) {
+		delete h;
+	}
+
+	for (auto o : unuseOugerArray) {
+		delete o;
+	}
+
 	for (auto e : pEnemyArray) {
 		delete e;
 	}
@@ -38,6 +62,11 @@ void EnemyManager::Start() {
 	originGoblinMHandle = MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1");
 	originSpiderMHandle = MV1LoadModel("Res/Model/Enemy/Spider/model.mv1");
 	originWolfMHandle = MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1");
+	originTrollMHandle = MV1LoadModel("Res/Model/Enemy/Troll/model.mv1");
+	originZombieMHandle = MV1LoadModel("Res/Model/Enemy/Zombie/model.mv1");
+	originHellHoundMHandle = MV1LoadModel("Res/Model/Enemy/HellHound/model.mv1");
+	originOugerMHandle = MV1LoadModel("Res/Model/Enemy/Ouger/model.mv1");
+
 	pEnemyArray.clear();
 
 	AudioManager* manager = &AudioManager::GetInstance();
@@ -68,35 +97,9 @@ void EnemyManager::Render() {
 void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 	Enemy* e = nullptr;
 
-	switch (type) {
-	case Goblin:
-		if (unuseGoblinArray.size() > 0) {
-			e = UseEnemy(Goblin);
-			break;
-		}
-		else {
-			e = new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle));
-			break;
-		}
-	case Spider:
-		if (unuseSpiderArray.size() > 0) {
-			e = UseEnemy(Spider);
-			break;
-		}
-		else {
-			e = new EnemySpider(MV1DuplicateModel(originSpiderMHandle));
-			break;
-		}
-	case Wolf:
-		if (unuseWolfArray.size() > 0) {
-			e = UseEnemy(Wolf);
-			break;
-		}
-		else {
-			e = new EnemyWolf(MV1DuplicateModel(originWolfMHandle));
-			break;
-		}
-	}
+	e = UseEnemy(type);
+
+	if (e == nullptr) return;
 
 	pEnemyArray.push_back(e);
 	e->Setup();
@@ -120,22 +123,49 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 
 Enemy* EnemyManager::UseEnemy(EnemyType type) {
 	Enemy* e = nullptr;
+	std::vector<Enemy*> tmp = { nullptr };
+	std::vector<Enemy*>& enemyArray = tmp;
+
 	switch (type) {
 	case Goblin:
-		e = unuseGoblinArray[0];
-		unuseGoblinArray.erase(unuseGoblinArray.begin());
+		enemyArray = unuseGoblinArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle)));
 		break;
 	case Spider:
-		e = unuseSpiderArray[0];
-		unuseSpiderArray.erase(unuseSpiderArray.begin());
+		enemyArray = unuseSpiderArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemySpider(MV1DuplicateModel(originSpiderMHandle)));
 		break;
-
 	case Wolf:
-		e = unuseWolfArray[0];
-		unuseWolfArray.erase(unuseWolfArray.begin());
+		enemyArray = unuseWolfArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyWolf(MV1DuplicateModel(originWolfMHandle)));
+		break;
+	case Troll:
+		enemyArray = unuseTrollArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyTroll(MV1DuplicateModel(originTrollMHandle)));
+		break;
+	case Zombie:
+		enemyArray = unuseZombieArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyZombie(MV1DuplicateModel(originZombieMHandle)));
+		break;
+	case HellHound:
+		enemyArray = unuseHellHoundArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyHellHound(MV1DuplicateModel(originHellHoundMHandle)));
+		break;
+	case Ouger:
+		enemyArray = unuseOugerArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyOuger(MV1DuplicateModel(originOugerMHandle)));
 		break;
 	}
 
+	e = enemyArray[0];
+	enemyArray.erase(enemyArray.begin());
 
 	if (e == nullptr) return nullptr;
 
@@ -159,6 +189,18 @@ void EnemyManager::UnuseEnemy(Enemy* enemy) {
 		break;
 	case Wolf:
 		unuseWolfArray.push_back(enemy);
+		break;
+	case Troll:
+		unuseTrollArray.push_back(enemy);
+		break;
+	case Zombie:
+		unuseZombieArray.push_back(enemy);
+		break;
+	case HellHound:
+		unuseHellHoundArray.push_back(enemy);
+		break;
+	case Ouger:
+		unuseOugerArray.push_back(enemy);
 		break;
 	}
 }

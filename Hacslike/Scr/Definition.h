@@ -115,6 +115,11 @@ enum EnemyType {
 	Goblin,
 	Spider,
 	Wolf,
+	Troll,
+	Zombie,
+	HellHound,
+	Ouger,
+	Ketbleperz
 };
 
 enum RoomStatus {	// 部屋の配列ステータス
