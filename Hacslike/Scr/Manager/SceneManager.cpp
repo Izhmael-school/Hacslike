@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "../Scene/GameScene.h"
 #include "../Scene/TitleScene.h"
+#include "../Scene/SekinoScene.h"
 
 SceneManager::SceneManager()
 	:pCurrentScene(nullptr)
@@ -20,6 +21,7 @@ SceneManager::~SceneManager() {
 void SceneManager::Start() {
 	pSceneList[(int)SceneType::Title] = new TitleScene();
 	pSceneList[(int)SceneType::Game] = new GameScene();
+	pSceneList[(int)SceneType::Sekino] = new SekinoScene();
 }
 
 

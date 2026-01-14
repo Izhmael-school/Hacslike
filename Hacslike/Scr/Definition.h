@@ -87,6 +87,7 @@ const unsigned int palegreen = GetColor(144, 238, 144); // 薄い緑
 enum class SceneType {
 	Title,
 	Game,
+	Sekino,
 	Max,
 };
 
@@ -119,7 +120,8 @@ enum EnemyType {
 	Zombie,
 	HellHound,
 	Ouger,
-	Ketbleperz
+	Ketbleperz,
+	Durahan,
 };
 
 enum RoomStatus {	// 部屋の配列ステータス
