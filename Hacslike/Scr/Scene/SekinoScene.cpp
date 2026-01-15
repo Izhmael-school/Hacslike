@@ -1,8 +1,17 @@
 #include "SekinoScene.h"
 #include "../GameObject/Camera/Camera.h"
 #include "../GameObject/Character/Enemy/Goblin/EnemyGoblin.h"
+#include "../GameObject/Character/Enemy/Spider/EnemySpider.h"
+#include "../GameObject/Character/Enemy/Wolf/EnemyWolf.h"
+#include "../GameObject/Character/Enemy/Troll/EnemyTroll.h"
+#include "../GameObject/Character/Enemy/Zombie/EnemyZombie.h"
+#include "../GameObject/Character/Enemy/HellHound/EnemyHellHound.h"
+#include "../GameObject/Character/Enemy/Ouger/EnemyOuger.h"
+#include "../GameObject/Character/Enemy/Ketbleperz/EnemyKetbleperz.h"
+#include "../GameObject/Character/Enemy/Durahan/EnemyDurahan.h"
 #include "../GameObject/Character/Player/Player.h"
 #include "../Manager/StageManager.h"
+#include "../Manager/EnemyManager.h"
 
 SekinoScene::SekinoScene()
 {
@@ -20,14 +29,18 @@ SekinoScene::~SekinoScene() {
 void SekinoScene::Start() {
 	Player* pPlayer = new Player();
 	pGameObjectArray.push_back(pPlayer);
+	pPlayer->AddMaxHp(10000000);
+	pPlayer->AddHp(pPlayer->GetMaxHp());
 	Weapon* pWeapon = new Weapon("sabel");
-
+	Enemy* e = EnemyManager().GetInstance().UseEnemy(Zombie);
+	pGameObjectArray.push_back(e);
+	e->SetPosition(VGet(200, 0, 800));
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
 	pCamera->SetTarget(pPlayer);
 
-	StageManager::GetInstance().Generate();
+	StageManager::GetInstance().NoFadeGenerate();
 }
 
 void SekinoScene::Update() {
@@ -92,3 +105,7 @@ void SekinoScene::Render() {
 	}
 #endif
 }
+
+void SekinoScene::Setup() {}
+
+void SekinoScene::Teardown() {}

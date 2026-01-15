@@ -365,6 +365,12 @@ void Enemy::Wander() {
 	}
 }
 
+VECTOR Enemy::AttackAreaPos(float dis) {
+	VECTOR dir = VGet(sinf(Deg2Rad(rotation.y)), 0, cosf(Deg2Rad(rotation.y)));
+	VECTOR nDir = VNorm(dir);
+	return VScale(nDir,dis);
+}
+
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 	VECTOR dir = VSub(targetPos, position);
 	float angle = atan2f(dir.x, dir.z);
@@ -460,6 +466,8 @@ void Enemy::Attack() {
 }
 
 void Enemy::OnTriggerEnter(Collider* _pOther) {
+	if (IsDead()) return;
+
 	if (_pOther->GetGameObject()->CompareTag("Player")) {
 		isTouch = true;
 		pAnimator->Play("idle01");

@@ -70,7 +70,7 @@ public:
 
 	// 再使用時の初期化
 	void Setup();
-	// 死んだかどうか
+	// 死んだとき実行する処理
 	void DeadExecute() override;
 	// Jsonファイルからステータスを持ってくる
 	void SetStatusData(int enemyID);
@@ -78,6 +78,8 @@ public:
 	void LoadAnimation();
 	// 敵の種類を取得
 	inline EnemyType GetType() const { return type; }
+	// 攻撃の当たり判定の座標計算
+	VECTOR AttackAreaPos(float dis);
 private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// 追跡行動

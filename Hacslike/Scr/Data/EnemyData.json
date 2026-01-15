@@ -85,5 +85,27 @@
     "atk": 30,
     "def": 10,
     "exp": 70
+  },
+
+  {
+    "id": 8,
+    "name": "ケトブレペルツ",
+    "typeID": 7,
+    "mPath": "Res/Model/Enemy/Ketbleperz/",
+    "hp": 500,
+    "atk": 150,
+    "def": 50,
+    "exp": 500
+  },
+
+  {
+    "id": 8,
+    "name": "デュラハン",
+    "typeID": 7,
+    "mPath": "Res/Model/Enemy/Durahan/",
+    "hp": 300,
+    "atk": 250,
+    "def": 150,
+    "exp": 700
   }
 ]
