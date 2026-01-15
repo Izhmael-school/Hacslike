@@ -1,4 +1,4 @@
-#include "StageManager.h"
+ï»¿#include "StageManager.h"
 #include "FadeManager.h"
 #include "../GameObject/Character/Character.h"
 #include "../CommonModule.h"
@@ -33,7 +33,7 @@ void StageManager::Update() {
 
 void StageManager::Render() {
 	generator->Render();
-	DrawFormatString(100, 100, red, "ŠK‘w %d ŠK", floorCount - 1);
+	DrawFormatString(100, 100, red, "éšå±¤ %d éš", floorCount - 1);
 }
 
 void StageManager::LoadFloorData() {
@@ -46,7 +46,7 @@ void StageManager::LoadFloorData() {
 		floorData.endFloor = d["endFloor"];
 		floorData.floorTextureName = d["floorTextureName"];
 
-		// ƒxƒNƒ^[‚Ì‰Šú‰»
+		// ãƒ™ã‚¯ã‚¿ãƒ¼ã®åˆæœŸåŒ–
 		floorData.spawnEnemyID.clear();
 		floorData.spawnEnemyID.shrink_to_fit();
 
@@ -73,19 +73,19 @@ int StageManager::GetRoomStatus(int roomNum, RoomStatus status) {
 }
 
 void StageManager::GenerateStage() {
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	generator->ClearStage();
-	// ŠK‘w‚Ì‰ÁZ
+	// éšå±¤ã®åŠ ç®—
 	floorCount++;
-	// ƒeƒNƒXƒ`ƒƒ‚Ì’£‘Ö‚¦
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¼µæ›¿ãˆ
 	//ChangeTexture(floorDifTexture[floor(floorCount - 1 / textureChangeFloor)], Room);
-	// ƒXƒe[ƒW‚Ìƒf[ƒ^‚ğì‚é
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä½œã‚‹
 	generator->GenerateStageData();
-	// ƒXƒe[ƒW‚ÌƒIƒuƒWƒFƒNƒg‚ğ’u‚­
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç½®ã
 	generator->GenerateStageObject();
-	// ƒvƒŒƒCƒ„[‚Ìİ’u
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¨­ç½®
 	SetGameObjectRandomPos(Character::player);
-	// ƒGƒlƒ~[‚Ìíœ
+	// ã‚¨ãƒãƒŸãƒ¼ã®å‰Šé™¤
 	EnemyManager::GetInstance().UnuseAllEnemy();
 	int canSpawnNum = 0;
 	for (int i = 0; i < RoomMax_Large; i++) {
@@ -94,18 +94,18 @@ void StageManager::GenerateStage() {
 
 		canSpawnNum += w * h;
 	}
-	// “G‚Ì”‚ğŒˆ‚ß‚é
+	// æ•µã®æ•°ã‚’æ±ºã‚ã‚‹
 	int spawnNum = Random(std::floor(canSpawnNum / 10), std::floor(canSpawnNum / 3));
 
 	if (spawnNum > EnemyMax) spawnNum = EnemyMax;
 
-	// “Gƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// æ•µãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	auto data = LoadJsonFile("Scr/Data/EnemyData.json");
 
 	int max = floorData.spawnEnemyID.size();
 	std::vector<EnemyData> spawnEnemyDataList;
 
-	// ƒXƒ|[ƒ“‚·‚é‰Â”\«‚Ì‚ ‚é“G‚Ìƒf[ƒ^‚ğæ“¾‚µ‚Ä‚¨‚­
+	// ã‚¹ãƒãƒ¼ãƒ³ã™ã‚‹å¯èƒ½æ€§ã®ã‚ã‚‹æ•µã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ãŠã
 	for (int i = 0; i < max; i++) {
 		for (auto d : data) {
 			if (d["id"] != floorData.spawnEnemyID[i]) continue;
@@ -133,17 +133,17 @@ void StageManager::GenerateStage() {
 }
 
 void StageManager::GenerateStage(int stageID) {
-	// ƒXƒe[ƒW‚Ì‰Šú‰»
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ã®åˆæœŸåŒ–
 	generator->ClearStage();
-	// ƒtƒƒA‚Ì‰ÁZ
+	// ãƒ•ãƒ­ã‚¢ã®åŠ ç®—
 	floorCount++;
-	// ƒtƒƒAƒf[ƒ^‚Ì“Ç‚İ‚İ
+	// ãƒ•ãƒ­ã‚¢ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
 	generator->LoadStageData(stageID);
-	// ƒtƒƒA‚Ì¶¬
+	// ãƒ•ãƒ­ã‚¢ã®ç”Ÿæˆ
 	generator->GenerateStageObject();
-	// ƒvƒŒƒCƒ„[‚Ì”z’u
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é…ç½®
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
-	// ƒ{ƒX‚Ì”z’u
+	// ãƒœã‚¹ã®é…ç½®
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
 
 	int enemyType = generator->GetStageData().bossType;
@@ -208,6 +208,68 @@ void StageManager::SetGameObject(VECTOR pos, GameObject* obj) {
 
 void StageManager::ChangeTexture(int textureHandle, ObjectType changeObject) {
 	generator->ChangeObjectTexture(textureHandle, changeObject);
+}
+
+void StageManager::SaveTo(BinaryWriter& w)
+{
+	// éšå±¤æƒ…å ±
+	w.WritePOD(floorCount);
+
+	// ã‚¹ãƒ†ãƒ¼ã‚¸çŠ¶æ…‹ã‚’å§”è­²ã—ã¦ä¿å­˜
+	if (generator) {
+		generator->SaveTo(w);
+	}
+}
+
+void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
+{
+	// éšå±¤æƒ…å ±
+	r.ReadPOD(floorCount);
+
+	// sanity check
+	if (floorCount < 0 || floorCount > 10000) {
+		printf("[Save] suspicious floorCount read: %d -> clamped to 0\n", floorCount);
+		floorCount = 0;
+	}
+	printf("[Save] floorCount read: %d\n", floorCount);
+
+	if (generator) {
+		generator->LoadFrom(r, saveVersion);
+
+		printf("[Save] after LoadFrom: mapWidth=%d mapHeight=%d roomCount=%d\n",
+			generator->mapWidth, generator->mapHeight, generator->roomCount);
+
+		// ã¾ãšé€šå¸¸ã©ãŠã‚Šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
+		generator->GenerateStageObject();
+
+		size_t created = 0;
+		for (auto c : generator->cells) {
+			if (c) { c->Update(); ++created; }
+		}
+		if (generator->useStair) { generator->useStair->Update(); ++created; }
+
+		printf("[Save] GenerateStageObject created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
+
+		// ã‚‚ã—ä½•ã‚‚ç”Ÿæˆã•ã‚Œãªã‹ã£ãŸã‚‰ã€èª­ã¿è¾¼ã¾ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãŒä¸å®Œå…¨ãªå¯èƒ½æ€§ãŒé«˜ã„ã®ã§å›å¾©å‡¦ç†ã‚’è©¦ã¿ã‚‹
+		if (created == 0) {
+			printf("[Save] No StageCells created - data may be incomplete. Forcing fallback reconstruction.\n");
+
+			// ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯: ãƒãƒƒãƒ—ã‚’å…¨é ˜åŸŸã¨ã—ã¦æ‰±ã†
+			generator->mapWidth = mapWidth_Large;
+			generator->mapHeight = mapHeight_Large;
+
+			// StageCell ã‚’å†ç”Ÿæˆï¼ˆæ—¢ã« ClearStage() ãŒå‘¼ã°ã‚ŒãŸçŠ¶æ…‹ãªã®ã§å•é¡Œãªã„ã¯ãšï¼‰
+			generator->GenerateStageObject();
+
+			created = 0;
+			for (auto c : generator->cells) {
+				if (c) { c->Update(); ++created; }
+			}
+			if (generator->useStair) { generator->useStair->Update(); ++created; }
+
+			printf("[Save] After fallback, created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
+		}
+	}
 }
 
 

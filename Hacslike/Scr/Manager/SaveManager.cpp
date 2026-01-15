@@ -1,4 +1,4 @@
-#include "SaveManager.h"
+ï»¿#include "SaveManager.h"
 #include"../GameObject/Character/Player/Player.h"
 #include"../Save/SaveIO.h"
 #include "../Save/SaveFormat.h"
@@ -67,6 +67,12 @@ void SaveManager::RegisterLoadHandler(const std::function<void(BinaryReader&, ui
 
 void SaveManager::RegisterSavers()
 {
+    // Prevent multiple registrations
+    if (saversRegistered) {
+        std::cout << "[SaveManager] RegisterSavers called but already registered - skipping." << std::endl;
+        return;
+    }
+    saversRegistered = true;
     RegisterSaveHandler([](BinaryWriter& w) {
         if (Player::GetInstance()) {
             Player::GetInstance()->SaveTo(w);
@@ -77,7 +83,13 @@ void SaveManager::RegisterSavers()
             Player::GetInstance()->LoadFrom(r, ver);
         }
         });
-   
+    // StageManager ã‚’ã‚»ãƒ¼ãƒ–/ãƒ­ãƒ¼ãƒ‰ã«ç™»éŒ²
+    RegisterSaveHandler([](BinaryWriter& w) {
+        StageManager::GetInstance().SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        StageManager::GetInstance().LoadFrom(r, ver);
+        });
 }
 
 bool SaveManager::Save(int slotIndex) {
@@ -85,18 +97,33 @@ bool SaveManager::Save(int slotIndex) {
     EnsureSaveDir();
     std::string tmp = SlotFileName(slotIndex) + ".tmp";
     std::ofstream out(tmp, std::ios::binary | std::ios::trunc);
-    if (!out) return false;
+    if (!out) {
+        std::cout << "[SaveManager] Failed to open tmp file for writing: " << tmp << std::endl;
+        return false;
+    }
+
+    std::cout << "[SaveManager] Saving to slot " << slotIndex << " tmp=" << tmp << std::endl;
+    std::cout << "[SaveManager] Number of save handlers: " << saveHandlers.size() << std::endl;
 
     // Header
     out.write(SAVE_MAGIC, sizeof(SAVE_MAGIC) - 1);
     uint32_t ver = SAVE_VERSION;
     out.write(reinterpret_cast<const char*>(&ver), sizeof(ver));
 
-    BinaryWriter w(out); // BinaryWriter ‚Í SaveIO.h ‚É‚æ‚è’è‹`Ï‚İ
+    BinaryWriter w(out); // BinaryWriter ï¿½ï¿½ SaveIO.h ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Ï‚ï¿½
     for (auto& h : saveHandlers) {
-        h(w); // ³í‚ÉŒÄ‚×‚é‚Í‚¸
+        h(w); // ï¿½ï¿½ï¿½ï¿½ï¿½ÉŒÄ‚×‚ï¿½ï¿½Í‚ï¿½
     }
     out.close();
+
+    // Debug: print size of tmp file
+    {
+        std::ifstream fin(tmp, std::ios::binary | std::ios::ate);
+        if (fin) {
+            auto size = fin.tellg();
+            std::cout << "[SaveManager] tmp file size = " << size << " bytes" << std::endl;
+        }
+    }
 
     std::string final = SlotFileName(slotIndex);
     std::remove(final.c_str());
@@ -112,18 +139,33 @@ bool SaveManager::Load(int slotIndex) {
     if (slotIndex < 0 || slotIndex >= 10) return false;
     std::string fname = SlotFileName(slotIndex);
     std::ifstream in(fname, std::ios::binary);
-    if (!in) return false;
+    if (!in) {
+        std::cout << "[SaveManager] Failed to open save file for reading: " << fname << std::endl;
+        return false;
+    }
+
+    // Debug: file size
+    in.seekg(0, std::ios::end);
+    std::streampos fileSize = in.tellg();
+    in.seekg(0, std::ios::beg);
+    std::cout << "[SaveManager] Loading from " << fname << " size=" << fileSize << " bytes" << std::endl;
+    std::cout << "[SaveManager] Number of load handlers: " << loadHandlers.size() << std::endl;
+
     char magicBuf[9] = { 0 };
     in.read(magicBuf, sizeof(SAVE_MAGIC) - 1);
+    std::cout << "[SaveManager] Read magic: '" << magicBuf << "'" << std::endl;
     if (std::strncmp(magicBuf, SAVE_MAGIC, sizeof(SAVE_MAGIC) - 1) != 0) {
         in.close();
+        std::cout << "[SaveManager] Invalid magic - aborting load" << std::endl;
         return false;
     }
     uint32_t ver = 0;
     in.read(reinterpret_cast<char*>(&ver), sizeof(ver));
-    BinaryReader r(in); // BinaryReader ‚Í SaveIO.h ‚É‚æ‚è’è‹`Ï‚İ
+    std::cout << "[SaveManager] Save version: " << ver << std::endl;
+
+    BinaryReader r(in); // BinaryReader ï¿½ï¿½ SaveIO.h ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Ï‚ï¿½
     for (auto& h : loadHandlers) {
-        h(r, ver); // ³í‚ÉŒÄ‚×‚é‚Í‚¸
+        h(r, ver); // ï¿½ï¿½ï¿½ï¿½ï¿½ÉŒÄ‚×‚ï¿½ï¿½Í‚ï¿½
     }
     in.close();
     return true;
@@ -134,8 +176,8 @@ bool SaveManager::Delete(int slotIndex)
     if (slotIndex < 0 || slotIndex >= 10) return false;
     std::string fname = SlotFileName(slotIndex);
     if (std::remove(fname.c_str()) != 0) {
-        // íœ¸”siƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡‚à‚ ‚éj
-        // ‚»‚ê‚Å‚àƒƒ^‚ğXV‚µ‚Ä‚¨‚­
+        // å‰Šé™¤å¤±æ•—ï¼ˆãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆã‚‚ã‚ã‚‹ï¼‰
+        // ãã‚Œã§ã‚‚ãƒ¡ã‚¿ã‚’æ›´æ–°ã—ã¦ãŠã
     }
     slots[slotIndex].exists = false;
     slots[slotIndex].timestamp = 0;

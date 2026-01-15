@@ -37,5 +37,8 @@ private:
     std::array<SaveSlotMeta, 10> slots;
     std::vector<std::function<void(BinaryWriter&)>> saveHandlers;
     std::vector<std::function<void(BinaryReader&, uint32_t)>> loadHandlers;
+
+    // Guard to ensure RegisterSavers is applied only once
+    bool saversRegistered = false;
 };
 

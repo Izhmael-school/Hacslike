@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include "StageGenerator.h"
 #include "../Character/Character.h"
 #include"../../Save/SaveIO.h"
@@ -789,6 +790,150 @@ VECTOR StageGenerator::GetRandomRoomRandomPos() {
 	int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
 
 	return VGet(defaultPos.x + x * CellSize, 0, defaultPos.z + y * CellSize);
+}
+
+void StageGenerator::SaveTo(BinaryWriter& w)
+{
+	// mapWidth / mapHeight は内部的に使われるが、念のため保存します
+	w.WritePOD(mapWidth);
+	w.WritePOD(mapHeight);
+
+	// map 配列 (int)
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			int v = map[x][y];
+			w.WritePOD(v);
+		}
+	}
+
+	// mapObjects (bool -> uint8_t)
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			uint8_t b = mapObjects[x][y] ? 1u : 0u;
+			w.WritePOD(b);
+		}
+	}
+
+	// stageMap (bool -> uint8_t)
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			uint8_t b = stageMap[x][y] ? 1u : 0u;
+			w.WritePOD(b);
+		}
+	}
+
+	// roomStatus (int)
+	for (int s = 0; s < RoomStatus::Max; ++s) {
+		for (int i = 0; i < RoomMax_Large; ++i) {
+			int v = roomStatus[s][i];
+			w.WritePOD(v);
+		}
+	}
+
+	// roomCount
+	w.WritePOD(roomCount);
+}
+
+void StageGenerator::LoadFrom(BinaryReader& r, uint32_t ver)
+{
+	// まず現在のステージオブジェクトをクリア
+	ClearStage();
+
+	// mapWidth / mapHeight を読み取って内部変数へ
+	r.ReadPOD(mapWidth);
+	r.ReadPOD(mapHeight);
+
+	// map
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			int v = 0;
+			r.ReadPOD(v);
+			map[x][y] = v;
+		}
+	}
+
+	// mapObjects
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			uint8_t b = 0;
+			r.ReadPOD(b);
+			mapObjects[x][y] = (b != 0);
+		}
+	}
+
+	// stageMap
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			uint8_t b = 0;
+			r.ReadPOD(b);
+			stageMap[x][y] = (b != 0);
+		}
+	}
+
+	// roomStatus
+	for (int s = 0; s < RoomStatus::Max; ++s) {
+		for (int i = 0; i < RoomMax_Large; ++i) {
+			int v = -1;
+			r.ReadPOD(v);
+			roomStatus[s][i] = v;
+		}
+	}
+
+	// roomCount
+	r.ReadPOD(roomCount);
+
+	// 検査: 読み込んだデータの妥当性をチェック
+	int nonWallCount = 0;
+	for (int x = 0; x < mapWidth_Large; ++x) {
+		for (int y = 0; y < mapHeight_Large; ++y) {
+			if (map[x][y] != (int)ObjectType::Wall) ++nonWallCount;
+		}
+	}
+
+	// 問題検出条件:
+	// - roomCount が 0 かつ非 Wall セルが 0
+	// - mapWidth/mapHeight が範囲外または極端に小さい
+	bool suspicious = false;
+	if (roomCount <= 0) suspicious = true;
+	if (nonWallCount == 0) suspicious = true;
+	if (mapWidth <= 0 || mapHeight <= 0 || mapWidth > mapWidth_Large || mapHeight > mapHeight_Large) suspicious = true;
+
+	if (suspicious) {
+		printf("[StageGenerator] Loaded stage state appears suspicious: roomCount=%d nonWall=%d mapW=%d mapH=%d. Attempting recovery...\n",
+			roomCount, nonWallCount, mapWidth, mapHeight);
+
+		// 非 Wall セルから有効領域を検出して回復を試みる
+		int minX = mapWidth_Large, maxX = -1, minY = mapHeight_Large, maxY = -1;
+		for (int x = 0; x < mapWidth_Large; ++x) {
+			for (int y = 0; y < mapHeight_Large; ++y) {
+				if (map[x][y] != (int)ObjectType::Wall) {
+					if (x < minX) minX = x;
+					if (x > maxX) maxX = x;
+					if (y < minY) minY = y;
+					if (y > maxY) maxY = y;
+				}
+			}
+		}
+
+		if (maxX >= 0 && maxY >= 0) {
+			// 見つかった領域から mapWidth/mapHeight を復元（必要なら defaultPos の調整も検討）
+			int recoveredW = maxX - minX + 1;
+			int recoveredH = maxY - minY + 1;
+			mapWidth = std::min(recoveredW, mapWidth_Large);
+			mapHeight = std::min(recoveredH, mapHeight_Large);
+			printf("[StageGenerator] Recovered extents from data: minX=%d maxX=%d minY=%d maxY=%d -> mapW=%d mapH=%d\n",
+				minX, maxX, minY, maxY, mapWidth, mapHeight);
+		}
+		else {
+			// 完全にデータが無さそう -> 全領域にフォールバック
+			mapWidth = mapWidth_Large;
+			mapHeight = mapHeight_Large;
+			printf("[StageGenerator] No non-wall tiles found, falling back to full grid %d x %d\n", mapWidth, mapHeight);
+		}
+	}
+
+	// ここまででロードされた論理データは復元済み。
+	// 実際の StageCell の生成は StageManager 側で GenerateStageObject() を呼んで行います
 }
 
 
