@@ -43,6 +43,7 @@ void GameScene::Start() {
 	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
+
 }
 
 void GameScene::Update() {

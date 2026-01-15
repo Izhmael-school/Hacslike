@@ -18,7 +18,7 @@ struct StageData {
 };
 
 class StageGenerator {
-private:
+public:
 	int groundModel = -1;
 	int wallModel = -1;
 	int roadModel = -1;
@@ -97,6 +97,8 @@ public:
 	// 読み込んだステージデータの取得
 	inline StageData GetStageData() { return stage; }
 	
-
+	// シリアライズ / デシリアライズ
+	void SaveTo(BinaryWriter& w);
+	void LoadFrom(BinaryReader& r, uint32_t ver);
 };
 
