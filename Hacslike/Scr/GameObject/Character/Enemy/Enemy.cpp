@@ -365,8 +365,8 @@ void Enemy::Wander() {
 	}
 }
 
-VECTOR Enemy::AttackArea(float dis) {
-	VECTOR dir = VGet(sinf(rotation.y), 0, cosf(rotation.y));
+VECTOR Enemy::AttackAreaPos(float dis) {
+	VECTOR dir = VGet(sinf(Deg2Rad(rotation.y)), 0, cosf(Deg2Rad(rotation.y)));
 	VECTOR nDir = VNorm(dir);
 	return VScale(nDir,dis);
 }

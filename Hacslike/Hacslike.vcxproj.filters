@@ -184,6 +184,7 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Other\AttackArea.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -377,6 +378,7 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Other\AttackArea.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -468,6 +470,9 @@
     </Filter>
     <Filter Include="GameObject\HitPool">
       <UniqueIdentifier>{536cda0b-462c-4d97-a4ff-26691146aa76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Other">
+      <UniqueIdentifier>{f5781026-4ce0-486a-ad5e-ede1ea904921}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

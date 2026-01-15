@@ -79,7 +79,7 @@ public:
 	// “G‚Ìí—Ş‚ğæ“¾
 	inline EnemyType GetType() const { return type; }
 	// UŒ‚‚Ì“–‚½‚è”»’è‚ÌÀ•WŒvZ
-	VECTOR AttackArea(float dis);
+	VECTOR AttackAreaPos(float dis);
 private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// ’ÇÕs“®
