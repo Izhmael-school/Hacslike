@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Enemy.h"
 #include "../../../Manager/TimeManager.h"
 #include "../../../Component/Collider/Collider.h"
@@ -29,6 +30,7 @@ void Enemy::Start() {
 	SetTag("Enemy");
 	isTouch = false;
 	rayAnswer = false;
+	area.SetOwner(this);
 }
 
 void Enemy::Setup() {
@@ -53,7 +55,9 @@ void Enemy::Update() {
 	// アニメーションの更新
 	if (pAnimator != nullptr) {
 		pAnimator->Update();
+		area.Update();
 	}
+
 
 	// 攻撃当たり判定の更新
 	for (auto c : attackColliderList) {
@@ -97,6 +101,8 @@ void Enemy::Update() {
 
 void Enemy::Render() {
 	if (!isVisible) return;
+
+	area.Render();
 
 	// 攻撃当たり判定の更新
 	for (auto c : attackColliderList) {
@@ -363,6 +369,17 @@ void Enemy::Wander() {
 		nextWanderTime = 0;
 		goalPos = VGet(-1, -1, -1);
 	}
+}
+
+void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float time) {
+	pAnimator->GetAnimation(animName)->SetEvent(func,time);
+}
+
+void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis) {
+	float speed = pAnimator->GetAnimSpeed(animName);
+	SetAnimEvent(animName, [this,radius,speed,colliderspawnTime,dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis),position), speed, 
+		[this,radius,dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
+
 }
 
 VECTOR Enemy::AttackAreaPos(float dis) {

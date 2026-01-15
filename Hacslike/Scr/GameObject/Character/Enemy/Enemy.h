@@ -4,6 +4,7 @@
 #include "../../../Manager/EffectManager.h"
 #include "../../../Component/Collider/SphereHitBox.h"
 #include "../../../Manager/AudioManager.h"
+#include "Other/AttackArea.h"
 
 class Enemy : public Character {
 protected:
@@ -59,6 +60,8 @@ protected:
 	float nextWanderSpan;
 	// 視界
 	Ray_Fan vision;
+	// 攻撃前の攻撃範囲表示
+	AttackArea area;
 
 public:
 	Enemy();
@@ -80,6 +83,9 @@ public:
 	inline EnemyType GetType() const { return type; }
 	// 攻撃の当たり判定の座標計算
 	VECTOR AttackAreaPos(float dis);
+	// アニメーションイベントの登録
+	void SetAnimEvent(std::string animName,std::function<void()> func,float time = 0);
+	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,float dis);
 private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// 追跡行動

@@ -85,7 +85,7 @@ void SphereHitBox::CreateCollider() {
 	//	SetPosition(VAdd(owner->GetPosition(), offset));
 	//}
 	if (!pCollider) {
-		pCollider = new SphereCollider(this, offset, radius);
+		pCollider = new SphereCollider(this, VZero, radius);
 		pCollider->SetEnable(true);
 		CollisionManager::GetInstance().Register(pCollider);
 	}

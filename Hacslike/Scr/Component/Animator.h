@@ -105,7 +105,7 @@ public:
 	inline void ChangeSpeed(int index, float _speed) { pAnimations[index]->playSpeed = _speed; }
 	float GetTotalTime(std::string animName);
 	int GetAnimationIndex(std::string animName);
-
+	float GetAnimSpeed(std::string animName);
 
 	inline void SetAnimModelHandle(int handle);
 	VECTOR GetRootMotionDelta();
