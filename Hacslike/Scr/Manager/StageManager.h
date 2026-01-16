@@ -9,7 +9,6 @@
 struct FloorData {
 	int startFloor;
 	int endFloor;
-	std::string floorTextureName;
 	std::vector<int> spawnEnemyID;
 };
 
@@ -36,17 +35,20 @@ public:
 	class StageGenerator* generator;
 	int floorCount = 0;
 	std::vector<int> floorDifTexture;
+	std::vector<int> wallDifTexture;
 	std::vector<int> floorNormalTexture;
+	std::vector<int> wallNormalTexture;
 	int textureChangeFloor = 10;
 	const int BossFloorNum = 10;
 	FloorData floorData;
 
-
+	const std::string TEXTURE_FILEPATH = "Res/Model/Stage/Texture/";
 
 public:
 	void Update();
 	void Render();
 	void LoadFloorData();
+	void LoadFloorTexture();
 
 	int GetMapData(int x,int y);
 	int SetMapData(int x,int y,int setValue);

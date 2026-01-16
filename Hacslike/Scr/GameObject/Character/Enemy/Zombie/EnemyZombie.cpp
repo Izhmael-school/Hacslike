@@ -27,9 +27,9 @@ void EnemyZombie::Start() {
 	SetAnimEventForAttackCollider("attack02", 14, 2, 100, 100);
 	SetAnimEventForAttackCollider("attack02", 36, 2, 70, 100);
 	// UŒ‚’†‚ÌˆÚ“®§Œä
-	SetAnimEvent("attack01", [this]() { SetAttacking(true); }, 10);
+	SetAnimEvent("attack01", [this]() { SetAttacking(true); });
 	SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	SetAnimEvent("attack02", [this]() { SetAttacking(true); }, 10);
+	SetAnimEvent("attack02", [this]() { SetAttacking(true); });
 	SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
 
 }

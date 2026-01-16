@@ -6,7 +6,10 @@
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
-	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3","FloorDawn",false);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3", "FloorDawn", false);
+
+	auto data = LoadJsonFile("Scr/Data/FloorData.json");
+	LoadFloorTexture();
 }
 
 StageManager::~StageManager() {
@@ -17,6 +20,14 @@ StageManager::~StageManager() {
 	}
 
 	for (auto t : floorNormalTexture) {
+		DeleteGraph(t);
+	}
+
+	for (auto t : wallDifTexture) {
+		DeleteGraph(t);
+	}
+
+	for (auto t : wallNormalTexture) {
 		DeleteGraph(t);
 	}
 }
@@ -43,7 +54,6 @@ void StageManager::LoadFloorData() {
 
 		floorData.startFloor = d["startFloor"];
 		floorData.endFloor = d["endFloor"];
-		floorData.floorTextureName = d["floorTextureName"];
 
 		// ベクターの初期化
 		floorData.spawnEnemyID.clear();
@@ -53,6 +63,28 @@ void StageManager::LoadFloorData() {
 			floorData.spawnEnemyID.push_back(id);
 		}
 		break;
+	}
+}
+
+void StageManager::LoadFloorTexture() {
+	auto data = LoadJsonFile("Scr/data/FloorData.json");
+
+	for(auto d : data){
+	std::string floorTag = "f";
+	std::string wallTag = "w";
+	std::string normalTag = "n";
+	std::string pngTag = ".png";
+
+	std::string fileName = d["floorTextureName"];
+
+	std::string floorDifFileName = MergeString(TEXTURE_FILEPATH.c_str(), fileName, floorTag, pngTag);
+	std::string floorNormalFileName = MergeString(TEXTURE_FILEPATH.c_str(), fileName, floorTag, normalTag, pngTag);
+	std::string wallDifFileName = MergeString(TEXTURE_FILEPATH.c_str(), fileName, wallTag, pngTag);
+	std::string wallNormalFileName = MergeString(TEXTURE_FILEPATH.c_str(), fileName, wallTag, normalTag, pngTag);
+	floorDifTexture.push_back(LoadGraph(floorDifFileName.c_str()));
+	floorNormalTexture.push_back(LoadGraph(floorDifFileName.c_str()));
+	wallDifTexture.push_back(LoadGraph(wallNormalFileName.c_str()));
+	wallNormalTexture.push_back(LoadGraph(wallNormalFileName.c_str()));
 	}
 }
 
@@ -77,7 +109,7 @@ void StageManager::GenerateStage() {
 	// 階層の加算
 	floorCount++;
 	// テクスチャの張替え
-	//ChangeTexture(floorDifTexture[floor(floorCount - 1 / textureChangeFloor)], Room);
+	ChangeTexture(floorDifTexture[floor(floorCount - 1 / textureChangeFloor)], Room);
 	// ステージのデータを作る
 	generator->GenerateStageData();
 	// ステージのオブジェクトを置く

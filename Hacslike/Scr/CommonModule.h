@@ -73,3 +73,19 @@ inline VECTOR Cross(VECTOR dir1, VECTOR dir2) {
     float z = dir1.x * dir2.y - dir1.y * dir2.x;
     return VGet(x, y, z);
 }
+
+/// <summary>
+/// •¶š—ñ‚Ì‡‘Ì
+/// </summary>
+/// <param name="text"></param>
+/// <param name=""></param>
+/// <returns></returns>
+template<typename... Args>
+inline std::string MergeString(const Args&... args) {
+
+    std::string mergedText;
+    
+    (mergedText += ... += args);
+
+    return mergedText;
+}

@@ -12,7 +12,7 @@ EnemyTroll::~EnemyTroll() {}
 void EnemyTroll::Start() {
 	Enemy::Start();
 	// 当たり判定の設定
-	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 150, 0), 30);
+	pCollider = new CapsuleCollider(this, VGet(0, 00, 0), VGet(0, 250, 0), 70);
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	type = Troll;
 
@@ -22,17 +22,17 @@ void EnemyTroll::Start() {
 
 	// アニメーションイベントの設定
 	pAnimator->GetAnimation("dead")->SetEvent([this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
-	// 攻撃中の移動制御
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 15);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 11);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 9);
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 	// 攻撃の当たり判定
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 19);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 15);
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 15);
+	SetAnimEventForAttackCollider("attack01", 19,2, 200, 300);
+	SetAnimEventForAttackCollider("attack02", 15,2, 200, 150);
+	SetAnimEventForAttackCollider("attack03", 15,2, 200, 150);
+	// 攻撃中の移動制御
+	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 0);
+	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 0);
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
+	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 0);
+	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 
 }
 

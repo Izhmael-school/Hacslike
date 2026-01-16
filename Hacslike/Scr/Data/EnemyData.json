@@ -99,13 +99,24 @@
   },
 
   {
-    "id": 8,
+    "id": 9,
     "name": "デュラハン",
-    "typeID": 7,
+    "typeID": 8,
     "mPath": "Res/Model/Enemy/Durahan/",
     "hp": 300,
     "atk": 250,
     "def": 150,
     "exp": 700
+  },
+
+  {
+    "id": 10,
+    "name": "ホブゴブリン",
+    "typeID": 9,
+    "mPath": "Res/Model/Enemy/HobGoblin/",
+    "hp": 150,
+    "atk": 100,
+    "def": 10,
+    "exp": 100
   }
 ]

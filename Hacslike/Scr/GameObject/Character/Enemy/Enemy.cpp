@@ -37,13 +37,22 @@ void Enemy::Setup() {
 	hp = maxHp;
 	SetVisible(true);
 	rotation.y = Random(0, 359);
+	isTouch = false;
+	rayAnswer = false;
+	area.SetOwner(this);
 }
 
 void Enemy::Update() {
-	if (!isVisible || IsDead() || !GameSystem::GetInstance()->IsPlayable()) return;
+	if (!isVisible || !GameSystem::GetInstance()->IsPlayable()) return;
 	// 座標の更新等
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
+
+	if (IsDead()) {
+		pAnimator->Update();
+		area.Update();
+		return;
+	}
 
 	// レイの更新
 	WallDetectionVision_Fan(GetPlayer()->GetPosition());

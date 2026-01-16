@@ -36,8 +36,10 @@ void SpiderBullet::Render()
 
 		c += colorValue;
 
-		if (i == pointMax)
-			DrawLine3D(webPoint[pointMax], webPoint[0], GetColor(c, c, c));
+		if (i == pointMax - 1) {
+			DrawLine3D(webPoint[pointMax - 1], webPoint[0], GetColor(c, c, c));
+			return;
+		}
 
 		DrawLine3D(webPoint[i], webPoint[i + 1], GetColor(c, c, c));
 	}

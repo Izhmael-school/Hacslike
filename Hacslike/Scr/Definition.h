@@ -122,6 +122,7 @@ enum EnemyType {
 	Ouger,
 	Ketbleperz,
 	Durahan,
+	HobGoblin
 };
 
 enum RoomStatus {	// 部屋の配列ステータス
