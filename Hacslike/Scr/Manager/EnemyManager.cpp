@@ -13,6 +13,7 @@
 #include "../GameObject/Character/Enemy/Boss/BossBase.h"
 #include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
 #include "../Manager/AudioManager.h"
+#include"../Save/SaveIO.h"
 
 EnemyManager::EnemyManager() {
 	Start();
@@ -278,5 +279,70 @@ void EnemyManager::DeleteAllEnemy() {
 
 	pEnemyArray.clear();
 	pEnemyArray.shrink_to_fit();
+}
+
+void EnemyManager::SaveTo(BinaryWriter& w)
+{
+	// active 敵数
+	uint32_t count = static_cast<uint32_t>(pEnemyArray.size());
+	w.WritePOD(count);
+	for (auto e : pEnemyArray) {
+		// 必要な getter を Enemy 側で用意しておくこと（GetType, GetPosition, GetRotationY, GetHP, IsDead）
+		uint32_t type = static_cast<uint32_t>(e->GetType());
+		w.WritePOD(type);
+
+		VECTOR pos = e->GetPosition();
+		w.WritePOD(pos.x);
+		w.WritePOD(pos.y);
+		w.WritePOD(pos.z);
+
+		
+
+		float hp = e->GetHP();
+		w.WritePOD(hp);
+
+		uint8_t dead = e->IsDead() ? 1u : 0u;
+		w.WritePOD(dead);
+	}
+}
+
+void EnemyManager::LoadFrom(BinaryReader& r, uint32_t ver)
+{
+	// 既存の敵を一旦クリアする
+	UnuseAllEnemy();
+	DeleteAllEnemy();
+
+	uint32_t count = 0;
+	r.ReadPOD(count);
+	for (uint32_t i = 0; i < count; ++i) {
+		uint32_t type;
+		r.ReadPOD(type);
+
+		float x, y, z;
+		r.ReadPOD(x); r.ReadPOD(y); r.ReadPOD(z);
+
+		float rotY;
+		r.ReadPOD(rotY);
+
+		float hp;
+		r.ReadPOD(hp);
+
+		uint8_t dead;
+		r.ReadPOD(dead);
+
+		// UseEnemy でプールから取り出して pEnemyArray に push される（UseEnemy が内部で Setup/SetVisible を行う）
+		Enemy* e = UseEnemy(static_cast<EnemyType>(type));
+		if (!e) continue;
+
+		e->SetPosition(VGet(x, y, z));
+		e->SetHP(hp); // Enemy 側で実装
+
+		if (dead) {
+			e->SetDeadState(true); // ダメージ配布や経験値付与を発生させない専用処理を作ること
+			e->SetVisible(false);
+			// 衝突判定なども適切に解除する（必要なら）
+			CollisionManager::GetInstance().UnRegister(e->GetCollider());
+		}
+	}
 }
 

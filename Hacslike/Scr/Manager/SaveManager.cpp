@@ -19,6 +19,7 @@
 #include "../GameObject/Item/Inventory.h"
 #include"ArtifactManager.h"
 #include"SkillManager.h"
+#include"EnemyManager.h"
 
 static void EnsureSaveDir() {
 #ifdef _WIN32
@@ -114,6 +115,13 @@ void SaveManager::RegisterSavers()
         });
     RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
         SkillManager::GetInstance().LoadFrom(r, ver);
+        });
+    // 追加: EnemyManager の保存 / 読み込みハンドラ
+    RegisterSaveHandler([](BinaryWriter& w) {
+        EnemyManager::GetInstance().SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        EnemyManager::GetInstance().LoadFrom(r, ver);
         });
 }
 

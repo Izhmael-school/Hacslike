@@ -2,6 +2,7 @@
 #include "../Component/Singleton.h"
 #include <vector>
 #include "../Definition.h"
+#include"../Manager/SaveManager.h"
 
 class Enemy;
 
@@ -51,5 +52,9 @@ public:
 
 	void DeleteEnemy(Enemy* enemy);
 	void DeleteAllEnemy();
+
+	// セーブ / ロード
+	void SaveTo(BinaryWriter& w);
+	void LoadFrom(BinaryReader& r, uint32_t ver);
 };
 

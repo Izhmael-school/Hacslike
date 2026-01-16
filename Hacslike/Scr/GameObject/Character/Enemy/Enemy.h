@@ -112,5 +112,27 @@ public:
 	virtual void OnTriggerStay(Collider* _pOther) override;
 	// 出たとき
 	virtual void OnTriggerExit(Collider* _pOther) override;
+
+	public:
+		// 既に存在するメソッド群の補完として追加
+		VECTOR GetPosition() const { return position; }            // もし Character にあるなら不要
+		float GetRotationY() const { return rotation.y; }
+		void SetRotationY(float y) { rotation.y = y; }
+
+		float GetHP() const { return hp; }
+		void SetHP(float v) { hp = v; }
+
+		bool IsDead() const { return isDead; }
+		void SetDeadState(bool d) {
+			isDead = d;
+			if (d) {
+				hp = 0;
+				// 表示やアニメ切替（報酬は与えない）
+				if (pAnimator) pAnimator->Play("dead");
+				SetVisible(false);
+			}
+		}
+		// 必要なら collider 取得
+		Collider* GetCollider() const { return pCollider; }
 };
 
