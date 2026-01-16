@@ -41,8 +41,7 @@ void GameScene::Start() {
 	StartTreasureChest* pChest = new StartTreasureChest();
 	pGameObjectArray.push_back(pChest);
 	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
-	//アイテムのセット
-	ItemFactory::Instance().InitializeDefaultItems();
+	
 
 }
 

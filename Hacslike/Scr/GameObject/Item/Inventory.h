@@ -6,15 +6,18 @@
 #include "ItemBase.h"
 #include <unordered_map>
 #include"ItemHeal/ItemHeal.h"
+#include "../../Manager/SaveManager.h"
 
 class Inventory
 {
 public:
     struct InventoryItem {
-        std::unique_ptr<ItemBase> item;
+        std::unique_ptr<ItemBase> item; // 実インスタンス。Load 時は nullptr のままにできる
         int quantity;
+        std::string pendingID; // 追加: Load 直後は ID をここに保持しておき、後から生成する
 
         InventoryItem(std::unique_ptr<ItemBase> _item, int _quantity = 1);
+      
     };
 /// <summary>
 /// アイテム取得表示用構造体
@@ -67,7 +70,8 @@ private:
     std::string itemEffect;
     int itemEffectValue;
     int itemValue;
-
+    std::string Id;
+    std::string eqId;
     // 選択/スクロール状態
     int currentIndex;
     int scrollOffset;
@@ -186,6 +190,18 @@ public:
     InventoryItem* FindHealBySize(HealSize size);
 
     void RefreshHealShortcut();
+    
+    // セーブ/ロード用の API（SaveManager 経由で呼ばれる）
+    void SaveTo(BinaryWriter& w);
+    void LoadFrom(BinaryReader& r, uint32_t saveVersion);
+    uint32_t GetFloorForSave() const;
+
+    // --- 追加: シリアライズ / 補助 ---
+    void Save(class BinaryWriter& w);
+    void Load(class BinaryReader& r);
+    void Clear();
+    inline std::string GetEquippedItemID() const;
+    void SetEquippedByID(const std::string& id);
 public:
     inline const std::vector<InventoryItem>& GetItems() const { return items; }
 

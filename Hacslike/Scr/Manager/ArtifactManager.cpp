@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iostream>
 #include "AudioManager.h"
+#include "../GameObject/Character/Player/Player.h"
+#include "../Save/SaveIO.h" 
 
 
 ArtifactManager::ArtifactManager()

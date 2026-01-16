@@ -32,9 +32,11 @@
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
@@ -101,9 +103,11 @@
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.h" />

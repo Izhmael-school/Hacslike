@@ -123,10 +123,14 @@ void Player::SaveTo(BinaryWriter& w)
 	w.WritePOD(py);
 	w.WritePOD(pz);
 	
+	
 }
 
 void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 {
+	static int loadCallCount = 0;
+	loadCallCount++;
+	printfDx("[Player::LoadFrom] called times=%d\n", loadCallCount);
 	r.ReadPOD(Lv);
 	r.ReadPOD(exp);
 	r.ReadPOD(maxExp);
@@ -142,8 +146,9 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 	r.ReadPOD(py);
 	r.ReadPOD(pz);
 	SetPosition(VECTOR{ px, py,pz });
-	uint32_t itemCount;
-	r.ReadPOD(itemCount);
+	
+
+	
 	
 	// スキル・アーティファクトの復元も同様に
 }

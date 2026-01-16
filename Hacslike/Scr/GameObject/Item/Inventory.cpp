@@ -10,6 +10,11 @@
 #include"../Character/Character.h"
 #include"../Character/Player/Player.h"
 #include "../../Manager/AudioManager.h"
+// ここで Save/Load 用ヘッダと ItemFactory を追加で include
+#include "../../Save/SaveIO.h"
+#include "../../Save/SaveFormat.h"
+#include "ItemFactory.h"
+#include <cstdint> // uint32_t
 
 
 Inventory::InventoryItem::InventoryItem(std::unique_ptr<ItemBase> _item, int _quantity)
@@ -17,6 +22,7 @@ Inventory::InventoryItem::InventoryItem(std::unique_ptr<ItemBase> _item, int _qu
 {
    
 }
+
 
 Inventory::Inventory() : currentIndex(0),
 scrollOffset(0),
@@ -187,7 +193,9 @@ int Inventory::GetMaxVisible() const
 /// </summary>
 void Inventory::Update(Player* player)
 {
-    if (player->GetIsMenuSelected() == true) {
+   
+
+    if ((player->GetIsMenuSelected() == true)&& player->GetisItemUI() == true) {
 
         InputManager* input = &InputManager::GetInstance();
         // 並び替え
@@ -275,7 +283,7 @@ void Inventory::Update(Player* player)
         }
 
         // 左右でメニューの切替（EnterでOKする方式の場合は不要だが、対応）
-        if (menuActive) {
+        if (menuActive && player->GetisItemUI() == true) {
             if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
                 AudioManager::GetInstance().PlayOneShot("SelectSkill");
                 menuChoice = (std::max)(0, menuChoice - 1);
@@ -933,4 +941,106 @@ void Inventory::RefreshHealShortcut()
         if (largest)
             slotUp.itemID = largest->item->GetID();
     }
+}
+void Inventory::Save(BinaryWriter& w) 
+{
+    // items count
+    uint32_t count = static_cast<uint32_t>(items.size());
+    w.WritePOD(count);
+#if _DEBUG
+    printfDx("%d\n", count);
+#endif
+    for (const auto& inv : items) {
+        Id = inv.item->GetID();
+        w.WriteString(Id);
+        int qty = inv.quantity;
+        w.WritePOD(qty);
+        #if _DEBUG
+            printfDx("%sを保存\n", Id.c_str());
+        #endif
+        // 将来、アイテム固有状態を保存したければここで型名を書いて item->Serialize(w) を呼ぶ
+    }
+
+    // 装備中アイテム ID
+    eqId = GetEquippedItemID();
+    w.WriteString(eqId);
+
+    // ショートカット
+    w.WriteString(slotUp.itemID);
+    w.WriteString(slotRight.itemID);
+    w.WriteString(slotLeft.itemID);
+    w.WriteString(slotDown.itemID);
+}
+
+void Inventory::Load(BinaryReader& r)
+{
+    Clear();
+
+    uint32_t count = 0;
+    r.ReadPOD(count);
+
+#if _DEBUG
+    printfDx("%d\n", count);
+#endif
+    for (uint32_t i = 0; i < count; ++i) {
+        std::string id = r.ReadString();
+#if _DEBUG
+        printfDx("%s\n", id.c_str());
+#endif
+        int qty = 0;
+        r.ReadPOD(qty);
+
+        if (id.empty()) continue;
+        auto item = ItemFactory::Instance().CreateItem(id);
+        if (item) {
+            items.emplace_back(std::move(item), qty);
+        }
+        else {
+            // ファクトリに登録されていない ID の場合はログ出力してスキップ
+#if _DEBUG
+            printfDx("%sのロードが失敗して\n", id.c_str());
+#endif
+        }
+    }
+
+    // 装備中アイテム復元（ID を読んで items 内からポインタを探す）
+    std::string eqID = r.ReadString();
+    if (!eqID.empty()) {
+        InventoryItem* p = FindItemByID(eqID);
+        if (p) equippedItem = p->item.get();
+    }
+
+    // ショートカット復元
+    slotUp.itemID = r.ReadString();
+    slotRight.itemID = r.ReadString();
+    slotLeft.itemID = r.ReadString();
+    slotDown.itemID = r.ReadString();
+
+    
+}
+
+void Inventory::Clear()
+{
+    items.clear();
+    activeItems.clear();
+    equippedItem = nullptr;
+    slotUp.itemID.clear();
+    slotRight.itemID.clear();
+    slotLeft.itemID.clear();
+    slotDown.itemID.clear();
+    gainedItems.clear();
+    // アイコンハンドルは保持したままにするか、完全にクリアするかは選択可能
+}
+
+inline std::string Inventory::GetEquippedItemID() const
+{
+    if (!equippedItem) return std::string();
+    return equippedItem->GetID();
+}
+
+void Inventory::SetEquippedByID(const std::string& id)
+{
+    if (id.empty()) { equippedItem = nullptr; return; }
+    InventoryItem* it = FindItemByID(id);
+    if (it) equippedItem = it->item.get();
 }

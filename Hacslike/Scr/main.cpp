@@ -40,6 +40,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		DxLib_End();
 		return 0;
 	}
+	// ‘¼‚Ì‰Šú‰»‘O‚É“o˜^‚µ‚Ä‚¨‚­
+	ItemFactory::Instance().InitializeDefaultItems();
 
 	// •`‰æ‚·‚éæ‚ğİ’è‚·‚é — ‰æ–Ê‚É•ÏX‚·‚é
 	SetDrawScreen(DX_SCREEN_BACK);

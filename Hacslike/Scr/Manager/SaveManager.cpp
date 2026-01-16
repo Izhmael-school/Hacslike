@@ -14,8 +14,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #endif
-
 #include "StageManager.h"
+// 追加: Inventory ヘッダ（Player 経由でアクセスする想定）
+#include "../GameObject/Item/Inventory.h"
 
 static void EnsureSaveDir() {
 #ifdef _WIN32
@@ -74,22 +75,30 @@ void SaveManager::RegisterSavers()
     }
     saversRegistered = true;
     RegisterSaveHandler([](BinaryWriter& w) {
-        if (Player::GetInstance()) {
-            Player::GetInstance()->SaveTo(w);
-        }
-        });
-    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
-        if (Player::GetInstance()) {
-            Player::GetInstance()->LoadFrom(r, ver);
-        }
-        });
-    // StageManager をセーブ/ロードに登録
-    RegisterSaveHandler([](BinaryWriter& w) {
+        
+        Player::GetInstance()->SaveTo(w);
         StageManager::GetInstance().SaveTo(w);
         });
     RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        Player::GetInstance()->LoadFrom(r, ver);
         StageManager::GetInstance().LoadFrom(r, ver);
         });
+    // 追加: Inventory を個別に保存 / 読み込みするハンドラ
+    // （Player が Inventory を所有している場合）：
+    RegisterSaveHandler([](BinaryWriter& w) {
+        if (Player::GetInstance()) {
+            // Player にアクセサ GetInventory() を実装しておくこと
+            Inventory* inv = Player::GetInstance()->GetInventory();
+            if (inv) inv->Save(w);
+        }
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        if (Player::GetInstance()) {
+            Inventory* inv = Player::GetInstance()->GetInventory();
+            if (inv) inv->Load(r);
+        }
+        });
+  
 }
 
 bool SaveManager::Save(int slotIndex) {

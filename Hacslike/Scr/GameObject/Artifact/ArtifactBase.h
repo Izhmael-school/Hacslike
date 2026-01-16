@@ -28,6 +28,7 @@ public:	//オーバーライドするメンバ関数
 	virtual void Apply(Player* player) = 0;
 	virtual void Remove(Player* player) = 0;
 
+
 public:
 	const int GetID() const { return id; }
 	const std::string& GetName() const { return name; }

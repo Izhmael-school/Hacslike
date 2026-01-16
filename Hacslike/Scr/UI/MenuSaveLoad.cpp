@@ -8,6 +8,7 @@
 
 
 #include "../Manager/InputManager.h"
+#include "../GameObject/Item/ItemFactory.h"
 
 MenuSaveLoad::MenuSaveLoad(Mode m) : mode(m), selectedSlot(0), menuActive(false), menuChoice(0) {}
 
@@ -39,6 +40,7 @@ void MenuSaveLoad::Update() {
                 break;
             case 1: // ロード
                 // 存在チェックなどは SaveManager 内で行われる想定
+                ItemFactory::Instance().InitializeDefaultItems();
                 SaveManager::GetInstance().Load(selectedSlot);
                 break;
             case 2: // 削除

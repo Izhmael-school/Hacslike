@@ -336,6 +336,8 @@ public:		//	Getter と Setter
 	/// <returns></returns>
 	inline bool GetIsDead() const { return isDead; }
 
+	inline bool GetisItemUI() const { return isItemUI; }
+
 	/// <summary>
 	/// プレイヤーの前方向の取得
 	/// </summary>
