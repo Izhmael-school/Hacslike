@@ -32,7 +32,7 @@ void SekinoScene::Start() {
 	pPlayer->AddMaxHp(10000000);
 	pPlayer->AddHp(pPlayer->GetMaxHp());
 	Weapon* pWeapon = new Weapon("sabel");
-	Enemy* e = EnemyManager().GetInstance().UseEnemy(Zombie);
+	Enemy* e = EnemyManager().GetInstance().UseEnemy(HobGoblin);
 	pGameObjectArray.push_back(e);
 	e->SetPosition(VGet(200, 0, 800));
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));

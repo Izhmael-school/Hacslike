@@ -24,16 +24,15 @@ void EnemyWolf::Start() {
 	// アニメーションイベントの設定
 	pAnimator->GetAnimation("dead")->SetEvent([this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	// 攻撃の当たり判定
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 15);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 12);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 18);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 22);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 28);
+	SetAnimEventForAttackCollider("attack01", 15, 2, 100, 150);
+	SetAnimEventForAttackCollider("attack02", 12, 2, 100, 100);
+	SetAnimEventForAttackCollider("attack02", 18, 2, 75, 100);
+	SetAnimEventForAttackCollider("attack02", 22, 2, 50, 100);
 	// 攻撃中の移動制御
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 8);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 8);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
+	SetAnimEvent("attack01", [this]() { SetAttacking(true); });
+	SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
+	SetAnimEvent("attack02", [this]() { SetAttacking(true); });
+	SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
 	// 効果音
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 15);
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 12);

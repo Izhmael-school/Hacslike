@@ -410,12 +410,12 @@ void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 	if (attackIndex < 3) {
 		//VECTOR startLocal = VScale(forward, 20.0f);           // ローカル座標
 		//VECTOR endLocal = VScale(forward, 20.0f + _length); // ローカル座標
-		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 70.0f), VGet(0, 100, 0)));
+		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 100.0f), VGet(0, 100, 0)));
 		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
 		//CapsuleHitBox* capsuleBox = pCapsulePool->Spawn(pPlayer, startLocal, endLocal, VGet(0, 0, 0), _radius, 0.25f);
 	}
 	else {
-		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 70.0f), VGet(0, 100, 0)));
+		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 100.0f), VGet(0, 100, 0)));
 		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
 	}
 }

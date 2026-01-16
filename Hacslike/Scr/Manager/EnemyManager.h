@@ -19,6 +19,7 @@ private:
 	std::vector<Enemy*> unuseOugerArray;
 	std::vector<Enemy*> unuseKetbleperzArray;
 	std::vector<Enemy*> unuseDurahanArray;
+	std::vector<Enemy*> unuseHobGoblinArray;
 
 	const std::string audioFilePath = "Res/Audio/SE/Enemy/";
 
@@ -32,6 +33,7 @@ private:
 	int originOugerMHandle;
 	int originKetbleperzMHandle;
 	int originDurahanMHandle;
+	int originHobGoblinMHandle;
 
 public:
 	EnemyManager();

@@ -2,25 +2,25 @@
   {
     "startFloor": 0,
     "endFloor": 0,
-    "floorTextureName": "",
+    "floorTextureName": "3",
     "spawnEnemyID": [ -1 ]
   },
   {
     "startFloor": 1,
     "endFloor": 10,
-    "floorTextureName": "",
+    "floorTextureName": "1",
     "spawnEnemyID": [ 8 ]
   },
   {
     "startFloor": 11,
     "endFloor": 20,
-    "floorTextureName": "",
+    "floorTextureName": "2",
     "spawnEnemyID": [ 0 ]
   },
   {
     "startFloor": 21,
     "endFloor": 30,
-    "floorTextureName": "",
+    "floorTextureName": "3",
     "spawnEnemyID": [ 0 ]
   },
   {

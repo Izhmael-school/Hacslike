@@ -8,6 +8,7 @@
 #include "../GameObject/Character/Enemy/Ouger/EnemyOuger.h"
 #include "../GameObject/Character/Enemy/Ketbleperz/EnemyKetbleperz.h"
 #include "../GameObject/Character/Enemy/Durahan/EnemyDurahan.h"
+#include "../GameObject/Character/Enemy/HobGoblin/EnemyHobGoblin.h"
 #include "../GameObject/Character/Enemy/Enemy.h"
 #include "../GameObject/Character/Enemy/Boss/BossBase.h"
 #include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
@@ -28,6 +29,7 @@ EnemyManager::~EnemyManager() {
 	MV1DeleteModel(originOugerMHandle);
 	MV1DeleteModel(originKetbleperzMHandle);
 	MV1DeleteModel(originDurahanMHandle);
+	MV1DeleteModel(originHobGoblinMHandle);
 
 	for (auto g : unuseGoblinArray) {
 		delete g;
@@ -65,6 +67,10 @@ EnemyManager::~EnemyManager() {
 		delete d;
 	}
 
+	for (auto h : unuseHobGoblinArray) {
+		delete h;
+	}
+
 	for (auto e : pEnemyArray) {
 		delete e;
 	}
@@ -80,6 +86,7 @@ void EnemyManager::Start() {
 	originOugerMHandle = MV1LoadModel("Res/Model/Enemy/Ouger/model.mv1");
 	originKetbleperzMHandle = MV1LoadModel("Res/Model/Enemy/Ketbleperz/model.mv1");
 	originDurahanMHandle = MV1LoadModel("Res/Model/Enemy/Durahan/model.mv1");
+	originHobGoblinMHandle = MV1LoadModel("Res/Model/Enemy/HobGoblin/model.mv1");
 
 	pEnemyArray.clear();
 
@@ -186,6 +193,11 @@ Enemy* EnemyManager::UseEnemy(EnemyType type) {
 		if (enemyArray.size() <= 0)
 			enemyArray.push_back(new EnemyDurahan(MV1DuplicateModel(originDurahanMHandle)));
 		break;
+	case HobGoblin:
+		enemyArray = unuseHobGoblinArray;
+		if (enemyArray.size() <= 0)
+			enemyArray.push_back(new EnemyHobGoblin(MV1DuplicateModel(originHobGoblinMHandle)));
+		break;
 	}
 
 	e = enemyArray[0];
@@ -194,6 +206,7 @@ Enemy* EnemyManager::UseEnemy(EnemyType type) {
 	if (e == nullptr) return nullptr;
 
 	CollisionManager::GetInstance().Register(e->GetCollider());
+	e->Setup();
 	e->SetVisible(true);
 
 	return e;
@@ -231,6 +244,9 @@ void EnemyManager::UnuseEnemy(Enemy* enemy) {
 		break;
 	case Durahan:
 		unuseDurahanArray.push_back(enemy);
+		break;
+	case HobGoblin:
+		unuseHobGoblinArray.push_back(enemy);
 		break;
 	}
 }

@@ -127,6 +127,14 @@ int Animator::GetAnimationIndex(std::string animName) {
 	return -1;
 }
 
+float Animator::GetAnimSpeed(std::string animName) {
+	for (int i = 0, max = pAnimations.size(); i < max; i++) {
+		if (pAnimations[i]->name != animName) continue;
+		return pAnimations[i]->playSpeed;
+	}
+	return 0.0f;
+}
+
 void Animator::SetAnimModelHandle(int handle) {
 	animationModelHandle = handle;
 	// モデルのルートボーンを探す（ボーン名はモデルに合わせて変更）
