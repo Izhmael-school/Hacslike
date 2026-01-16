@@ -181,4 +181,102 @@ void ArtifactManager::ClearArtifact(Player* player)
 
 }
 
+void ArtifactManager::SaveTo(BinaryWriter& w) const
+{
+    uint32_t count = static_cast<uint32_t>(obtainedArtifacts.size());
+    w.WritePOD(count);
+    for (const auto& art : obtainedArtifacts)
+    {
+        int32_t aid = art->GetID();
+        bool active = (std::find(activeArtifact.begin(), activeArtifact.end(), art) != activeArtifact.end());
+        w.WritePOD(aid);
+        w.WritePOD(active);
+        art->Save(w);
+    }
+}
+
+void ArtifactManager::LoadFrom(BinaryReader& r, uint32_t version)
+{
+    // Clear current lists
+    activeArtifact.clear();
+    obtainedArtifacts.clear();
+    artifacrPool.clear();
+
+    Player* player = Player::GetInstance(); // assumes Player singleton accessor exists
+
+    uint32_t count = 0;
+    r.ReadPOD(count);
+    for (uint32_t i = 0; i < count; ++i)
+    {
+        int32_t aid = 0;
+        bool active = false;
+        r.ReadPOD(aid);
+        r.ReadPOD(active);
+
+        auto art = CreateArtifactByID(aid);
+        if (!art)
+        {
+            // Unknown id: skip -- but reading of artifact-specific data must still be consistent.
+#if _DEBUG
+            printfDx("[ArtifactManager::LoadFrom] Unknown artifact id: %d\n", aid);
+#endif
+            continue;
+        }
+        art->Load(r, version);
+
+        obtainedArtifacts.push_back(art);
+        if (active)
+        {
+            activeArtifact.push_back(art);
+            // Reattach to player for event callbacks without reapplying permanent stat changes
+            art->Restore(player);
+        }
+    }
+
+    // Reconstruct artifacrPool as the initial set minus obtained ones (by id)
+    auto proto = MakeInitialPool();
+    // remove obtained IDs from proto (one-by-one)
+    for (const auto& got : obtainedArtifacts)
+    {
+        int idgot = got->GetID();
+        auto it = std::find_if(proto.begin(), proto.end(), [&](const std::shared_ptr<ArtifactBase>& p) {
+            return p->GetID() == idgot;
+            });
+        if (it != proto.end())
+            proto.erase(it);
+    }
+    artifacrPool = std::move(proto);
+}
+
+std::shared_ptr<ArtifactBase> ArtifactManager::CreateArtifactByID(int id)
+{
+    switch (id)
+    {
+    case 1: return std::make_shared<conditional_attack_power_raise_HP>();
+    case 2: return std::make_shared<Hp_Max_Raise>();
+    case 3: return std::make_shared<CoinValue_raise>();
+    case 4: return std::make_shared<conditional_defense_power_raise_HP>();
+    case 5: return std::make_shared<attactPower_raise_GetCoin>();
+    case 6: return std::make_shared<itemDropRateUpwardOnCoinAcquisition>();
+    case 7: return std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>();
+    case 8: return std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>();
+    default:
+        return nullptr;
+    }
+}
+
+std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::MakeInitialPool()
+{
+    return {
+       std::make_shared<conditional_attack_power_raise_HP>(),
+       std::make_shared<Hp_Max_Raise>(),
+       std::make_shared<CoinValue_raise>(),
+       std::make_shared<conditional_defense_power_raise_HP>(),
+       std::make_shared<attactPower_raise_GetCoin>(),
+       std::make_shared<itemDropRateUpwardOnCoinAcquisition>(),
+       std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>(),
+       std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>(),
+    };
+}
+
 

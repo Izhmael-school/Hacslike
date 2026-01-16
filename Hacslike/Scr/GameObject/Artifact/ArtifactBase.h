@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include <string>
+#include"../../Manager/SaveManager.h"
 class Player;
 class PlayerMovement;
 
@@ -27,8 +28,9 @@ public:	//オーバーライドするメンバ関数
 	virtual void Update(Player* player) = 0;
 	virtual void Apply(Player* player) = 0;
 	virtual void Remove(Player* player) = 0;
-
-
+	virtual void Save(BinaryWriter& w) = 0;
+	virtual void Load(BinaryReader& r, uint32_t version);
+	virtual void Restore(Player* player);
 public:
 	const int GetID() const { return id; }
 	const std::string& GetName() const { return name; }
@@ -52,7 +54,8 @@ public:
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 };
 
 /// <summary>
@@ -66,7 +69,8 @@ public:
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 };
 
 /// <summary>
@@ -79,7 +83,8 @@ public:
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 
 };
 
@@ -94,7 +99,8 @@ public:
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 
 };
 
@@ -116,7 +122,8 @@ public:
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 };
 
 /// <summary>
@@ -135,7 +142,8 @@ public:
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 };
 
 /// <summary>
@@ -154,7 +162,8 @@ public:
 	void Update(Player* player)override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
-
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 	
 };
 
@@ -171,6 +180,8 @@ public:
 	void Update(Player* player)override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
 };
 
 #pragma endregion

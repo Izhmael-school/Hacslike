@@ -17,6 +17,7 @@
 #include "StageManager.h"
 // 追加: Inventory ヘッダ（Player 経由でアクセスする想定）
 #include "../GameObject/Item/Inventory.h"
+#include"ArtifactManager.h"
 
 static void EnsureSaveDir() {
 #ifdef _WIN32
@@ -97,6 +98,14 @@ void SaveManager::RegisterSavers()
             Inventory* inv = Player::GetInstance()->GetInventory();
             if (inv) inv->Load(r);
         }
+        });
+
+    // 追加: ArtifactManager の保存 / 読み込みハンドラ
+    RegisterSaveHandler([](BinaryWriter& w) {
+        ArtifactManager::GetInstance().SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        ArtifactManager::GetInstance().LoadFrom(r, ver);
         });
   
 }

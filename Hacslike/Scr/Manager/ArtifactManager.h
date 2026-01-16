@@ -54,5 +54,17 @@ public:
 
 	const std::vector<std::shared_ptr<ArtifactBase>>& GetObtainedArtifacts() const { return obtainedArtifacts; }
 
+	// --- Serialization ---
+	void SaveTo(BinaryWriter& w) const;
+	void LoadFrom(BinaryReader& r, uint32_t version);
+
+private:
+	// helper to create fresh instance by ID
+	std::shared_ptr<ArtifactBase> CreateArtifactByID(int id);
+
+	// helper to create prototype list (same set used in ctor)
+	std::vector<std::shared_ptr<ArtifactBase>> MakeInitialPool();
+
+
 };
 

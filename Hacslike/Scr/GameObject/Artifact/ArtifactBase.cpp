@@ -2,7 +2,10 @@
 #include"../Character/Player/Player.h"
 #include"../../Manager/TimeManager.h"
 #include"../Character/Player/PlayerMovement.h"
+#include"../../Save/SaveIO.h"
 
+
+#pragma region 基底
 ArtifactBase::ArtifactBase(const int _id,const std::string& _name, const std::string& _desc, const std::string& _icon)
     :id(_id)
     ,name(_name)
@@ -14,6 +17,10 @@ ArtifactBase::ArtifactBase(const int _id,const std::string& _name, const std::st
     }
 }
 
+void ArtifactBase::Update(Player* player)
+{
+}
+
 void ArtifactBase::Apply(Player* player)
 {
 }
@@ -21,6 +28,20 @@ void ArtifactBase::Apply(Player* player)
 void ArtifactBase::Remove(Player* player)
 {
 }
+
+void ArtifactBase::Save(BinaryWriter& w)
+{
+}
+
+void ArtifactBase::Load(BinaryReader& r, uint32_t version)
+{
+}
+
+void ArtifactBase::Restore(Player* player)
+{
+}
+#pragma endregion
+
 
 #pragma region HPが一定値以上だと攻撃力上昇
 conditional_attack_power_raise_HP::conditional_attack_power_raise_HP(float boost)
@@ -62,6 +83,19 @@ void conditional_attack_power_raise_HP::Remove(Player* player)
         isBoosted = false;
     }
 }
+
+void conditional_attack_power_raise_HP::Save(BinaryWriter& w)
+{
+    w.WritePOD(attackBoost);
+    w.WritePOD(isBoosted);
+}
+
+void conditional_attack_power_raise_HP::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(attackBoost);
+    r.ReadPOD(isBoosted);
+}
+
 #pragma endregion
 
 #pragma region HP上限上昇
@@ -88,6 +122,14 @@ void Hp_Max_Raise::Remove(Player* player)
     if (!player) return;
     player->SetMaxHp(player->GetMaxHp() / MaxHpBoost);
 }
+void Hp_Max_Raise::Save(BinaryWriter& w)
+{
+    w.WritePOD(MaxHpBoost);
+}
+void Hp_Max_Raise::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(MaxHpBoost);
+}
 #pragma endregion
 
 #pragma region コインの取得量上昇
@@ -108,6 +150,14 @@ void CoinValue_raise::Apply(Player* player)
 
 void CoinValue_raise::Remove(Player* player)
 {
+}
+void CoinValue_raise::Save(BinaryWriter& w)
+{
+    w.WritePOD(UpValue);
+}
+void CoinValue_raise::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(UpValue);
 }
 #pragma endregion
 
@@ -150,6 +200,16 @@ void conditional_defense_power_raise_HP::Remove(Player* player)
         player->SetDef(player->GetDef() / defenseBoost);
         isDefBoosted = false;
     }
+}
+void conditional_defense_power_raise_HP::Save(BinaryWriter& w)
+{
+    w.WritePOD(defenseBoost);
+    w.WritePOD(isDefBoosted);
+}
+void conditional_defense_power_raise_HP::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(defenseBoost);
+    r.ReadPOD(isDefBoosted);
 }
 #pragma endregion
 
@@ -206,6 +266,22 @@ void attactPower_raise_GetCoin::Remove(Player* player)
     player->SetBaseAtk(originalAtk);
 
 }
+void attactPower_raise_GetCoin::Save(BinaryWriter& w)
+{
+    w.WritePOD(boostAmount);
+    w.WritePOD(duration);
+    w.WritePOD(timer);
+    w.WritePOD(isBoosted);
+    w.WritePOD(originalAtk);
+}
+void attactPower_raise_GetCoin::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(boostAmount);
+    r.ReadPOD(duration);
+    r.ReadPOD(timer);
+    r.ReadPOD(isBoosted);
+    r.ReadPOD(originalAtk);
+}
 #pragma endregion
 
 #pragma region コイン取得時にアイテムドロップ率が上昇
@@ -259,6 +335,20 @@ void itemDropRateUpwardOnCoinAcquisition::Apply(Player* player)
 void itemDropRateUpwardOnCoinAcquisition::Remove(Player* player)
 {
     ItemDropManager::GetInstance().SetItemDropRate(ItemDropManager::GetInstance().GetItemDropRate() - dropRateUpward);
+}
+void itemDropRateUpwardOnCoinAcquisition::Save(BinaryWriter& w)
+{
+    w.WritePOD(dropRateUpward);
+    w.WritePOD(duration);
+    w.WritePOD(timer);
+    w.WritePOD(isBoost);
+}
+void itemDropRateUpwardOnCoinAcquisition::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(dropRateUpward);
+    r.ReadPOD(duration);
+    r.ReadPOD(timer);
+    r.ReadPOD(isBoost);
 }
 #pragma endregion
 
@@ -324,6 +414,22 @@ void AttackincreasesforSeveralSecondsAfterEvasion::Remove(Player* player)
 {
     player->SetAtk(originalAtk);
 }
+void AttackincreasesforSeveralSecondsAfterEvasion::Save(BinaryWriter& w)
+{
+    w.WritePOD(attackPowerUp);
+    w.WritePOD(duration);
+    w.WritePOD(timer);
+    w.WritePOD(isBoost);
+    w.WritePOD(originalAtk);
+}
+void AttackincreasesforSeveralSecondsAfterEvasion::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(attackPowerUp);
+    r.ReadPOD(duration);
+    r.ReadPOD(timer);
+    r.ReadPOD(isBoost);
+    r.ReadPOD(originalAtk);
+}
 #pragma endregion
 
 #pragma region  回避時攻撃力上昇
@@ -381,5 +487,21 @@ void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Remove(Player* playe
 {
     player->SetCriticalHitRate(originalAtk);
 
+}
+void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Save(BinaryWriter& w)
+{
+    w.WritePOD(CriticalUp);
+    w.WritePOD(duration);
+    w.WritePOD(timer);
+    w.WritePOD(isBoost);
+    w.WritePOD(originalAtk);
+}
+void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(CriticalUp);
+    r.ReadPOD(duration);
+    r.ReadPOD(timer);
+    r.ReadPOD(isBoost);
+    r.ReadPOD(originalAtk);
 }
 #pragma endregion
