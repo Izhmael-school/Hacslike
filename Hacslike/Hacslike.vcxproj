@@ -38,6 +38,7 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Other\AttackArea.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Other\AttackArea.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.h" />

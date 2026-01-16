@@ -44,7 +44,6 @@ void StageManager::LoadFloorData() {
 
 		floorData.startFloor = d["startFloor"];
 		floorData.endFloor = d["endFloor"];
-		floorData.floorTextureName = d["floorTextureName"];
 
 		// ベクターの初期化
 		floorData.spawnEnemyID.clear();
