@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include"../Manager/SaveManager.h"
 
 class Player;
 
@@ -40,6 +41,13 @@ public://オーバーライドされる関数達
     int GetLevel() const { return level; }
     int GetMaxLevel() const { return maxLevel; }
     virtual void ClearLevel() = 0;                      // レベルを1に戻す
+
+    // 追加: セーブ/ロード用に外部からレベルを設定できるようにする
+    void SetLevel(int lv) { level = lv; }
+
+    // 追加: ロード時に現在の level に応じてプレイヤーへ効果を反映する（level を変更しない）
+    //       デフォルトは何もしない。各スキルで override する。
+    virtual void ApplyAllLevels(Player* player) { /* default no-op */ }
 public://ゲッター
     const int GetID() const { return id; }
     const std::string& GetName() const { return name; }
@@ -63,6 +71,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -76,6 +85,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
+    void ApplyAllLevels(Player* player) override;
 };
 
 
@@ -90,6 +100,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -102,7 +113,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
-
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -115,7 +126,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
-
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -128,7 +139,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
-
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -141,6 +152,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -153,7 +165,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
-
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -166,7 +178,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
-
+    void ApplyAllLevels(Player* player) override;
 };
 
 /// <summary>
@@ -179,7 +191,7 @@ public:
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;
-
+    void ApplyAllLevels(Player* player) override;
 
 };
 

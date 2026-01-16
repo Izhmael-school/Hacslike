@@ -46,6 +46,10 @@ void AttackUpSkill::ClearLevel()
     level = 0;
 }
 
+void AttackUpSkill::ApplyAllLevels(Player* player)
+{
+}
+
 
 // =============================
 //   HP 上限増加
@@ -72,6 +76,10 @@ void HPUpSkill::Remove(Player* player)
 void HPUpSkill::ClearLevel()
 {
     level = 0;
+}
+
+void HPUpSkill::ApplyAllLevels(Player* player)
+{
 }
 
 // =============================
@@ -101,6 +109,10 @@ void SpeedUpSkill::ClearLevel()
     level = 0;
 }
 
+void SpeedUpSkill::ApplyAllLevels(Player* player)
+{
+}
+
 // =============================
 //   防御力上昇
 // =============================
@@ -126,6 +138,10 @@ void DefenseUpSkill::Remove(Player* player)
 void DefenseUpSkill::ClearLevel()
 {
     level = 0;
+}
+
+void DefenseUpSkill::ApplyAllLevels(Player* player)
+{
 }
 
 // =============================
@@ -155,6 +171,10 @@ void ProximityCorrectionUpSkill::ClearLevel()
     level = 0;
 }
 
+void ProximityCorrectionUpSkill::ApplyAllLevels(Player* player)
+{
+}
+
 // =============================
 //   遠距離補正 UP
 // =============================
@@ -180,6 +200,10 @@ void RangedCorrectionUpSkill::Remove(Player* player)
 void RangedCorrectionUpSkill::ClearLevel()
 {
     level = 0;
+}
+
+void RangedCorrectionUpSkill::ApplyAllLevels(Player* player)
+{
 }
 
 // =============================
@@ -211,6 +235,10 @@ void ItemDropRateUpSkill::ClearLevel()
     level = 0;
 }
 
+void ItemDropRateUpSkill::ApplyAllLevels(Player* player)
+{
+}
+
 // =============================
 //   会心率 UP
 // =============================
@@ -236,6 +264,10 @@ void CriticalHitRateUpSkill::Remove(Player* player)
 void CriticalHitRateUpSkill::ClearLevel()
 {
     level = 0;
+}
+
+void CriticalHitRateUpSkill::ApplyAllLevels(Player* player)
+{
 }
 
 // =============================
@@ -265,6 +297,10 @@ void CriticalDamageUpSkill::ClearLevel()
     level = 0;
 }
 
+void CriticalDamageUpSkill::ApplyAllLevels(Player* player)
+{
+}
+
 // =============================
 //   ダッシュ攻撃（1回のみ）
 // =============================
@@ -289,4 +325,8 @@ void IsDashAttack::Remove(Player* player)
 void IsDashAttack::ClearLevel()
 {
     level = 0;
+}
+
+void IsDashAttack::ApplyAllLevels(Player* player)
+{
 }

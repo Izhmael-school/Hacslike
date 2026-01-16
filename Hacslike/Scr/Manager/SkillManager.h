@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 #include <random>
-
+#include"../Manager/SaveManager.h"
 class Player;
 
 class SkillManager : public Singleton<SkillManager>{
@@ -40,6 +40,8 @@ public:
 
     const std::vector<std::shared_ptr<Skill>>& GetActiveSkills() const { return activeSkills; }
 
-
+    // 追加: セーブ・ロード
+    void SaveTo(BinaryWriter& w);
+    void LoadFrom(BinaryReader& r, uint32_t ver);
 };
 

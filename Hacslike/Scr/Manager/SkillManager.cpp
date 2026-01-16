@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include "AudioManager.h"
+#include"../Save/SaveIO.h"
 
 
 // ------------------------
@@ -101,6 +102,77 @@ void SkillManager::ClearSkills(Player* player)
     activeSkills.clear();
 
     std::cout << "スキルを全てリセットしました。\n";
+}
+
+void SkillManager::SaveTo(BinaryWriter& w)
+{
+    uint32_t poolCount = static_cast<uint32_t>(skillPool.size());
+    w.WritePOD(poolCount);
+    for (auto& s : skillPool) {
+        int id = s->GetID();
+        int lv = s->GetLevel();
+        w.WritePOD(id);
+        w.WritePOD(lv);
+    }
+    // activeSkills の ID リストも保存（どのスキルがアクティブか）
+    uint32_t activeCount = static_cast<uint32_t>(activeSkills.size());
+    w.WritePOD(activeCount);
+    for (auto& s : activeSkills) {
+        int id = s->GetID();
+        w.WritePOD(id);
+    }
+
+    std::cout << "[SkillManager] Saved " << poolCount << " skills, " << activeCount << " active\n";
+}
+
+void SkillManager::LoadFrom(BinaryReader& r, uint32_t ver)
+{
+    // skillPool 側の情報（ID, level）
+    uint32_t poolCount = 0;
+    r.ReadPOD(poolCount);
+    for (uint32_t i = 0; i < poolCount; ++i) {
+        int id = 0;
+        int lv = 0;
+        r.ReadPOD(id);
+        r.ReadPOD(lv);
+        auto it = std::find_if(skillPool.begin(), skillPool.end(), [&](const std::shared_ptr<Skill>& s) {
+            return s->GetID() == id;
+            });
+        if (it != skillPool.end()) {
+            (*it)->SetLevel(lv);
+        }
+        else {
+            std::cout << "[SkillManager] Unknown skill id in save: " << id << "\n";
+        }
+    }
+
+    // active list を復元（ID -> skillPool 内の shared_ptr を参照）
+    uint32_t activeCount = 0;
+    r.ReadPOD(activeCount);
+    activeSkills.clear();
+    for (uint32_t i = 0; i < activeCount; ++i) {
+        int id = 0;
+        r.ReadPOD(id);
+        auto it = std::find_if(skillPool.begin(), skillPool.end(), [&](const std::shared_ptr<Skill>& s) {
+            return s->GetID() == id;
+            });
+        if (it != skillPool.end()) {
+            activeSkills.push_back(*it);
+        }
+        else {
+            std::cout << "[SkillManager] Unknown active skill id in save: " << id << "\n";
+        }
+    }
+
+    // プレイヤーに効果を反映（Player がロード済みであることが前提）
+    Player* player = Player::GetInstance();
+    if (player) {
+        for (auto& s : activeSkills) {
+            s->ApplyAllLevels(player);
+        }
+    }
+
+    std::cout << "[SkillManager] Loaded. poolCount=" << poolCount << " activeCount=" << activeCount << "\n";
 }
 
 

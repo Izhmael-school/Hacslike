@@ -18,6 +18,7 @@
 // 追加: Inventory ヘッダ（Player 経由でアクセスする想定）
 #include "../GameObject/Item/Inventory.h"
 #include"ArtifactManager.h"
+#include"SkillManager.h"
 
 static void EnsureSaveDir() {
 #ifdef _WIN32
@@ -107,7 +108,13 @@ void SaveManager::RegisterSavers()
     RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
         ArtifactManager::GetInstance().LoadFrom(r, ver);
         });
-  
+    // 追加: SkillManager の保存 / 読み込みハンドラ
+    RegisterSaveHandler([](BinaryWriter& w) {
+        SkillManager::GetInstance().SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        SkillManager::GetInstance().LoadFrom(r, ver);
+        });
 }
 
 bool SaveManager::Save(int slotIndex) {
