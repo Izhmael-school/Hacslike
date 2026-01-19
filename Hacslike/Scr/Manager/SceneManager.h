@@ -8,6 +8,7 @@ private:
 	class BaseScene* pCurrentScene;	// 今のシーン
 	class BaseScene* pSceneList[(int)SceneType::Max];
 
+	bool isEnd;
 private:
 	void Start();
 public:
@@ -29,5 +30,10 @@ public:
 	/// </summary>
 	/// <param name="_next">変更するシーン</param>
 	void ChangeScene(SceneType _next);
+
+
+	inline bool GetEnd() const { return isEnd; }
+
+	inline void SetEnd(bool _End) { isEnd = _End; }
 };
 

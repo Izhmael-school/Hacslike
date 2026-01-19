@@ -269,6 +269,7 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 			printf("[Save] After fallback, created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
 		}
 	}
+	
 }
 
 

@@ -55,11 +55,19 @@ StageGenerator::StageGenerator()
 }
 
 StageGenerator::~StageGenerator() {
-	delete[] map;
-	delete[] roomStatus;
-	delete[] mapObjects;
-	delete[] stageMap;
+	// NOTE:
+	// map, roomStatus, mapObjects, stageMap are member fixed-size arrays
+	// (declared as `int map[mapWidth_Large][mapHeight_Large];` etc.)
+	// They MUST NOT be deleted with delete[] (they were not allocated with new).
+	// Deleting them causes undefined behavior and can crash on exit.
+	// Removed those erroneous delete[] calls.
 
+	// delete[] map;            <- REMOVE (was invalid)
+	// delete[] roomStatus;     <- REMOVE (was invalid)
+	// delete[] mapObjects;     <- REMOVE (was invalid)
+	// delete[] stageMap;       <- REMOVE (was invalid)
+
+	// StageCell pointers are cleaned up below.
 	delete unuseStair;
 	delete useStair;
 

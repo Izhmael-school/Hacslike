@@ -81,6 +81,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager::GetInstance().ChangeScene(SceneType::Title);
 	// ゲームのメインループ
 	while (true) {
+		if(SceneManager::GetInstance().GetEnd() == true){
+			break;
+		}
 		//DxLibのカメラとEffekseerのカメラを同期する
 		Effekseer_Sync3DSetting();
 		// 更新処理
