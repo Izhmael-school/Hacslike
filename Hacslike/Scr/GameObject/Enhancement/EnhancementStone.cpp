@@ -49,7 +49,7 @@ void EnhancementStone::Update() {
     // プレイヤーが範囲内にいて、Eキーかボタンが押されたら開く
     if (canEnhance) {
         auto& input = InputManager::GetInstance();
-        if (CheckHitKey(KEY_INPUT_E) == 1 || input.IsButtonDown(XINPUT_GAMEPAD_X)) {
+        if (CheckHitKey(KEY_INPUT_E) == 1 || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
             OpenEnhanceMenu();
         }
     }
@@ -84,7 +84,7 @@ void EnhancementStone::Render() {
         DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
         DrawFormatString(textX + 40, textY, black, "キー/ ボタン:強化する");
         DrawFormatString(textX + 30, textY, white, "E");
-        DrawFormatString(textX + 83, textY, white, "X");
+        DrawFormatString(textX + 83, textY, white, "B");
     }
 
     // 3. 他の3Dオブジェクトの描画のために設定を元に戻す
