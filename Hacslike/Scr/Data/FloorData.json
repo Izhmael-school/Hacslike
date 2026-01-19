@@ -9,37 +9,37 @@
     "startFloor": 1,
     "endFloor": 10,
     "floorTextureName": "1",
-    "spawnEnemyID": [ 8 ]
+    "spawnEnemyID": [ 0,2,3 ]
   },
   {
     "startFloor": 11,
     "endFloor": 20,
-    "floorTextureName": "2",
-    "spawnEnemyID": [ 0 ]
+    "floorTextureName": "1",
+    "spawnEnemyID": [ 3,4,5 ]
   },
   {
     "startFloor": 21,
     "endFloor": 30,
-    "floorTextureName": "3",
-    "spawnEnemyID": [ 0 ]
+    "floorTextureName": "2",
+    "spawnEnemyID": [ 10,0,5,6 ]
   },
   {
     "startFloor": 31,
     "endFloor": 40,
-    "floorTextureName": "",
-    "spawnEnemyID": [ 0 ]
+    "floorTextureName": "2",
+    "spawnEnemyID": [ 6,7,8 ]
   },
   {
     "startFloor": 41,
     "endFloor": 50,
-    "floorTextureName": "",
-    "spawnEnemyID": [ 0 ]
+    "floorTextureName": "3",
+    "spawnEnemyID": [ 7,8,9 ]
   },
   {
     "startFloor": 51,
     "endFloor": 60,
     "floorTextureName": "",
-    "spawnEnemyID": [ 0 ]
+    "spawnEnemyID": [ -1]
   },
   {
     "startFloor": 61,

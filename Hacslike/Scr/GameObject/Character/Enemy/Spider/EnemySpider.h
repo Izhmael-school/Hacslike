@@ -1,6 +1,5 @@
 #pragma once
 #include "../Enemy.h"
-#include "SpiderBullet.h"
 
 class EnemySpider : public Enemy {
 public:
@@ -17,7 +16,5 @@ public:
 
 	void ShotBullet();
 
-private:
-	SpiderBullet* bullet;
 
 };

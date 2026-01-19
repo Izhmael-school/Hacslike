@@ -41,11 +41,14 @@ void TitleScene::Start() {
 
 void TitleScene::Update() {
 #pragma region テスト用
-	/*if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
+#if _DEBUG
+	//if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 
-		SceneManager::GetInstance().ChangeScene(SceneType::Game);
-	}*/
+	//	SceneManager::GetInstance().ChangeScene(SceneType::Game);
+	//}
+#endif
 #pragma endregion
+
 	// Basic input helpers (match usage elsewhere in project)
 	auto& input = InputManager::GetInstance();
 
@@ -156,6 +159,8 @@ void TitleScene::Update() {
 
 	// Message timer decrement
 	if (messageFramesLeft > 0) --messageFramesLeft;
+
+
 }
 
 static std::string FormatTime(std::time_t t) {

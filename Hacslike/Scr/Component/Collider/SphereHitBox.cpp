@@ -71,12 +71,11 @@ void SphereHitBox::Update() {
 	timer += TimeManager::GetInstance().deltaTime;
 
 	// ¶‘¶ŽžŠÔ‚ª—ˆ‚½‚çÁ‚·
-	if (timer >= lifeTime) {
+	if (IsDead()) {
 
 		if (pCollider) {
 			pCollider->SetEnable(false);
 			CollisionManager::GetInstance().UnRegister(pCollider);
-
 		}
 		active = false;
 		return;

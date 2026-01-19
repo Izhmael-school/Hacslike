@@ -2,7 +2,6 @@
 
 
 EnemySpider::EnemySpider(int mHandle)
-	:bullet(nullptr)
 {
 	SetModelHandle(mHandle);
 	// ステータスの設定
@@ -40,16 +39,10 @@ void EnemySpider::Start() {
 
 void EnemySpider::Update() {
 	Enemy::Update();
-
-	if (bullet != nullptr)
-		bullet->Update();
 }
 
 void EnemySpider::Render() {
 	Enemy::Render();
-
-	if (bullet != nullptr)
-		bullet->Render();
 }
 
 void EnemySpider::OnTriggerEnter(Collider* _pOther) {
@@ -59,13 +52,13 @@ void EnemySpider::OnTriggerEnter(Collider* _pOther) {
 
 void EnemySpider::ShotBullet()
 {
-	// 当たり判定の準備
-	SphereHitBox* col = new SphereHitBox(this, VZero, SpiderBullet::maxDis, 3);
-	attackColliderList.push_back(col);
+	//// 当たり判定の準備
+	//SphereHitBox* col = new SphereHitBox(this, VZero, SpiderBullet::maxDis, 3);
+	//attackColliderList.push_back(col);
 
-	// 方向の指定
-	VECTOR dir = NormDir(position,player->GetPosition());
+	//// 方向の指定
+	//VECTOR dir = NormDir(position,player->GetPosition());
 
-	bullet = new SpiderBullet(col->GetCollider(),dir);
+	//bullet = new SpiderBullet(col->GetCollider(),dir);
 
 }
