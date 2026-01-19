@@ -765,24 +765,26 @@ void Player::GetArtifact() {
 				artifactSelectUI.StartSelection();
 				isSelectArtifact = true;
 				GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-
 			}
 		}
 		else {
-			// ★スキル選択中の処理
 			int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
 			if (Selected != -1) {
 
 				if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
 					ArtifactManager::GetInstance().ApplySelectedArtifact(this, artifactChioces[Selected]);
 
-
+					// 修正: 接触中の宝箱インスタンスがあればそのインスタンスを消す
+					if (hitChestObj) {
+						hitChestObj->OpenTreasureChest();
+						// 終了処理
+						hitChestObj = nullptr;
+						hitChest = false;
+					}
 				}
 
 				GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
-
 			}
-
 		}
 	}
 	else return;
@@ -896,6 +898,8 @@ void Player::OnTriggerStay(Collider* _pCol) {
 	}
 	if (_pCol->GetGameObject()->GetTag() == "TreasureChest") {
 		hitChest = true;
+		// 接触中の宝箱インスタンスを保持（nullptr チェックのため dynamic_cast）
+		hitChestObj = dynamic_cast<StartTreasureChest*>(_pCol->GetGameObject());
 		GetArtifact();
 
 	}
@@ -914,6 +918,10 @@ void Player::OnTriggerExit(Collider* _pCol) {
 	}
 	if (_pCol->GetGameObject()->GetTag() == "TreasureChest") {
 		hitChest = false;
+		// 接触終了したらポインタをクリア
+		if (hitChestObj == _pCol->GetGameObject()) {
+			hitChestObj = nullptr;
 
+		}
 	}
 }

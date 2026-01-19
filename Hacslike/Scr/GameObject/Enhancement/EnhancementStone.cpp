@@ -106,7 +106,8 @@ void EnhancementStone::CloseEnhanceMenu() {
 
 // ”»’èˆ—iˆÈ‘O‚Ì‚Ü‚Üj
 void EnhancementStone::OnTriggerStay(Collider* _pCol) {
-    if (_pCol->GetGameObject()->GetTag() == "Player") canEnhance = true;
+    if (_pCol->GetGameObject()->GetTag() == "Player")
+        canEnhance = true;
 }
 void EnhancementStone::OnTriggerExit(Collider* _pCol) {
     if (_pCol->GetGameObject()->GetTag() == "Player") canEnhance = false;
