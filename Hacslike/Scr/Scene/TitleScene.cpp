@@ -67,11 +67,11 @@ void TitleScene::Update() {
 			if (titleMenuIndex == 0) {
 				// New Game: create/reset Player and start game
 				// Ensure existing player destroyed (defensive)
-				Player::DestroyInstance();
-				Player* p = Player::CreateInstance(VZero);
-				if (p) {
-					p->PlayerSetUp(); // initialize stats for new game
-				}
+				//Player::DestroyInstance();
+				//Player* p = Player::CreateInstance(VZero);
+				//if (p) {
+				//	p->PlayerSetUp(); // initialize stats for new game
+				//}
 				// Reset managers that hold game state
 				StageManager::GetInstance(); // ctor side-effects create generator etc.
 				ArtifactManager::GetInstance(); // ensure instance
