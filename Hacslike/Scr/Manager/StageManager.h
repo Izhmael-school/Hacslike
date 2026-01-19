@@ -69,7 +69,7 @@ public:
 private:
 	void GenerateStage();
 	void GenerateStage(int stageID);
-	void ChangeTexture(int textureHandle, ObjectType changeObject);
+	void ChangeTexture(int num, ObjectType changeObject);
 
 public:
 	// セーブ/ロード用の API（SaveManager 経由で呼ばれる）

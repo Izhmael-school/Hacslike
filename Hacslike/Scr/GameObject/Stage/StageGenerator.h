@@ -88,7 +88,7 @@ public:
 	bool TransparencyWall(StageCell* cell);
 
 	// ステージオブジェクトのテクスチャ張替
-	void ChangeObjectTexture(int textureHandle,ObjectType changeObject);
+	void ChangeObjectTexture(int num,ObjectType changeObject);
 	// 座標から今いる部屋番号を返す
 	int GetNowRoomNum(VECTOR pos);
 	int GetNowRoomNum(int x,int z);

@@ -723,47 +723,55 @@ bool StageGenerator::TransparencyWall(StageCell* cell) {
 	return false;
 }
 
-void StageGenerator::ChangeObjectTexture(int textureHandle, ObjectType changeObject) {
+void StageGenerator::ChangeObjectTexture(int num, ObjectType changeObject) {
 	
-	//std::list<int>& floorDivList = StageManager::GetInstance().
+	std::vector<int>& floorDifList = StageManager::GetInstance().floorDifTexture;
+	std::vector<int>& floorNormalList = StageManager::GetInstance().floorNormalTexture;
+	std::vector<int>& wallDifList = StageManager::GetInstance().wallDifTexture;
+	std::vector<int>& wallNormalList = StageManager::GetInstance().wallNormalTexture;
 	
-	//int mHandle;
-	//int texNum;
-	//int correct;
-	//switch (changeObject) {
-	//case Room:
-	//	for (auto c : unuseRoom) {
-	//		mHandle = c->GetModelHandle();
-	//		texNum = MV1GetMaterialDifMapTexture(mHandle, 0);
-	//		correct = MV1SetTextureGraphHandle(mHandle, texNum, textureHandle, false);
-	//	}
+	for (auto c : unuseRoad) {
+		int mHandle = c->GetModelHandle();
+		int difNum = MV1GetMaterialDifMapTexture(mHandle, 0);
+		int norNum = MV1GetMaterialNormalMapTexture(mHandle, 0);
+		MV1SetTextureGraphHandle(mHandle, difNum, floorDifList[num], false);
+		MV1SetTextureGraphHandle(mHandle, norNum, floorNormalList[num], false);
+	}
 
-	//	texNum = MV1GetMaterialDifMapTexture(groundModel, 0);
-	//	correct = MV1SetTextureGraphHandle(groundModel, texNum, textureHandle, false);
-	//	break;
-	//case Road:
-	//	for (auto c : unuseRoad) {
-	//		mHandle = c->GetModelHandle();
-	//		texNum = MV1GetMaterialDifMapTexture(mHandle, 0);
-	//		correct = MV1SetTextureGraphHandle(mHandle, texNum, textureHandle, false);
-	//	}
+	for (auto c : unuseRoom) {
+		int mHandle = c->GetModelHandle();
+		int difNum = MV1GetMaterialDifMapTexture(mHandle, 0);
+		int norNum = MV1GetMaterialNormalMapTexture(mHandle, 0);
+		MV1SetTextureGraphHandle(mHandle, difNum, floorDifList[num], false);
+		MV1SetTextureGraphHandle(mHandle, norNum, floorNormalList[num], false);
+	}
+	
+	for (auto c : unuseWall) {
+		int mHandle = c->GetModelHandle();
+		int difNum = MV1GetMaterialDifMapTexture(mHandle, 0);
+		int norNum = MV1GetMaterialNormalMapTexture(mHandle, 0);
+		MV1SetTextureGraphHandle(mHandle, difNum, wallDifList[num], false);
+		MV1SetTextureGraphHandle(mHandle, norNum, wallNormalList[num], false);
+	}
 
-	//	texNum = MV1GetMaterialDifMapTexture(roadModel, 0);
-	//	correct = MV1SetTextureGraphHandle(roadModel, texNum, textureHandle, false);
-	//	break;
-	//case Wall:
-	//	for (auto c : unuseWall) {
-	//		mHandle = c->GetModelHandle();
-	//		texNum = MV1GetMaterialDifMapTexture(wallModel, 0);
-	//		correct = MV1SetTextureGraphHandle(wallModel, texNum, textureHandle, false);
-	//	}
-
-	//	texNum = MV1GetMaterialDifMapTexture(groundModel, 0);
-	//	correct = MV1SetTextureGraphHandle(groundModel, texNum, textureHandle, false);
-	//	break;
-	//case Stair:
-	//	break;
-	//}
+	for (auto c : cells) {
+		int mHandle = c->GetModelHandle();
+		int difNum = MV1GetMaterialDifMapTexture(mHandle, 0);
+		int norNum = MV1GetMaterialNormalMapTexture(mHandle, 0);
+		switch (c->GetObjectType()) {
+		case Wall:
+			MV1SetTextureGraphHandle(mHandle, difNum, wallDifList[num], false);
+			MV1SetTextureGraphHandle(mHandle, norNum, wallNormalList[num], false);
+			break;
+		case Room:
+		case Road:
+			MV1SetTextureGraphHandle(mHandle, difNum, floorDifList[num], false);
+			MV1SetTextureGraphHandle(mHandle, norNum, floorNormalList[num], false);
+			break;
+		case Stair:
+			break;
+		}
+	}
 }
 
 int StageGenerator::GetNowRoomNum(VECTOR pos) {

@@ -8,6 +8,8 @@
 StageManager::StageManager() {
 	generator = new StageGenerator();
 	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3","FloorDawn",false);
+
+	LoadFloorTexture();
 }
 
 StageManager::~StageManager() {
@@ -56,6 +58,27 @@ void StageManager::LoadFloorData() {
 	}
 }
 
+void StageManager::LoadFloorTexture() {
+	auto data = LoadJsonFile("Scr/data/FloorData.json");
+
+	std::string floorTag = "f";
+	std::string wallTag = "w";
+	std::string normalTag = "n";
+	std::string pngTag = ".png";
+
+	for (auto d : data) {
+		std::string floorDiv = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], floorTag, pngTag);
+		std::string floorNml = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], floorTag,normalTag, pngTag);
+		std::string wallDiv = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], wallTag, pngTag);
+		std::string wallNml = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], wallTag,normalTag, pngTag);
+	
+		floorDifTexture.push_back(LoadGraph(floorDiv.c_str()));
+		floorNormalTexture.push_back(LoadGraph(floorNml.c_str()));
+		wallDifTexture.push_back(LoadGraph(wallDiv.c_str()));
+		wallNormalTexture.push_back(LoadGraph(wallNml.c_str()));
+	}
+}
+
 int StageManager::GetMapData(int x, int y) {
 
 	if (x < 0 || y < 0 || x > mapWidth_Large || y > mapHeight_Large) return -1;
@@ -76,12 +99,12 @@ void StageManager::GenerateStage() {
 	generator->ClearStage();
 	// 階層の加算
 	floorCount++;
-	// テクスチャの張替え
-	//ChangeTexture(floorDifTexture[floor(floorCount - 1 / textureChangeFloor)], Room);
 	// ステージのデータを作る
 	generator->GenerateStageData();
 	// ステージのオブジェクトを置く
 	generator->GenerateStageObject();
+	// テクスチャの張替え
+	ChangeTexture(floor(floorCount - 1 / textureChangeFloor), Room);
 	// プレイヤーの設置
 	SetGameObjectRandomPos(Character::player);
 	// エネミーの削除
@@ -118,7 +141,7 @@ void StageManager::GenerateStage() {
 		}
 	}
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < spawnNum; i++) {
 		int spawnEnemyID = spawnEnemyDataList[Random(0, spawnEnemyDataList.size() - 1)].id;
 
 		for (auto e : spawnEnemyDataList) {
@@ -140,6 +163,8 @@ void StageManager::GenerateStage(int stageID) {
 	generator->LoadStageData(stageID);
 	// フロアの生成
 	generator->GenerateStageObject();
+	// テクスチャの張替え
+	ChangeTexture(floor(floorCount - 1 / textureChangeFloor), Room);
 	// プレイヤーの配置
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
 	// ボスの配置
@@ -205,8 +230,8 @@ void StageManager::SetGameObject(VECTOR pos, GameObject* obj) {
 	generator->SetGameObject(obj, pos);
 }
 
-void StageManager::ChangeTexture(int textureHandle, ObjectType changeObject) {
-	generator->ChangeObjectTexture(textureHandle, changeObject);
+void StageManager::ChangeTexture(int num, ObjectType changeObject) {
+	generator->ChangeObjectTexture(num, changeObject);
 }
 
 void StageManager::SaveTo(BinaryWriter& w)
