@@ -15,7 +15,7 @@ Enemy::Enemy()
 	, atkTime(0)
 	, atkSpan(4)
 	, goalPos(VGet(-1, -1, -1))
-	, nextWanderSpan(Random(1,4))
+	, nextWanderSpan(Random(1, 4))
 	, nextWanderTime(nextWanderSpan) {
 	Start();
 }
@@ -328,7 +328,7 @@ bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
 		}
 
 		// ターゲット位置に到達したら終了
-		if (x0 == x1 && z0 == z1) 
+		if (x0 == x1 && z0 == z1)
 			break;
 
 		// Bresenham の誤差計算で次のセルへ進む
@@ -381,20 +381,31 @@ void Enemy::Wander() {
 }
 
 void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float time) {
-	pAnimator->GetAnimation(animName)->SetEvent(func,time);
+	pAnimator->GetAnimation(animName)->SetEvent(func, time);
 }
 
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis) {
 	float speed = pAnimator->GetAnimSpeed(animName);
-	SetAnimEvent(animName, [this,radius,speed,colliderspawnTime,dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis),position), speed, 
-		[this,radius,dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
+	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis), position), speed,
+		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
+}
 
+void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis) {
+	float speed = pAnimator->GetAnimSpeed(animName);
+	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime,pos]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
+		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
 }
 
 VECTOR Enemy::AttackAreaPos(float dis) {
 	VECTOR dir = VGet(sinf(Deg2Rad(rotation.y)), 0, cosf(Deg2Rad(rotation.y)));
 	VECTOR nDir = VNorm(dir);
-	return VScale(nDir,dis);
+	return VScale(nDir, dis);
+}
+
+VECTOR Enemy::AttackAreaPos(VECTOR pos, float dis) {
+	VECTOR dir = VGet(sinf(Deg2Rad(rotation.y)) + pos.x, 0 + pos.y, cosf(Deg2Rad(rotation.y)) + pos.z);
+	VECTOR nDir = VNorm(dir);
+	return VScale(nDir, dis);
 }
 
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
@@ -437,7 +448,7 @@ void Enemy::Move(VECTOR targetPos) {
 	VECTOR dir = VSub(targetPos, position);
 	float d = TimeManager::GetInstance().deltaTime;
 	VECTOR velocity = VGet(dir.x * moveSpeed, 0, dir.z * moveSpeed);
-	VECTOR pos = VAdd(position,VScale(velocity,d));
+	VECTOR pos = VAdd(position, VScale(velocity, d));
 	// 壁の判定を確認して移動する
 	SetPosition(CheckWallToWallRubbing(pos));
 }
