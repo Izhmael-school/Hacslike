@@ -1,7 +1,12 @@
 #pragma once
 #include "../Enemy.h"
+#include "../../../Artifact/ArtifactSelectUI.h"
 
 class BossBase : public Enemy {
+public:
+	ArtifactSelectUI artifactSelectUI;
+	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
+	bool isSelectArtifact = false;
 protected:
 	BossBase();
 	~BossBase();
@@ -16,6 +21,7 @@ public:
 	void Render() override;
 
 	void DeadExecute() override;
+
 
 private:
 

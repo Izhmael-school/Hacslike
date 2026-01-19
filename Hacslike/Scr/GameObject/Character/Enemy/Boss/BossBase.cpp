@@ -1,5 +1,8 @@
 #include "BossBase.h"
 #include "../../../../CommonModule.h"
+#include"../../../../Manager/ArtifactManager.h"
+#include "../../../../GameSystem/GameSystem.h"
+#include"../../Player/Player.h"
 
 BossBase::BossBase() 
 	:appearPos()
@@ -31,6 +34,7 @@ void BossBase::Start() {
 
 void BossBase::Update() {
 	Enemy::Update();
+	
 }
 
 void BossBase::Render() {
@@ -42,5 +46,28 @@ void BossBase::DeadExecute() {
 	Enemy::DeadExecute();
 
 	AppearStair();
+	Player* pPlayer = Player::GetInstance();
+	if (!isSelectArtifact) {
+		
+		artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
+		artifactSelectUI.StartSelection();
+		isSelectArtifact = true;
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+		
+	}
+	else {
+		int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
+		if (Selected != -1) {
+
+			if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
+				ArtifactManager::GetInstance().ApplySelectedArtifact(pPlayer, artifactChioces[Selected]);
+
+				
+			}
+
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+		}
+	}
+	
 }
 
