@@ -44,8 +44,7 @@ void GameScene::Start() {
 
 	EnhancementStone* pEnhance = new EnhancementStone(VGet(200.0f, 0, 500.0f));
 	pGameObjectArray.push_back(pEnhance);
-	//アイテムのセット
-	ItemFactory::Instance().InitializeDefaultItems();
+	
 	
 
 }

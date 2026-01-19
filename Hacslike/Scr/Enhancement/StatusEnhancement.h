@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include <vector>
 #include <string>
-
+#include"../Manager/SaveManager.h"
 
 // ステータス個別のデータ構造
 struct StatData {
@@ -20,6 +20,8 @@ private:
     bool allMax;        // 全MAXフラグ
     int selectedIndex;  // 現在選択中のインデックス
 
+    // グローバル参照用（セーブ/ロードで参照）
+    static StatusEnhancement* g_instance;
 public:
     /// <summary>
     /// コンストラクタ
@@ -54,4 +56,12 @@ public:
     /// <param name="level">現在のレベル</param>
     /// <param name="baseColor">基本色</param>
     void DrawParallelGauge(int x, int y, int level, unsigned int baseColor);
+
+    // セーブ / ロード
+    // StatusEnhancement の実インスタンスが存在する場合はその状態を保存 / 復元する
+    static void SaveTo(BinaryWriter& w);
+    static void LoadFrom(BinaryReader& r, uint32_t ver);
+
+    // グローバル実インスタンスへのアクセサ
+    static StatusEnhancement* GetInstance() { return g_instance; }
 };

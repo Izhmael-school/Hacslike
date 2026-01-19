@@ -20,6 +20,7 @@
 #include"ArtifactManager.h"
 #include"SkillManager.h"
 #include"EnemyManager.h"
+#include "../Enhancement/StatusEnhancement.h" // 追加: StatusEnhancement のセーブ/ロード
 
 static void EnsureSaveDir() {
 #ifdef _WIN32
@@ -122,6 +123,14 @@ void SaveManager::RegisterSavers()
         });
     RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
         EnemyManager::GetInstance().LoadFrom(r, ver);
+        });
+    // 追加: StatusEnhancement の保存 / 読み込み
+    RegisterSaveHandler([](BinaryWriter& w) {
+        StatusEnhancement::GetInstance()->SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        // 注意: StatusEnhancement の実インスタンスが存在している必要がある
+        StatusEnhancement::GetInstance()->LoadFrom(r, ver);
         });
 }
 

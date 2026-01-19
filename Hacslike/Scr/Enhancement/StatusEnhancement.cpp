@@ -3,6 +3,14 @@
 #include <cmath>
 #include "../Manager/InputManager.h"
 #include "../GameObject/Character/Player/Player.h"
+#include"../Save/SaveIO.h"
+
+// グローバル参照用ポインタ定義（クラス内 static の定義）
+StatusEnhancement* StatusEnhancement::g_instance = nullptr;
+
+// プログラム開始時に必ず存在する実インスタンスを作成する
+// （翻訳単位スコープの静的オブジェクトとして置く）
+static StatusEnhancement g_globalStatusEnhancement;
 
 static int oldMouse = 0;
 
@@ -11,9 +19,12 @@ StatusEnhancement::StatusEnhancement()
     , allMax(false)
     , playerCoins(0)
     , selectedIndex(0) {
+    // コンストラクタでグローバル参照を設定
+    g_instance = this;
 }
 
 StatusEnhancement::~StatusEnhancement() {
+    if (g_instance == this) g_instance = nullptr;
 }
 
 void StatusEnhancement::Start() {
@@ -299,5 +310,66 @@ void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int 
             if (shineIdx > 0.85f) finalLight = GetColor(255, 255, 255);
             DrawQuadrangle(x1 + 2, y1 + 2, x2 - 1, y2 + 2, x3 - 2, y3 - 2, x4 + 1, y4 - 2, finalLight, FALSE);
         }
+    }
+}
+
+void StatusEnhancement::SaveTo(BinaryWriter& w)
+{
+    // g_instance がない場合は空データを書いておく（互換性維持）
+    if (!g_instance) {
+        uint32_t zero = 0;
+        w.WritePOD(zero);
+        // allMax, selectedIndex を書いておく
+        bool am = false;
+        int si = 0;
+        w.WritePOD(am);
+        w.WritePOD(si);
+        return;
+    }
+
+    // stats の数
+    uint32_t count = static_cast<uint32_t>(g_instance->stats.size());
+    w.WritePOD(count);
+    for (const auto& s : g_instance->stats) {
+        w.WriteString(s.name);
+        w.WritePOD(s.level);
+        w.WritePOD(s.totalBonus);
+        w.WritePOD(s.color);
+    }
+    w.WritePOD(g_instance->allMax);
+    w.WritePOD(g_instance->selectedIndex);
+}
+
+void StatusEnhancement::LoadFrom(BinaryReader& r, uint32_t ver)
+{
+    // バージョン分岐が必要になったら ver を使って対応する
+    uint32_t count = 0;
+    r.ReadPOD(count);
+    g_instance->stats.clear();
+    for (uint32_t i = 0; i < count; ++i) {
+        StatData sd;
+        sd.name = r.ReadString();
+        r.ReadPOD(sd.level);
+        r.ReadPOD(sd.totalBonus);
+        r.ReadPOD(sd.color);
+        g_instance->stats.push_back(sd);
+    }
+    r.ReadPOD(g_instance->allMax);
+    r.ReadPOD(g_instance->selectedIndex);
+
+    // 確保されているデータを元に必要なら Player へ反映（HPやATK等）
+    Player* player = Player::GetInstance();
+    if (player && !g_instance->stats.empty()) {
+        // HP
+        player->SetMaxHp(100 + g_instance->stats[0].totalBonus);
+        player->SetHp(player->GetMaxHp());
+        // 攻撃
+        player->SetAtk(10 + g_instance->stats[1].totalBonus);
+        // 防御
+        player->SetDef(g_instance->stats[2].totalBonus);
+        // 会心率
+        player->SetCriticalHitRate((float)(5 + g_instance->stats[3].totalBonus));
+        // 会心ダメ
+        player->SetCriticalDamage(1.5f + (g_instance->stats[4].totalBonus / 100.0f));
     }
 }
