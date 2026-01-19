@@ -24,7 +24,7 @@ EnhancementStone::~EnhancementStone() {
 }
 
 void EnhancementStone::Start() {
-    modelHandle = MV1LoadModel("Res/Model/Enhancement/EnhanceObj.mv1");
+    modelHandle = MV1LoadModel("Res/Model/EnhanceObject/EnhanceObject.mv1");
     if (!pCollider) {
         pCollider = new CapsuleCollider(this, VZero, VGet(0, 80, 0), 80.0f);
         CollisionManager::GetInstance().Register(pCollider);
@@ -73,7 +73,18 @@ void EnhancementStone::Render() {
     }
     else if (canEnhance) {
         VECTOR screenPos = ConvWorldPosToScreenPos(VAdd(position, VGet(0, 100, 0)));
-        DrawFormatString((int)screenPos.x - 60, (int)screenPos.y, GetColor(255, 255, 0), "[E] ENHANCE");
+        int StartX = (WINDOW_WIDTH / 2) - 200;
+        int StartY = (WINDOW_HEIGHT)-200;
+        int GoalX = (WINDOW_WIDTH / 2) + 200;
+        int GoalY = (WINDOW_HEIGHT)-150;
+        int textX = StartX + 80;
+        int textY = StartY + 17;
+
+        DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+        DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+        DrawFormatString(textX + 40, textY, black, "キー/ ボタン:強化する");
+        DrawFormatString(textX + 30, textY, white, "E");
+        DrawFormatString(textX + 83, textY, white, "X");
     }
 
     // 3. 他の3Dオブジェクトの描画のために設定を元に戻す
