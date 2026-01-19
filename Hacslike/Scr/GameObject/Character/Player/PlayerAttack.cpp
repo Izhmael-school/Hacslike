@@ -42,7 +42,9 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 /// 初期化
 /// </summary>
 void PlayerAttack::Start() {
-	EffectManager::GetInstance().Load("Res/Effect/ChargeAttackEfk.efk", "ChargeBlad", 50.0f);
+	EffectManager::GetInstance().Load("Res/Effect/CharegeAttackEfk.efk", "ChargeBlad", 20.0f);
+	EffectManager::GetInstance().Load("Res/Effect/DA.efk", "DA", 10.0f);
+	EffectManager::GetInstance().Load("Res/Effect/HIt.efk", "Hit", 20.0f);
 
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/ChargeAttackVoice.mp3", "chargeAttack", false);
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Sword.mp3", "Sword", false);
@@ -102,7 +104,6 @@ void PlayerAttack::AttackInput() {
 	//	チャージ中
 	if (isCharging) {
 		chargeTime += TimeManager::GetInstance().deltaTime;
-		Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
 		//	溜め中アニメーションに切り替え
 		if (chargeTime >= 0.65f)
 			pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
@@ -126,16 +127,19 @@ void PlayerAttack::AttackInput() {
 			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
 			attackIndex = 4;
 			AudioManager::GetInstance().PlayOneShot("chargeAttack");
+			Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
 		}
 		else if (chargeRatio < 1.2f) {
 			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
 			attackIndex = 4;
 			AudioManager::GetInstance().PlayOneShot("chargeAttack");;
+			Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
 		}
 		else {
 			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
 			attackIndex = 4;
 			AudioManager::GetInstance().PlayOneShot("chargeAttack");
+			Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
 		}
 	}
 #pragma endregion
@@ -346,14 +350,17 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
 
 			// 攻撃判定生成
-			if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f)
+			if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f){
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
+			}
 			if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f)
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
 			if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f)
 				CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1)); // 周囲攻撃
-			if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f)
+			if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f){
 				CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 周囲攻撃
+				Effect* pEffe = EffectManager::GetInstance().Instantiate("DA", pPlayer->GetPosition());
+			}
 
 			if (attackTimer > 0.8f) {
 				isAttacking = false;
@@ -568,10 +575,12 @@ void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 100.0f), VGet(0, 100, 0)));
 		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
 		//CapsuleHitBox* capsuleBox = pCapsulePool->Spawn(pPlayer, startLocal, endLocal, VGet(0, 0, 0), _radius, 0.25f);
+		Effect* pEffe = EffectManager::GetInstance().Instantiate("Hit",spawnPos);
 	}
 	else {
 		VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 100.0f), VGet(0, 100, 0)));
 		SphereHitBox* sphereBox = pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
+		Effect* pEffe = EffectManager::GetInstance().Instantiate("Hit", spawnPos);
 	}
 }
 #pragma endregion

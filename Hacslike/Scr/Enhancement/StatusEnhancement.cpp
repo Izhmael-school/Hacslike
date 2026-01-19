@@ -116,7 +116,7 @@ bool StatusEnhancement::Update() {
                         player->SetHp(player->GetMaxHp());
                         break;
                     case 1: // 攻撃力
-                        player->SetAtk(10 + stats[1].totalBonus);
+                        player->SetBaseAtk(10 + stats[1].totalBonus);
                         break;
                     case 2: // 防御力
                         player->SetDef(stats[2].totalBonus);
