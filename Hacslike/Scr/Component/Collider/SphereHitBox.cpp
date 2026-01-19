@@ -20,7 +20,7 @@ SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, flo
 	, timer(0.0f)
 	, lifeTime(_lifeTime)
 	, velocity()
-	, active(false)
+	, active(true)
 	, chain(){
 
 	position = VAdd(owner ? owner->GetPosition() : VGet(0, 0, 0), offset); // ©‚±‚±‚Å‰ŠúˆÊ’u‚ğŒˆ’è
@@ -71,7 +71,7 @@ void SphereHitBox::Update() {
 	timer += TimeManager::GetInstance().deltaTime;
 
 	// ¶‘¶ŠÔ‚ª—ˆ‚½‚çÁ‚·
-	if (timer >= lifeTime) {
+	if (IsDead()) {
 		active = false;
 		if (pCollider) {
 			pCollider->SetEnable(false);

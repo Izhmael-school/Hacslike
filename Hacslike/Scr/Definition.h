@@ -30,6 +30,7 @@
 // ゼロベクトル
 #define VZero   (VGet(0,0,0))
 #define VOne   (VGet(1,1,1))
+#define VMinus (VGet(-1,-1,-1))
 
 // DxLibの読み込みエラ-
 #define INVALID (-1)

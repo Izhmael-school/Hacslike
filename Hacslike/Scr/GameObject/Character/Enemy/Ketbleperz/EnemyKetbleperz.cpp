@@ -33,7 +33,11 @@ void EnemyKetbleperz::Start() {
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
 	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 0);
 	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
-
+	// Œø‰Ê‰¹
+	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, 23);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, 13);
+	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, 18);
+	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 40);
 }
 
 void EnemyKetbleperz::Update() { 

@@ -98,6 +98,10 @@ void EnemyManager::Start() {
 	manager->Load(audioFilePath + "SpiderAttack.mp3", "SpiderAttack", false);
 	manager->Load(audioFilePath + "Bite1.mp3", "Bite1", false);
 	manager->Load(audioFilePath + "Bite2.mp3", "Bite2", false);
+	manager->Load(audioFilePath + "Axe.mp3", "Axe", false);
+	manager->Load(audioFilePath + "Punch1.mp3", "Punch1", false);
+	manager->Load(audioFilePath + "Punch2.mp3", "Punch2", false);
+	manager->Load(audioFilePath + "HeadBang.mp3", "HeadBang", false);
 }
 
 void EnemyManager::Update() {
