@@ -7,6 +7,7 @@
 #include"../GameObject/Coin/Coin.h"
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
 #include "../GameSystem/GameSystem.h"
+#include "../GameObject/Enhancement/EnhancementStone.h"
 
 
 GameScene::GameScene() {
@@ -41,6 +42,11 @@ void GameScene::Start() {
 	StartTreasureChest* pChest = new StartTreasureChest();
 	pGameObjectArray.push_back(pChest);
 	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
+
+	EnhancementStone* pEnhance = new EnhancementStone(VGet(200.0f, 0, 500.0f));
+	pGameObjectArray.push_back(pEnhance);
+	//アイテムのセット
+	ItemFactory::Instance().InitializeDefaultItems();
 	
 
 }

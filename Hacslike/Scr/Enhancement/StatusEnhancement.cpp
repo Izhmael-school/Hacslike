@@ -42,6 +42,12 @@ bool StatusEnhancement::Update() {
     InputManager* input = &InputManager::GetInstance();
     if (!input) return false;
 
+    // --- レイアウト基準（Renderと完全に同期させる） ---
+    int centerX = WINDOW_WIDTH / 2;
+    // ゲージサイズ拡大(w:65, gap:7)に基づき、10個分の幅を考慮して中央寄せ
+    int gaugeStartX = centerX - 370;
+    int baseY = 180;
+
     // パッド（十字キー）による選択移動
     if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
         selectedIndex--;
@@ -52,23 +58,24 @@ bool StatusEnhancement::Update() {
         if (selectedIndex >= (int)stats.size()) selectedIndex = 0;
     }
 
-    // マウスによる選択更新
+    // マウスによる選択更新（拡大したゲージの当たり判定）
     int mouseX, mouseY;
     GetMousePoint(&mouseX, &mouseY);
     for (int i = 0; i < (int)stats.size(); i++) {
-        int x = 380;
-        int y = 200 + i * 100;
-        if (mouseX >= x && mouseX <= x + 625 && mouseY >= y && mouseY <= y + 35) {
+        int x = gaugeStartX;
+        int y = baseY + i * 110; // 項目の縦間隔
+
+        // 判定範囲：名前(x-150)からコスト表示(x+850)まで、高さはゲージ高さ(45)付近をカバー
+        if (mouseX >= x - 150 && mouseX <= x + 850 && mouseY >= y && mouseY <= y + 80) {
             selectedIndex = i;
         }
     }
 
     // --- 強化実行処理 ---
-    if (input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButton(XINPUT_GAMEPAD_A)) {
+    if (input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_A)) {
         if (!stats.empty() && stats[selectedIndex].level < 50) {
 
-            // コスト計算：1フロア100枚制限のため、初期コスト3から緩やかに上昇
-            // Lv.0->Lv.1で 3枚、Lv.20で 43枚、Lv.40で 83枚
+            // コスト計算
             int cost = 3 + (stats[selectedIndex].level * 2);
 
             // コインが足りるかチェック
@@ -77,25 +84,25 @@ bool StatusEnhancement::Update() {
                 playerCoins -= cost;
                 if (player) player->SetCoinValue(playerCoins);
 
-                // 各ステータスの上昇幅（totalBonusに加算）
+                // 各ステータスの上昇幅
                 int boostValue = 0;
                 switch (selectedIndex) {
                 case 0: boostValue = 10; break; // HP +10
                 case 1: boostValue = 2;  break; // 攻撃 +2
                 case 2: boostValue = 1;  break; // 防御 +1
                 case 3: boostValue = 1;  break; // 会心率 +1
-                case 4: boostValue = 5;  break; // 会心ダメ +5 (0.05倍相当)
+                case 4: boostValue = 5;  break; // 会心ダメ +5
                 }
 
                 stats[selectedIndex].totalBonus += boostValue;
                 stats[selectedIndex].level++;
 
-                // --- 重要：Playerクラスの実際のステータスに反映 ---
+                // Playerクラスのステータスに反映
                 if (player) {
                     switch (selectedIndex) {
                     case 0: // HP
                         player->SetMaxHp(100 + stats[0].totalBonus);
-                        player->SetHp(player->GetMaxHp()); // 最大HP上昇時に全回復
+                        player->SetHp(player->GetMaxHp());
                         break;
                     case 1: // 攻撃力
                         player->SetAtk(10 + stats[1].totalBonus);
@@ -116,21 +123,15 @@ bool StatusEnhancement::Update() {
     }
 
     // 全ステータスMax判定
-    bool check = true;
-    if (stats.empty()) {
-        check = false;
-    }
-    else {
-        for (const auto& s : stats) {
-            if (s.level < 50) { check = false; break; }
-        }
+    bool check = !stats.empty();
+    for (const auto& s : stats) {
+        if (s.level < 50) { check = false; break; }
     }
     allMax = check;
 
-    // --- ここに追加：閉じる処理 ---
-   // Bボタン または ESCキー または 強化画面以外の場所クリック など
+    // 閉じる処理
     if (input->IsButtonDown(XINPUT_GAMEPAD_B) || input->IsKeyDown(KEY_INPUT_ESCAPE)) {
-        return true; // 「画面を閉じる」という合図を送る
+        return true;
     }
 
     return false;
@@ -142,71 +143,72 @@ void StatusEnhancement::Render() {
         return;
     }
 
-    // --- ここを強化 ---
-     // 1. 3Dモデルに隠されないように、深度テストを完全にオフにする
     SetUseZBuffer3D(FALSE);
     SetWriteZBuffer3D(FALSE);
-
-    // 2. もし3D空間の中にメニューが埋まってしまう場合は、ここで一度リセット
-    // これにより、石のモデルより物理的に後ろにメニューがあっても描画されます
     ClearDrawScreenZBuffer();
-
-    // 3. ライティングの影響でメニューが暗くならないようにする
     SetUseLighting(FALSE);
 
-    int mouseX, mouseY;
-    GetMousePoint(&mouseX, &mouseY);
-    
+    // --- 中央揃えのための計算 ---
+    int centerX = WINDOW_WIDTH / 2;
+    int gaugeStartX = centerX - 370;
+    int baseY = 180;
 
     // 背景パネル
-    DrawBox(150, 50, 1150, 750, GetColor(5, 5, 10), TRUE);
-    DrawBox(150, 50, 1150, 750, GetColor(40, 40, 50), FALSE);
+    DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GetColor(5, 5, 10), TRUE);
 
-    // タイトル
+    // タイトル (中央寄せ)
     unsigned int titleColor = allMax ? GetColor(255, 255, 255) : GetColor(200, 200, 200);
-    DrawString(480, 80, "STATUS ENHANCEMENT", titleColor);
+    DrawString(centerX - 150, 60, "STATUS ENHANCEMENT", titleColor);
 
-    // --- 所持コイン表示 (右上) ---
+    // 所持コイン表示 (右上)
     unsigned int coinColor = GetColor(255, 215, 0);
-    DrawFormatString(900, 80, coinColor, "COINS: %d", playerCoins);
+    DrawFormatString(WINDOW_WIDTH - 280, 60, coinColor, "COINS: %d", playerCoins);
 
     for (int i = 0; i < (int)stats.size(); i++) {
-        int x = 380;
-        int y = 200 + i * 100;
+        int x = gaugeStartX;
+        int y = baseY + i * 110;
 
-        // 選択カーソル
+        // 選択カーソル (y方向のオフセット微調整)
         if (i == selectedIndex) {
             int animX = (int)(sin(GetNowCount() / 150.0f) * 5.0f);
-            DrawString(x - 175 + animX, y + 8, "->", GetColor(255, 255, 255));
+            DrawString(x - 175 + animX, y + 15, "->", GetColor(255, 255, 255));
         }
 
-        // 項目名
-        DrawString(x - 140, y + 8, stats[i].name.c_str(), GetColor(255, 255, 255));
+        // 項目名・レベル・ボーナス (ゲージの左側)
+        DrawString(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255));
+        DrawFormatString(x - 140, y + 32, (stats[i].level >= 50 ? GetColor(255, 215, 0) : GetColor(150, 150, 150)), "Lv.%d", stats[i].level);
+        DrawFormatString(x - 140, y + 62, GetColor(0, 255, 150), "+%d", stats[i].totalBonus);
 
-        // 現在のボーナス値 (+○○)
-        DrawFormatString(x - 140, y + 55, GetColor(0, 255, 150), "+%d", stats[i].totalBonus);
-
-        // レベル表示
-        unsigned int lvColor = (stats[i].level >= 50) ? GetColor(255, 215, 0) : GetColor(150, 150, 150);
-        DrawFormatString(x - 140, y + 30, lvColor, "Lv.%d", stats[i].level);
-
-        // ゲージ描画
+        // ゲージ描画 (ここで大きいサイズが適用される)
         DrawParallelGauge(x, y, stats[i].level, stats[i].color);
 
-        // --- コスト表示 ---
+        // コスト表示 (ゲージが大きくなった分、xのオフセットを 640 -> 750 に拡大)
         if (stats[i].level < 50) {
             int cost = 3 + (stats[i].level * 2);
             unsigned int cCol = (playerCoins >= cost) ? GetColor(255, 255, 255) : GetColor(255, 50, 50);
-            DrawFormatString(x + 640, y + 8, cCol, "COST: %d", cost);
+            DrawFormatString(x + 750, y + 15, cCol, "COST: %d", cost);
         }
         else {
-            DrawString(x + 640, y + 8, "MAXED", GetColor(255, 215, 0));
+            DrawString(x + 750, y + 15, "MAX", GetColor(255, 215, 0));
         }
     }
 
     if (allMax) {
-        DrawString(510, 700, "ULTIMATE RAINBOW ACHIEVED", GetColor(255, 255, 255));
+        DrawString(centerX - 200, WINDOW_HEIGHT - 80, "ULTIMATE RAINBOW ACHIEVED", GetColor(255, 255, 255));
     }
+
+    int StartX = (WINDOW_WIDTH / 2) - 200;
+    int StartY = (WINDOW_HEIGHT) - 100;
+    int GoalX = (WINDOW_WIDTH / 2) + 200;
+    int GoalY = (WINDOW_HEIGHT) - 50;
+    int textX = StartX + 80;
+    int textY = StartY + 17;
+
+    DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+    DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+    DrawFormatString(textX + 50, textY, black, "キー/ ボタン:閉じる");
+    DrawFormatString(textX + 20, textY, white, "ESC");
+    DrawFormatString(textX + 93, textY, white, "B");
 
     SetUseLighting(TRUE);
     SetUseZBuffer3D(TRUE);
@@ -214,7 +216,12 @@ void StatusEnhancement::Render() {
 }
 
 void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int baseColor) {
-    int w = 55; int h = 35; int skew = 15; int gap = 6;
+    // --- ゲージのサイズ設定（拡大版） ---
+    int w = 65;    // 1コマの幅
+    int h = 45;    // 1コマの高さ
+    int skew = 18; // 斜めの傾き
+    int gap = 7;   // コマ同士の隙間
+
     float systemTime = GetNowCount() / 1000.0f;
 
     int loopCount = (level - 1) / 10;
@@ -274,14 +281,18 @@ void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int 
             }
         }
 
+        // 四角形の4頂点を計算
         int x1 = x + i * (w + gap) + skew; int y1 = curY;
         int x2 = x1 + w;                   int y2 = curY;
         int x3 = x + i * (w + gap) + w;    int y3 = curY + h;
         int x4 = x + i * (w + gap);        int y4 = curY + h;
 
+        // 塗りつぶし描画
         DrawQuadrangle(x1, y1, x2, y2, x3, y3, x4, y4, contentCol, TRUE);
+        // 枠線描画
         DrawQuadrangle(x1, y1, x2, y2, x3, y3, x4, y4, outerBorder, FALSE);
 
+        // 光沢・エフェクト
         if (allMax || loopCount > 0 || isFilled || (i == (level % 10) && level < 50)) {
             float shineIdx = sin(systemTime * 3.5f - (i * 0.4f));
             unsigned int finalLight = innerLight;
