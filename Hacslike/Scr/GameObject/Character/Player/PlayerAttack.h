@@ -15,7 +15,7 @@ class InputManager;
 /// プレイヤーの攻撃処理
 /// </summary>
 class PlayerAttack {
-private:
+private:	//	変数
 	//	クラス関連
 	Player* pPlayer;				//	プレイヤー
 	Weapon* pWeapon;				//	武器

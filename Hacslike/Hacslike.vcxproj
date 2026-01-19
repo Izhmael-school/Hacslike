@@ -23,6 +23,7 @@
     <ClCompile Include="Scr\Component\Collider\CapsuleHitBox.cpp" />
     <ClCompile Include="Scr\Component\Collider\Collider.cpp" />
     <ClCompile Include="Scr\Component\Collider\SphereHitBox.cpp" />
+    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp" />
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactBase.cpp" />
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactSelectUI.cpp" />
     <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="Scr\GameObject\Character\Player\PlayerMovement.cpp" />
     <ClCompile Include="Scr\GameObject\Coin\Coin.cpp" />
     <ClCompile Include="Scr\GameObject\Effect\Effect.cpp" />
+    <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp" />
     <ClCompile Include="Scr\GameObject\GameObject.cpp" />
     <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp" />
     <ClCompile Include="Scr\GameObject\Item\Inventory.cpp" />
@@ -91,6 +93,7 @@
     <ClInclude Include="Scr\Component\Collider\SphereHitBox.h" />
     <ClInclude Include="Scr\Component\Singleton.h" />
     <ClInclude Include="Scr\Definition.h" />
+    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h" />
     <ClInclude Include="Scr\ExpansionMethod.h" />
     <ClInclude Include="Scr\GameObject\Artifact\ArtifactBase.h" />
     <ClInclude Include="Scr\GameObject\Artifact\ArtifactSelectUI.h" />
@@ -115,6 +118,7 @@
     <ClInclude Include="Scr\GameObject\Character\Player\PlayerMovement.h" />
     <ClInclude Include="Scr\GameObject\Coin\Coin.h" />
     <ClInclude Include="Scr\GameObject\Effect\Effect.h" />
+    <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h" />
     <ClInclude Include="Scr\GameObject\GameObject.h" />
     <ClInclude Include="Scr\GameObject\HitPool\CapsuleHitPool.h" />
     <ClInclude Include="Scr\GameObject\Item\Inventory.h" />

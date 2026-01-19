@@ -180,6 +180,12 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
+      <Filter>Enhancement</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp">
+      <Filter>GameObject\EnhanceObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -375,6 +381,12 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
+      <Filter>Enhancement</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h">
+      <Filter>GameObject\EnhanceObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -475,6 +487,12 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{29d66693-ee73-4dea-a05a-4a7b0cbca8f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enhancement">
+      <UniqueIdentifier>{d7e27c2e-15d1-4452-a4a7-0014895396ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\EnhanceObject">
+      <UniqueIdentifier>{a13c845d-4d68-499a-9b67-43fe38c90391}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

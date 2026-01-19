@@ -7,6 +7,8 @@
 #include"../GameObject/Coin/Coin.h"
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
 #include "../GameSystem/GameSystem.h"
+#include "../Enhancement/StatusEnhancement.h"
+#include "../GameObject/Enhancement/EnhancementStone.h"
 
 
 GameScene::GameScene() {
@@ -27,6 +29,7 @@ void GameScene::Start() {
 	pGameObjectArray.push_back(pPlayer);
 	//Weapon* pWeapon = new Weapon("sabel");
 
+
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
@@ -37,10 +40,12 @@ void GameScene::Start() {
 	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
 	EffectManager::GetInstance().Load("Res/Effect/Explosion.efkefc", "Explosion", 20.0f);
 
-
 	StartTreasureChest* pChest = new StartTreasureChest();
 	pGameObjectArray.push_back(pChest);
 	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
+
+	EnhancementStone* pEnhance = new EnhancementStone(VGet(200.0f, 0, 500.0f));
+	pGameObjectArray.push_back(pEnhance);
 	//アイテムのセット
 	ItemFactory::Instance().InitializeDefaultItems();
 }
@@ -80,8 +85,6 @@ void GameScene::Update() {
 		//	isSelectingArtifact = false;
 		//}
 	}
-
-
 
 	EffectManager::GetInstance().Update();
 	ItemDropManager::GetInstance().Update();
