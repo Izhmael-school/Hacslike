@@ -398,14 +398,16 @@ void Enemy::SetAnimEventForAttackCollider(std::string animName, float collidersp
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis), position), speed,
 		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS()));
-
+	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(dis)));
 		}); });
 }
 
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis) {
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
-		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
+		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); 
+	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(dis)));
+		}); });
 }
 
 VECTOR Enemy::AttackAreaPos(float dis) {
