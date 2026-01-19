@@ -40,6 +40,9 @@ void Enemy::Setup() {
 	isTouch = false;
 	rayAnswer = false;
 	area.SetOwner(this);
+	atking = false;
+	isDead = false;
+	goalPos = VMinus;
 }
 
 void Enemy::Update() {
@@ -79,6 +82,7 @@ void Enemy::Update() {
 	for (auto itr = attackColliderList.begin(); itr != attackColliderList.end(); ) {
 		SphereHitBox* c = *itr;
 		if (c->GetActive()) {
+			++itr;
 			continue;
 		}
 
@@ -110,7 +114,7 @@ void Enemy::Update() {
 void Enemy::Render() {
 	if (!isVisible) return;
 
-	area.Render();
+	//area.Render();
 
 	// çUåÇìñÇΩÇËîªíËÇÃçXêV
 	for (auto c : attackColliderList) {
@@ -386,7 +390,9 @@ void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis) {
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis), position), speed,
-		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
+		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS()));
+		
+		}); });
 }
 
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis) {

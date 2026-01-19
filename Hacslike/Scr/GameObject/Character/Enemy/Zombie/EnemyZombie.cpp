@@ -31,7 +31,11 @@ void EnemyZombie::Start() {
 	SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
 	SetAnimEvent("attack02", [this]() { SetAttacking(true); });
 	SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-
+	// Œø‰Ê‰¹
+	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Bite1"); }, 16);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 14);
+	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 36);
+	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 41);
 }
 
 void EnemyZombie::Update() {
