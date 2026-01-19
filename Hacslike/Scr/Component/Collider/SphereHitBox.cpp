@@ -72,17 +72,42 @@ void SphereHitBox::Update() {
 
 	// 生存時間が来たら消す
 	if (timer >= lifeTime) {
-
+		active = false;
 		if (pCollider) {
 			pCollider->SetEnable(false);
 			CollisionManager::GetInstance().UnRegister(pCollider);
-
 		}
-		active = false;
 		return;
 	}
 
-	// まだ生きてる → 位置更新
+	// --- 跳ね返り巡回ロジック ---
+	if (!targetPoints.empty() && currentTargetIndex < targetPoints.size()) {
+		VECTOR targetPos = targetPoints[currentTargetIndex];
+
+		// ターゲットへのベクトル
+		VECTOR toTarget = VSub(targetPos, position);
+
+		// VSizeでベクトルの長さを取得
+		float dist = VSize(toTarget);
+
+		// 目的地に十分近づいたか？ (20.0fは調整してください)
+		if (dist < 60.0f) {
+			currentTargetIndex++;
+
+			if (currentTargetIndex < targetPoints.size()) {
+				// 次の地点への方向ベクトルを作成
+				VECTOR nextDir = VSub(targetPoints[currentTargetIndex], position);
+				// 正規化して速度を掛ける
+				velocity = VScale(VNorm(nextDir), moveSpeed);
+			}
+			else {
+				// 5箇所全て回りきったら消滅
+				timer = lifeTime;
+			}
+		}
+	}
+
+	// 位置更新
 	position = VAdd(position, velocity);
 
 	if (pCollider && pCollider->IsEnable()) {

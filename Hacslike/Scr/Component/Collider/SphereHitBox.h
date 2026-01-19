@@ -22,6 +22,10 @@ private:
 
 	SphereCollider* pCollider;	//	コライダー
 
+	std::vector<VECTOR> targetPoints; // 目的地リスト
+	int currentTargetIndex = 0;       // 現在の目的地番号
+	float moveSpeed = 30.0f;          // 移動速度
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -125,6 +129,16 @@ public:
 	/// </summary>
 	/// <param name="_owner"></param>
 	inline void SetOwner(Character* _owner) { owner = _owner; }
+
+	// 目的地をセットする関数
+	void SetTargetList(const std::vector<VECTOR>& points) {
+		targetPoints = points;
+		currentTargetIndex = 0;
+		if (!points.empty()) {
+			// 現在のvelocityから移動スピードを保存しておく
+			moveSpeed = VSize(velocity);
+		}
+	}
 
 public:		//	オーバーライドした衝突検知
 	/*

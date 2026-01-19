@@ -39,7 +39,8 @@ PlayerMovement::PlayerMovement(Player* _player)
 	, evasionSpeed(1.0f)
 	, inputVec()
 	, dashState(false)
-	, audio() {
+	, audio()
+	, blinkDirection(){
 	Start();
 }
 
@@ -93,55 +94,79 @@ void PlayerMovement::Render() {
 	}
 }
 
+void PlayerMovement::ForceMove(float speed) {
+	// 攻撃開始時に固定した方向へ進む
+	VECTOR moveVec = VScale(lockedDirection, speed);
+	VECTOR pos = VAdd(pPlayer->GetPosition(), moveVec);
+
+	// 壁判定を通して座標をセット（壁抜け防止）
+	VECTOR correctedPos = pPlayer->CheckWallToWallRubbing(pos);
+	pPlayer->SetPosition(correctedPos.x, correctedPos.y, correctedPos.z);
+}
+
+void PlayerMovement::LockDirection() {
+	lockedDirection = pPlayer->GetForward();
+}
+
+void PlayerMovement::StopDash() {
+	evasionSpeed = 1.0f; // スピードを通常に戻す
+	dashState = false;   // ダッシュフラグを下ろす
+}
+
 /// <summary>
 /// 移動・アニメーション・回転処理
 /// </summary>
 void PlayerMovement::UpdateMovement() {
-	if (!pPlayer->GetPlayerAttack()->IsAttacking()) {
-		//	入力があれば
-		if (VSquareSize(inputVec) >= 0.01f) {
-			//	入力ベクトルの正規化
-			inputVec = VNorm(inputVec);
+	if (pPlayer->GetPlayerAttack()->IsAttacking()) return;
 
-			inputVec = VScale(inputVec, pPlayer->GetSpeed());
+	if (VSquareSize(inputVec) >= 0.01f || isBlinking) {
 
-			inputVec = VScale(inputVec, evasionSpeed);
+		VECTOR moveDirection;
 
-			//	カメラからみた移動する方向ベクトル
-			VECTOR moveDirection = VZero;
+		if (isBlinking) {
+			// --- 回避中は保存した方向を使い続ける (スティック無視) ---
+			moveDirection = blinkDirection;
+		}
+		else {
+			// --- 通常時はスティック入力から計算 ---
+			VECTOR normalizedInput = VNorm(inputVec);
+			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));
+			moveDirection = VTransform(normalizedInput, mRotY);
 
-			MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));		//	カメラのY軸回転行列
-			moveDirection = VTransform(inputVec, mRotY);
-
-			VECTOR pos = pPlayer->GetPosition();
-			pos = VAdd(pos, VScale(moveDirection, 10.0f));
-			VECTOR dir = pPlayer->CheckWallToWallRubbing(pos); // ← 壁補正（これで壁抜けしない）
-			pPlayer->SetPosition(dir.x, dir.y, dir.z);
-
+			// 回転更新 (通常時のみ)
 			VECTOR rot = pPlayer->GetRotation();
 			rot.y = Rad2Deg(atan2f(moveDirection.x, moveDirection.z)) + 180.0f;
 			pPlayer->SetRotation(rot);
+		}
 
-			//	移動アニメーションを再生
+		// --- 座標更新 (moveDirection を元に移動) ---
+		float moveMagnitude = 10.0f * evasionSpeed;
+		VECTOR pos = pPlayer->GetPosition();
+		pos = VAdd(pos, VScale(moveDirection, moveMagnitude));
+
+		VECTOR dir = pPlayer->CheckWallToWallRubbing(pos);
+		pPlayer->SetPosition(dir.x, dir.y, dir.z);
+
+		// アニメーション (通常時のみ)
+		if (!isBlinking) {
 			if (evasionSpeed >= 1.2f) {
 				pPlayer->GetAnimator()->Play(5, 0.5f);
 				dashState = true;
-				audio.PlayOneShot("run");
 			}
 			else {
 				pPlayer->GetAnimator()->Play(1, 1.3f);
 				dashState = false;
-				audio.PlayOneShot("run");
 			}
-		}
-		else {
-			//	待機アニメーションを再生
-			pPlayer->GetAnimator()->Play(0);
-			evasionSpeed = 1;
-			dashState = false;
+			audio.PlayOneShot("run");
 		}
 	}
+	else {
+		pPlayer->GetAnimator()->Play(0);
+		evasionSpeed = 1.0f;
+		dashState = false;
+	}
 }
+
 
 /// <summary>
 /// 移動入力
@@ -194,17 +219,31 @@ void PlayerMovement::Evasion() {
 
 	pPlayer->GetCollider()->SetEnable(false);
 
-	// 瞬間移動
+	// --- 回避開始時の移動方向を確定・保存する ---
+	if (VSquareSize(inputVec) >= 0.01f) {
+		// 現在の入力から方向を計算
+		MATRIX mRotY = MGetRotY(Deg2Rad(Camera::main->GetRotation().y));
+		blinkDirection = VNorm(VTransform(inputVec, mRotY)); // 正規化して保存
+
+		// 向き（回転）もここで確定
+		VECTOR rot = pPlayer->GetRotation();
+		rot.y = Rad2Deg(atan2f(blinkDirection.x, blinkDirection.z)) + 180.0f;
+		pPlayer->SetRotation(rot);
+	}
+	else {
+		// 入力がない場合は正面に進む（または回避をキャンセルする等の処理）
+		blinkDirection = pPlayer->GetForward();
+	}
+
 	evasionSpeed = 6;
+	// 残像開始
+	isBlinking = true;
+	blinkTimer = 0.15f;
 
 	if (attactArtifact)
 		attactArtifact->OnBlinking(this);
 	if (CriticalArtifact)
 		CriticalArtifact->OnBlinking(this);
-
-	// 残像開始
-	isBlinking = true;
-	blinkTimer = 0.15f;
 
 
 	// --- 履歴をすべて現在位置にリセット ---

@@ -51,6 +51,8 @@ private:	//	メンバ変数
 	int expValue;			//	Exp量
 	int maxExp;
 	int remainExp;
+
+	bool canEnhance = false; // 強化可能フラグ
 #pragma endregion
 
 #pragma region 死亡処理関連
@@ -221,6 +223,12 @@ public:		//	メンバ関数
 	/// プレイヤーのセットアップ
 	/// </summary>
 	void PlayerSetUp();
+
+	// 強化可能フラグの状態を返す (GameSceneで使用)
+	bool GetCanEnhance() const { return canEnhance; }
+
+	// 強化可能フラグを書き換える (CapsuleHitBoxで使用)
+	void SetCanEnhance(bool _flag) { canEnhance = _flag; }
 #pragma endregion
 
 #pragma region GetterとSetter

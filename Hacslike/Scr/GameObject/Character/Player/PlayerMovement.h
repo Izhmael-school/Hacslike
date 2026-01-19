@@ -35,10 +35,12 @@ private:
 	bool evasionButtonPressed;			//	回避入力
 	float evasionSpeed;					//	回避速度
 	float evasionCooldown;				// クールダウンタイマー
-	const float EVASION_COOLDOWN_TIME = 2.0f;		// 2秒クールダウン
+	const float EVASION_COOLDOWN_TIME = 3.0f;		// 3秒クールダウン
 	const float ATTACK_INPUT_COOLDOWN_TIME = 0.2f;	// 0.2秒クールダウン
+	VECTOR blinkDirection; // 回避開始時の移動方向を保存する用
 #pragma endregion
 
+	VECTOR lockedDirection; // 回避やダッシュ攻撃中に固定される移動方向
 	VECTOR inputVec;	//	移動量
 
 	bool dashState;		//	ダッシュしてるかどうか
@@ -103,6 +105,13 @@ public:
 	/// </summary>
 	void Dash();
 
+	// 踏み込み用：lockedDirectionに向かって進む
+	void ForceMove(float speed);
+	// 向き固定用：現在の Forward を lockedDirection に保存する
+	void LockDirection();
+
+	void StopDash();
+
 public:
 	/// <summary>
 	/// 回避中かどうか
@@ -127,6 +136,13 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	inline Player* GetPlayer()const {return pPlayer;}
+
+	/// <summary>
+	/// 速度の設定
+	/// </summary>
+	/// <param name="_ES"></param>
+	/// <returns></returns>
+	inline void SetEvasionSpeed(int _ES) { evasionSpeed = _ES; }
 
 	inline void SetAttactArtifact(AttackincreasesforSeveralSecondsAfterEvasion* artifact) { attactArtifact = artifact; }
 	inline void SetCriticalArtifact(CriticalHitRateIncreasesForSeveralSecondsAfterEvasion* artifact) { CriticalArtifact = artifact; }
