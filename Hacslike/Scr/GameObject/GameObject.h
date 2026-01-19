@@ -17,6 +17,9 @@ protected:
 	int layer;
 	VECTOR forward, right, up; //ローカルのベクトル
 
+	// 既存メンバ...
+	bool markedForRemoval = false; // デフォルト false
+
 public: // トラクタ
 	GameObject(VECTOR _pos = VZero, std::string _tag = "");
 
@@ -31,6 +34,8 @@ public:	// メンバ関数
 	virtual void Update();
 	// 描画処理
 	virtual void Render() = 0;
+
+	bool IsMarkedForRemoval() const { return markedForRemoval; }
 
 public:	// ゲッターとセッター
 #pragma region Visible

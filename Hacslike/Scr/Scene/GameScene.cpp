@@ -23,10 +23,9 @@ GameScene::~GameScene() {
 
 void GameScene::Start() {
 	Player* pPlayer = new Player();
-	PlayerMovement::CreateInstance(pPlayer);
+	pPlayer->CreateInstance();
 	pGameObjectArray.push_back(pPlayer);
-	//Weapon* pWeapon = new Weapon("sabel");
-
+	
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
