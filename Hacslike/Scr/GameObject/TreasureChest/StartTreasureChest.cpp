@@ -1,4 +1,4 @@
-#include "StartTreasureChest.h"
+﻿#include "StartTreasureChest.h"
 #include <algorithm>
 #include"../../Manager/CollisionManager.h"
 #include"../../Component/Collider/Collider.h"
@@ -8,15 +8,16 @@
 StartTreasureChest* StartTreasureChest::pInstance = nullptr;
 
 StartTreasureChest::StartTreasureChest(VECTOR _pos, std::string _tag)
-	:GameObject(_pos,"TreasureChest")
+	:GameObject(_pos, "TreasureChest")
 	, TreasureChestModel(INVALID)
-	,active(false){
+	, active(false) {
+	// NOTE: singleton 登録しない（シーンで new したオブジェクトと競合するため）
 	Start();
 }
 
 StartTreasureChest::~StartTreasureChest()
 {
-	if(TreasureChestModel != INVALID){
+	if (TreasureChestModel != INVALID) {
 		MV1DeleteModel(TreasureChestModel);
 		TreasureChestModel = INVALID;
 	}
@@ -24,7 +25,9 @@ StartTreasureChest::~StartTreasureChest()
 
 void StartTreasureChest::CreateInstance()
 {
-	pInstance = new StartTreasureChest();
+	if (pInstance == nullptr) {
+		pInstance = new StartTreasureChest();
+	}
 }
 
 StartTreasureChest* StartTreasureChest::GetInstance()
@@ -45,7 +48,11 @@ void StartTreasureChest::DestroyInstance()
 
 void StartTreasureChest::Start()
 {
+	// コライダーを作る
 	SetCollider(new SphereCollider(this, VZero, 100));
+	// 生成時に CollisionManager に登録（OpenTreasureChest で UnRegister する対）
+	CollisionManager::GetInstance().Register(pCollider);
+
 	TreasureChestModel = MV1LoadModel("Res/Model/DropObject/TreasureChest.mv1");
 	active = true;
 }
@@ -53,7 +60,7 @@ void StartTreasureChest::Start()
 void StartTreasureChest::Update()
 {
 	if (!active) return;
-	// �R���C�_�[�X�V
+	// コライダー更新
 	if (pCollider != nullptr)
 	{
 		pCollider->SetMatrix(matrix);
@@ -65,21 +72,38 @@ void StartTreasureChest::Update()
 
 void StartTreasureChest::Render()
 {
-	// active �܂��� isVisible �̂ǂ��炩�� false �Ȃ�`�悵�Ȃ�
 	if (!active || !isVisible) return;
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	MV1SetMatrix(TreasureChestModel, matrix);
 	MV1DrawModel(TreasureChestModel);
 
-	// �����蔻��̕`��i�f�o�b�O�p�j
 #if _DEBUG
-   if (pCollider != nullptr) {
-	   pCollider->Render();
-   }
+	if (pCollider != nullptr) {
+		pCollider->Render();
+	}
 #endif
 }
 
 void StartTreasureChest::OpenTreasureChest()
 {
+	// 既に無効なら何もしない
+	if (!active) return;
 
+	active = false;
+	isVisible = false;
+
+	// コライダー無効化 & CollisionManager から登録解除
+	if (pCollider != nullptr) {
+		pCollider->SetEnable(false);
+		CollisionManager::GetInstance().UnRegister(pCollider);
+	}
+
+	// モデル解放
+	if (TreasureChestModel != INVALID) {
+		MV1DeleteModel(TreasureChestModel);
+		TreasureChestModel = INVALID;
+	}
+
+	// 効果音
+	AudioManager::GetInstance().PlayOneShot("Decision");
 }

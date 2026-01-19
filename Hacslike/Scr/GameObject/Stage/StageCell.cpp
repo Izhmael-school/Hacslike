@@ -28,7 +28,7 @@ void StageCell::Update() {
 
 	MV1SetMatrix(modelHandle, matrix);
 
-	if (isTouch && (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_X) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_X))) {
+	if (isTouch && (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_X))) {
 
 		if (FadeManager::GetInstance().GetFadeState() != FadeState::FadeEnd) return;
 
@@ -59,7 +59,7 @@ void StageCell::Render() {
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
 		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:階層移動する");
 		DrawFormatString(textX, textY, white, "X");
-		DrawFormatString(textX + 53, textY, white, "X");
+		DrawFormatString(textX + 53, textY, white, "B");
 	}
 
 	MV1DrawModel(modelHandle);

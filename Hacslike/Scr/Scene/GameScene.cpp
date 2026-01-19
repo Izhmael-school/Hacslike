@@ -38,7 +38,7 @@ void GameScene::Start() {
 	EffectManager::GetInstance().Load("Res/Effect/Explosion.efkefc", "Explosion", 20.0f);
 
 
-	StartTreasureChest* pChest = new StartTreasureChest();
+	StartTreasureChest* pChest = new StartTreasureChest(VGet(800.0f,0,790.0f));
 	pGameObjectArray.push_back(pChest);
 	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 
@@ -90,12 +90,12 @@ void GameScene::Update() {
 	EffectManager::GetInstance().Update();
 	ItemDropManager::GetInstance().Update();
 
+#if _DEBUG アイテムドロップテスト
 	// --- アイテムドロップテスト ---
 	if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 		VECTOR spawnPos = Character::player->GetPosition();
 		ItemDropManager::GetInstance().TryDropItem(10, VGet(spawnPos.x, 5.0f, spawnPos.z));
 	}
-#if _DEBUG アイテムドロップテスト
 	// --- アイテムドロップテスト ---
 	if (input->IsKeyDown(KEY_INPUT_Q)) {
 		VECTOR spawnPos = Character::player->GetPosition();

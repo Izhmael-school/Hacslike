@@ -18,6 +18,7 @@
 #include "../../../Manager/SaveManager.h"
 #include "../../../UI/MenuSaveLoad.h"
 
+class StartTreasureChest;
 
 
 
@@ -76,7 +77,11 @@ private:	//	メンバ変数
 	bool isGetCoin = false;
 	attactPower_raise_GetCoin* coinArtifact;  // コイン取得系のアーティファクト
 	itemDropRateUpwardOnCoinAcquisition* itemArtifact;
+	// ... 既存メンバ ...
 	bool hitChest = false;
+
+	// 追加: 接触中の宝箱オブジェクトを保持するポインタ
+	StartTreasureChest* hitChestObj = nullptr;
 	bool isSelectArtifact = false;
 	ArtifactSelectUI artifactSelectUI;
 	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
