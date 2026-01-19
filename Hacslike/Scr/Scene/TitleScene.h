@@ -3,6 +3,8 @@
 class TitleScene : public BaseScene {
 	int teamLogoHandle;
 
+	int titleHandle;
+
 	int titleMenuIndex = 0;      // 0: New Game, 1: Load, 2: Exit
 	bool inLoadMenu = false;
 	int selectedSlot = 0;        // 0..9
