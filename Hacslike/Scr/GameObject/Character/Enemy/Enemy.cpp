@@ -43,6 +43,11 @@ void Enemy::Setup() {
 	atking = false;
 	isDead = false;
 	goalPos = VMinus;
+	nextWanderSpan = Random(1, 4);
+	nextWanderTime = nextWanderSpan;
+	atkSpan = 4;
+	atkTime = 0;
+	moveSpeed = 1;
 }
 
 void Enemy::Update() {
@@ -225,13 +230,13 @@ bool Enemy::Vision_Ray() {
 		if (ray.HitFlag == 1) {
 			end = ray.HitPosition;
 			return true;
-		}
+	}
 
 #if Debug
 		DrawLine3D(start, end, yellow);
 #endif
 		return false;
-	}
+}
 }
 
 /// <summary>
@@ -347,13 +352,14 @@ bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
 void Enemy::Wander() {
 	if (rayAnswer || isAttack()) return;
 
-	if (nextWanderTime < nextWanderSpan) {
-		nextWanderTime += TimeManager::GetInstance().deltaTime;
-		pAnimator->Play("idle01");
-		return;
-	}
-
+	// ÉSÅ[ÉãÇ™Ç»ÇØÇÍÇŒ
 	if (goalPos.x == -1 || goalPos.z == -1) {
+
+		if (nextWanderTime < nextWanderSpan) {
+			nextWanderTime += TimeManager::GetInstance().deltaTime;
+			pAnimator->Play("idle01");
+			return;
+		}
 
 		int x = std::round(position.x / CellSize);
 		int z = std::round(position.z / CellSize);
@@ -376,6 +382,7 @@ void Enemy::Wander() {
 	LookTarget(goalPos);
 	Move(goalPos);
 
+	//ÉSÅ[Éãínì_Ç…ãﬂÇ√Ç¢ÇΩÇÁ
 	if (position.x >= goalPos.x - 50 && position.x < goalPos.x + 50 &&
 		position.z >= goalPos.z - 50 && position.z < goalPos.z + 50) {
 		nextWanderTime = 0;
@@ -391,13 +398,13 @@ void Enemy::SetAnimEventForAttackCollider(std::string animName, float collidersp
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis), position), speed,
 		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS()));
-		
+
 		}); });
 }
 
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis) {
 	float speed = pAnimator->GetAnimSpeed(animName);
-	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime,pos]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
+	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
 		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); }); });
 }
 

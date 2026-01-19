@@ -149,67 +149,66 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 
 Enemy* EnemyManager::UseEnemy(EnemyType type) {
 	Enemy* e = nullptr;
-	std::vector<Enemy*> tmp = { nullptr };
-	std::vector<Enemy*>& enemyArray = tmp;
+	std::vector<Enemy*>* enemyArray = nullptr;
 
 	switch (type) {
 	case Goblin:
-		enemyArray = unuseGoblinArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle)));
+		enemyArray = &unuseGoblinArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle)));
 		break;
 	case Spider:
-		enemyArray = unuseSpiderArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemySpider(MV1DuplicateModel(originSpiderMHandle)));
+		enemyArray = &unuseSpiderArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemySpider(MV1DuplicateModel(originSpiderMHandle)));
 		break;
 	case Wolf:
-		enemyArray = unuseWolfArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyWolf(MV1DuplicateModel(originWolfMHandle)));
+		enemyArray = &unuseWolfArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyWolf(MV1DuplicateModel(originWolfMHandle)));
 		break;
 	case Troll:
-		enemyArray = unuseTrollArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyTroll(MV1DuplicateModel(originTrollMHandle)));
+		enemyArray = &unuseTrollArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyTroll(MV1DuplicateModel(originTrollMHandle)));
 		break;
 	case Zombie:
-		enemyArray = unuseZombieArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyZombie(MV1DuplicateModel(originZombieMHandle)));
+		enemyArray = &unuseZombieArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyZombie(MV1DuplicateModel(originZombieMHandle)));
 		break;
 	case HellHound:
-		enemyArray = unuseHellHoundArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyHellHound(MV1DuplicateModel(originHellHoundMHandle)));
+		enemyArray = &unuseHellHoundArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyHellHound(MV1DuplicateModel(originHellHoundMHandle)));
 		break;
 	case Ouger:
-		enemyArray = unuseOugerArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyOuger(MV1DuplicateModel(originOugerMHandle)));
+		enemyArray = &unuseOugerArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyOuger(MV1DuplicateModel(originOugerMHandle)));
 		break;
 	case Ketbleperz:
-		enemyArray = unuseKetbleperzArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyKetbleperz(MV1DuplicateModel(originKetbleperzMHandle)));
+		enemyArray = &unuseKetbleperzArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyKetbleperz(MV1DuplicateModel(originKetbleperzMHandle)));
 		break;
 	case Durahan:
-		enemyArray = unuseDurahanArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyDurahan(MV1DuplicateModel(originDurahanMHandle)));
+		enemyArray = &unuseDurahanArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyDurahan(MV1DuplicateModel(originDurahanMHandle)));
 		break;
 	case HobGoblin:
-		enemyArray = unuseHobGoblinArray;
-		if (enemyArray.size() <= 0)
-			enemyArray.push_back(new EnemyHobGoblin(MV1DuplicateModel(originHobGoblinMHandle)));
+		enemyArray = &unuseHobGoblinArray;
+		if (enemyArray->size() == 0)
+			enemyArray->push_back(new EnemyHobGoblin(MV1DuplicateModel(originHobGoblinMHandle)));
 		break;
 	}
 
-	e = enemyArray[0];
-	enemyArray.erase(enemyArray.begin());
+	e = enemyArray->back();
 
 	if (e == nullptr) return nullptr;
 
+	enemyArray->pop_back();
 	CollisionManager::GetInstance().Register(e->GetCollider());
 	e->Setup();
 	e->SetVisible(true);

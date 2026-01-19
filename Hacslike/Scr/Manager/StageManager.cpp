@@ -97,6 +97,8 @@ int StageManager::GetRoomStatus(int roomNum, RoomStatus status) {
 void StageManager::GenerateStage() {
 	// 初期化
 	generator->ClearStage();
+	// エネミーの削除
+	EnemyManager::GetInstance().UnuseAllEnemy();
 	// 階層の加算
 	floorCount++;
 	// ステージのデータを作る
@@ -108,8 +110,6 @@ void StageManager::GenerateStage() {
 	ChangeTexture(texNum, Room);
 	// プレイヤーの設置
 	SetGameObjectRandomPos(Character::player);
-	// エネミーの削除
-	EnemyManager::GetInstance().UnuseAllEnemy();
 	int canSpawnNum = 0;
 	for (int i = 0; i < RoomMax_Large; i++) {
 		int w = generator->roomStatus[rw][i];
@@ -158,6 +158,8 @@ void StageManager::GenerateStage() {
 void StageManager::GenerateStage(int stageID) {
 	// ステージの初期化
 	generator->ClearStage();
+	// エネミーの削除
+	EnemyManager::GetInstance().UnuseAllEnemy();
 	// フロアの加算
 	floorCount++;
 	// フロアデータの読み込み

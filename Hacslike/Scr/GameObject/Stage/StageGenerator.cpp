@@ -165,8 +165,6 @@ void StageGenerator::ClearStage() {
 		}
 	}
 
-	EnemyManager::GetInstance().UnuseAllEnemy();
-
 	roomNum = 0;
 	parentNum = 0;
 	maxArea = 0;
