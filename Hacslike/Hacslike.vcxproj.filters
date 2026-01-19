@@ -146,8 +146,6 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\Spider.cpp" />
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
     <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp">
       <Filter>GameObject\TreasureChest</Filter>
     </ClCompile>
@@ -167,7 +165,6 @@
     <ClCompile Include="Scr\UI\MenuSaveLoad.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClCompile>
@@ -185,6 +182,18 @@
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp">
       <Filter>GameObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.cpp">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Other\AttackArea.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.cpp">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
+      <Filter>GameObject\Character\Enemy\Wolf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,7 +349,6 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
       <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
       <Filter>GameObject\TreasureChest</Filter>
     </ClInclude>
@@ -354,7 +362,6 @@
       <Filter>GameObject\HitPool</Filter>
     </ClInclude>
     <ClInclude Include="Scr\ExpansionMethod.h" />
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
     <ClInclude Include="Scr\UI\Gauge.h" />
     <ClInclude Include="Scr\Save\SaveFormat.h">
       <Filter>Save</Filter>
@@ -368,7 +375,6 @@
     <ClInclude Include="Scr\UI\MenuSaveLoad.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.h">
       <Filter>GameObject\Character\Enemy</Filter>
     </ClInclude>
@@ -386,6 +392,18 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h">
       <Filter>GameObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.h">
+      <Filter>GameObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Other\AttackArea.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h">
+      <Filter>GameObject\Character\Enemy\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
+      <Filter>GameObject\Character\Enemy\Wolf</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

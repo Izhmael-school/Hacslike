@@ -78,8 +78,7 @@ void Enemy::Update() {
 	// UŒ‚“–‚½‚è”»’è‚Ìíœ
 	for (auto itr = attackColliderList.begin(); itr != attackColliderList.end(); ) {
 		SphereHitBox* c = *itr;
-		if (!c->IsDead()) {
-			++itr;
+		if (c->GetActive()) {
 			continue;
 		}
 
@@ -403,7 +402,9 @@ VECTOR Enemy::AttackAreaPos(float dis) {
 }
 
 VECTOR Enemy::AttackAreaPos(VECTOR pos, float dis) {
-	VECTOR dir = VGet(sinf(Deg2Rad(rotation.y)) + pos.x, 0 + pos.y, cosf(Deg2Rad(rotation.y)) + pos.z);
+	float rad = Deg2Rad(rotation.y);
+
+	VECTOR dir = VGet(pos.x * cosf(rad) + pos.z * sinf(rad), 0, -pos.x * sinf(rad) + pos.z * cosf(rad));
 	VECTOR nDir = VNorm(dir);
 	return VScale(nDir, dis);
 }

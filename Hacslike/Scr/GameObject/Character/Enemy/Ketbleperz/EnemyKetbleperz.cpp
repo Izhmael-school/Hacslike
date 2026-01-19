@@ -23,7 +23,7 @@ void EnemyKetbleperz::Start() {
 	// アニメーションイベントの設定
 	pAnimator->GetAnimation("dead")->SetEvent([this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	// 攻撃の当たり判定
-	SetAnimEventForAttackCollider("attack01", 23, 2, 200, VGet(200,0,0) ,200);
+	SetAnimEventForAttackCollider("attack01", 23, 2, 200, 200);
 	SetAnimEventForAttackCollider("attack02", 13, 2, 200, 200);
 	SetAnimEventForAttackCollider("attack03", 18, 2, 200, 200);
 	// 攻撃中の移動制御

@@ -42,7 +42,6 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Other\AttackArea.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.cpp" />
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp" />
@@ -117,7 +116,6 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Other\AttackArea.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h" />
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\SpiderBullet.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h" />

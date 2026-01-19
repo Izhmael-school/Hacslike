@@ -103,8 +103,9 @@ void StageManager::GenerateStage() {
 	generator->GenerateStageData();
 	// ステージのオブジェクトを置く
 	generator->GenerateStageObject();
+	int texNum = std::floor((floorCount - 1 + 10) / textureChangeFloor);
 	// テクスチャの張替え
-	ChangeTexture(floor(floorCount - 1 / textureChangeFloor), Room);
+	ChangeTexture(texNum, Room);
 	// プレイヤーの設置
 	SetGameObjectRandomPos(Character::player);
 	// エネミーの削除
@@ -164,7 +165,7 @@ void StageManager::GenerateStage(int stageID) {
 	// フロアの生成
 	generator->GenerateStageObject();
 	// テクスチャの張替え
-	ChangeTexture(floor(floorCount - 1 / textureChangeFloor), Room);
+	ChangeTexture(std::floor((floorCount - 1) / textureChangeFloor), Room);
 	// プレイヤーの配置
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
 	// ボスの配置
