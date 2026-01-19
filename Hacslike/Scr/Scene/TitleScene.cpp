@@ -32,6 +32,8 @@ void TitleScene::Start() {
 	// 追加: アイテムテンプレートを先に登録しておく（Load 前に必須）
 	ItemFactory::Instance().InitializeDefaultItems();
 
+	titleHandle = LoadGraph("Res/Title/Hacslike_title.png");
+
 	titleMenuIndex = 0;
 	inLoadMenu = false;
 	selectedSlot = 0;
@@ -65,23 +67,9 @@ void TitleScene::Update() {
 		if (input.IsButtonDown(XINPUT_GAMEPAD_A) || input.IsMouseDown(MOUSE_INPUT_LEFT) || input.IsKeyDown(KEY_INPUT_RETURN)) {
 			AudioManager::GetInstance().PlayOneShot("Decision");
 			if (titleMenuIndex == 0) {
-				// New Game: create/reset Player and start game
-				// Ensure existing player destroyed (defensive)
-				//Player::DestroyInstance();
-				//Player* p = Player::CreateInstance(VZero);
-				//if (p) {
-				//	p->PlayerSetUp(); // initialize stats for new game
-				//}
-				// Reset managers that hold game state
-				StageManager::GetInstance(); // ctor side-effects create generator etc.
-				ArtifactManager::GetInstance(); // ensure instance
-				SkillManager::GetInstance();
-				EnemyManager::GetInstance();
-				ItemFactory::Instance().InitializeDefaultItems();
-
+				
 				// Change to game scene
 				SceneManager::GetInstance().ChangeScene(SceneType::Game);
-				return;
 			}
 			else if (titleMenuIndex == 1) {
 				// Open load menu
@@ -172,16 +160,16 @@ static std::string FormatTime(std::time_t t) {
 
 void TitleScene::Render() {
 	// Title
-	DrawString(600, 200, "Hacslike", red);
+	DrawGraph(0, 0, titleHandle, TRUE);
 
 	if (!inLoadMenu) {
 		// Title menu
-		DrawString(600, 400, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white);
-		DrawString(600, 440, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white);
-		DrawString(600, 480, (titleMenuIndex == 2) ? "> 終了" : "  終了", white);
+		DrawString(550, 400, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white);
+		DrawString(550, 440, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white);
+		DrawString(550, 480, (titleMenuIndex == 2) ? "> 終了" : "  終了", white);
 
 		// Hint
-		DrawFormatString(600, 540, white, "A: 決定  /  上下: 選択");
+		DrawFormatString(550, 540, white, "A: 決定  /  上下: 選択");
 	}
 	else {
 		// Load menu - display 10 slots
