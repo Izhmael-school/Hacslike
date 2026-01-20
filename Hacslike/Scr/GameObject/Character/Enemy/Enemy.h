@@ -81,6 +81,7 @@ public:
 	void LoadAnimation();
 	// “G‚Ìí—Ş‚ğæ“¾
 	inline EnemyType GetType() const { return type; }
+	inline void SetType(EnemyType _type) { type = _type; }
 	// UŒ‚‚Ì“–‚½‚è”»’è‚ÌÀ•WŒvZ
 	VECTOR AttackAreaPos(float dis);
 	VECTOR AttackAreaPos(VECTOR pos,float dis = 1);

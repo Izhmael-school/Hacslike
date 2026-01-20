@@ -14,7 +14,6 @@ void EnemyTroll::Start() {
 	// 当たり判定の設定
 	pCollider = new CapsuleCollider(this, VGet(0, 00, 0), VGet(0, 250, 0), 70);
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
-	type = Troll;
 
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);

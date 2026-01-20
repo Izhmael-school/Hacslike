@@ -164,27 +164,6 @@
     <ClCompile Include="Scr\UI\MenuSaveLoad.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Enemy\Other\AttackArea.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -214,6 +193,27 @@
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp">
       <Filter>GameObject\Character\Enemy\Boss\Durahan</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp">
+      <Filter>GameObject\Character\Enemy\HellHound</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp">
+      <Filter>GameObject\Character\Enemy\Durahan</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp">
+      <Filter>GameObject\Character\Enemy\Ketbleperz</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.cpp">
+      <Filter>GameObject\Character\Enemy\HobGoblin</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp">
+      <Filter>GameObject\Character\Enemy\Ouger</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.cpp">
+      <Filter>GameObject\Character\Enemy\Troll</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp">
+      <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,27 +394,6 @@
     <ClInclude Include="Scr\UI\MenuSaveLoad.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Other\AttackArea.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -447,6 +426,27 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.h">
       <Filter>GameObject\Character\Enemy\Boss\Durahan</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h">
+      <Filter>GameObject\Character\Enemy\HellHound</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h">
+      <Filter>GameObject\Character\Enemy\Durahan</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h">
+      <Filter>GameObject\Character\Enemy\Ketbleperz</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.h">
+      <Filter>GameObject\Character\Enemy\HobGoblin</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h">
+      <Filter>GameObject\Character\Enemy\Ouger</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.h">
+      <Filter>GameObject\Character\Enemy\Troll</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h">
+      <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -563,6 +563,27 @@
     </Filter>
     <Filter Include="GameObject\Character\Enemy\Boss\Durahan">
       <UniqueIdentifier>{ac9c4305-e533-4d1b-bb87-8305993ab3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\HellHound">
+      <UniqueIdentifier>{17e5aadf-1ab3-43a5-a48f-43d02d290f6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Durahan">
+      <UniqueIdentifier>{70583c7c-24aa-449e-827f-994274a73ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Ketbleperz">
+      <UniqueIdentifier>{3863a643-4074-4c00-a0f3-db22a404d82a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\HobGoblin">
+      <UniqueIdentifier>{cd9f6c2b-5ff5-4b2d-b30b-08b9f13eb0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Ouger">
+      <UniqueIdentifier>{f53b84b9-d7b7-467d-ba27-a9f80e3dd1c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Troll">
+      <UniqueIdentifier>{516c8b66-50cf-4695-8149-202a9a9b0df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Zombie">
+      <UniqueIdentifier>{6f658fd7-1abe-479a-8456-aab45f5681ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,10 @@
 #include "../GameObject/Character/Enemy/Enemy.h"
 #include "../GameObject/Character/Enemy/Boss/BossBase.h"
 #include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
+#include "../GameObject/Character/Enemy/Boss/HellHound/BossHellHound.h"
+#include "../GameObject/Character/Enemy/Boss/Ouger/BossOuger.h"
+#include "../GameObject/Character/Enemy/Boss/Ketbleperz/BossKetbleperz.h"
+#include "../GameObject/Character/Enemy/Boss/Durahan/BossDurahan.h"
 #include "../Manager/AudioManager.h"
 #include"../Save/SaveIO.h"
 
@@ -129,6 +133,7 @@ void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 
 	pEnemyArray.push_back(e);
 	e->Setup();
+	e->SetType(type);
 	pEnemyArray[pEnemyArray.size() - 1]->SetPosition(pos);
 }
 
@@ -139,11 +144,25 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 	case Goblin:
 		boss = new BossGoblin();
 		break;
+	case HellHound:
+		boss = new BossHellHound();
+		break;
+	case Ouger:
+		boss = new BossOuger();
+		break;
+	case Ketbleperz:
+		boss = new BossKetbleperz();
+		break;
+	case Durahan:
+		boss = new BossDurahan();
+		break;
+	default:
+		return;
 	}
 	boss->SetAppearPos(pos);
 	boss->SetPosition(VGet(pos.x * CellSize, 0, pos.z * CellSize));
 	boss->SetVisible(true);
-	boss->Setup();
+	boss->SetType(type);
 	pEnemyArray.push_back(boss);
 }
 

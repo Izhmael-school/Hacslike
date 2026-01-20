@@ -14,7 +14,6 @@ void EnemyOuger::Start() {
 	// 当たり判定の設定
 	pCollider = new CapsuleCollider(this, VGet(0, 0, 0), VGet(0,200, 0), 120);
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
-	type = Ouger;
 
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);

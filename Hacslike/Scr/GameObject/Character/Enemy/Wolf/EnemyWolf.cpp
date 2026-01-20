@@ -15,7 +15,6 @@ void EnemyWolf::Start() {
 	// 当たり判定の設定
 	pCollider = new SphereCollider(this, position, 100);
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
-	type = EnemyType::Wolf;
 
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);

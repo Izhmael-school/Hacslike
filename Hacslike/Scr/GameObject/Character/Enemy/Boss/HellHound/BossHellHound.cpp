@@ -14,8 +14,6 @@ void BossHellHound::Start() {
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
 
-	type = HellHound;
-
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	SetAnimEventForAttackCollider("attack01", 16, 2, 300, 250);
 	SetAnimEventForAttackCollider("attack02", 12, 2, 125, 140);

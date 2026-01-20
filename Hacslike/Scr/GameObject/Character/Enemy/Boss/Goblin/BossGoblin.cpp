@@ -17,8 +17,6 @@ void BossGoblin::Start() {
 	// “–‚½‚è”»’è‚ÌÝ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
 
-	type = Goblin;
-
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 14);
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 3 / GetFPS())); }, 12);

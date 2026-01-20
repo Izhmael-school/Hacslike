@@ -16,7 +16,6 @@ void EnemyGoblin::Start() {
 	// 当たり判定の設定
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 150, 0), 30);
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
-	type = Goblin;
 
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);

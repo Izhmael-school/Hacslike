@@ -14,8 +14,6 @@ void BossOuger::Start() {
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
 
-	type = Ouger;
-
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	SetAnimEventForAttackCollider("attack01", 17, 2, 150, 200);
 	SetAnimEventForAttackCollider("attack02", 16, 2, 175, 200);

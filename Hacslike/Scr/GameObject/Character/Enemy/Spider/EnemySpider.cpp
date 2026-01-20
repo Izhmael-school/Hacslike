@@ -16,7 +16,6 @@ void EnemySpider::Start() {
 	// 当たり判定の設定
 	pCollider = new SphereCollider(this,position,100);
 	SetScale(VGet(0.01f, 0.01f, 0.01f));
-	type = EnemyType::Spider;
 
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);

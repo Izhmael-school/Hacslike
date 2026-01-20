@@ -14,7 +14,6 @@ void EnemyHobGoblin::Start() {
 	// 当たり判定の設定
 	pCollider = new CapsuleCollider(this, VGet(0, 0, 0), VGet(0, 250, 0), 50);
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
-	type = HobGoblin;
 
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);

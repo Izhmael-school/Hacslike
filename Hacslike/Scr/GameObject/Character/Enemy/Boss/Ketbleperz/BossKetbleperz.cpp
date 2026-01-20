@@ -15,8 +15,6 @@ void BossKetbleperz::Start() {
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
 
-	type = Ketbleperz;
-
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	SetAnimEventForAttackCollider("attack01", 23, 2, 200, 200);
 	SetAnimEventForAttackCollider("attack02", 13, 2, 200, 200);
