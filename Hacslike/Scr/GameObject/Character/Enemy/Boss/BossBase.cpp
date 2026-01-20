@@ -9,10 +9,11 @@ BossBase::BossBase()
 	:appearPos() {
 	vision.rayAngle = 360;
 	vision.rayCount = 120;
-	Start();
 }
 
-BossBase::~BossBase() {}
+BossBase::~BossBase() {
+	delete hpBar;
+}
 
 void BossBase::AppearStair() {
 	auto cells = StageManager::GetInstance().generator->cells;
@@ -39,6 +40,8 @@ void BossBase::Start() {
 	LoadAnimation();
 	// アニメーションイベントの設定
 	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	hpBar = new Gauge(maxHp, 200.0f, 600.0f, 400.0f, 50.0f);
+
 }
 
 void BossBase::Update() {
@@ -50,6 +53,8 @@ void BossBase::Update() {
 
 void BossBase::Render() {
 	Enemy::Render();
+
+	if (!isDead) hpBar->Render(hp);
 
 	if(isDead) BossSlainUI::GetInstance()->Draw();
 }

@@ -254,7 +254,10 @@ void Player::Start() {
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "Decision", false);
 
 	pAnimator->GetAnimation("Down1")->SetEvent([this]() {pAnimator->Play("Down2"); }, pAnimator->GetTotalTime("Down1"));
-	pAnimator->GetAnimation("Down2")->SetEvent([this]() {SceneManager::GetInstance().ChangeScene(SceneType::Title); }, 0);
+	pAnimator->GetAnimation("Down2")->SetEvent([this]() {
+		SceneManager::GetInstance().ChangeScene(SceneType::Title);
+		EnemyManager::GetInstance().DeleteAllEnemy();
+		}, 0);
 	pAnimator->GetAnimation("Down2")->SetEvent([this]() {CollisionManager::GetInstance().UnRegister(pCollider); }, 0);
 
 

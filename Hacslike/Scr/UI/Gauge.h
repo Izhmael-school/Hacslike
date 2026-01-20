@@ -13,9 +13,9 @@ public:
 	float width;
 	float height;
 public:
-	Gauge();
+	Gauge(float _maxValue,float x,float y, float w, float h);
 	~Gauge() = default;
 
-	void Update(float _currentValue);
+	void Render(float _currentValue);
 };
 

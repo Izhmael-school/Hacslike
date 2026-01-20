@@ -14,8 +14,9 @@ void AttackArea::Update() {
 
 		a->Update();
 
-		if (a->useFunc)
+		if (a->useFunc) {
 			deleteArray.push_back(a);
+		}
 	}
 
 	for (auto d : deleteArray) {

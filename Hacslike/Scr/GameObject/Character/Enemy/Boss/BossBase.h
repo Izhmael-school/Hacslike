@@ -1,6 +1,7 @@
 #pragma once
 #include "../Enemy.h"
 #include "../../../Artifact/ArtifactSelectUI.h"
+#include "../../../../UI/Gauge.h"
 
 class BossBase : public Enemy {
 public:
@@ -25,6 +26,7 @@ public:
 
 private:
 
+	Gauge* hpBar;
 
 
 	// ŠK’i‚ªoŒ»‚·‚éˆÊ’u
