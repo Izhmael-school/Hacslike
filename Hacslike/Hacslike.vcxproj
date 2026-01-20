@@ -32,7 +32,11 @@
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
@@ -96,6 +100,7 @@
     <ClInclude Include="Scr\Component\Collider\Collider.h" />
     <ClInclude Include="Scr\Component\Collider\SphereHitBox.h" />
     <ClInclude Include="Scr\Component\Singleton.h" />
+    <ClInclude Include="Scr\Data\json.hpp" />
     <ClInclude Include="Scr\Definition.h" />
     <ClInclude Include="Scr\Enhancement\StatusEnhancement.h" />
     <ClInclude Include="Scr\ExpansionMethod.h" />
@@ -107,7 +112,11 @@
     <ClInclude Include="Scr\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
@@ -168,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="Scr\Data\BossData.json" />
     <None Include="Scr\Data\EnemyData.json" />
     <None Include="Scr\Data\FloorData.json" />
     <None Include="Scr\Data\SkillTreeData.json" />

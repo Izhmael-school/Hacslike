@@ -89,8 +89,6 @@ void GameScene::Update() {
 		//}
 	}
 
-
-
 	EffectManager::GetInstance().Update();
 	ItemDropManager::GetInstance().Update();
 

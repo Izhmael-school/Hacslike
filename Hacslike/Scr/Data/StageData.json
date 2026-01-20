@@ -34,6 +34,6 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [2,3],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 0
+    "bossType": 5
   }
 ]

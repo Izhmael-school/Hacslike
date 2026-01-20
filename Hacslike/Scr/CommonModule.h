@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "../json.hpp"
+#include "Data/json.hpp"
 #include <DxLib.h>
 #include <fstream>
 #include <iostream>
