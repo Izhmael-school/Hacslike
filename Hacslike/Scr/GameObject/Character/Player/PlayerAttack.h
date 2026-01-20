@@ -25,12 +25,15 @@ private:	//	変数
 	BulletPool* pSpherePool;		//	Sphereのプール
 	CapsuleHitPool* pCapsulePool;	//	Capsuleのプール	
 
+
 	//	通常攻撃関連
 	int attackIndex;			//	攻撃の番号
 	float attackTimer;			//	攻撃の当たり判定の表示時間
 	bool isAttacking;			//	攻撃してるか
 	bool canNextAttack;			//	次の攻撃ができるかどうか
 	bool attackButtonPressed;	//	攻撃ボタンが押されているかどうか
+
+	bool hasGeneratedHitbox;
 
 	//	ダッシュ攻撃関連
 	bool isDashAttack;			//	ダッシュ攻撃してるかどうか
