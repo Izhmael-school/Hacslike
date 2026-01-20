@@ -115,6 +115,9 @@ AnimationClip<>* Animator::GetAnimation(std::string _name) const {
 
 float Animator::GetTotalTime(std::string animName) {
 	int handle = GetAnimation(animName)->animationHandle;
+
+	if (handle == -1) return -1;
+
 	int t = MV1GetAnimTotalTime(handle, 0);
 	return t;
 }

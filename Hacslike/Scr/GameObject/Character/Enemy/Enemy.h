@@ -89,6 +89,7 @@ public:
 	void SetAnimEvent(std::string animName,std::function<void()> func,float time = 0);
 	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,float dis);
 	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,VECTOR pos,float dis = 1);
+	
 private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// í«ê’çsìÆ

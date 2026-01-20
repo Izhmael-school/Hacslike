@@ -15,21 +15,9 @@ void EnemySpider::Start() {
 	Enemy::Start();
 	// 当たり判定の設定
 	pCollider = new SphereCollider(this,position,100);
-	SetScale(VGet(0.01f, 0.01f, 0.01f));
 
-	// アニメーションの設定
-	pAnimator->SetModelHandle(modelHandle);
-	// アニメーションのロード
-	LoadAnimation();
-	// アニメーションイベントの設定
-	SetAnimEvent("dead", [this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	// 攻撃の当たり判定
 	SetAnimEventForAttackCollider("attack01", 14, 2, 100, 100);
-	//SetAnimEvent("attack02", [this]() { ShotBullet();  }, 12);
-	//pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 3)); }, 12);
-	// 攻撃中の移動制御
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
 	// 攻撃の効果音
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SpiderAttack"); }, 14);
 	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 9);

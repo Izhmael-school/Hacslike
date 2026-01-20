@@ -21,13 +21,6 @@ void BossDurahan::Start() {
 	SetAnimEventForAttackCollider("attack02", 19, 2, 50, 175);
 	SetAnimEventForAttackCollider("attack02", 19, 2, 50, 100);
 	SetAnimEventForAttackCollider("attack03", 31, 2, 150, 400);
-	// UŒ‚’†‚ÌˆÚ“®§Œä
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, 43);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, 19);

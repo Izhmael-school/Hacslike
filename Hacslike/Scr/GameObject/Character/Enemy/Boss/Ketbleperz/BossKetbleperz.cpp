@@ -19,13 +19,6 @@ void BossKetbleperz::Start() {
 	SetAnimEventForAttackCollider("attack01", 23, 2, 200, 200);
 	SetAnimEventForAttackCollider("attack02", 13, 2, 200, 200);
 	SetAnimEventForAttackCollider("attack03", 18, 2, 200, 200);
-	// UŒ‚’†‚ÌˆÚ“®§Œä
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, 23);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, 13);

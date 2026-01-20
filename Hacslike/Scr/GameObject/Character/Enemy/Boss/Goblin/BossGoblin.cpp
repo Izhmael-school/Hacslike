@@ -22,13 +22,6 @@ void BossGoblin::Start() {
 	SetAnimEventForAttackCollider("attack02", 12, 2, 150, 150);
 	SetAnimEventForAttackCollider("attack02", 24, 2, 120, 150);
 	SetAnimEventForAttackCollider("attack03", 33, 2, 200, 150);
-	// UŒ‚’†‚ÌˆÚ“®§Œä
-	SetAnimEvent("attack01", [this]() { SetAttacking(true); }, 0);
-	SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	SetAnimEvent("attack02", [this]() { SetAttacking(true); }, 0);
-	SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-	SetAnimEvent("attack03", [this]() { SetAttacking(true); }, 0);
-	SetAnimEvent("attack03", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 	// UŒ‚‚ÌŒø‰Ê‰¹
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 14);
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 12);

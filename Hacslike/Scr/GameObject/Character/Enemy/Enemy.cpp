@@ -28,9 +28,20 @@ Enemy::~Enemy() {
 void Enemy::Start() {
 	// タグの設定
 	SetTag("Enemy");
-	isTouch = false;
-	rayAnswer = false;
-	area.SetOwner(this);
+	Setup();
+	// アニメーションモデルハンドルの設定
+	pAnimator->SetModelHandle(modelHandle);
+	// 大きすぎるため1/10
+	SetScale(VGet(0.1f, 0.1f, 0.1f));
+	// アニメーションイベントの設定
+	pAnimator->GetAnimation("dead")->SetEvent([this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	// 攻撃中の移動制御
+	SetAnimEvent("attack01", [this]() { SetAttacking(true); });
+	SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
+	SetAnimEvent("attack02", [this]() { SetAttacking(true); });
+	SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
+	SetAnimEvent("attack03", [this]() { SetAttacking(true); });
+	SetAnimEvent("attack03", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 }
 
 void Enemy::Setup() {
@@ -153,6 +164,8 @@ void Enemy::SetStatusData(int enemyID) {
 		mPath = e["mPath"];
 		break;
 	}
+
+	LoadAnimation();
 }
 
 void Enemy::LoadAnimation() {
@@ -391,7 +404,11 @@ void Enemy::Wander() {
 }
 
 void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float time) {
-	pAnimator->GetAnimation(animName)->SetEvent(func, time);
+	auto anim = pAnimator->GetAnimation(animName);
+
+	if (anim == nullptr) return;
+
+	anim->SetEvent(func, time);
 }
 
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis) {

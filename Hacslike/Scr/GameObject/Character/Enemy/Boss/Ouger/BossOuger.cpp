@@ -18,13 +18,6 @@ void BossOuger::Start() {
 	SetAnimEventForAttackCollider("attack01", 17, 2, 150, 200);
 	SetAnimEventForAttackCollider("attack02", 16, 2, 175, 200);
 	SetAnimEventForAttackCollider("attack03", 48, 2, 250, 250);
-	// UŒ‚’†‚ÌˆÚ“®§Œä
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack03")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, 17);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, 16);

@@ -19,11 +19,6 @@ void BossHellHound::Start() {
 	SetAnimEventForAttackCollider("attack02", 12, 2, 125, 140);
 	SetAnimEventForAttackCollider("attack02", 22, 2, 100, 140);
 	SetAnimEventForAttackCollider("attack02", 32, 2, 75, 140);
-	// UŒ‚’†‚ÌˆÚ“®§Œä
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(true); }, 0);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 16);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 12);
