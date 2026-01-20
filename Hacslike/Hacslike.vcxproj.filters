@@ -209,6 +209,12 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp">
       <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.cpp">
+      <Filter>GameObject\Character\Enemy\Boss\Ketbleperz</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp">
+      <Filter>GameObject\Character\Enemy\Boss\Durahan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -436,6 +442,12 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h">
       <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.h">
+      <Filter>GameObject\Character\Enemy\Boss\Ketbleperz</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.h">
+      <Filter>GameObject\Character\Enemy\Boss\Durahan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -545,6 +557,12 @@
     </Filter>
     <Filter Include="GameObject\Character\Enemy\Boss\Ouger">
       <UniqueIdentifier>{7355ea24-d14b-4858-8df7-11dd7a8b432a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Boss\Ketbleperz">
+      <UniqueIdentifier>{b713391c-7a79-4911-b297-f74071fb1eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Boss\Durahan">
+      <UniqueIdentifier>{ac9c4305-e533-4d1b-bb87-8305993ab3e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

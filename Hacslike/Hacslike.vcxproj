@@ -32,8 +32,10 @@
     <ClCompile Include="Scr\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Character.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.cpp" />
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp" />
     <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp" />
@@ -109,8 +111,10 @@
     <ClInclude Include="Scr\GameObject\Camera\Camera.h" />
     <ClInclude Include="Scr\GameObject\Character\Character.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.h" />
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h" />
     <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h" />
