@@ -161,6 +161,8 @@
     <ClInclude Include="Scr\Scene\TitleScene.h" />
     <ClInclude Include="Scr\Skill\Skill.h" />
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
+    <ClInclude Include="Scr\UI\BossSlainUI.h" />
+    <ClInclude Include="Scr\UI\GameEndUI.h" />
     <ClInclude Include="Scr\UI\Gauge.h" />
     <ClInclude Include="Scr\UI\MenuSaveLoad.h" />
   </ItemGroup>

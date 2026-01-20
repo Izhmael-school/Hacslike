@@ -19,6 +19,7 @@
 #include"../../../Manager/SaveManager.h"
 #include <math.h>
 #include <cmath>
+#include "../../../UI/GameEndUI.h"
 
 
 // シングルトンインスタンスの初期化
@@ -98,6 +99,7 @@ void Player::DestroyInstance() {
 void Player::DeadExecute() {
 	if (hp > 0 || isDead) return;
 	isDead = true;
+	GameEndUI::GetInstance()->Start();
 	pAnimator->Play("Down1", 0.9);
 }
 
@@ -266,6 +268,10 @@ void Player::Update() {
 	//	非表示だったら更新しない
 	if (!isVisible)
 		return;
+
+	if (isDead) {
+		GameEndUI::GetInstance()->Update();
+	}
 
 	hpRate = (float)hp / (float)maxHp;
 
@@ -514,6 +520,10 @@ void Player::Render() {
 	}
 
 #pragma endregion
+
+	if (isDead) {
+		GameEndUI::GetInstance()->Draw();
+	}
 }
 
 ///// <summary>

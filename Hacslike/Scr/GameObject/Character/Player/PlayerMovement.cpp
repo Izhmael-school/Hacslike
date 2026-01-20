@@ -194,7 +194,7 @@ void PlayerMovement::MoveInput() {
 /// </summary>
 void PlayerMovement::EvasionInput() {
 	// ===== 回避入力 =====
-	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || input->IsButtonDown(XINPUT_GAMEPAD_A) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
+	bool isEvasionButtonDown = input->IsKeyDown(KEY_INPUT_LSHIFT) || input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsMouseDown(MOUSE_INPUT_MIDDLE);
 
 	if (isEvasionButtonDown && !evasionButtonPressed && evasionCooldown <= 0.0f && VSize(inputVec) != 0 && !pPlayer->GetPlayerAttack()->IsAttacking()) {
 		// 押した瞬間＆クールダウン終了時のみ回避

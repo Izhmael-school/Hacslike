@@ -195,6 +195,8 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
       <Filter>GameObject\Character\Enemy\Wolf</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp" />
+    <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -404,6 +406,14 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
       <Filter>GameObject\Character\Enemy\Wolf</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h" />
+    <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h" />
+    <ClInclude Include="Scr\UI\GameEndUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\BossSlainUI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

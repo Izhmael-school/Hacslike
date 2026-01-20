@@ -20,8 +20,6 @@
 
 class StartTreasureChest;
 
-
-
 /// <summary>
 /// プレイヤークラス
 /// </summary>
