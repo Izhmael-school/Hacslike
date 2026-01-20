@@ -111,6 +111,7 @@ AnimationClip<>* Animator::GetAnimation(std::string _name) const {
 		if (pAnimations[i]->name != _name) continue;
 		return pAnimations[i];
 	}
+	return nullptr;
 }
 
 float Animator::GetTotalTime(std::string animName) {

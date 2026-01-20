@@ -16,9 +16,7 @@ Enemy::Enemy()
 	, atkSpan(4)
 	, goalPos(VGet(-1, -1, -1))
 	, nextWanderSpan(Random(1, 4))
-	, nextWanderTime(nextWanderSpan) {
-	Start();
-}
+	, nextWanderTime(nextWanderSpan) {}
 
 Enemy::~Enemy() {
 	attackAnimationList.clear();
@@ -36,12 +34,19 @@ void Enemy::Start() {
 	// アニメーションイベントの設定
 	pAnimator->GetAnimation("dead")->SetEvent([this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	// 攻撃中の移動制御
-	SetAnimEvent("attack01", [this]() { SetAttacking(true); });
-	SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
-	SetAnimEvent("attack02", [this]() { SetAttacking(true); });
-	SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
-	SetAnimEvent("attack03", [this]() { SetAttacking(true); });
-	SetAnimEvent("attack03", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
+
+	if (pAnimator->GetAnimation("attack01") != nullptr) {
+		SetAnimEvent("attack01", [this]() { SetAttacking(true); });
+		SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
+	}
+	if (pAnimator->GetAnimation("attack02") != nullptr) {
+		SetAnimEvent("attack02", [this]() { SetAttacking(true); });
+		SetAnimEvent("attack02", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack02"));
+	}
+	if (pAnimator->GetAnimation("attack03") != nullptr) {
+		SetAnimEvent("attack03", [this]() { SetAttacking(true); });
+		SetAnimEvent("attack03", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack03"));
+	}
 }
 
 void Enemy::Setup() {
@@ -243,13 +248,13 @@ bool Enemy::Vision_Ray() {
 		if (ray.HitFlag == 1) {
 			end = ray.HitPosition;
 			return true;
-	}
+		}
 
 #if Debug
 		DrawLine3D(start, end, yellow);
 #endif
 		return false;
-}
+	}
 }
 
 /// <summary>
@@ -406,7 +411,7 @@ void Enemy::Wander() {
 void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float time) {
 	auto anim = pAnimator->GetAnimation(animName);
 
-	if (anim == nullptr) return;
+	if (anim->animationHandle == -1) return;
 
 	anim->SetEvent(func, time);
 }
@@ -422,7 +427,7 @@ void Enemy::SetAnimEventForAttackCollider(std::string animName, float collidersp
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis) {
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
-		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS())); 
+		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS()));
 	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(dis)));
 		}); });
 }

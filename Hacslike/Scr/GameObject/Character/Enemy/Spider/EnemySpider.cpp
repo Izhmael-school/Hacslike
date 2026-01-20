@@ -13,6 +13,7 @@ EnemySpider::~EnemySpider() {}
 
 void EnemySpider::Start() {
 	Enemy::Start();
+	SetScale(VScale(VOne,0.01f));
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new SphereCollider(this,position,100);
 
