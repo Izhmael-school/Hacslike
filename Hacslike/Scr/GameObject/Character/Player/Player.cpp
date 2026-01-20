@@ -313,23 +313,23 @@ void Player::Update() {
 		artifactUI.Update();
 	}
 
-	// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
-	if (isSaveUI) {
-		if (!pSaveMenu) {
-			// menuIndex によって Save/Load を切り替えたいならここで判定
-			pSaveMenu = new MenuSaveLoad(MenuSaveLoad::SaveMode);
-			pSaveMenu->Open();
-		}
-		// メニューの入力処理等を行う
-		pSaveMenu->Update();
-	}
-	else {
-		// メニューを閉じたら破棄して状態をリセット
-		if (pSaveMenu) {
-			delete pSaveMenu;
-			pSaveMenu = nullptr;
-		}
-	}
+	//// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
+	//if (isSaveUI) {
+	//	if (!pSaveMenu) {
+	//		// menuIndex によって Save/Load を切り替えたいならここで判定
+	//		pSaveMenu = new MenuSaveLoad(MenuSaveLoad::SaveMode);
+	//		pSaveMenu->Open();
+	//	}
+	//	// メニューの入力処理等を行う
+	//	pSaveMenu->Update();
+	//}
+	//else {
+	//	// メニューを閉じたら破棄して状態をリセット
+	//	if (pSaveMenu) {
+	//		delete pSaveMenu;
+	//		pSaveMenu = nullptr;
+	//	}
+	//}
 
 	if (input->IsKeyDown(KEY_INPUT_3)) {
 		AddExp(maxExp);
@@ -492,9 +492,9 @@ void Player::Render() {
 	if (isArtifactUI) {
 		artifactUI.Render();
 	}
-	if (isSaveUI) {
+	/*if (isSaveUI) {
 		pSaveMenu->Render();
-	}
+	}*/
 
 	inventory.AddItemRender();
 
@@ -674,10 +674,6 @@ void Player::selectMenu() {
 			isArtifactUI = true;
 			isSaveUI = false;
 			break;
-		case 2:
-			isItemUI = false;
-			isArtifactUI = false;
-			isSaveUI = true;
 		default:
 			break;
 		}
@@ -698,7 +694,7 @@ void Player::DrawMenu() {
 	const int margin = 10;
 
 	// ← ここにメニューを好きなだけ並べるだけで増やせる！
-	const char* menuNames[] = { "アイテム", "アーティファクト", "セーブ" };
+	const char* menuNames[] = { "アイテム", "アーティファクト"};
 	const int menuCount = sizeof(menuNames) / sizeof(menuNames[0]);
 
 	for (int i = 0; i < menuCount; i++) {

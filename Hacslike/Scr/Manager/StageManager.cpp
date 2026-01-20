@@ -4,6 +4,7 @@
 #include "../CommonModule.h"
 #include "AudioManager.h"
 #include"../Save/SaveIO.h"
+#include "../GameObject/SaveObject/SaveObject.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -170,6 +171,10 @@ void StageManager::GenerateStage(int stageID) {
 	ChangeTexture(std::floor((floorCount - 1) / textureChangeFloor), Room);
 	// プレイヤーの配置
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
+	//セーブオブジェクトの配置
+	SaveObject* pSaveObject = new SaveObject(VZero);
+	generator->SetGameObject(pSaveObject, generator->GetStageData().saveObjectPos);
+
 	// ボスの配置
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
 

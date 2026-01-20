@@ -59,6 +59,7 @@
     <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp" />
     <ClCompile Include="Scr\GameObject\Item\ItemFactory.cpp" />
     <ClCompile Include="Scr\GameObject\Item\ItemHeal\ItemHeal.cpp" />
+    <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp" />
     <ClCompile Include="Scr\GameObject\Slash\Slash.cpp" />
     <ClCompile Include="Scr\GameObject\Stage\StageCell.cpp" />
     <ClCompile Include="Scr\GameObject\Stage\StageGenerator.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h" />
     <ClInclude Include="Scr\GameObject\Item\ItemFactory.h" />
     <ClInclude Include="Scr\GameObject\Item\ItemHeal\ItemHeal.h" />
+    <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h" />
     <ClInclude Include="Scr\GameObject\Slash\Slash.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageCell.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageGenerator.h" />

@@ -299,7 +299,9 @@ void EnemyManager::SaveTo(BinaryWriter& w)
 		w.WritePOD(pos.y);
 		w.WritePOD(pos.z);
 
-		
+		// ’Ç‰Á: ‰ñ“]iYj‚ð•Û‘¶iLoadFrom ‚ªŠú‘Ò‚µ‚Ä‚¢‚é‡˜‚É‡‚í‚¹‚éj
+		float rotY = e->GetRotationY();
+		w.WritePOD(rotY);
 
 		float hp = e->GetHP();
 		w.WritePOD(hp);
@@ -338,6 +340,10 @@ void EnemyManager::LoadFrom(BinaryReader& r, uint32_t ver)
 		if (!e) continue;
 
 		e->SetPosition(VGet(x, y, z));
+
+		// ’Ç‰Á: ‰ñ“]‚Ì•œŒ³
+		e->SetRotationY(rotY);
+
 		e->SetHP(hp); // Enemy ‘¤‚ÅŽÀ‘•
 
 		if (dead) {

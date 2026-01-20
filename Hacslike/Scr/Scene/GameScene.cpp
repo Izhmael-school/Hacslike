@@ -8,6 +8,7 @@
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
 #include "../GameSystem/GameSystem.h"
 #include "../GameObject/Enhancement/EnhancementStone.h"
+#include "../GameObject/SaveObject/SaveObject.h"
 
 
 GameScene::GameScene() {
@@ -40,10 +41,13 @@ void GameScene::Start() {
 
 	StartTreasureChest* pChest = new StartTreasureChest(VGet(800.0f,0,790.0f));
 	pGameObjectArray.push_back(pChest);
-	StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
+	//StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 
 	EnhancementStone* pEnhance = new EnhancementStone(VGet(200.0f, 0, 500.0f));
 	pGameObjectArray.push_back(pEnhance);
+	
+	SaveObject* pSaveObject = new SaveObject(VGet(800,0,420));
+	pGameObjectArray.push_back(pSaveObject);
 	
 	
 

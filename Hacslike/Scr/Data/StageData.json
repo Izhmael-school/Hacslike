@@ -13,8 +13,9 @@
       [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
     ],
     "playerSpawnPos": [ 4, 2 ],
+    "saveObjectPos": [4, 2],
     "bossSpawnPos": [ 4, 1 ],
-    "bossType" :  -1
+    "bossType": -1
   },
 
   {
@@ -31,6 +32,7 @@
       [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
     ],
     "playerSpawnPos": [ 4, 3 ],
+    "saveObjectPos": [2,3],
     "bossSpawnPos": [ 4, 15 ],
     "bossType": 0
   }

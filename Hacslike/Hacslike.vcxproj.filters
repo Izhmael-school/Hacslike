@@ -195,6 +195,11 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
       <Filter>GameObject\Character\Enemy\Wolf</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp" />
+    <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp" />
+    <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp">
+      <Filter>GameObject\SaveObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -405,6 +410,11 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
       <Filter>GameObject\Character\Enemy\Wolf</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h" />
+    <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h" />
+    <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h">
+      <Filter>GameObject\SaveObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -505,6 +515,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{29d66693-ee73-4dea-a05a-4a7b0cbca8f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\SaveObject">
+      <UniqueIdentifier>{cf970a38-92d2-4ba6-846c-b2e233e6cf75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
