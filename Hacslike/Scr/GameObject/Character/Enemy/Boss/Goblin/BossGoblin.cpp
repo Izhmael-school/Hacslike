@@ -9,25 +9,16 @@ BossGoblin::~BossGoblin() {
 }
 
 void BossGoblin::Start() {
-	BossBase::Start();
 
+	// ステータスの設定
 	SetStatusData(1);
-	SetModelHandleDup(MV1LoadModel((mPath + "boss.mv1").c_str()));
-	int i = modelHandle;
+	BossBase::Start();
 
 	// 当たり判定の設定
 	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
-	SetScale(VGet(0.2f, 0.2f, 0.2f));
+
 	type = Goblin;
 
-	// アニメーションの設定
-	pAnimator->SetModelHandle(modelHandle);
-	// ステータスの設定
-	SetStatusData(1);
-	// アニメーションのロード
-	LoadAnimation();
-	// アニメーションイベントの設定
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	// 攻撃の当たり判定
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 2 / GetFPS())); }, 14);
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() { attackColliderList.push_back(new SphereHitBox(this, VZero, 200, 3 / GetFPS())); }, 12);

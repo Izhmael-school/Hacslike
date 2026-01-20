@@ -12,6 +12,7 @@
 #include "../GameObject/Character/Enemy/Enemy.h"
 #include "../GameObject/Character/Enemy/Boss/BossBase.h"
 #include "../GameObject/Character/Enemy/Boss/Goblin/BossGoblin.h"
+#include "../GameObject/Character/Enemy/Boss/HellHound/BossHellHound.h"
 #include "../Manager/AudioManager.h"
 #include"../Save/SaveIO.h"
 
@@ -139,11 +140,19 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 	case Goblin:
 		boss = new BossGoblin();
 		break;
+	case HellHound:
+		boss = new BossHellHound();
+		break;
+	case Ouger:
+		break;
+	case Ketbleperz:
+		break;
+	case Durahan:
+		break;
 	}
 	boss->SetAppearPos(pos);
 	boss->SetPosition(VGet(pos.x * CellSize, 0, pos.z * CellSize));
 	boss->SetVisible(true);
-	boss->Setup();
 	pEnemyArray.push_back(boss);
 }
 
@@ -285,8 +294,7 @@ void EnemyManager::DeleteAllEnemy() {
 	pEnemyArray.shrink_to_fit();
 }
 
-void EnemyManager::SaveTo(BinaryWriter& w)
-{
+void EnemyManager::SaveTo(BinaryWriter& w) {
 	// active “G”
 	uint32_t count = static_cast<uint32_t>(pEnemyArray.size());
 	w.WritePOD(count);
@@ -300,7 +308,7 @@ void EnemyManager::SaveTo(BinaryWriter& w)
 		w.WritePOD(pos.y);
 		w.WritePOD(pos.z);
 
-		
+
 
 		float hp = e->GetHP();
 		w.WritePOD(hp);
@@ -310,8 +318,7 @@ void EnemyManager::SaveTo(BinaryWriter& w)
 	}
 }
 
-void EnemyManager::LoadFrom(BinaryReader& r, uint32_t ver)
-{
+void EnemyManager::LoadFrom(BinaryReader& r, uint32_t ver) {
 	// Šù‘¶‚Ì“G‚ğˆê’UƒNƒŠƒA‚·‚é
 	UnuseAllEnemy();
 	DeleteAllEnemy();

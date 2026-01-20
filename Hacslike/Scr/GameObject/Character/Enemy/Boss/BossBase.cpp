@@ -4,6 +4,8 @@
 BossBase::BossBase() 
 	:appearPos()
 {
+	vision.rayAngle = 360;
+	vision.rayCount = 120;
 	Start();
 }
 
@@ -27,6 +29,14 @@ void BossBase::AppearStair() {
 
 void BossBase::Start() {
 	Enemy::Start();
+	SetModelHandleDup(MV1LoadModel(MergeString(mPath, "boss.mv1").c_str()));
+	SetScale(VGet(0.2f, 0.2f, 0.2f));
+	// アニメーションの設定
+	pAnimator->SetModelHandle(modelHandle);
+	// アニメーションのロード
+	LoadAnimation();
+	// アニメーションイベントの設定
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
 }
 
 void BossBase::Update() {
@@ -42,5 +52,6 @@ void BossBase::DeadExecute() {
 	Enemy::DeadExecute();
 
 	AppearStair();
+	
 }
 

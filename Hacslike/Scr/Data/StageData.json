@@ -32,6 +32,6 @@
     ],
     "playerSpawnPos": [ 4, 3 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 0
+    "bossType": 5
   }
 ]

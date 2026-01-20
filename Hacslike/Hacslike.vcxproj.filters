@@ -158,7 +158,6 @@
     <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp">
       <Filter>GameObject\HitPool</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\UI\Gauge.cpp" />
     <ClCompile Include="Scr\Manager\SaveManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -194,6 +193,21 @@
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
       <Filter>GameObject\Character\Enemy\Wolf</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\UI\Gauge.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.cpp">
+      <Filter>GameObject\Character\Enemy\Boss\HellHound</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp">
+      <Filter>GameObject\EnhanceObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp">
+      <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +376,6 @@
       <Filter>GameObject\HitPool</Filter>
     </ClInclude>
     <ClInclude Include="Scr\ExpansionMethod.h" />
-    <ClInclude Include="Scr\UI\Gauge.h" />
     <ClInclude Include="Scr\Save\SaveFormat.h">
       <Filter>Save</Filter>
     </ClInclude>
@@ -404,6 +417,24 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
       <Filter>GameObject\Character\Enemy\Wolf</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Data\json.hpp">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\Gauge.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.h">
+      <Filter>GameObject\Character\Enemy\Boss\HellHound</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h">
+      <Filter>GameObject\EnhanceObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h">
+      <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,6 +537,15 @@
     <Filter Include="UI">
       <UniqueIdentifier>{29d66693-ee73-4dea-a05a-4a7b0cbca8f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Character\Enemy\Boss\HellHound">
+      <UniqueIdentifier>{9b4ff774-0def-4bff-ad72-72b690896ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\EnhanceObject">
+      <UniqueIdentifier>{b08b3c80-0033-4eb8-b5b8-59f59f2bc31b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Enemy\Boss\Ouger">
+      <UniqueIdentifier>{7355ea24-d14b-4858-8df7-11dd7a8b432a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Scr\Data\WeaponsData.json">
@@ -516,9 +556,6 @@
     </None>
     <None Include="cpp.hint" />
     <None Include="Scr\Data\SkillTreeData.json">
-      <Filter>Data</Filter>
-    </None>
-    <None Include="Scr\Data\BossData.json">
       <Filter>Data</Filter>
     </None>
     <None Include="Scr\Data\EnemyData.json">

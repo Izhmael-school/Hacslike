@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <unordered_map>
 #include <string>
-#include "../json.hpp"
+#include "../Data/json.hpp"
 #include "../Component/Singleton.h"
 #include "../Definition.h"
 #include <DxLib.h> // DxLibのヘッダ

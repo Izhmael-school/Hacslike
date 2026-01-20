@@ -12,7 +12,7 @@
 
   {
     "id": 1,
-    "name": "ゴブリンリーダー",
+    "name": "Goblin Leader",
     "typeID": 0,
     "mPath": "Res/Model/Enemy/Goblin/",
     "hp": 100,
@@ -115,6 +115,50 @@
     "typeID": 9,
     "mPath": "Res/Model/Enemy/HobGoblin/",
     "hp": 150,
+    "atk": 100,
+    "def": 10,
+    "exp": 100
+  },
+
+  {
+    "id": 11,
+    "name": "HellHound",
+    "typeID": 5,
+    "mPath": "Res/Model/Enemy/HellHound/",
+    "hp": 500,
+    "atk": 100,
+    "def": 10,
+    "exp": 100
+  },
+
+  {
+    "id": 12,
+    "name": "Lord of Ouger",
+    "typeID": 6,
+    "mPath": "Res/Model/Enemy/Ouger/",
+    "hp": 500,
+    "atk": 100,
+    "def": 10,
+    "exp": 100
+  },
+
+  {
+    "id": 13,
+    "name": "Golden Minister's War Boar",
+    "typeID": 7,
+    "mPath": "Res/Model/Enemy/Ketbleperz/",
+    "hp": 500,
+    "atk": 100,
+    "def": 10,
+    "exp": 100
+  },
+
+  {
+    "id": 14,
+    "name": "Golden Minister",
+    "typeID": 8,
+    "mPath": "Res/Model/Enemy/Durahan/",
+    "hp": 500,
     "atk": 100,
     "def": 10,
     "exp": 100
