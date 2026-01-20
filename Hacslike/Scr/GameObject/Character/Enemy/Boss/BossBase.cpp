@@ -3,6 +3,7 @@
 #include"../../../../Manager/ArtifactManager.h"
 #include "../../../../GameSystem/GameSystem.h"
 #include"../../Player/Player.h"
+#include "../../../../UI/BossSlainUI.h"
 
 BossBase::BossBase()
 	:appearPos() {
@@ -43,15 +44,21 @@ void BossBase::Start() {
 void BossBase::Update() {
 	Enemy::Update();
 	
+	if(isDead) BossSlainUI::GetInstance()->Update();
+
 }
 
 void BossBase::Render() {
 	Enemy::Render();
+
+	if(isDead) BossSlainUI::GetInstance()->Draw();
 }
 
 void BossBase::DeadExecute() {
 	if (hp > 0) return;
 	Enemy::DeadExecute();
+
+	BossSlainUI::GetInstance()->Start();
 
 	AppearStair();
 	Player* pPlayer = Player::GetInstance();
