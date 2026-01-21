@@ -14,6 +14,7 @@ struct StageData {
 	VECTOR playerSpawnPos;
 	VECTOR saveObjectPos;
 	VECTOR chestObjectPos;
+	VECTOR enhancementStonePos;
 	VECTOR bossSpawnPos;
 	int bossType;
 };

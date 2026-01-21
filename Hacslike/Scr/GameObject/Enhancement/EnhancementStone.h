@@ -1,10 +1,14 @@
 #pragma once
 #include "../GameObject.h"
 #include "../../Enhancement/StatusEnhancement.h"
+#include "../../Component/Collider/Collider.h"
 
 class CapsuleHitBox;
 
 class EnhancementStone : public GameObject {
+public:
+    static EnhancementStone* pInstance;
+
 private:
     int modelHandle;
     Collider* pCollider;
@@ -12,8 +16,29 @@ private:
     bool canEnhance;          // プレイヤーが範囲内にいるか
     bool isMenuOpen;          // メニューが開いているか
 
+private://静的メンバ関数
+	/// <summary>
+	/// CreateInstance
+	/// 自信のインスタンスを生成する
+	/// </summary>
+	static void CreateInstance();
+
+public://静的メンバ関数
+	/// <summary>
+	/// GetInstance
+	/// 自身のインスタンスを取得する唯一の手段
+	/// return InputManager*
+	/// </summary>
+	/// <returns></returns>DINPUT_JOYSTATE
+	static EnhancementStone* GetInstance();
+
+	/// <summary>
+	/// DestroyInstance
+	/// 自身のインスタンスを破棄する唯一の手段
+	/// </summary>
+	static void DestroyInstance();
 public:
-    EnhancementStone(VECTOR _pos);
+    EnhancementStone();
     virtual ~EnhancementStone();
 
     void Start() override;

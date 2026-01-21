@@ -10,6 +10,7 @@
 // forward
 class SaveObject;
 class StartTreasureChest;
+class EnhancementStone;
 
 struct FloorData {
 	int startFloor;
@@ -52,6 +53,7 @@ public:
 	// SaveObject ‚ğ StageManager ‚ªŠ—L‚µ‚Ä Update/Render ‚ğŒÄ‚Ô
 	SaveObject* pSaveObject = nullptr;
 	StartTreasureChest* pChest = nullptr;
+	EnhancementStone* pStone = nullptr;
 public:
 	void Update();
 	void Render();

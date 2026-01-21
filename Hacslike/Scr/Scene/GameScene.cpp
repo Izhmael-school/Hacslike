@@ -39,13 +39,7 @@ void GameScene::Start() {
 	EffectManager::GetInstance().Load("Res/Effect/Explosion.efkefc", "Explosion", 20.0f);
 
 
-	/*StartTreasureChest* pChest = new StartTreasureChest(VGet(800.0f,0,790.0f));
-	pGameObjectArray.push_back(pChest);*/
-	//StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 
-	EnhancementStone* pEnhance = new EnhancementStone(VGet(200.0f, 0, 500.0f));
-	pGameObjectArray.push_back(pEnhance);
-	
 	
 	
 

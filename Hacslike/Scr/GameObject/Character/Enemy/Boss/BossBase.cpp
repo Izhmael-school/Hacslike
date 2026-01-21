@@ -38,8 +38,9 @@ void BossBase::Start() {
 	pAnimator->SetModelHandle(modelHandle);
 	// アニメーションのロード
 	LoadAnimation();
-	// アニメーションイベントの設定
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {
+		deadAnimEnded = true;
+		}, pAnimator->GetTotalTime("dead"));
 	hpBar = new Gauge(maxHp, 200.0f, 600.0f, 400.0f, 25.0f);
 
 }
@@ -48,12 +49,38 @@ void BossBase::Update() {
 	Enemy::Update();
 	
 	if(isDead) BossSlainUI::GetInstance()->Update();
+	Player* pPlayer = Player::GetInstance();
+	if (isSelectArtifact) {
+		int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
+		if (Selected != -1) {
 
+			if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
+				ArtifactManager::GetInstance().ApplySelectedArtifact(pPlayer, artifactChioces[Selected]);
+				pendingDelete = true;
+			}
+			isSelectArtifact = false;
+
+			// アーティファクト選択完了後の削除処理：
+			// 死亡アニメが既に終わっていればすぐ削除、そうでなければ pendingDelete を立ててアニメ終了時に削除する
+			if (deadAnimEnded) {
+				EnemyManager::GetInstance().DeleteEnemy(this);
+				return; // 削除要求を出したらこのオブジェクトは消えるので以降処理しない
+			}
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+
+		}
+	}
+
+	// アニメが終わっていて削除保留が立っているならここで削除
+	if (pendingDelete && deadAnimEnded) {
+		EnemyManager::GetInstance().DeleteEnemy(this);
+		return;
+	}
 }
 
 void BossBase::Render() {
 	Enemy::Render();
-
+	artifactSelectUI.Render(artifactChioces);
 	if (!isDead) {
 		hpBar->Render(hp);
 		DrawString(200, 580, name.c_str(), black);
@@ -69,28 +96,16 @@ void BossBase::DeadExecute() {
 	BossSlainUI::GetInstance()->Start();
 
 	AppearStair();
-	Player* pPlayer = Player::GetInstance();
+	
 	if (!isSelectArtifact) {
 		
 		artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
 		artifactSelectUI.StartSelection();
 		isSelectArtifact = true;
-		//GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 		
 	}
-	else {
-		int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
-		if (Selected != -1) {
-
-			if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
-				ArtifactManager::GetInstance().ApplySelectedArtifact(pPlayer, artifactChioces[Selected]);
-
-				
-			}
-
-			//GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
-		}
-	}
+	
 	
 }
 

@@ -8,6 +8,12 @@ public:
 	ArtifactSelectUI artifactSelectUI;
 	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
 	bool isSelectArtifact = false;
+
+	// 追加フラグ：
+	// 死亡アニメーションが終了したかどうか（アニメ終了時のイベントで true にする）
+	bool deadAnimEnded = false;
+	// アーティファクト選択後に削除保留中かどうか
+	bool pendingDelete = false;
 protected:
 	BossBase();
 	~BossBase();

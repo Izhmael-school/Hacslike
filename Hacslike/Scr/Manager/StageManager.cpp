@@ -6,6 +6,7 @@
 #include"../Save/SaveIO.h"
 #include "../GameObject/SaveObject/SaveObject.h"
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
+#include "../GameObject/Enhancement/EnhancementStone.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -35,6 +36,9 @@ void StageManager::Update() {
 	if (pChest) {
 		pChest->Update();
 	}
+	if(pStone){
+		pStone->Update();
+	}
 #if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) {
 		LoadFloorData();
@@ -57,6 +61,9 @@ void StageManager::Render() {
 	}
 	if (pChest) {
 		pChest->Render();
+	}
+	if (pStone) {
+		pStone->Render();
 	}
 	DrawFormatString(100, 100, red, "階層 %d 階", floorCount - 1);
 }
@@ -210,6 +217,14 @@ void StageManager::GenerateStage(int stageID) {
 		if(chest){
 			generator->SetGameObject(chest, sd.chestObjectPos);
 			pChest = chest;
+		}
+	}
+	{
+		StageData sd = generator->GetStageData();
+		EnhancementStone* stone = EnhancementStone::GetInstance();
+		if(stone){
+			generator->SetGameObject(stone, sd.enhancementStonePos);
+			pStone = stone;
 		}
 	}
 	// ボスの配置

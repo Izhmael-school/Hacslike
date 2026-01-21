@@ -15,6 +15,7 @@
     "playerSpawnPos": [ 4, 2 ],
     "saveObjectPos": [ 0, 7 ],
     "ChestObjectPos": [ 4, 4 ],
+    "enhancementStonePos": [1,4],
     "bossSpawnPos": [ 4, 1 ],
     "bossType": -1
   },
@@ -35,6 +36,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "ChestObjectPos": [ 0, 0 ],
+    "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
     "bossType": 0
   },
@@ -55,6 +57,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "ChestObjectPos": [ 0, 0 ],
+    "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
     "bossType": 5
   },
@@ -75,6 +78,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "ChestObjectPos": [ 0, 0 ],
+    "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
     "bossType": 11
   },
@@ -95,6 +99,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "ChestObjectPos": [ 0, 0 ],
+    "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
     "bossType": 12
   },
@@ -115,6 +120,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "ChestObjectPos": [ 0, 0 ],
+    "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
     "bossType": 13
   }

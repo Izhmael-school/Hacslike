@@ -5,8 +5,33 @@
 #include "../../Manager/InputManager.h"
 #include "../../GameSystem/GameSystem.h"
 
-EnhancementStone::EnhancementStone(VECTOR _pos) : GameObject() {
-    this->position = _pos;
+EnhancementStone* EnhancementStone::pInstance = nullptr;
+
+void EnhancementStone::CreateInstance()
+{
+    if (pInstance == nullptr) {
+        pInstance = new EnhancementStone();
+    }
+}
+
+EnhancementStone* EnhancementStone::GetInstance()
+{
+    if (pInstance == nullptr)
+        CreateInstance();
+
+    return pInstance;
+}
+
+void EnhancementStone::DestroyInstance()
+{
+    if (pInstance != nullptr) {
+        delete pInstance;
+        pInstance = nullptr;
+    }
+}
+
+EnhancementStone::EnhancementStone() : GameObject() {
+   
     this->tag = "EnhanceObject";
     this->canEnhance = false;
     this->isMenuOpen = false;
