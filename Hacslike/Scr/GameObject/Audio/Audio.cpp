@@ -15,6 +15,7 @@ Audio::~Audio() {}
 void Audio::Start() {
 
 	ChangeVolumeSoundMem((int)volume, soundHandle);
+	SetVolumeSoundMem((int)volume, soundHandle);
 	if (isLoop) {
 		PlaySoundMem(soundHandle, DX_PLAYTYPE_LOOP);
 	}

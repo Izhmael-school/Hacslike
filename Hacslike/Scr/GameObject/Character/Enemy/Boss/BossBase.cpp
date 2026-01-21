@@ -39,9 +39,8 @@ void BossBase::Start() {
 	// アニメーションのロード
 	LoadAnimation();
 	// アニメーションイベントの設定
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
-	hpBar = new Gauge(maxHp, 200.0f, 600.0f, 400.0f, 25.0f);
-
+	//pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	hpBar = new	Gauge(hp, maxHp, 200.0f, 600.0f, 400.0f, 25.0f);
 }
 
 void BossBase::Update() {
@@ -55,7 +54,7 @@ void BossBase::Render() {
 	Enemy::Render();
 
 	if (!isDead) {
-		hpBar->Render(hp);
+		hpBar->Render();
 		DrawString(200, 580, name.c_str(), black);
 		
 	}
@@ -72,7 +71,7 @@ void BossBase::DeadExecute() {
 	Player* pPlayer = Player::GetInstance();
 	if (!isSelectArtifact) {
 		
-		artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
+		artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
 		artifactSelectUI.StartSelection();
 		isSelectArtifact = true;
 		//GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);

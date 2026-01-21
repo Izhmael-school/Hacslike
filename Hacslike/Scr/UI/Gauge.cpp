@@ -1,26 +1,53 @@
 #include "Gauge.h"
 #include "../Manager/TimeManager.h"
 
-Gauge::Gauge(float _maxValue, float x, float y, float w, float h)
+Gauge::Gauge(int& _currentValue, int& _maxValue, float x, float y, float w, float h)
 	:maxValue(_maxValue)
-	, currentValue(maxValue)
-	, decreaseValue(maxValue)
+	, currentValue(_currentValue)
+	, currentDecreaseValue(0)
 	, posX(x)
 	, posY(y)
 	, width(w)
-	, height(h) {}
+	, height(h)
+	, speed(1) {}
 
-void Gauge::Render(float _currentValue) {
-	float value = _currentValue / maxValue;
+void Gauge::ChangeColor(unsigned int _top, unsigned int _bottom, unsigned int _frame, unsigned int _back) {
+	topColor = _top;
+	bottomColor = _bottom;
+	frameColor = _frame;
+	backColor = _back;
+}
+
+void Gauge::Render() {
+	float value = (float)currentValue / (float)maxValue;
 	float barWidth = width * value;
-	decreaseValue += (currentValue - decreaseValue) * TimeManager::GetInstance().deltaTime * 1;
-	// îwåi
-	DrawBox(posX, posY, posX + width, posY + height, red, true);
 
-	// HP
-	DrawBox(posX, posY, posX + barWidth, posY + height, green, true);
+	float diff = barWidth - currentDecreaseValue;
+
+	currentDecreaseValue += diff * TimeManager::GetInstance().deltaTime * speed;
+
+	// î˜êUìÆñhé~
+	if (fabs(diff) < 0.1f) {
+		currentDecreaseValue = barWidth;
+	}
+
+	// îwåi
+	DrawBox(posX, posY, posX + width, posY + height, bottomColor, true);
+	// ëOÇÊÇËÉQÅ[ÉWÇ™å∏Ç¡ÇƒÇ¢ÇÈÇ©
+	if (barWidth < currentDecreaseValue) {
+		// èôÅXÇ…å∏ÇÈ
+		DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, backColor, true);
+		// HP
+		DrawBox(posX, posY, posX + barWidth, posY + height, topColor, true);
+	}
+	else {
+		// HP
+		DrawBox(posX, posY, posX + barWidth, posY + height, backColor, true);
+		// èôÅXÇ…ëùÇ¶ÇÈ
+		DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, topColor, true);
+	}
 
 	// òg
-	DrawBox(posX, posY, posX + width, posY + height, black, false);
+	DrawBox(posX, posY, posX + width, posY + height, frameColor, false);
 }
 
