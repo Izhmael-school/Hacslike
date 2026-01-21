@@ -38,6 +38,8 @@ SaveManager& SaveManager::GetInstance() {
 SaveManager::SaveManager() {
     for (auto& m : slots) m = SaveSlotMeta();
     LoadMeta();
+
+    RegisterSavers();
 }
 
 void SaveManager::LoadMeta() {
@@ -78,14 +80,20 @@ void SaveManager::RegisterSavers()
         return;
     }
     saversRegistered = true;
+    // Stage save/load first
     RegisterSaveHandler([](BinaryWriter& w) {
-        
-        Player::GetInstance()->SaveTo(w);
         StageManager::GetInstance().SaveTo(w);
         });
     RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
-        Player::GetInstance()->LoadFrom(r, ver);
         StageManager::GetInstance().LoadFrom(r, ver);
+        });
+
+    // Player save/load second
+    RegisterSaveHandler([](BinaryWriter& w) {
+        Player::GetInstance()->SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        Player::GetInstance()->LoadFrom(r, ver);
         });
     // 追加: Inventory を個別に保存 / 読み込みするハンドラ
     // （Player が Inventory を所有している場合）：
@@ -132,6 +140,16 @@ void SaveManager::RegisterSavers()
         // 注意: StatusEnhancement の実インスタンスが存在している必要がある
         StatusEnhancement::GetInstance()->LoadFrom(r, ver);
         });
+}
+
+bool SaveManager::HasLoadedSave() const
+{
+    return lastLoadSucceeded;
+}
+
+void SaveManager::ClearLoadedFlag()
+{
+    lastLoadSucceeded = false;
 }
 
 bool SaveManager::Save(int slotIndex) {
@@ -210,6 +228,8 @@ bool SaveManager::Load(int slotIndex) {
         h(r, ver); // �����ɌĂׂ��͂�
     }
     in.close();
+
+    lastLoadSucceeded = true;
     return true;
 }
 

@@ -531,6 +531,7 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.id = stageID;
 		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
 		stage.saveObjectPos = VGet(s["saveObjectPos"][0], 0, s["saveObjectPos"][1]);
+		stage.chestObjectPos = VGet(s["ChestObjectPos"][0], 0, s["ChestObjectPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
 		stage.bossType = s["bossType"];
 

@@ -79,6 +79,7 @@ void SaveObject::Update()
 		}
 		
 	}
+	else { openSaveMenu = false; }
 	
 	if(openSaveMenu){
 		if (!pSaveMenu) {
@@ -135,7 +136,7 @@ void SaveObject::Render()
 	}
 
 
-	if(openSaveMenu){
+	if(openSaveMenu && hitObject){
 		pSaveMenu->Render();
 	}
 }

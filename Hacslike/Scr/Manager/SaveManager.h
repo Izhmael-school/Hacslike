@@ -32,6 +32,10 @@ public:
     void RegisterLoadHandler(const std::function<void(BinaryReader&, uint32_t)>& handler);
     void RegisterSavers();
 
+    // ロードが成功してゲーム開始時にその状態が反映されたかを確認するためのフラグ操作
+    bool HasLoadedSave() const;
+    void ClearLoadedFlag();
+
 private:
     SaveManager();
     std::array<SaveSlotMeta, 10> slots;
@@ -40,5 +44,8 @@ private:
 
     // Guard to ensure RegisterSavers is applied only once
     bool saversRegistered = false;
+
+    // フラグ: 最後に Load() が成功したか（ゲーム起動時のセットアップで消費される）
+    bool lastLoadSucceeded = false;
 };
 

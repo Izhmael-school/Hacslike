@@ -178,6 +178,12 @@ void ArtifactManager::ClearArtifact(Player* player)
     }
     activeArtifact.clear();
 
+    // 取得済みリストをクリア（全て忘れる）
+    obtainedArtifacts.clear();
+
+    // アーティファクトプールを初期状態に戻す
+    artifacrPool = MakeInitialPool();
+
 
 }
 
