@@ -322,6 +322,11 @@ void Player::Update() {
 		artifactUI.Update();
 	}
 
+	if (GetHp() <= 0) {
+		hp = 0;
+		return;
+	}
+
 	//// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
 	//if (isSaveUI) {
 	//	if (!pSaveMenu) {
@@ -468,6 +473,9 @@ void Player::Render() {
 	DrawCircle(cx, cy, r_inner, white, FALSE);
 	DrawCircle(cx, cy, expR_inner, white, FALSE);
 
+	SetFontSize(80);
+	DrawFormatString(0, 720, green, "%d",hp);
+	SetFontSize(16);
 #pragma endregion		
 
 	playerMovement->Render();
@@ -850,7 +858,7 @@ void Player::PlayerStatusRender() {
 void Player::PlayerSetUp() {
 	maxHp = 100;
 	hp = maxHp;
-	atk = 5;
+	baseAttack = 5;
 	def = 2;
 	exp = 0;
 	maxExp = 100;
