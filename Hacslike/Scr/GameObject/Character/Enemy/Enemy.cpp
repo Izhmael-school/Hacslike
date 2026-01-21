@@ -21,6 +21,7 @@ Enemy::Enemy()
 Enemy::~Enemy() {
 	attackAnimationList.clear();
 	attackAnimationList.shrink_to_fit();
+	area.DeleteObject();
 }
 
 void Enemy::Start() {
@@ -74,7 +75,6 @@ void Enemy::Update() {
 
 	if (IsDead()) {
 		pAnimator->Update();
-		area.Update();
 		return;
 	}
 
@@ -90,7 +90,6 @@ void Enemy::Update() {
 		pAnimator->Update();
 		area.Update();
 	}
-
 
 	// UŒ‚“–‚½‚è”»’è‚ÌXV
 	for (auto c : attackColliderList) {
@@ -126,8 +125,6 @@ void Enemy::Update() {
 		Attack();
 
 
-
-
 	// UŒ‚‚ÌƒŠƒLƒƒƒXƒg
 	atkTime += TimeManager::GetInstance().deltaTime;
 }
@@ -135,8 +132,12 @@ void Enemy::Update() {
 void Enemy::Render() {
 	if (!isVisible) return;
 
-	//area.Render();
+	// UŒ‚”ÍˆÍ‚Ì•`‰æ
+	if (!IsDead()) {
+		area.Render();
+	}
 
+#if _DEBUG
 	// UŒ‚“–‚½‚è”»’è‚ÌXV
 	for (auto c : attackColliderList) {
 		if (c->GetCollider() == nullptr) continue;
@@ -144,7 +145,6 @@ void Enemy::Render() {
 		c->Render();
 	}
 
-#if _DEBUG
 	//DrawVisionFanDebug();
 #endif
 
@@ -254,8 +254,8 @@ bool Enemy::Vision_Ray() {
 		DrawLine3D(start, end, yellow);
 #endif
 		return false;
+		}
 	}
-}
 
 /// <summary>
 /// MV1CollCheck_Sphere‚ð—p‚¢‚½Ray
@@ -411,7 +411,7 @@ void Enemy::Wander() {
 void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float time) {
 	auto anim = pAnimator->GetAnimation(animName);
 
-	if (anim->animationHandle == -1) return;
+	if (anim == nullptr || anim->animationHandle == -1) return;
 
 	anim->SetEvent(func, time);
 }

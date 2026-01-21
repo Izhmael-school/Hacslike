@@ -37,7 +37,7 @@ Player::Player(VECTOR _pos)
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
 	, isItemUI(false)
-	, coinValue(100000000)
+	, coinValue(100000000000)
 	, expValue()
 	, criticalHitRate()
 	, criticalDamage()
@@ -340,13 +340,13 @@ void Player::Update() {
 	//	}
 	//}
 
+#if _DEBUG
 	if (input->IsKeyDown(KEY_INPUT_3)) {
 		AddExp(maxExp);
 	}
 	else if (input->IsKeyDown(KEY_INPUT_2)) {
 		Damage(10);
 	}
-#if _DEBUG
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
 		AddHp(10);
 	}

@@ -78,4 +78,5 @@ public:
 	void Update();
 	void Render();
 	void SetOwner(Character* chara) { owner = chara; }
+	void DeleteObject();
 };

@@ -36,3 +36,13 @@ void AttackArea::Render() {
 		a->Render();
 	}
 }
+
+void AttackArea::DeleteObject() {
+	if (areaObjectArray.size() == 0) return;
+
+	for (auto o : areaObjectArray) {
+		delete o;
+	}
+
+	areaObjectArray.clear();
+}

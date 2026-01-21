@@ -134,7 +134,7 @@ void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 	pEnemyArray.push_back(e);
 	e->Setup();
 	e->SetType(type);
-	pEnemyArray[pEnemyArray.size() - 1]->SetPosition(pos);
+	e->SetPosition(pos);
 }
 
 

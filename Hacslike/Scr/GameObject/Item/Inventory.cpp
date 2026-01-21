@@ -732,10 +732,10 @@ void Inventory::AddItemRender()
 void Inventory::UseItemShortcutUpdate()
 {
     InputManager* input = &InputManager::GetInstance();
-    if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP))    UseSlot(slotUp);
-    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) UseSlot(slotRight);
-    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT))  UseSlot(slotLeft);
-    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))  UseSlot(slotDown);
+    if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP) || input->IsKeyDown(KEY_INPUT_UP))    UseSlot(slotUp);
+    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT) || input->IsKeyDown(KEY_INPUT_RIGHT)) UseSlot(slotRight);
+    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT) || input->IsKeyDown(KEY_INPUT_LEFT))  UseSlot(slotLeft);
+    else if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || input->IsKeyDown(KEY_INPUT_DOWN))  UseSlot(slotDown);
 }
 
 void Inventory::UseSlot(Slot& slot)

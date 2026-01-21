@@ -135,10 +135,10 @@ void Coin::Render()
     MV1SetMatrix(coinModelHandle, matrix);
     MV1DrawModel(coinModelHandle);
 
-    // 当たり判定の描画（デバッグ用）
-    if (pCollider != nullptr) {
-        pCollider->Render();
-    }
+    //// 当たり判定の描画（デバッグ用）
+    //if (pCollider != nullptr) {
+    //    pCollider->Render();
+    //}
 }
 
 /// <summary>

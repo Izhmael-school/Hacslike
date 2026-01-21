@@ -185,8 +185,8 @@ void PlayerMovement::MoveInput() {
 	if (input->IsKey(KEY_INPUT_A))
 		inputVec.x = inputVec.x - pPlayer->GetSpeed();
 
-	if (input->IsKey(KEY_INPUT_Q))
-		inputVec = VAdd(inputVec, VUp);
+	//if (input->IsKey(KEY_INPUT_Q))
+	//	inputVec = VAdd(inputVec, VUp);
 }
 
 /// <summary>

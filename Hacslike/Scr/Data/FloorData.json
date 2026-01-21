@@ -21,7 +21,7 @@
     "startFloor": 21,
     "endFloor": 30,
     "floorTextureName": "2",
-    "spawnEnemyID": [ 10,0,5,6 ]
+    "spawnEnemyID": [ 10,5,6 ]
   },
   {
     "startFloor": 31,
