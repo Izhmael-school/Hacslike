@@ -361,7 +361,7 @@ void Inventory::EquipItem(ItemBase* item)
     }
 
     equippedItem = item; // equippedItem は ItemBase* でOK
-    item->Use();
+    equippedItem->Use();
 }
 
 /// <summary>

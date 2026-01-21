@@ -7,6 +7,10 @@
 #include "EnemyManager.h"
 #include <vector>
 
+// forward
+class SaveObject;
+class StartTreasureChest;
+
 struct FloorData {
 	int startFloor;
 	int endFloor;
@@ -45,6 +49,9 @@ public:
 
 	const std::string TEXTURE_FILEPATH = "Res/Model/Stage/Texture/";
 
+	// SaveObject ‚ğ StageManager ‚ªŠ—L‚µ‚Ä Update/Render ‚ğŒÄ‚Ô
+	SaveObject* pSaveObject = nullptr;
+	StartTreasureChest* pChest = nullptr;
 public:
 	void Update();
 	void Render();

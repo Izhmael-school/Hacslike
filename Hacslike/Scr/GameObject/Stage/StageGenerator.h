@@ -13,6 +13,7 @@ struct StageData {
 	int stageData[mapWidth_Large][mapHeight_Large];
 	VECTOR playerSpawnPos;
 	VECTOR saveObjectPos;
+	VECTOR chestObjectPos;
 	VECTOR bossSpawnPos;
 	int bossType;
 };

@@ -150,6 +150,8 @@ void CoinValue_raise::Apply(Player* player)
 
 void CoinValue_raise::Remove(Player* player)
 {
+    player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() - UpValue);
+
 }
 void CoinValue_raise::Save(BinaryWriter& w)
 {
@@ -432,7 +434,7 @@ void AttackincreasesforSeveralSecondsAfterEvasion::Load(BinaryReader& r, uint32_
 }
 #pragma endregion
 
-#pragma region  ‰ñ”ğUŒ‚—Íã¸
+#pragma region  ‰ñ”ğ‰ïS—¦ã¸
 CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::CriticalHitRateIncreasesForSeveralSecondsAfterEvasion(float boost, float time)
     :ArtifactBase(8,"—¬‚Ìw—Ö", "‰ñ”ğŒã”•bŠÔ‰ïS—¦ã¸", "Res/ArtifactIcon/Critical_UP.png")
     , CriticalUp(boost)

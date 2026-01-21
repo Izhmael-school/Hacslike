@@ -201,6 +201,7 @@ CollisionManager::~CollisionManager() {
 			delete pCol;
 			pCol = nullptr;
 		}
+		return;
 	}
 
 	pColliderArray.clear();

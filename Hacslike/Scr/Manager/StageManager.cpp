@@ -5,6 +5,7 @@
 #include "AudioManager.h"
 #include"../Save/SaveIO.h"
 #include "../GameObject/SaveObject/SaveObject.h"
+#include"../GameObject/TreasureChest/StartTreasureChest.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -28,6 +29,12 @@ StageManager::~StageManager() {
 void StageManager::Update() {
 	generator->Update();
 
+	if(pSaveObject){
+		pSaveObject->Update();
+	}
+	if (pChest) {
+		pChest->Update();
+	}
 #if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) {
 		LoadFloorData();
@@ -44,6 +51,13 @@ void StageManager::Update() {
 
 void StageManager::Render() {
 	generator->Render();
+
+	if(pSaveObject){
+		pSaveObject->Render();
+	}
+	if (pChest) {
+		pChest->Render();
+	}
 	DrawFormatString(100, 100, red, "階層 %d 階", floorCount - 1);
 }
 
@@ -179,10 +193,25 @@ void StageManager::GenerateStage(int stageID) {
 	ChangeTexture(std::floor((floorCount - 1) / textureChangeFloor), Room);
 	// プレイヤーの配置
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
-	//セーブオブジェクトの配置
-	SaveObject* pSaveObject = new SaveObject(VZero);
-	generator->SetGameObject(pSaveObject, generator->GetStageData().saveObjectPos);
-
+	// JSON に書かれた saveObjectPos があれば SaveObject を生成して配置する
+	{
+		StageData sd = generator->GetStageData();
+		// SaveObject のシングルトンを取得（未生成なら生成される）
+		SaveObject* so = SaveObject::GetInstance();
+		if (so) {
+			// 位置は StageGenerator 側のセル座標（generator->SetGameObject がスケール変換してくれる）
+			generator->SetGameObject(so, sd.saveObjectPos);
+			pSaveObject = so;
+		}
+	}
+	{
+		StageData sd = generator->GetStageData();
+		StartTreasureChest* chest = StartTreasureChest::GetInstance();
+		if(chest){
+			generator->SetGameObject(chest, sd.chestObjectPos);
+			pChest = chest;
+		}
+	}
 	// ボスの配置
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
 

@@ -39,15 +39,13 @@ void GameScene::Start() {
 	EffectManager::GetInstance().Load("Res/Effect/Explosion.efkefc", "Explosion", 20.0f);
 
 
-	StartTreasureChest* pChest = new StartTreasureChest(VGet(800.0f,0,790.0f));
-	pGameObjectArray.push_back(pChest);
+	/*StartTreasureChest* pChest = new StartTreasureChest(VGet(800.0f,0,790.0f));
+	pGameObjectArray.push_back(pChest);*/
 	//StageManager::GetInstance().SetGameObject(VGet(4, 0, 4), pChest);
 
 	EnhancementStone* pEnhance = new EnhancementStone(VGet(200.0f, 0, 500.0f));
 	pGameObjectArray.push_back(pEnhance);
 	
-	SaveObject* pSaveObject = new SaveObject(VGet(800,0,420));
-	pGameObjectArray.push_back(pSaveObject);
 	
 	
 
@@ -56,37 +54,10 @@ void GameScene::Start() {
 void GameScene::Update() {
 #pragma region プロト用スキルとアイテム
 	InputManager* input = &InputManager::GetInstance();
-
-	if (!isSelectingArtifact) {
-		if (input->IsKeyDown(KEY_INPUT_Y)) {
-			artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
-			artifactUI.StartSelection();
-			isSelectingArtifact = true;
-		}
-		StageManager::GetInstance().Update();
-		EnemyManager::GetInstance().Update();
-		for (auto pObj : pGameObjectArray) {
-			pObj->Update();
-		}
-	}
-	else {
-		// ★スキル選択中の処理
-		//int Selected = artifactUI.UpdateSelection();
-		//if (Selected != -1) {
-
-		//	// プレイヤー取得
-		//	Player* player = nullptr;
-		//	for (auto p : pGameObjectArray) {
-		//		player = dynamic_cast<Player*>(p);
-		//		if (player) break;
-		//	}
-
-		//	if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
-		//		ArtifactManager::GetInstance().ApplySelectedArtifact(player, artifactChioces[Selected]);
-		//	}
-
-		//	isSelectingArtifact = false;
-		//}
+	StageManager::GetInstance().Update();
+	EnemyManager::GetInstance().Update();
+	for (auto pObj : pGameObjectArray) {
+		pObj->Update();
 	}
 
 	EffectManager::GetInstance().Update();
@@ -190,9 +161,22 @@ void GameScene::Render() {
 }
 
 void GameScene::Setup() {
-	StageManager::GetInstance().ResetFloorCount();
-	StageManager::GetInstance().NoFadeGenerate();
-	Player::GetInstance()->PlayerSetUp();
+	// ロードしてきたセーブがある場合は、StageManager 側が既に LoadFrom() を経て
+		// フロア情報・ステージデータを復元しているはずなので、floorCount をリセットしたり
+		// 再生成を行ってはいけない。
+	if (SaveManager::GetInstance().HasLoadedSave()) {
+		// プレイヤー関連のセットアップだけ行う（位置やカメラ設定など）。
+		Player::GetInstance()->PlayerSetUp();
+
+		// フラグを消費しておく（次回の新規開始では通常の初期化を行うため）
+		SaveManager::GetInstance().ClearLoadedFlag();
+	}
+	else {
+		// 新規開始 / ロード無し の通常フロー
+		StageManager::GetInstance().ResetFloorCount();
+		StageManager::GetInstance().NoFadeGenerate();
+		Player::GetInstance()->PlayerSetUp();
+	}
 }
 
 void GameScene::Teardown() {

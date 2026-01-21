@@ -72,7 +72,7 @@ void BossBase::DeadExecute() {
 	Player* pPlayer = Player::GetInstance();
 	if (!isSelectArtifact) {
 		
-		artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
+		artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
 		artifactSelectUI.StartSelection();
 		isSelectArtifact = true;
 		//GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
