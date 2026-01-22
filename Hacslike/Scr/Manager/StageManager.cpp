@@ -316,9 +316,9 @@ void StageManager::SaveTo(BinaryWriter& w)
 
 void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 {
+
 	// 階層情報
 	r.ReadPOD(floorCount);
-
 	// sanity check
 	if (floorCount < 0 || floorCount > 10000) {
 		printf("[Save] suspicious floorCount read: %d -> clamped to 0\n", floorCount);
@@ -359,7 +359,8 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 			printf("[Save] After fallback, created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
 		}
 	}
-	
+	AudioManager::GetInstance().PlayBGM("NormalFloor");
+	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
 }
 
 
