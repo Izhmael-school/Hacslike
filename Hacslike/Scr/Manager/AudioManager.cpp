@@ -51,7 +51,7 @@ void AudioManager::ChangeVolume(float _volume, std::string _name) {
 	}
 }
 
-void AudioManager::PlayBGM(std::string _name) {
+void AudioManager::PlayBGM(std::string _name, float volume) {
 	int sound = INVALID;
 	if (GetSoundTotalTime(audioResourceMap[_name]) >= 1000 * 60 * 3) {
 		sound = audioResourceMap[_name];
@@ -63,6 +63,7 @@ void AudioManager::PlayBGM(std::string _name) {
 	Audio* pAudioObj = new Audio(sound);
 	pAudioObj->SetTag(_name);
 	pAudioObj->SetLoop(true);
+	pAudioObj->SetVolume(volume);
 	pAudioObj->Start();
 	pAudioList.push_back(pAudioObj);
 }

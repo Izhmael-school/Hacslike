@@ -232,9 +232,10 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 
 	// “–‚½‚è”»’èˆ—
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
-		owner->GetTag() != pTarget->GetTag()) {
+		owner->GetTag() != pTarget->GetTag() && active) {
 		_pCol->GetCharacter()->Damage(owner->GetAtk());
 		AudioManager::GetInstance().PlayOneShot("damage");
+		active = false;
 	}
 }
 

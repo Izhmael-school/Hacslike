@@ -215,6 +215,8 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp">
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp" />
+    <ClCompile Include="Scr\Manager\FontManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -448,6 +450,10 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h">
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h" />
+    <ClInclude Include="Scr\UI\BossSlainUI.h" />
+    <ClInclude Include="Scr\UI\GameEndUI.h" />
+    <ClInclude Include="Scr\Manager\FontManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">

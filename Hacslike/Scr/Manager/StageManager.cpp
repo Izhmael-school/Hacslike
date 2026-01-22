@@ -251,8 +251,7 @@ void StageManager::Generate() {
 		GenerateStage();
 	}
 
-	AudioManager::GetInstance().PlayBGM("NormalFloor");
-	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
+	AudioManager::GetInstance().PlayBGM("NormalFloor", 0.3f);
 
 	FadeManager::GetInstance().FadeIn(0.5f);
 

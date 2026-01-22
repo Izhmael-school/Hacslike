@@ -37,7 +37,7 @@ Player::Player(VECTOR _pos)
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
 	, isItemUI(false)
-	, coinValue(100000000000)
+	, coinValue(0)
 	, expValue()
 	, criticalHitRate()
 	, criticalDamage()
@@ -73,6 +73,8 @@ Player::~Player() {
 	}
 
 	MV1DeleteModel(PLAYER_MODEL_HANDLE);
+	delete hpBar;
+	delete expBar;
 }
 
 #pragma region シングルトン関連
@@ -192,6 +194,18 @@ void Player::Start() {
 	deadTime = 0;
 
 	prevHP = GetHp();
+
+	// hpゲージの生成
+	if (hpBar == nullptr)
+		hpBar = new Gauge(hp, maxHp, 100, 100, 300, 25);
+	if (expBar == nullptr) {
+		expBar = new Gauge(exp, maxExp, 100, 125, 250, 15);
+		expBar->ChangeColor(yellow,GetColor(200,200,150),black,GetColor(240,240,100));
+	}
+
+#if _DEBUG
+	SetCoinValue(10000000000);
+#endif
 
 	//	アニメーションの読み込み
 #pragma region Animation
@@ -410,68 +424,68 @@ void Player::Render() {
 	if (!isVisible)
 		return;
 
-#pragma region プレイヤーのHPやEXP
-	int cx = 0, cy = 800;   //	中心座標
-	int r_outer = 200;		//	外側半径
-	int r_inner = 160;		//	内側半径
-	int steps = 50;			//	分割数
+#pragma region プレイヤーのHPやEXP(没)
+	//int cx = 0, cy = 800;   //	中心座標
+	//int r_outer = 200;		//	外側半径
+	//int r_inner = 160;		//	内側半径
+	//int steps = 50;			//	分割数
 
-	double percent = (double)hp / maxHp * 100;		//	HP割合
-	double max_angle = 90.0;						//	四分円の角度
-	double angle_end = max_angle * percent / 100.0;	//	HP割合に応じて何度まで描画するか
+	//double percent = (double)hp / maxHp * 100;		//	HP割合
+	//double max_angle = 90.0;						//	四分円の角度
+	//double angle_end = max_angle * percent / 100.0;	//	HP割合に応じて何度まで描画するか
 
-	for (int i = 0; i < steps; i++) {
-		double angle1 = Deg2Rad(angle_end * i / steps);			//	ラジアン角への変換
-		double angle2 = Deg2Rad(angle_end * (i + 1) / steps);	//	ラジアン角への変換
+	//for (int i = 0; i < steps; i++) {
+	//	double angle1 = Deg2Rad(angle_end * i / steps);			//	ラジアン角への変換
+	//	double angle2 = Deg2Rad(angle_end * (i + 1) / steps);	//	ラジアン角への変換
 
-		// 外側頂点
-		int x1o = cx + (int)(r_outer * cos(angle1));
-		int y1o = cy - (int)(r_outer * sin(angle1));
-		int x2o = cx + (int)(r_outer * cos(angle2));
-		int y2o = cy - (int)(r_outer * sin(angle2));
+	//	// 外側頂点
+	//	int x1o = cx + (int)(r_outer * cos(angle1));
+	//	int y1o = cy - (int)(r_outer * sin(angle1));
+	//	int x2o = cx + (int)(r_outer * cos(angle2));
+	//	int y2o = cy - (int)(r_outer * sin(angle2));
 
-		// 内側頂点
-		int x1i = cx + (int)(r_inner * cos(angle1));
-		int y1i = cy - (int)(r_inner * sin(angle1));
-		int x2i = cx + (int)(r_inner * cos(angle2));
-		int y2i = cy - (int)(r_inner * sin(angle2));
+	//	// 内側頂点
+	//	int x1i = cx + (int)(r_inner * cos(angle1));
+	//	int y1i = cy - (int)(r_inner * sin(angle1));
+	//	int x2i = cx + (int)(r_inner * cos(angle2));
+	//	int y2i = cy - (int)(r_inner * sin(angle2));
 
-		// 三角形2つで四角形を描画
-		DrawTriangle(x1o, y1o, x2o, y2o, x1i, y1i, GetColor(30, 200, 30), TRUE);
-		DrawTriangle(x2o, y2o, x2i, y2i, x1i, y1i, GetColor(30, 200, 30), TRUE);
-	}
+	//	// 三角形2つで四角形を描画
+	//	DrawTriangle(x1o, y1o, x2o, y2o, x1i, y1i, GetColor(30, 200, 30), TRUE);
+	//	DrawTriangle(x2o, y2o, x2i, y2i, x1i, y1i, GetColor(30, 200, 30), TRUE);
+	//}
 
-	int expR_outer = 160;  //	外側半径
-	int expR_inner = 140;  //	内側半径
-	int expSteps = 50;	   //	分割数
+	//int expR_outer = 160;  //	外側半径
+	//int expR_inner = 140;  //	内側半径
+	//int expSteps = 50;	   //	分割数
 
-	double expPercent = (double)exp / maxExp * 100;
-	double Exp_max_angle = 90.0;
-	double Exp_angle_end = Exp_max_angle * expPercent / 100.0;
+	//double expPercent = (double)exp / maxExp * 100;
+	//double Exp_max_angle = 90.0;
+	//double Exp_angle_end = Exp_max_angle * expPercent / 100.0;
 
-	for (int i = 0; i < expSteps; i++) {
-		double expAngle1 = Deg2Rad(Exp_angle_end * i / expSteps);		//	ラジアン角への変換
-		double expAngle2 = Deg2Rad(Exp_angle_end * (i + 1) / expSteps);	//	ラジアン角への変換
+	//for (int i = 0; i < expSteps; i++) {
+	//	double expAngle1 = Deg2Rad(Exp_angle_end * i / expSteps);		//	ラジアン角への変換
+	//	double expAngle2 = Deg2Rad(Exp_angle_end * (i + 1) / expSteps);	//	ラジアン角への変換
 
-		//	外側頂点
-		int expX1o = cx + (int)(expR_outer * cos(expAngle1));
-		int expY1o = cy - (int)(expR_outer * sin(expAngle1));
-		int expX2o = cx + (int)(expR_outer * cos(expAngle2));
-		int expY2o = cy - (int)(expR_outer * sin(expAngle2));
+	//	//	外側頂点
+	//	int expX1o = cx + (int)(expR_outer * cos(expAngle1));
+	//	int expY1o = cy - (int)(expR_outer * sin(expAngle1));
+	//	int expX2o = cx + (int)(expR_outer * cos(expAngle2));
+	//	int expY2o = cy - (int)(expR_outer * sin(expAngle2));
 
-		//	内側頂点
-		int expX1i = cx + (int)(expR_inner * cos(expAngle1));
-		int expY1i = cy - (int)(expR_inner * sin(expAngle1));
-		int expX2i = cx + (int)(expR_inner * cos(expAngle2));
-		int expY2i = cy - (int)(expR_inner * sin(expAngle2));
+	//	//	内側頂点
+	//	int expX1i = cx + (int)(expR_inner * cos(expAngle1));
+	//	int expY1i = cy - (int)(expR_inner * sin(expAngle1));
+	//	int expX2i = cx + (int)(expR_inner * cos(expAngle2));
+	//	int expY2i = cy - (int)(expR_inner * sin(expAngle2));
 
-		//	三角形2つで四角形を描画
-		DrawTriangle(expX1o, expY1o, expX2o, expY2o, expX1i, expY1i, yellow, TRUE);
-		DrawTriangle(expX2o, expY2o, expX2i, expY2i, expX1i, expY1i, yellow, TRUE);
-	}
-	DrawCircle(cx, cy, r_outer, white, FALSE);
-	DrawCircle(cx, cy, r_inner, white, FALSE);
-	DrawCircle(cx, cy, expR_inner, white, FALSE);
+	//	//	三角形2つで四角形を描画
+	//	DrawTriangle(expX1o, expY1o, expX2o, expY2o, expX1i, expY1i, yellow, TRUE);
+	//	DrawTriangle(expX2o, expY2o, expX2i, expY2i, expX1i, expY1i, yellow, TRUE);
+	//}
+	//DrawCircle(cx, cy, r_outer, white, FALSE);
+	//DrawCircle(cx, cy, r_inner, white, FALSE);
+	//DrawCircle(cx, cy, expR_inner, white, FALSE);
 
 	SetFontSize(80);
 	DrawFormatString(0, 720, green, "%d",hp);
@@ -535,6 +549,9 @@ void Player::Render() {
 	if (isDead) {
 		GameEndUI::GetInstance()->Draw();
 	}
+
+	hpBar->Render();
+	expBar->Render();
 }
 
 ///// <summary>

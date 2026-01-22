@@ -80,7 +80,7 @@
     "ChestObjectPos": [ 0, 0 ],
     "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 11
+    "bossType": 6
   },
 
   {
@@ -101,7 +101,7 @@
     "ChestObjectPos": [ 0, 0 ],
     "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 12
+    "bossType": 7
   },
 
   {
@@ -122,6 +122,6 @@
     "ChestObjectPos": [ 0, 0 ],
     "enhancementStonePos": [ 2, 4 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 13
+    "bossType": 8
   }
 ]

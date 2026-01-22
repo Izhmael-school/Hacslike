@@ -25,7 +25,7 @@ public:
 
 	void ChangeVolume(float _volume,std::string _name = "");
 
-	void PlayBGM(std::string _name);
+	void PlayBGM(std::string _name,float volume = 1.0f);
 
 	void PlayOneShot(std::string _name);
 
