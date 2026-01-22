@@ -24,6 +24,7 @@ GameScene::~GameScene() {
 }
 
 void GameScene::Start() {
+
 	Player* pPlayer = new Player();
 	pPlayer->CreateInstance();
 	pGameObjectArray.push_back(pPlayer);
@@ -46,7 +47,7 @@ void GameScene::Start() {
 }
 
 void GameScene::Update() {
-#pragma region プロト用スキルとアイテム
+
 	InputManager* input = &InputManager::GetInstance();
 	StageManager::GetInstance().Update();
 	EnemyManager::GetInstance().Update();
@@ -75,7 +76,7 @@ void GameScene::Update() {
 
 	Coin::GetInstance()->UpdateAll();
 
-#pragma endregion
+
 
 
 
@@ -174,7 +175,6 @@ void GameScene::Setup() {
 }
 
 void GameScene::Teardown() {
-	printfDx("GameScene:TearDown\n");
 	EnemyManager::GetInstance().UnuseAllEnemy();
 	AudioManager::GetInstance().Stop("all");
 }

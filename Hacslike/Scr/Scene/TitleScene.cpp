@@ -109,9 +109,9 @@ void TitleScene::Update() {
 			}
 			else {
 				// Ensure Player instance exists before load handlers run
-				Player::DestroyInstance();
-				Player* p = Player::CreateInstance(VZero);
-				if (p) {
+				/*Player::DestroyInstance();
+				*//*Player* p = Player::CreateInstance(VZero);*/
+				/*if (p) {*/
 					// Load into managers and player
 					if (SaveManager::GetInstance().Load(selectedSlot)) {
 						// After successful load, go to game scene
@@ -121,7 +121,7 @@ void TitleScene::Update() {
 					else {
 						snprintf(messageBuf, sizeof(messageBuf), "ロードに失敗しました (Slot %02d)", selectedSlot + 1);
 						messageFramesLeft = 120;
-					}
+				/*	}*/
 				}
 			}
 		}
@@ -227,8 +227,7 @@ void TitleScene::Render() {
 
 void TitleScene::Setup() {
 	AudioManager::GetInstance().PlayBGM("Title");
-	//アイテムのセット
-	ItemFactory::Instance().InitializeDefaultItems();
+	
 }
 
 void TitleScene::Teardown() {

@@ -255,7 +255,7 @@ void Player::Start() {
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
 		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
 	);
-
+	printfDx("aaa");
 	// インベントリに追加
 	GetInventory()->AddItem(std::move(stick));
 
@@ -895,7 +895,7 @@ void Player::PlayerSetUp() {
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
 		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
 	);
-
+	
 	// インベントリに追加
 	GetInventory()->AddItem(std::move(stick));
 }
