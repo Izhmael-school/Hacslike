@@ -44,11 +44,11 @@ void TitleScene::Start() {
 void TitleScene::Update() {
 #pragma region テスト用
 #if _DEBUG
-	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
+	//if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 
-		SceneManager::GetInstance().ChangeScene(SceneType::Sekino);
-	}
-	return;
+	//	SceneManager::GetInstance().ChangeScene(SceneType::Sekino);
+	//}
+	//return;
 #endif
 #pragma endregion
 
