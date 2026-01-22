@@ -187,6 +187,9 @@
     <None Include="Scr\Data\StageData.json" />
     <None Include="Scr\Data\WeaponsData.json" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

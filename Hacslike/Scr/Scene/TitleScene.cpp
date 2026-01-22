@@ -46,7 +46,7 @@ void TitleScene::Update() {
 #if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 
-		SceneManager::GetInstance().ChangeScene(SceneType::Sekino);
+		SceneManager::GetInstance().ChangeScene(SceneType::Game);
 	}
 	return;
 #endif
