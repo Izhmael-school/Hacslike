@@ -182,9 +182,6 @@
     <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp">
       <Filter>GameObject\EnhanceObject</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp">
       <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
     </ClCompile>
@@ -217,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp" />
     <ClCompile Include="Scr\Manager\FontManager.cpp" />
+    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
+      <Filter>Enhancement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -417,9 +417,6 @@
     <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h">
       <Filter>GameObject\EnhanceObject</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h">
       <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
     </ClInclude>
@@ -451,9 +448,16 @@
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h" />
-    <ClInclude Include="Scr\UI\BossSlainUI.h" />
-    <ClInclude Include="Scr\UI\GameEndUI.h" />
     <ClInclude Include="Scr\Manager\FontManager.h" />
+    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
+      <Filter>Enhancement</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\BossSlainUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\GameEndUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -590,6 +594,9 @@
     </Filter>
     <Filter Include="GameObject\Character\Enemy\Zombie">
       <UniqueIdentifier>{6f658fd7-1abe-479a-8456-aab45f5681ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enhancement">
+      <UniqueIdentifier>{01c58468-8212-4efd-9876-67772217197a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
