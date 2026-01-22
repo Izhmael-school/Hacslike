@@ -7,6 +7,8 @@
 #include "../GameObject/SaveObject/SaveObject.h"
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
 #include "../GameObject/Enhancement/EnhancementStone.h"
+#include"../GameObject/Coin/Coin.h"
+#include "ItemDropManager.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -129,6 +131,10 @@ void StageManager::GenerateStage() {
 	generator->ClearStage();
 	// エネミーの削除
 	EnemyManager::GetInstance().UnuseAllEnemy();
+	// コインの削除
+	Coin::GetInstance()->ResetAll();
+	//アイテムの削除
+	ItemDropManager::GetInstance().RemoveItemAll();
 	// 階層の加算
 	floorCount++;
 	// ステージのデータを作る
@@ -190,6 +196,10 @@ void StageManager::GenerateStage(int stageID) {
 	generator->ClearStage();
 	// エネミーの削除
 	EnemyManager::GetInstance().UnuseAllEnemy();
+	// コインの削除
+	Coin::GetInstance()->ResetAll();
+	//アイテムの削除
+	ItemDropManager::GetInstance().RemoveItemAll();
 	// フロアの加算
 	floorCount++;
 	// フロアデータの読み込み

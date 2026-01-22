@@ -97,6 +97,11 @@ public: //メンバ変数
 	/// オブジェクトプール用の描画
 	/// </summary>
 	static void RenderAll();
+
+	/// <summary>
+	/// コインの削除
+	/// </summary>
+	static void ResetAll();
 public:
 	/// <summary>
 	/// コインの値のセット

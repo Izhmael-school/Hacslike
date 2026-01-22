@@ -22,8 +22,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	// 起動時のウィンドウのモードの設定
 	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
-
-	
+	SetMainWindowText("Hacslike");
+	SetWindowIconID(333);
 
 	// 背景色の設定
 #if _DEBUG

@@ -97,6 +97,30 @@ void ItemDropManager::RemoveItem(ItemEntity* target)
  
 }
 
+/// <summary>
+/// 全てのアイテム削除
+/// </summary>
+void ItemDropManager::RemoveItemAll()
+{
+    // この関数が呼ばれたら全ての落ちているアイテムを消す
+    for (auto& item : activeItems) {
+        if (!item) continue;
+
+        // エフェクトを消す
+        if (item->GetDropEffect()) {
+            item->GetDropEffect()->Stop();
+        }
+
+        // コライダ登録を解除
+        if (item->GetCollider()) {
+            CollisionManager::GetInstance().UnRegister(item->GetCollider());
+        }
+    }
+
+    // unique_ptr のデストラクタでアイテムは削除される
+    activeItems.clear();
+}
+
 bool ItemDropManager::RandomChance(float _rate)
 {
     static std::random_device rd;

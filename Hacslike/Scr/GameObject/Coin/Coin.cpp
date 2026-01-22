@@ -217,3 +217,15 @@ void Coin::RenderAll()
         coin->Render();
     }
 }
+
+/// <summary>
+/// ƒRƒCƒ“‚Ìíœ
+/// </summary>
+void Coin::ResetAll()
+{
+    for(auto& coin : coinPool){
+        coin->SetActive(false);
+        coin->GetCollider()->SetEnable(false);
+    }
+
+}

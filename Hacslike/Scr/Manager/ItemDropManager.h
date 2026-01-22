@@ -40,6 +40,11 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="target"></param>
 	void RemoveItem(ItemEntity* target);
+
+    /// <summary>
+    /// 全てのアイテム削除
+    /// </summary>
+    void RemoveItemAll();
 private://メンバ関数
 	bool RandomChance(float _rate);
 	
