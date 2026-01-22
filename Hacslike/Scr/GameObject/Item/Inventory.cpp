@@ -51,7 +51,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 {
     AudioManager::GetInstance().PlayOneShot("GetItem");
 #if _DEBUG
-    printfDx("[Inventory::AddItem] this=%p BEFORE items.size=%d\n", this, (int)items.size());
+    //printfDx("[Inventory::AddItem] this=%p BEFORE items.size=%d\n", this, (int)items.size());
 
 #endif
     const std::string& itemName = newItem->GetName();
@@ -69,7 +69,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
         if (it != items.end()) {
             it->quantity++;
             #if _DEBUG
-            printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
+            //printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
             #endif  
             OnItemGained(it->item.get(), it->quantity);
             AssignToShortcut(&(*it));
@@ -84,8 +84,8 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
     OnItemGained(addedItem.item.get(), addedItem.quantity);
     AssignToShortcut(&addedItem);
 #if _DEBUG
-    printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
-    printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());
+  /*  printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
+    printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());*/
 #endif
 }
 
