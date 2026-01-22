@@ -132,7 +132,6 @@ bool StatusEnhancement::Update() {
 						break;
 					case 1: // 攻撃力
 						player->SetBaseAtk(player->GetBaseAtk() + (int)boostValue);
-						player->SetAtk(player->GetAtk() + (int)boostValue);
 						break;
 					case 2: // 防御力
 						player->SetDef(player->GetDef() + (float)boostValue);
