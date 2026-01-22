@@ -93,12 +93,12 @@ bool StatusEnhancement::Update() {
 	}
 
 	// --- 強化実行処理 ---
-	if (input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
+	if (input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
 		if (!stats.empty() && stats[selectedIndex].level < 50) {
 
 			// コスト計算
 			int cost = 3 + (stats[selectedIndex].level * 2);
-
+			
 			// コインが足りるかチェック
 			if (playerCoins >= cost) {
 				// コイン消費
@@ -120,22 +120,31 @@ bool StatusEnhancement::Update() {
 
 				// Playerクラスのステータスに反映
 				if (player) {
-					switch (selectedIndex) {
+					switch (selectedIndex) {	
 					case 0: // HP
-						player->SetMaxHp(100 + stats[0].totalBonus);
-						player->SetHp(player->GetMaxHp());
-						break;
+						if (player != nullptr) { // ヌルチェック（逆参照エラー防止）
+							// 今の最大HPに、今回増えた分（boostValue = 10）だけを足す
+							float newMax = player->GetMaxHp() + (float)boostValue;
+
+							player->SetMaxHp(newMax);
+							player->SetHp(newMax); // 回復もさせる場合
+						}
 					case 1: // 攻撃力
-						player->SetBaseAtk(10 + stats[1].totalBonus);
+						// 1. 基礎攻撃力を更新（永続保存用）
+						player->SetBaseAtk(player->GetBaseAtk() + (int)boostValue);
+
+						// 2. 現在の攻撃力（武器込みの数値）にも、上がった分だけを足す
+						// これなら武器を装備していても、その数値に上乗せされるだけなので消えません！
+						player->SetAtk(player->GetAtk() + (int)boostValue);
 						break;
 					case 2: // 防御力
-						player->SetDef(stats[2].totalBonus);
+						player->SetDef(player->GetDef() + (float)boostValue);
 						break;
 					case 3: // 会心率
-						player->SetCriticalHitRate((float)(5 + stats[3].totalBonus));
+						player->SetCriticalHitRate(player->GetCriticalHitRate() + (float)boostValue);
 						break;
 					case 4: // 会心ダメ
-						player->SetCriticalDamage(1.5f + (stats[4].totalBonus / 100.0f));
+						player->SetCriticalDamage(player->GetCriticalDamage() + (boostValue / 100.0f));
 						break;
 					}
 				}

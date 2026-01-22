@@ -6,6 +6,12 @@
 #include <vector>
 #include "DxLib.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="_player"></param>
+/// <param name="_weapon"></param>
+/// <param name="_playerMovement"></param>
 PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _playerMovement)
 	: pPlayer(_player)
 	, pWeapon(_weapon)
@@ -15,7 +21,7 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, attackTimer(0.0f)
 	, canNextAttack(false)
 	, attackButtonPressed(false)
-	, hasGeneratedHitbox(false) // ★追加
+	, hasGeneratedHitbox(false)
 	, CapsuleHitboxes()
 	, SphereHitboxes()
 	, playerMovement(_playerMovement)
@@ -27,12 +33,16 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, pCapsulePool(nullptr)
 	, addRadius()
 	, currentChainCount()
-	, maxChainCount() {
+	, maxChainCount()
+	, animName(){
 	pSpherePool = &BulletPool::GetInstance();
 	pCapsulePool = &CapsuleHitPool::GetInstance();
 	Start();
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void PlayerAttack::Start() {
 	EffectManager::GetInstance().Load("Res/Effect/CharegeAttackEfk.efk", "ChargeBlad", 20.0f);
 	EffectManager::GetInstance().Load("Res/Effect/DA.efk", "DA", 10.0f);
@@ -44,6 +54,9 @@ void PlayerAttack::Start() {
 	AudioManager::GetInstance().Load("Res/Audio/SE/Player/se_furi2.mp3", "furi", false);
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
 void PlayerAttack::Update() {
 	if (!pPlayer->GetIsDead())
 		AttackInput();
@@ -52,8 +65,14 @@ void PlayerAttack::Update() {
 	pCapsulePool->Update();
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void PlayerAttack::Render() {}
 
+/// <summary>
+/// 攻撃の入力処理
+/// </summary>
 void PlayerAttack::AttackInput() {
 #pragma region 入力処理
 	bool isButtonDown = input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_RIGHT_SHOULDER);
@@ -89,7 +108,7 @@ void PlayerAttack::AttackInput() {
 		isCharging = false;
 		isAttacking = true;
 		attackTimer = 0.0f;
-		hasGeneratedHitbox = false; // ★追加
+		hasGeneratedHitbox = false;
 
 		float ratio = chargeTime / maxChargeTime;
 		float chargeRatio = (ratio < 1.0f) ? ratio : 1.0f;
@@ -107,11 +126,11 @@ void PlayerAttack::AttackInput() {
 
 		// Sword
 		if (pWeapon->GetType() == 0) {
-			std::string animName = "Atk" + std::to_string(attackIndex + 1);
+			animName = "Atk" + std::to_string(attackIndex + 1);
 			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
 				isAttacking = true;
-				isDashAttack = true;
 				attackIndex = 4;
+				isDashAttack = true;
 				attackTimer = 0.0f;
 				hasGeneratedHitbox = false; // ★追加
 				playerMovement->LockDirection();
@@ -121,46 +140,30 @@ void PlayerAttack::AttackInput() {
 			}
 			else if (!isAttacking) {
 				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("Sword");
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("Sword");
 			}
 		}
 		// GreatSword
 		else if (pWeapon->GetType() == 1) {
-			std::string animName = "GreatAtk" + std::to_string(attackIndex + 1);
+			animName = "GreatAtk" + std::to_string(attackIndex + 1);
 			if (!isAttacking) {
 				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("GAtk1");
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
 		// Axe
 		else if (pWeapon->GetType() == 2) {
-			std::string animName = "AxeAtk" + std::to_string(attackIndex + 1);
+			animName = "AxeAtk" + std::to_string(attackIndex + 1);
 			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
 				isAttacking = true;
 				isDashAttack = true;
@@ -174,25 +177,17 @@ void PlayerAttack::AttackInput() {
 			}
 			else if (!isAttacking) {
 				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
 		// Lance
 		else if (pWeapon->GetType() == 4) {
-			std::string animName = "GreatAtk" + std::to_string(attackIndex + 1);
+			animName = "GreatAtk" + std::to_string(attackIndex + 1);
 			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
 				isAttacking = true;
 				isDashAttack = true;
@@ -205,46 +200,20 @@ void PlayerAttack::AttackInput() {
 			}
 			else if (!isAttacking) {
 				isAttacking = true;
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("GAtk1");
 			}
 			else if (canNextAttack && attackIndex < 3) {
-				attackIndex++;
-				attackTimer = 0.0f;
-				canNextAttack = false;
-				hasGeneratedHitbox = false; // ★追加
-				pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("furi");
 			}
 		}
 	}
 #pragma endregion
 
-#pragma region 遠距離武器
-	else if (isButtonUp && pWeapon->GetType() == 3) {
-		if (!isAttacking) {
-			isAttacking = true;
-			attackIndex = 1;
-			attackTimer = 0.0f;
-			canNextAttack = false;
-			hasGeneratedHitbox = false; // ★追加
-			CreateRangedHitBox();
-			pPlayer->Damage(addRadius >= 0.5f ? 5 : 1);
-		}
-		addRadius = 0.0f;
-	}
-
-	if (isButton && pWeapon->GetType() == 3) {
-		addRadius += TimeManager::GetInstance().deltaTime;
-	}
-	else if (!isButtonDown) {
+	if (!isButtonDown) {
 		attackButtonPressed = false;
 	}
-#pragma endregion
 
 	if (isAttacking && !isCharging && !playerMovement->IsBlinking()) {
 		attackTimer += TimeManager::GetInstance().deltaTime;
@@ -259,16 +228,13 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f) {
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
@@ -284,16 +250,13 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.3f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.9f && attackTimer < 1.9f) {
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
@@ -308,16 +271,13 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.36f && attackTimer < 0.48f) {
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
@@ -332,23 +292,20 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+					HitBoxReset();
 				}
-				if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f) {
-					CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
-					hasGeneratedHitbox = true;
+				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
+					HitBoxReset();
 				}
-				if (attackIndex == 4 && attackTimer > 0.32f && attackTimer < 0.35f) {
+				if (attackIndex == 4 && attackTimer > 0.32f && attackTimer < 0.5f) {
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
 					hasGeneratedHitbox = true;
 				}
 			}
-			if (attackTimer > 1.2f) { isAttacking = false; isDashAttack = false; canNextAttack = false; attackIndex = 0; hasGeneratedHitbox = false; }
+			if (attackTimer > (attackIndex >= 3 ? 2.78f : 1.0f)) { isAttacking = false; isDashAttack = false; canNextAttack = false; attackIndex = 0; hasGeneratedHitbox = false; }
 		}
 		else if (pWeapon->GetType() == 3) {
 			if (attackTimer > 0.4f && attackTimer < 1.0f) canNextAttack = true;
@@ -359,7 +316,7 @@ void PlayerAttack::AttackInput() {
 			isDashAttack = false;
 			canNextAttack = false;
 			attackIndex = 0;
-			hasGeneratedHitbox = false; // ★追加
+			hasGeneratedHitbox = false;
 		}
 	}
 #pragma endregion
@@ -379,53 +336,23 @@ void PlayerAttack::AttackInput() {
 	}
 #pragma endregion
 
+#pragma region リセット
 	if (isAttacking) {
 		if (!pPlayer->GetAnimator()->IsPlaying()) {
 			isAttacking = false;
 			attackIndex = 0;
 			canNextAttack = false;
-			hasGeneratedHitbox = false; // ★追加
+			hasGeneratedHitbox = false;
 		}
 	}
+#pragma endregion
 }
 
 #pragma region 攻撃判定処理
-void PlayerAttack::CreateRangedHitBox() {
-	VECTOR forward = pPlayer->GetForward();
-	VECTOR basePos = pPlayer->GetPosition();
-	int pointCount = (addRadius < 0.5f) ? 1 : (addRadius < 1.5f ? 3 : 5);
-	std::vector<VECTOR> points;
-	float spreadAngle = 120.0f;
-	float range = 500.0f;
-
-	for (int i = 0; i < pointCount; ++i) {
-		float angleRad = (i - (pointCount / 2)) * (spreadAngle / (pointCount > 1 ? (pointCount - 1) : 1)) * (3.14159265f / 180.0f);
-		MATRIX rotMat = MGetRotY(angleRad);
-		VECTOR rotDir = VTransform(forward, rotMat);
-		VECTOR p = VAdd(basePos, VScale(rotDir, range));
-		p.y += 40.0f;
-		points.push_back(p);
-	}
-
-	for (int i = 0; i < (int)points.size(); ++i) {
-		int r = GetRand((int)points.size() - 1);
-		VECTOR temp = points[i];
-		points[i] = points[r];
-		points[r] = temp;
-	}
-
-	VECTOR startPos = VAdd(basePos, VScale(forward, 50.0f));
-	VECTOR dir = VNorm(VSub(points[0], startPos));
-	VECTOR vel = VScale(dir, 50.0f);
-	SphereHitBox* bullet = pSpherePool->BulletSpawn(pPlayer, startPos, vel, 30.0f, 3.0f, maxChainCount);
-	if (bullet) bullet->SetTargetList(points);
-	isAttacking = false;
-	addRadius = 0.0f;
-}
-
 void PlayerAttack::CreateHitBox(VECTOR _pos, float _radius) {
 	pSpherePool->Spawn(pPlayer, _pos, VGet(0, 0, 0), _radius, 0.25f);
 }
+
 
 void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 	VECTOR forward = pPlayer->GetForward();
@@ -434,3 +361,16 @@ void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 	Effect* pEffe = EffectManager::GetInstance().Instantiate("Hit", spawnPos);
 }
 #pragma endregion
+
+void PlayerAttack::AttackReset() {
+	attackIndex++;
+	attackTimer = 0.0f;
+	canNextAttack = false;
+	hasGeneratedHitbox = false;
+	pPlayer->GetAnimator()->Play(animName.c_str(), pWeapon->GetAnimationSpeed(attackIndex - 1));
+}
+
+void PlayerAttack::HitBoxReset() {
+	CreateAttackHitbox(pWeapon->GetColLength(attackIndex - 1), pWeapon->GetColRadius(attackIndex - 1));
+	hasGeneratedHitbox = true;
+}

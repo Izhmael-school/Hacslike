@@ -183,7 +183,7 @@ void Player::Start() {
 
 	maxHp = 100;
 	hp = maxHp;
-	atk = 5;
+	baseAttack = 5;
 	def = 2;
 	exp = 0;
 	criticalHitRate = 10;

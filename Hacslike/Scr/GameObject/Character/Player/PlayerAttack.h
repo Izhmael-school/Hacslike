@@ -35,6 +35,8 @@ private:	//	変数
 
 	bool hasGeneratedHitbox;
 
+	std::string animName;
+
 	//	ダッシュ攻撃関連
 	bool isDashAttack;			//	ダッシュ攻撃してるかどうか
 	bool checkDashAttack;		//	ダッシュ攻撃が可能かどうか
@@ -89,11 +91,6 @@ public:
 	///<param name="length"></param>
 	///<param name="radius"></param>
 	void CreateAttackHitbox(float _length, float _radius);
-
-	/// <summary>
-	/// 遠距離攻撃用の当たり判定処理
-	/// </summary>
-	void CreateRangedHitBox();
 	
 	/// <summary>
 	/// グレネード用の当たり判定処理
@@ -124,4 +121,14 @@ public:
 	void SetWeapon(Weapon* _weapon) {
 		pWeapon = _weapon;
 	}
+
+	/// <summary>
+	/// 攻撃時にやること
+	/// </summary>
+	void AttackReset();
+
+	/// <summary>
+	/// 当たり判定生成時にやること
+	/// </summary>
+	void HitBoxReset();
 };

@@ -142,7 +142,7 @@ public:
 	/// </summary>
 	/// <param name="_ES"></param>
 	/// <returns></returns>
-	inline void SetEvasionSpeed(int _ES) { evasionSpeed = _ES; }
+	inline void SetEvasionSpeed(float _ES) { evasionSpeed = _ES; }
 
 	inline void SetAttactArtifact(AttackincreasesforSeveralSecondsAfterEvasion* artifact) { attactArtifact = artifact; }
 	inline void SetCriticalArtifact(CriticalHitRateIncreasesForSeveralSecondsAfterEvasion* artifact) { CriticalArtifact = artifact; }

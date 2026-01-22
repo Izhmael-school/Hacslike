@@ -481,7 +481,7 @@ void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Update(Player* playe
 
 void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Apply(Player* player)
 {
-    player->GetPlayerMovement()->SetCriticalArtifact(this);
+    player->GetPlayerMovement()->SetCriticalArtifact(this); 
     player->Update();
 }
 
