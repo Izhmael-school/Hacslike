@@ -125,9 +125,9 @@ void SaveObject::Render()
 
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:セーブ/ロード");
-		DrawFormatString(textX, textY, white, "E");
-		DrawFormatString(textX + 53, textY, white, "B");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:セーブ/ロード");
+		DrawFormatStringToHandle(textX, textY, white,MainFont, "E");
+		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
 		// Zバッファ（奥行き）をチェックせずに描画する
 		SetUseZBuffer3D(TRUE);

@@ -83,7 +83,7 @@ void BossBase::Render() {
 	artifactSelectUI.Render(artifactChioces);
 	if (!isDead) {
 		hpBar->Render();
-		DrawString(200, 580, name.c_str(), black);
+		DrawStringToHandle(200, 580, name.c_str(), black,MainFont);
 		
 	}
 	if(isDead) BossSlainUI::GetInstance()->Draw();

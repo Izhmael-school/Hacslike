@@ -107,9 +107,9 @@ void EnhancementStone::Render() {
 
         DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
         DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-        DrawFormatString(textX + 40, textY, black, "キー/ ボタン:強化する");
-        DrawFormatString(textX + 30, textY, white, "F");
-        DrawFormatString(textX + 83, textY, white, "B");
+        DrawFormatStringToHandle(textX + 40, textY, black,MainFont, "キー/ ボタン:強化する");
+        DrawFormatStringToHandle(textX + 30, textY, white,MainFont, "E");
+        DrawFormatStringToHandle(textX + 83, textY, white,MainFont, "B");
     }
 
     // 3. 他の3Dオブジェクトの描画のために設定を元に戻す

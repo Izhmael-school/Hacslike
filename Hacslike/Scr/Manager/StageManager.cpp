@@ -65,7 +65,7 @@ void StageManager::Render() {
 	if (pStone) {
 		pStone->Render();
 	}
-	DrawFormatString(100, 100, red, "階層 %d 階", floorCount - 1);
+	DrawFormatStringToHandle(100, 100, red,MainFont, "階層 %d 階", floorCount - 1);
 }
 
 void StageManager::LoadFloorData() {

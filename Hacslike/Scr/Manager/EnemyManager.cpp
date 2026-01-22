@@ -121,7 +121,7 @@ void EnemyManager::Render() {
 		e->Render();
 	}
 
-	DrawFormatString(100, 300, red, "c“G”:%d‘Ì", pEnemyArray.size());
+	DrawFormatStringToHandle(100, 300, red,MainFont, "c“G”:%d‘Ì", pEnemyArray.size());
 }
 
 void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {

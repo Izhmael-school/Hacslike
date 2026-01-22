@@ -198,13 +198,13 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
         DrawExtendGraph(cx - iconSize / 2, cy - iconSize / 2, cx + iconSize / 2, cy + iconSize / 2, iconHandle, TRUE);
         DeleteGraph(iconHandle);
 
-        DrawFormatString(cx - (int)(cardWidth * 0.4f * scale), cy - (int)(cardHeight * 0.4f * scale), white, skills[i]->GetName().c_str());
+        DrawFormatStringToHandle(cx - (int)(cardWidth * 0.4f * scale), cy - (int)(cardHeight * 0.4f * scale), white,MainFont, skills[i]->GetName().c_str());
         // ★レベル表示追加（ここ！）
         std::string lvText = "Lv: " + std::to_string(skills[i]->GetLevel()) +
             " / " + std::to_string(skills[i]->GetMaxLevel());
 
-        DrawFormatString(cx - (int)(cardWidth * 0.4f * scale),cy - (int)(cardHeight * 0.35f * scale),white,lvText.c_str());
-        DrawFormatString(cx - (int)(cardWidth * 0.4f * scale), cy + (int)(cardHeight * 0.3f * scale), white, skills[i]->GetDescription().c_str());
+        DrawFormatStringToHandle(cx - (int)(cardWidth * 0.4f * scale),cy - (int)(cardHeight * 0.35f * scale),white,MainFont,lvText.c_str());
+        DrawFormatStringToHandle(cx - (int)(cardWidth * 0.4f * scale), cy + (int)(cardHeight * 0.3f * scale), white,MainFont, skills[i]->GetDescription().c_str());
     }
 
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

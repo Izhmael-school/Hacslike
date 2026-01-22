@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScene.h"
+#include "../Manager/FontManager.h"
+
 class TitleScene : public BaseScene {
 	int teamLogoHandle;
 
@@ -10,6 +12,8 @@ class TitleScene : public BaseScene {
 	int selectedSlot = 0;        // 0..9
 	int messageFramesLeft = 0;   // for temporary messages
 	char messageBuf[256] = { 0 };
+
+	int fontHandle;
 public:
 	TitleScene();
 	~TitleScene();

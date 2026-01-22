@@ -95,7 +95,7 @@ void MenuSaveLoad::Render() {
 
     // タイトル
     const char* title = "セーブ / ロード";
-    DrawString(baseX + padding, baseY + 2, title, white);
+    DrawStringToHandle(baseX + padding, baseY + 2, title, white,MainFont);
 
     for (int i = 0; i < 10; ++i) {
         const auto& s = slots[i];
@@ -139,7 +139,7 @@ void MenuSaveLoad::Render() {
 
         int y = BaseY + i * lineHeight;
         unsigned int color = (i == selectedSlot) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
-        DrawString(BaseX, y, linebuf, color);
+        DrawStringToHandle(BaseX, y, linebuf, color,MainFont);
     }
 
     // ポップアップメニュー描画 (開いているとき)
@@ -156,8 +156,8 @@ void MenuSaveLoad::Render() {
         const char* opts[3] = { "セーブ", "ロード", "削除" };
         for (int i = 0; i < 3; ++i) {
             int col = (i == menuChoice) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
-            DrawString(px + 12 + i * 100, py + 12, opts[i], col);
+            DrawStringToHandle(px + 12 + i * 100, py + 12, opts[i], col,MainFont);
         }
-        DrawString(px + 8, py + popupH - 50, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180));
+        DrawStringToHandle(px + 8, py + popupH - 50, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180),MainFont);
     }
 }

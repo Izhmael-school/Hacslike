@@ -336,11 +336,6 @@ void Player::Update() {
 		artifactUI.Update();
 	}
 
-	if (GetHp() <= 0) {
-		hp = 0;
-		return;
-	}
-
 	//// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
 	//if (isSaveUI) {
 	//	if (!pSaveMenu) {
@@ -487,15 +482,12 @@ void Player::Render() {
 	//DrawCircle(cx, cy, r_inner, white, FALSE);
 	//DrawCircle(cx, cy, expR_inner, white, FALSE);
 
-	SetFontSize(80);
-	DrawFormatString(0, 720, green, "%d",hp);
-	SetFontSize(16);
 #pragma endregion		
 
 	playerMovement->Render();
 
 #if _DEBUG
-	DrawFormatString(200, 200, red, "x : %d | z : %d", (int)position.x, (int)position.z);
+	DrawFormatStringToHandle(200, 200, red, MainFont,"x : %d | z : %d", (int)position.x, (int)position.z);
 #endif
 
 #pragma region プレイヤーの描画
@@ -753,7 +745,7 @@ void Player::DrawMenu() {
 		}
 
 		// 文字
-		DrawString(x + 40, boxY + 10, menuNames[i], GetColor(255, 255, 255));
+		DrawStringToHandle(x + 40, boxY + 10, menuNames[i], GetColor(255, 255, 255),MainFont);
 	}
 	
 	PlayerStatusRender();
@@ -779,9 +771,9 @@ void Player::AddItemRender() {
 	if (hitItem) {
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:アイテムを取る");
-		DrawFormatString(textX, textY, white, "F");
-		DrawFormatString(textX + 53, textY, white, "B");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:アイテムを取る");
+		DrawFormatStringToHandle(textX, textY, white,MainFont, "F");
+		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
 
 	}
@@ -810,10 +802,10 @@ void Player::GetArtifact() {
 
 					// 修正: 接触中の宝箱インスタンスがあればそのインスタンスを消す
 					if (hitChestObj) {
-						//hitChestObj->OpenTreasureChest();
+						hitChestObj->OpenTreasureChest();
 						// 終了処理
 						hitChestObj = nullptr;
-						/*hitChest = false;*/
+						hitChest = false;
 					}
 				}
 
@@ -835,16 +827,16 @@ void Player::GetArtifactRender() {
 	if (!isSelectArtifact) {
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatString(textX + 10, textY, black, "キー/ ボタン:宝箱を開ける");
-		DrawFormatString(textX, textY, white, "F");
-		DrawFormatString(textX + 53, textY, white, "B");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:宝箱を開ける");
+		DrawFormatStringToHandle(textX, textY, white,MainFont, "F");
+		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
 
 	}
 	else if (isSelectArtifact) {
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatString(textX + 40, textY, black, "中身は空っぽだ");
+		DrawFormatStringToHandle(textX + 40, textY, black,MainFont, "中身は空っぽだ");
 
 	}
 	else return;
@@ -857,15 +849,15 @@ void Player::PlayerStatusRender() {
 
 	DrawBox(920, 20, WINDOW_WIDTH, 280, black, TRUE);
 	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
-	DrawFormatString(930, 20, white, "ステータス");
-	DrawFormatString(930, 60,  white, "LV　　　　　 : %d", Lv);
-	DrawFormatString(930, 80,  white, "EXP　　　　　: %d / %d", exp, maxExp);
-	DrawFormatString(930, 100, white, "HP　　　　　 : %d / %d", hp, maxHp);
-	DrawFormatString(930, 120, white, "攻撃力　　　 : %d", atk);
-	DrawFormatString(930, 140, white, "防御力　　　 : %d", def);
-	DrawFormatString(930, 160, white, "会心率　　　 : %.1f", criticalHitRate);
-	DrawFormatString(930, 180, white, "会心ダメージ : %.1f", criticalDamage);
-	DrawFormatString(930, 200, white, "コイン　　　 : %d", coinValue);
+	DrawFormatStringToHandle(930, 20, white,MainFont, "ステータス");
+	DrawFormatStringToHandle(930, 60,  white,MainFont, "LV　　　　　 : %d", Lv);
+	DrawFormatStringToHandle(930, 80,  white,MainFont, "EXP　　　　　: %d / %d", exp, maxExp);
+	DrawFormatStringToHandle(930, 100, white,MainFont, "HP　　　　　 : %d / %d", hp, maxHp);
+	DrawFormatStringToHandle(930, 120, white,MainFont, "攻撃力　　　 : %d", atk);
+	DrawFormatStringToHandle(930, 140, white,MainFont, "防御力　　　 : %d", def);
+	DrawFormatStringToHandle(930, 160, white,MainFont, "会心率　　　 : %.1f", criticalHitRate);
+	DrawFormatStringToHandle(930, 180, white,MainFont, "会心ダメージ : %.1f", criticalDamage);
+	DrawFormatStringToHandle(930, 200, white,MainFont, "コイン　　　 : %d", coinValue);
 
 }
 
@@ -875,7 +867,7 @@ void Player::PlayerStatusRender() {
 void Player::PlayerSetUp() {
 	maxHp = 100;
 	hp = maxHp;
-	baseAttack = 5;
+	atk = 5;
 	def = 2;
 	exp = 0;
 	maxExp = 100;
@@ -885,25 +877,6 @@ void Player::PlayerSetUp() {
 	SetSpeed(1);
 	CollisionManager::GetInstance().Register(pCollider);
 	isDead = false;
-
-	// 全ての宝箱を元に戻す
-	// インベントリのクリア
-	GetInventory()->Clear();
-
-	// スキルのクリア（Player ポインタを渡して個別解除）
-	SkillManager::GetInstance().ClearSkills(this);
-
-	// アーティファクトのクリア
-	ArtifactManager::GetInstance().ClearArtifact(this);
-
-	// すべての宝箱を元に戻す
-	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
-	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
-		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
-	);
-
-	// インベントリに追加
-	GetInventory()->AddItem(std::move(stick));
 }
 
 float Player::RuneCost(int L) {
