@@ -324,7 +324,7 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 			generator->mapWidth, generator->mapHeight, generator->roomCount);
 
 		// まず通常どおりオブジェクト生成
-		generator->GenerateStageObject();
+		GenerateStage((int)(floorCount / BossFloorNum));
 
 		size_t created = 0;
 		for (auto c : generator->cells) {
@@ -341,9 +341,6 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 			// フォールバック: マップを全領域として扱う
 			generator->mapWidth = mapWidth_Large;
 			generator->mapHeight = mapHeight_Large;
-
-			// StageCell を再生成（既に ClearStage() が呼ばれた状態なので問題ないはず）
-			generator->GenerateStageObject();
 
 			created = 0;
 			for (auto c : generator->cells) {
