@@ -72,7 +72,12 @@ public:	// ゲッターとセッター
 #pragma endregion
 
 #pragma region Hp
-	inline void AddHp(int heal) { hp += heal; }
+	inline void AddHp(int heal) { 
+		if (hp + heal < maxHp)
+			hp += heal;
+		else
+			hp = maxHp;
+	}
 	inline void SubHp(int damage) { hp -= (damage - def); }
 	inline void AddMaxHp(int max) { maxHp += max; }
 	inline void SetMaxHp(int _maxHp) { maxHp = _maxHp; }
