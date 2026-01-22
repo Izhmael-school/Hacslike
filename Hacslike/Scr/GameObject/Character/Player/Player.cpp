@@ -803,7 +803,7 @@ void Player::GetArtifact() {
 
 					// 修正: 接触中の宝箱インスタンスがあればそのインスタンスを消す
 					if (hitChestObj) {
-						hitChestObj->OpenTreasureChest();
+						//hitChestObj->OpenTreasureChest();
 						// 終了処理
 						hitChestObj = nullptr;
 						hitChest = false;
@@ -878,6 +878,26 @@ void Player::PlayerSetUp() {
 	SetSpeed(1);
 	CollisionManager::GetInstance().Register(pCollider);
 	isDead = false;
+	hitChest = false;
+	isSelectArtifact = false;
+	// 全ての宝箱を元に戻す
+	// インベントリのクリア
+	GetInventory()->Clear();
+
+	// スキルのクリア（Player ポインタを渡して個別解除）
+	SkillManager::GetInstance().ClearSkills(this);
+
+	// アーティファクトのクリア
+	ArtifactManager::GetInstance().ClearArtifact(this);
+
+	
+	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
+	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
+		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
+	);
+
+	// インベントリに追加
+	GetInventory()->AddItem(std::move(stick));
 }
 
 float Player::RuneCost(int L) {
