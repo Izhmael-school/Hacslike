@@ -20,8 +20,8 @@ SceneManager::~SceneManager() {
 
 void SceneManager::Start() {
 	pSceneList[(int)SceneType::Title] = new TitleScene();
-	pSceneList[(int)SceneType::Game] = new GameScene();
 	pSceneList[(int)SceneType::Sekino] = new SekinoScene();
+	pSceneList[(int)SceneType::Game] = new GameScene();
 }
 
 

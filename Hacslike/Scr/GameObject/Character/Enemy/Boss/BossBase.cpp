@@ -41,7 +41,7 @@ void BossBase::Start() {
 	pAnimator->GetAnimation("dead")->SetEvent([this]() {
 		deadAnimEnded = true;
 		}, pAnimator->GetTotalTime("dead"));
-	hpBar = new Gauge(maxHp, 200.0f, 600.0f, 400.0f, 25.0f);
+	hpBar = new Gauge(hp,maxHp, 200.0f, 600.0f, 400.0f, 25.0f);
 
 }
 
@@ -82,7 +82,7 @@ void BossBase::Render() {
 	Enemy::Render();
 	artifactSelectUI.Render(artifactChioces);
 	if (!isDead) {
-		hpBar->Render(hp);
+		hpBar->Render();
 		DrawString(200, 580, name.c_str(), black);
 		
 	}
