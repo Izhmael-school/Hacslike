@@ -69,6 +69,8 @@ public:
 	void GenerateStageData();
 	// ステージデータの読み込み生成
 	void LoadStageData(int stageID);
+	// ステージデータのロード
+	void LoadStageMeta(int stageID);
 	// ステージのオブジェクト生成
 	void GenerateStageObject();
 	// 分割点2点のうち大きいほうを分割する

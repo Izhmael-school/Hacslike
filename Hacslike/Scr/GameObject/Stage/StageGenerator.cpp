@@ -577,6 +577,23 @@ void StageGenerator::LoadStageData(int stageID) {
 	}
 }
 
+void StageGenerator::LoadStageMeta(int stageID)
+{
+	auto data = LoadJsonFile("Scr/Data/StageData.json");
+	for (auto s : data) {
+		if (s["id"] != stageID) continue;
+
+		stage.id = stageID;
+		stage.playerSpawnPos = VGet(s["playerSpawnPos"][0], 0, s["playerSpawnPos"][1]);
+		stage.saveObjectPos = VGet(s["saveObjectPos"][0], 0, s["saveObjectPos"][1]);
+		stage.chestObjectPos = VGet(s["ChestObjectPos"][0], 0, s["ChestObjectPos"][1]);
+		stage.enhancementStonePos = VGet(s["enhancementStonePos"][0], 0, s["enhancementStonePos"][1]);
+		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
+		stage.bossType = s["bossType"];
+		break;
+	}
+}
+
 StageCell* StageGenerator::UseObject(ObjectType type) {
 	StageCell* cell = nullptr;
 	switch (type) {

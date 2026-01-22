@@ -325,7 +325,6 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 
 		// まず通常どおりオブジェクト生成
 		GenerateStage((int)(floorCount / BossFloorNum));
-
 		size_t created = 0;
 		for (auto c : generator->cells) {
 			if (c) { c->Update(); ++created; }

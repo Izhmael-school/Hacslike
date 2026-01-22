@@ -174,6 +174,7 @@ void GameScene::Setup() {
 }
 
 void GameScene::Teardown() {
+	printfDx("GameScene:TearDown\n");
 	EnemyManager::GetInstance().UnuseAllEnemy();
 	AudioManager::GetInstance().Stop("all");
 }

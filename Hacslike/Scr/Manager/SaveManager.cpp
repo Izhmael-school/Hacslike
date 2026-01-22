@@ -80,6 +80,13 @@ void SaveManager::RegisterSavers()
         return;
     }
     saversRegistered = true;
+    // 追加: EnemyManager の保存 / 読み込みハンドラ
+    RegisterSaveHandler([](BinaryWriter& w) {
+        EnemyManager::GetInstance().SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        EnemyManager::GetInstance().LoadFrom(r, ver);
+        });
     // Stage save/load first
     RegisterSaveHandler([](BinaryWriter& w) {
         StageManager::GetInstance().SaveTo(w);
@@ -125,13 +132,7 @@ void SaveManager::RegisterSavers()
     RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
         SkillManager::GetInstance().LoadFrom(r, ver);
         });
-    // 追加: EnemyManager の保存 / 読み込みハンドラ
-    RegisterSaveHandler([](BinaryWriter& w) {
-        EnemyManager::GetInstance().SaveTo(w);
-        });
-    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
-        EnemyManager::GetInstance().LoadFrom(r, ver);
-        });
+
     // 追加: StatusEnhancement の保存 / 読み込み
     RegisterSaveHandler([](BinaryWriter& w) {
         StatusEnhancement::GetInstance()->SaveTo(w);

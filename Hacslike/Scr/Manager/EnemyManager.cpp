@@ -275,6 +275,7 @@ void EnemyManager::UnuseEnemy(Enemy* enemy) {
 }
 
 void EnemyManager::UnuseAllEnemy() {
+
 	while (pEnemyArray.size() > 0) {
 		UnuseEnemy(pEnemyArray[0]);
 		CollisionManager::GetInstance().UnRegister(pEnemyArray[0]->GetCollider());
