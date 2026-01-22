@@ -32,7 +32,10 @@ void Character::Damage(int rawDamage) {
 
 	if (damage <= 0) damage = 1;
 
-	hp -= damage;
+	if (hp - damage > 0)
+		hp -= damage;
+	else
+		hp = 0;
 
 	DeadExecute();
 }
