@@ -205,7 +205,7 @@ void StatusEnhancement::Render() {
 		}
 
 		// 項目名・レベル・ボーナス (ゲージの左側)
-		DrawString(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255));
+		DrawStringToHandle(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255),MainFont);
 		DrawFormatStringToHandle(x - 140, y + 32, (stats[i].level >= 50 ? GetColor(255, 215, 0) : GetColor(150, 150, 150)),MainFont, "Lv.%d", stats[i].level);
 		DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d", stats[i].totalBonus);
 
