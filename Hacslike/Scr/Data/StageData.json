@@ -72,7 +72,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 11
+    "bossType": 6
   },
 
   {
@@ -91,7 +91,7 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 12
+    "bossType": 7
   },
 
   {
@@ -110,6 +110,6 @@
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
     "bossSpawnPos": [ 4, 15 ],
-    "bossType": 13
+    "bossType": 8
   }
 ]

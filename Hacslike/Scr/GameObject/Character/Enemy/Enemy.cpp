@@ -33,7 +33,8 @@ void Enemy::Start() {
 	// 大きすぎるため1/10
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	// アニメーションイベントの設定
-	pAnimator->GetAnimation("dead")->SetEvent([this]() { EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); },pAnimator->GetTotalTime("dead"));
+	SetAnimEvent("idle01", [this]() {SetAttacking(false); }, 0);
 	// 攻撃中の移動制御
 
 	if (pAnimator->GetAnimation("attack01") != nullptr) {

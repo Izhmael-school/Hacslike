@@ -76,6 +76,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	std::mt19937_64 mt(rd());
 	SRand(mt());
 
+
+
 	//マウスの非表示
 	SetMouseDispFlag(FALSE);
 	SceneManager::GetInstance().ChangeScene(SceneType::Title);

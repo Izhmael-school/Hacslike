@@ -77,6 +77,7 @@
     <ClCompile Include="Scr\Manager\EffectManager.cpp" />
     <ClCompile Include="Scr\Manager\EnemyManager.cpp" />
     <ClCompile Include="Scr\Manager\FadeManager.cpp" />
+    <ClCompile Include="Scr\Manager\FontManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\Manager\ItemDropManager.cpp" />
     <ClCompile Include="Scr\Manager\SaveManager.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Scr\Manager\EffectManager.h" />
     <ClInclude Include="Scr\Manager\EnemyManager.h" />
     <ClInclude Include="Scr\Manager\FadeManager.h" />
+    <ClInclude Include="Scr\Manager\FontManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
     <ClInclude Include="Scr\Manager\ItemDropManager.h" />
     <ClInclude Include="Scr\Manager\SaveManager.h" />

@@ -37,6 +37,8 @@
 
 #define PLAYER_MODEL_HANDLE (MV1LoadModel("Res/PlayerModel/maya_Player.mv1"))
 
+
+
 // ステージ関連
 #define mapWidth_Large (64)	// マップの横サイズ
 #define mapHeight_Large (64)	// マップの縦サイズ

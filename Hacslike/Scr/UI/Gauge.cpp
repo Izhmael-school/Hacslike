@@ -4,12 +4,14 @@
 Gauge::Gauge(int& _currentValue, int& _maxValue, float x, float y, float w, float h)
 	:maxValue(_maxValue)
 	, currentValue(_currentValue)
-	, currentDecreaseValue(0)
+	, currentDecreaseValue(-1)
 	, posX(x)
 	, posY(y)
 	, width(w)
 	, height(h)
-	, speed(1) {}
+	, speed(1) {
+	currentDecreaseValue = width * ((float)currentValue / (float)maxValue);
+}
 
 void Gauge::ChangeColor(unsigned int _top, unsigned int _bottom, unsigned int _frame, unsigned int _back) {
 	topColor = _top;
