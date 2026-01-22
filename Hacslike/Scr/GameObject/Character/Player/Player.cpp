@@ -504,6 +504,9 @@ void Player::Render() {
 	}
 #pragma endregion
 
+	hpBar->Render();
+	expBar->Render();
+
 #pragma region アイテムのインベントリ表示
 	inventory.ItemDropRender();
 	if (isMenuUI) {
@@ -542,8 +545,6 @@ void Player::Render() {
 		GameEndUI::GetInstance()->Draw();
 	}
 
-	hpBar->Render();
-	expBar->Render();
 }
 
 ///// <summary>
@@ -850,9 +851,9 @@ void Player::PlayerStatusRender() {
 	DrawBox(920, 20, WINDOW_WIDTH, 280, black, TRUE);
 	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
 	DrawFormatStringToHandle(930, 20, white,MainFont, "ステータス");
-	DrawFormatStringToHandle(930, 60,  white,MainFont, "LV　　　　　 : %d", Lv);
-	DrawFormatStringToHandle(930, 80,  white,MainFont, "EXP　　　　　: %d / %d", exp, maxExp);
-	DrawFormatStringToHandle(930, 100, white,MainFont, "HP　　　　　 : %d / %d", hp, maxHp);
+	DrawFormatStringToHandle(930, 60,  white,MainFont, "レベル　　　 : %d", Lv);
+	DrawFormatStringToHandle(930, 80,  white,MainFont, "経験値　　 　: %d / %d", exp, maxExp);
+	DrawFormatStringToHandle(930, 100, white,MainFont, "体力 　　 　 : %d / %d", hp, maxHp);
 	DrawFormatStringToHandle(930, 120, white,MainFont, "攻撃力　　　 : %d", atk);
 	DrawFormatStringToHandle(930, 140, white,MainFont, "防御力　　　 : %d", def);
 	DrawFormatStringToHandle(930, 160, white,MainFont, "会心率　　　 : %.1f", criticalHitRate);

@@ -51,7 +51,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
 {
     AudioManager::GetInstance().PlayOneShot("GetItem");
 #if _DEBUG
-    //printfDx("[Inventory::AddItem] this=%p BEFORE items.size=%d\n", this, (int)items.size());
+    printfDx("[Inventory::AddItem] this=%p BEFORE items.size=%d\n", this, (int)items.size());
 
 #endif
     const std::string& itemName = newItem->GetName();
@@ -69,7 +69,7 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
         if (it != items.end()) {
             it->quantity++;
             #if _DEBUG
-            //printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
+            printfDx("「%s」をストック！ x%d\n", itemName.c_str(), it->quantity);
             #endif  
             OnItemGained(it->item.get(), it->quantity);
             AssignToShortcut(&(*it));
@@ -84,8 +84,8 @@ void Inventory::AddItem(std::unique_ptr<ItemBase> newItem)
     OnItemGained(addedItem.item.get(), addedItem.quantity);
     AssignToShortcut(&addedItem);
 #if _DEBUG
-  /*  printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
-    printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());*/
+    printfDx("「%s」をインベントリに追加！\n", itemName.c_str());
+    printfDx("[Inventory::AddItem] this=%p AFTER items.size=%d\n", this, (int)items.size());
 #endif
 }
 
@@ -791,7 +791,7 @@ void Inventory::UseSlot(Slot& slot)
 
 void Inventory::UseItemShortcutRender()
 {
-    int x = WINDOW_WIDTH-130, y = WINDOW_HEIGHT-100; // 右下の中心位置
+    int x = 130, y = WINDOW_HEIGHT-100; // 右下の中心位置
     int s = 48;
 
     DrawSlot(slotUp, x, y - 60, s);
@@ -802,7 +802,7 @@ void Inventory::UseItemShortcutRender()
 
 void Inventory::DrawSlot(const Slot& slot, int x, int y, int size)
 {
-    DrawBox(x - size / 2, y - size / 2, x + size / 2, y + size / 2, GetColor(80, 80, 80), FALSE);
+    DrawBox(x - size / 2, y - size / 2, x + size / 2, y + size / 2, white, FALSE);
 
     if (slot.itemID.empty()) return;
 

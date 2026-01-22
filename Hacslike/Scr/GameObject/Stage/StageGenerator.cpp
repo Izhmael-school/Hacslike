@@ -13,7 +13,7 @@ StageGenerator::StageGenerator()
 	, roomCount(0)
 	, line(0)
 	, mapSize(4)
-	, mapOffset(VGet(950, 0, 64 * 4))
+	, mapOffset(VGet(950, 0, WINDOW_HEIGHT - mapSize))
 	, stage() {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
@@ -694,6 +694,9 @@ void StageGenerator::DrawMap() {
 	else if (map[x][z] != Wall && !stageMap[x][z]) {
 		stageMap[x][z] = true;
 	}
+
+	DrawBox(mapOffset.x - mapSize, mapOffset.z + mapSize, mapOffset.x + (mapWidth_Large + 1) * mapSize, mapOffset.z + (mapHeight_Large + 1) * -mapSize, black, true);
+	DrawBox(mapOffset.x - mapSize, mapOffset.z + mapSize, mapOffset.x + (mapWidth_Large + 1) * mapSize, mapOffset.z + (mapHeight_Large + 1) * -mapSize, white, false);
 
 	// ínê}ÇÃï`âÊ
 	for (int w = 0; w < mapWidth_Large; w++) {
