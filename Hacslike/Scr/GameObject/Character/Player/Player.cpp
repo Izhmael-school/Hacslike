@@ -255,7 +255,7 @@ void Player::Start() {
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
 		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
 	);
-	printfDx("aaa");
+	
 	// インベントリに追加
 	GetInventory()->AddItem(std::move(stick));
 
@@ -866,20 +866,6 @@ void Player::PlayerStatusRender() {
 /// プレイヤーのセットアップ
 /// </summary>
 void Player::PlayerSetUp() {
-	maxHp = 100;
-	hp = maxHp;
-	atk = 5;
-	def = 2;
-	exp = 0;
-	maxExp = 100;
-	Lv = 1;
-	criticalHitRate = 10;
-	criticalDamage = 100;
-	SetSpeed(1);
-	CollisionManager::GetInstance().Register(pCollider);
-	isDead = false;
-	hitChest = false;
-	isSelectArtifact = false;
 	// 全ての宝箱を元に戻す
 	// インベントリのクリア
 	GetInventory()->Clear();
@@ -898,6 +884,20 @@ void Player::PlayerSetUp() {
 	
 	// インベントリに追加
 	GetInventory()->AddItem(std::move(stick));
+	maxHp = 100;
+	hp = maxHp;
+	atk = 5;
+	def = 2;
+	exp = 0;
+	maxExp = 100;
+	Lv = 1;
+	criticalHitRate = 10;
+	criticalDamage = 100;
+	SetSpeed(1);
+	CollisionManager::GetInstance().Register(pCollider);
+	isDead = false;
+	hitChest = false;
+	isSelectArtifact = false;
 }
 
 float Player::RuneCost(int L) {
