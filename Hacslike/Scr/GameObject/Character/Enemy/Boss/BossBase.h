@@ -14,6 +14,7 @@ public:
 	bool deadAnimEnded = false;
 	// アーティファクト選択後に削除保留中かどうか
 	bool pendingDelete = false;
+
 protected:
 	BossBase();
 	~BossBase();

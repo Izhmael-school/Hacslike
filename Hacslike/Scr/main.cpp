@@ -10,6 +10,7 @@
 #include "Manager/AudioManager.h"
 #include"Manager/SkillManager.h"
 #include"Manager/ItemDropManager.h"
+#include"Manager/FontManager.h"
 #include"Manager/EffectManager.h"
 #include <EffekseerForDXLib.h>
 #include "GameObject/Coin/Coin.h"
@@ -75,8 +76,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	std::random_device rd;
 	std::mt19937_64 mt(rd());
 	SRand(mt());
-
-
 
 	//マウスの非表示
 	SetMouseDispFlag(FALSE);

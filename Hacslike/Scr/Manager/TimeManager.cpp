@@ -43,5 +43,5 @@ void TimeManager::Update() {
 }
 
 void TimeManager::Render() {
-	DrawFormatString(100, 100, red, "%02d %d", deltaTime, ms);
+	DrawFormatStringToHandle(100, 100, red,MainFont, "%02d %d", deltaTime, ms);
 }

@@ -2,6 +2,7 @@
 #include "ArtifactUI.h"
 #include <algorithm>
 #include "../../Manager/InputManager.h"
+#include "../../Manager/FontManager.h"
 
 void ArtifactUI::Update()
 {
@@ -45,7 +46,7 @@ void ArtifactUI::Render()
 
     // タイトル
     DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, GetColor(40, 40, 40), TRUE);
-    DrawString(baseX + padding, baseY + 4, "アーティファクト", GetColor(255, 255, 255));
+    DrawStringToHandle(baseX + padding, baseY + 4, "アーティファクト", GetColor(255, 255, 255),MainFont);
 
     // --- 表示可能範囲だけ描画 ---
     int total = (int)obtained.size();
@@ -71,8 +72,8 @@ void ArtifactUI::Render()
         }
 
         int textX = frameX + iconSize + padding * 2;
-        DrawFormatString(textX, frameY + 6, GetColor(255, 255, 255), "%s", art->GetName().c_str());
-        DrawFormatString(textX, frameY + 28, GetColor(200, 200, 200), "%s", art->GetDescription().c_str());
+        DrawFormatStringToHandle(textX, frameY + 6, GetColor(255, 255, 255),MainFont, "%s", art->GetName().c_str());
+        DrawFormatStringToHandle(textX, frameY + 28, GetColor(200, 200, 200),MainFont, "%s", art->GetDescription().c_str());
     }
 
     // --- 矢印アイコンを描画（ページありなら） ---

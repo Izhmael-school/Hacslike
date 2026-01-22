@@ -35,8 +35,8 @@ void FadeManager::Render() {
 	// ブレンドモードを元に戻す
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, -1);
 #if _DEBUG
-	DrawFormatString(100, 200, red, "blend : %f", alpha);
-	DrawFormatString(100, 220, red, " time : %f", TimeManager::GetInstance().deltaTime);
+	DrawFormatStringToHandle(100, 200, red, MainFont,"blend : %f", alpha);
+	DrawFormatStringToHandle(100, 220, red, MainFont," time : %f", TimeManager::GetInstance().deltaTime);
 #endif
 }
 

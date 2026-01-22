@@ -4,6 +4,7 @@
 //	=================================================================
 #include <DxLib.h>
 #include <string>
+#include "Manager/FontManager.h"
 
 
 
@@ -59,6 +60,8 @@
 #define RoomMax_Large (12)
 
 #define EnemyMax (50)
+
+#define MainFont (FontManager::GetInstance().UseFontHandle("MainFont"))
 
 //	•ŠíŠÖ˜A
 #define ATTACK_SPEED_NUM (4)

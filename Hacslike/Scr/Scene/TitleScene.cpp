@@ -39,16 +39,17 @@ void TitleScene::Start() {
 	selectedSlot = 0;
 	messageFramesLeft = 0;
 	memset(messageBuf, 0, sizeof(messageBuf));
+	fontHandle = FontManager::GetInstance().UseFontHandle("MainFont");
 }
 
 void TitleScene::Update() {
 #pragma region テスト用
 #if _DEBUG
-	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
+	//if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_LEFT)) {
 
-		SceneManager::GetInstance().ChangeScene(SceneType::Sekino);
-	}
-	return;
+	//	SceneManager::GetInstance().ChangeScene(SceneType::Sekino);
+	//}
+	//return;
 #endif
 #pragma endregion
 
@@ -108,9 +109,9 @@ void TitleScene::Update() {
 			}
 			else {
 				// Ensure Player instance exists before load handlers run
-				/*Player::DestroyInstance();*/
-				//Player* p = Player::CreateInstance(VZero);
-				/*if (p) {*/
+				Player::DestroyInstance();
+				Player* p = Player::CreateInstance(VZero);
+				if (p) {
 					// Load into managers and player
 					if (SaveManager::GetInstance().Load(selectedSlot)) {
 						// After successful load, go to game scene
@@ -121,7 +122,7 @@ void TitleScene::Update() {
 						snprintf(messageBuf, sizeof(messageBuf), "ロードに失敗しました (Slot %02d)", selectedSlot + 1);
 						messageFramesLeft = 120;
 					}
-				//}
+				}
 			}
 		}
 
@@ -170,16 +171,16 @@ void TitleScene::Render() {
 
 	if (!inLoadMenu) {
 		// Title menu
-		DrawString(550, 400, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white);
-		DrawString(550, 440, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white);
-		DrawString(550, 480, (titleMenuIndex == 2) ? "> 終了" : "  終了", white);
+		DrawStringToHandle(550, 400, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white, fontHandle);
+		DrawStringToHandle(550, 440, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white,fontHandle);
+		DrawStringToHandle(550, 480, (titleMenuIndex == 2) ? "> 終了" : "  終了", white,fontHandle);
 
 		// Hint
-		DrawFormatString(550, 540, white, "A: 決定  /  上下: 選択");
+		DrawFormatStringToHandle(550, 540, white, fontHandle, "A: 決定  /  上下: 選択");
 	}
 	else {
 		// Load menu - display 10 slots
-		DrawString(500, 120, "ロードメニュー", white);
+		DrawStringToHandle(500, 120, "ロードメニュー", white,fontHandle);
 		const auto& slots = SaveManager::GetInstance().GetSlots();
 		int startY = 180;
 		for (int i = 0; i < 10; ++i) {
@@ -201,16 +202,16 @@ void TitleScene::Render() {
 
 			// highlight selected
 			if (i == selectedSlot) {
-				DrawString(460, y, ">", yellow);
-				DrawString(480, y, buf, white);
+				DrawStringToHandle(460, y, ">", yellow,fontHandle);
+				DrawStringToHandle(480, y, buf, white,fontHandle);
 			}
 			else {
-				DrawString(480, y, buf, gray);
+				DrawStringToHandle(480, y, buf, gray,fontHandle);
 			}
 		}
 
 		// Instructions
-		DrawFormatString(480, startY + 10 * 36 + 20, white, "A: ロード   X: 削除   B: 戻る");
+		DrawFormatStringToHandle(480, startY + 10 * 36 + 20, white,fontHandle, "A: ロード   X: 削除   B: 戻る");
 	}
 
 	// Message area
@@ -218,7 +219,7 @@ void TitleScene::Render() {
 		int alpha = 255;
 		DrawBox(400, 820, 1200, 880, black, TRUE);
 		DrawBox(402, 822, 1198, 878, white, FALSE);
-		DrawFormatString(420, 830, white, "%s", messageBuf);
+		DrawFormatStringToHandle(420, 830, white,fontHandle,"%s", messageBuf);
 	}
 	/*DrawString(600,200,"Hacslike",red);
 	DrawString(600, 600, "左クリックかAボタン",red);*/

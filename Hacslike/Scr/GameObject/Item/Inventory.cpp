@@ -446,7 +446,7 @@ void Inventory::Render()
 
     // タイトル
     const char* title = "持ち物";
-    DrawString(baseX + padding, baseY + 2, title, white);
+    DrawStringToHandle(baseX + padding, baseY + 2, title, white,MainFont);
 
     int maxVisible = GetMaxVisible();
     int startIdx = scrollOffset;
@@ -470,7 +470,7 @@ void Inventory::Render()
             // 枠とマーカー
             int selColor = yellow;
             DrawBox(baseX + 1, y, baseX + boxW - 1, y + lineHeight - 1, selColor, FALSE);
-            DrawString(textX - 40, y + 4, "->", selColor);
+            DrawStringToHandle(textX - 40, y + 4, "->", selColor,MainFont);
 
             // 現在のアイテム情報
             const InventoryItem& curInv = items[currentIndex];
@@ -504,9 +504,9 @@ void Inventory::Render()
             }
 
             // ===== 描画 =====
-            DrawString(desPosX, desPosY, itemName.c_str(), white);
-            DrawString(desPosX, desPosY + 20, itemDes.c_str(), white);
-            DrawFormatString(desPosX + 5, desPosY + infoH - 30, white,
+            DrawStringToHandle(desPosX, desPosY, itemName.c_str(), white,MainFont);
+            DrawStringToHandle(desPosX, desPosY + 20, itemDes.c_str(), white,MainFont);
+            DrawFormatStringToHandle(desPosX + 5, desPosY + infoH - 30, white,MainFont,
                 "%s : %d  価値 : %d", itemEffect.c_str(), itemEffectValue, itemValue);
         }
 
@@ -558,11 +558,11 @@ void Inventory::Render()
             nameColor = white;
         }
 
-        DrawString(textX, y + 4, name.c_str(), nameColor);
+        DrawStringToHandle(textX, y + 4, name.c_str(), nameColor,MainFont);
 
         // 装備中マーク
         if (equippedItem && equippedItem == inv.item.get()) {
-            DrawString(baseX + 3, y + 4, "E", cyan);
+            DrawStringToHandle(baseX + 3, y + 4, "E", cyan,MainFont);
         }
 
         // ★ 使用中アイテム（効果時間継続）のマーク S を表示 ★
@@ -574,7 +574,7 @@ void Inventory::Render()
             }
         }
         if (isActiveEffect) {
-            DrawString(baseX + 3, y + 4, "S", cyan);   // ← 黄系
+            DrawStringToHandle(baseX + 3, y + 4, "S", cyan,MainFont);   // ← 黄系
         }
 
         // 数量
@@ -582,7 +582,7 @@ void Inventory::Render()
             char buf[32];
             snprintf(buf, sizeof(buf), "x%d", quantity);
             int qtyX = baseX + boxW - qtyRightPad - 48;
-            DrawString(qtyX, y, buf, GetColor(255, 255, 192));
+            DrawStringToHandle(qtyX, y, buf, GetColor(255, 255, 192),MainFont);
         }
 
         y += lineHeight;
@@ -631,10 +631,10 @@ void Inventory::Render()
         int optX = px + 12;
         int optY = py + 12;
         int col0 = (menuChoice == 0) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
-        DrawString(optX, optY, opt0, col0);
+        DrawStringToHandle(optX, optY, opt0, col0,MainFont);
         int col1 = (menuChoice == 1) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
-        DrawString(optX + 120, optY, opt1, col1);
-        DrawString(px + 8, py + popupH - 18, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180));
+        DrawStringToHandle(optX + 120, optY, opt1, col1,MainFont);
+        DrawStringToHandle(px + 8, py + popupH - 18, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180),MainFont);
     }
 }
 
@@ -833,7 +833,7 @@ void Inventory::DrawSlot(const Slot& slot, int x, int y, int size)
     DrawExtendGraph(x - size/2, y - size/2, x + size/2, y + size/2, iconHandle, TRUE);
 
     // 残数（右下）
-    DrawFormatString(x + size/2 - 12, y + size/2 - 12, GetColor(255,255,255), "%d", inv->quantity);
+    DrawFormatStringToHandle(x + size/2 - 12, y + size/2 - 12, GetColor(255,255,255),MainFont, "%d", inv->quantity);
     bool isActiveEffect = false;
     for (auto* active : activeItems) {
         if (active == inv->item.get()) {
