@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Enemy.h"
 #include "../../../Manager/TimeManager.h"
+#include "../../../Manager/CollisionManager.h"
 #include "../../../Component/Collider/Collider.h"
 #include "../../../CommonModule.h"
 #include "../../../ExpansionMethod.h"
@@ -34,7 +35,7 @@ void Enemy::Start() {
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	// アニメーションイベントの設定
 	SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); },pAnimator->GetTotalTime("dead"));
-	SetAnimEvent("idle01", [this]() {SetAttacking(false); }, 0);
+	SetAnimEvent("idle01", [this]() {SetAttacking(false); });
 	// 攻撃中の移動制御
 
 	if (pAnimator->GetAnimation("attack01") != nullptr) {
@@ -53,7 +54,6 @@ void Enemy::Start() {
 
 void Enemy::Setup() {
 	hp = maxHp;
-	SetVisible(true);
 	rotation.y = Random(0, 359);
 	isTouch = false;
 	rayAnswer = false;
@@ -66,6 +66,13 @@ void Enemy::Setup() {
 	atkSpan = 4;
 	atkTime = 0;
 	moveSpeed = 1;
+	CollisionManager::GetInstance().Register(pCollider);
+	SetVisible(true);
+}
+
+void Enemy::Teardown() {
+	SetVisible(false);
+	CollisionManager::GetInstance().UnRegister(pCollider);
 }
 
 void Enemy::Update() {

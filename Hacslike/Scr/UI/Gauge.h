@@ -1,6 +1,9 @@
 #pragma once
 #include <Dxlib.h>
 #include "../Definition.h"
+#include "../Manager/TimeManager.h"
+
+template <typename Value>
 
 class Gauge{
 private:
@@ -8,8 +11,8 @@ private:
 	float currentDecreaseValue;
 public:
 	// êîíl
-	int& maxValue;
-	int& currentValue;
+	Value& maxValue;
+	Value& currentValue;
 
 	// ç¿ïWìô
 	float posX, posY;
@@ -26,12 +29,60 @@ public:
 	// èôÅXÇ…å∏ÇÈÉXÉsÅ[Éh
 	float speed;
 public:
-	Gauge(int& _currentValue, int& _maxValue, float x, float y, float w, float h);
+	Gauge(Value& _currentValue, Value& _maxValue, float x, float y, float w, float h)
+		:maxValue(_maxValue)
+		, currentValue(_currentValue)
+		, currentDecreaseValue(-1)
+		, posX(x)
+		, posY(y)
+		, width(w)
+		, height(h)
+		, speed(1) {
+		currentDecreaseValue = width * ((float)currentValue / (float)maxValue);
+	}
+
 	~Gauge() = default;
 
-	void ChangeColor(unsigned int _top, unsigned int _bottom, unsigned int _frame,unsigned int _back);
+	inline void ChangeColor(unsigned int _top, unsigned int _bottom, unsigned int _frame, unsigned int _back) {
+		topColor = _top;
+		bottomColor = _bottom;
+		frameColor = _frame;
+		backColor = _back;
+	}
+
 	inline void SetSpeed(float _speed) { speed = _speed; }
 
-	void Render();
+	void Render() {
+		float value = static_cast<float>(currentValue) / static_cast<float>(maxValue);
+		float barWidth = width * value;
+
+		float diff = barWidth - currentDecreaseValue;
+
+		currentDecreaseValue += diff * TimeManager::GetInstance().deltaTime * speed;
+
+		// î˜êUìÆñhé~
+		if (fabs(diff) < 0.1f) {
+			currentDecreaseValue = barWidth;
+		}
+
+		// îwåi
+		DrawBox(posX, posY, posX + width, posY + height, bottomColor, true);
+		// ëOÇÊÇËÉQÅ[ÉWÇ™å∏Ç¡ÇƒÇ¢ÇÈÇ©
+		if (barWidth < currentDecreaseValue) {
+			// èôÅXÇ…å∏ÇÈ
+			DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, backColor, true);
+			// HP
+			DrawBox(posX, posY, posX + barWidth, posY + height, topColor, true);
+		}
+		else {
+			// HP
+			DrawBox(posX, posY, posX + barWidth, posY + height, backColor, true);
+			// èôÅXÇ…ëùÇ¶ÇÈ
+			DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, topColor, true);
+		}
+
+		// òg
+		DrawBox(posX, posY, posX + width, posY + height, frameColor, false);
+	}
 };
 

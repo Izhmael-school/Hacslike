@@ -10,7 +10,7 @@
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
-	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3","FloorDawn",false);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3", "FloorDawn", false);
 
 	LoadFloorTexture();
 }
@@ -30,13 +30,13 @@ StageManager::~StageManager() {
 void StageManager::Update() {
 	generator->Update();
 
-	if(pSaveObject){
+	if (pSaveObject) {
 		pSaveObject->Update();
 	}
 	if (pChest) {
 		pChest->Update();
 	}
-	if(pStone){
+	if (pStone) {
 		pStone->Update();
 	}
 #if _DEBUG
@@ -56,7 +56,7 @@ void StageManager::Update() {
 void StageManager::Render() {
 	generator->Render();
 
-	if(pSaveObject){
+	if (pSaveObject) {
 		pSaveObject->Render();
 	}
 	if (pChest) {
@@ -65,7 +65,10 @@ void StageManager::Render() {
 	if (pStone) {
 		pStone->Render();
 	}
-	DrawFormatStringToHandle(100, 100, red,MainFont, "階層 %d 階", floorCount - 1);
+
+	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);
+	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, white, false);
+	DrawFormatStringToHandle(950 + ((WINDOW_WIDTH - 950) / 3), WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 25, red, MainFont, "第 %d 階層", floorCount - 1);
 }
 
 void StageManager::LoadFloorData() {
@@ -98,10 +101,10 @@ void StageManager::LoadFloorTexture() {
 
 	for (auto d : data) {
 		std::string floorDiv = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], floorTag, pngTag);
-		std::string floorNml = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], floorTag,normalTag, pngTag);
+		std::string floorNml = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], floorTag, normalTag, pngTag);
 		std::string wallDiv = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], wallTag, pngTag);
-		std::string wallNml = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], wallTag,normalTag, pngTag);
-	
+		std::string wallNml = MergeString(TEXTURE_FILEPATH, d["floorTextureName"], wallTag, normalTag, pngTag);
+
 		floorDifTexture.push_back(LoadGraph(floorDiv.c_str()));
 		floorNormalTexture.push_back(LoadGraph(floorNml.c_str()));
 		wallDifTexture.push_back(LoadGraph(wallDiv.c_str()));
@@ -214,7 +217,7 @@ void StageManager::GenerateStage(int stageID) {
 	{
 		StageData sd = generator->GetStageData();
 		StartTreasureChest* chest = StartTreasureChest::GetInstance();
-		if(chest){
+		if (chest) {
 			generator->SetGameObject(chest, sd.chestObjectPos);
 			pChest = chest;
 		}
@@ -222,7 +225,7 @@ void StageManager::GenerateStage(int stageID) {
 	{
 		StageData sd = generator->GetStageData();
 		EnhancementStone* stone = EnhancementStone::GetInstance();
-		if(stone){
+		if (stone) {
 			generator->SetGameObject(stone, sd.enhancementStonePos);
 			pStone = stone;
 		}
@@ -293,8 +296,7 @@ void StageManager::ChangeTexture(int num, ObjectType changeObject) {
 	generator->ChangeObjectTexture(num, changeObject);
 }
 
-void StageManager::SaveTo(BinaryWriter& w)
-{
+void StageManager::SaveTo(BinaryWriter& w) {
 	// 階層情報
 	w.WritePOD(floorCount);
 
@@ -304,8 +306,7 @@ void StageManager::SaveTo(BinaryWriter& w)
 	}
 }
 
-void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
-{
+void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	// 階層情報
 	r.ReadPOD(floorCount);
 
@@ -349,7 +350,7 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
 			printf("[Save] After fallback, created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
 		}
 	}
-	
+
 }
 
 

@@ -4,37 +4,69 @@
 #include "../Definition.h"
 #include"../Manager/SaveManager.h"
 
+#include <functional>
+
 class Enemy;
 
-class EnemyManager : public Singleton<EnemyManager>{
+struct EnemyUtility {
+	std::list<Enemy*> unuseArray;
+	std::function<Enemy* ()> CreateEnemy;
+	int originModelHandle;
+
+	EnemyUtility(std::function<Enemy* ()> _createFunc,int originMHandle)
+		:CreateEnemy(_createFunc)
+		,originModelHandle(originMHandle)
+	{}
+
+	~EnemyUtility() {
+		// 未使用リスト内のデータ削除
+		for (auto e : unuseArray) {
+			unuseArray.remove(e);
+			if (e == nullptr) continue;
+			delete e;
+			e = nullptr;
+		}
+
+		// モデルの削除
+		MV1DeleteModel(originModelHandle);
+	}
+
+	inline void SetCreateFunc(std::function<Enemy* ()> _createFunc) { CreateEnemy = _createFunc; }
+};
+
+class EnemyManager : public Singleton<EnemyManager> {
 private:
 
-	// 敵の一元管理
-	std::vector<Enemy*> pEnemyArray;
-	std::vector<Enemy*> unuseGoblinArray;
-	std::vector<Enemy*> unuseSpiderArray;
-	std::vector<Enemy*> unuseWolfArray;
-	std::vector<Enemy*> unuseTrollArray;	
-	std::vector<Enemy*> unuseZombieArray;
-	std::vector<Enemy*> unuseHellHoundArray;
-	std::vector<Enemy*> unuseOugerArray;
-	std::vector<Enemy*> unuseKetbleperzArray;
-	std::vector<Enemy*> unuseDurahanArray;
-	std::vector<Enemy*> unuseHobGoblinArray;
+	// 敵の一括管理
+	std::list<Enemy*> pEnemyArray;
+	// unuse配列の一括管理
+	std::vector<EnemyUtility*> pUnuseEnemiesArray;
+	std::list<Enemy*> unuseGoblinArray;
+	std::list<Enemy*> unuseSpiderArray;
+	std::list<Enemy*> unuseWolfArray;
+	std::list<Enemy*> unuseTrollArray;
+	std::list<Enemy*> unuseZombieArray;
+	std::list<Enemy*> unuseHellHoundArray;
+	std::list<Enemy*> unuseOugerArray;
+	std::list<Enemy*> unuseKetbleperzArray;
+	std::list<Enemy*> unuseDurahanArray;
+	std::list<Enemy*> unuseHobGoblinArray;
+	// pEnemyArrayからデータを削除するための配列
+	std::list<Enemy*> unuseEnemy;
 
 	const std::string audioFilePath = "Res/Audio/SE/Enemy/";
 
 private:
-	int originGoblinMHandle;
-	int originSpiderMHandle;
-	int originWolfMHandle;
-	int originTrollMHandle;
-	int originZombieMHandle;
-	int originHellHoundMHandle;
-	int originOugerMHandle;
-	int originKetbleperzMHandle;
-	int originDurahanMHandle;
-	int originHobGoblinMHandle;
+	EnemyUtility* goblin;
+	EnemyUtility* spider;
+	EnemyUtility* wolf;
+	EnemyUtility* troll;
+	EnemyUtility* zombie;
+	EnemyUtility* hellhound;
+	EnemyUtility* ouger;
+	EnemyUtility* ketbleperz;
+	EnemyUtility* ;
+	EnemyUtility* spider;
 
 public:
 	EnemyManager();

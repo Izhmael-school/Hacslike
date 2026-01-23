@@ -13,6 +13,7 @@ BossBase::BossBase()
 
 BossBase::~BossBase() {
 	delete hpBar;
+	delete attackSpanBar;
 }
 
 void BossBase::AppearStair() {
@@ -41,7 +42,8 @@ void BossBase::Start() {
 	pAnimator->GetAnimation("dead")->SetEvent([this]() {
 		deadAnimEnded = true;
 		}, pAnimator->GetTotalTime("dead"));
-	hpBar = new Gauge(hp,maxHp, 200.0f, 600.0f, 400.0f, 25.0f);
+	hpBar = new Gauge(hp,maxHp, WINDOW_WIDTH / 4, 700.0f, WINDOW_WIDTH / 2, 15.0f);
+	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 715.0f, WINDOW_WIDTH / 2, 5.0f);
 
 }
 
@@ -83,7 +85,7 @@ void BossBase::Render() {
 	artifactSelectUI.Render(artifactChioces);
 	if (!isDead) {
 		hpBar->Render();
-		DrawStringToHandle(200, 580, name.c_str(), black,MainFont);
+		DrawStringToHandle(WINDOW_WIDTH / 4, 700.0f - 20, name.c_str(), white,MainFont);
 		
 	}
 	if(isDead) BossSlainUI::GetInstance()->Draw();
