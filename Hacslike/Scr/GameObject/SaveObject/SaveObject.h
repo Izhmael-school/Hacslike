@@ -43,6 +43,7 @@ public://Ã“Iƒƒ“ƒoŠÖ”
 	void Update() override;
 	void Render() override;
 
+	inline bool GetIsOpenSaveMenu() { return openSaveMenu; }
 
 	void OnTriggerStay(Collider* _pCol) override;
 

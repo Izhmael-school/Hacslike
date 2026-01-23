@@ -48,6 +48,8 @@ public:
     void OpenEnhanceMenu();
     void CloseEnhanceMenu();
 
+	inline bool GetIsOpenMenu() { return isMenuOpen; }
+
     void OnTriggerStay(Collider* _pCol) override;
 
     void OnTriggerExit(Collider* _pCol) override;

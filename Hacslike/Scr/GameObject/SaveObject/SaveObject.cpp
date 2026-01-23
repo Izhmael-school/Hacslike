@@ -70,7 +70,7 @@ void SaveObject::Update()
 
 	auto& input = InputManager::GetInstance();
 	if(hitObject){
-		if (input.IsKeyDown(KEY_INPUT_E)|| input.IsButtonDown(XINPUT_GAMEPAD_B)) {
+		if (input.IsKeyDown(KEY_INPUT_F)|| input.IsButtonDown(XINPUT_GAMEPAD_B)) {
 			openSaveMenu = true;
 			Player::GetInstance()->SetIsOpenMenu(true);
 		}
@@ -130,7 +130,7 @@ void SaveObject::Render()
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
 		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/  ボタン:セーブ/ロード");
-		DrawFormatStringToHandle(textX, textY, white,MainFont, "E");
+		DrawFormatStringToHandle(textX, textY, white,MainFont, "F");
 		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
 		// Zバッファ（奥行き）をチェックせずに描画する
@@ -138,6 +138,9 @@ void SaveObject::Render()
 		// Zバッファに書き込みもしない（後の描画に影響を与えない）
 		SetWriteZBuffer3D(TRUE);
 	}
+	
+		
+	
 
 
 	if(openSaveMenu && hitObject){
