@@ -209,6 +209,7 @@ bool StatusEnhancement::Update() {
 						break;
 					case 1: // 攻撃力
 						player->SetBaseAtk(player->GetBaseAtk() + (int)boostValue);
+						player->UpdateAtkFromEquipment();
 						break;
 					case 2: // 防御力
 						player->SetDef(player->GetDef() + (float)boostValue);
@@ -313,7 +314,7 @@ void StatusEnhancement::Render() {
 
 	DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 	DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-	DrawFormatString(textX + 50, textY, black, "キー/ ボタン:閉じる");
+	DrawFormatString(textX + 50, textY, black, "キー/  ボタン:閉じる");
 	DrawFormatString(textX + 20, textY, white, "ESC");
 	DrawFormatString(textX + 93, textY, white, "A");
 

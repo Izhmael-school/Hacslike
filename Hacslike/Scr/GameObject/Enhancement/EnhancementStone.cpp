@@ -107,8 +107,8 @@ void EnhancementStone::Render() {
 
         DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
         DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-        DrawFormatStringToHandle(textX + 40, textY, black,MainFont, "キー/ ボタン:強化する");
-        DrawFormatStringToHandle(textX + 30, textY, white,MainFont, "E");
+        DrawFormatStringToHandle(textX + 40, textY, black,MainFont, "キー/  ボタン:強化する");
+        DrawFormatStringToHandle(textX + 30, textY, white,MainFont, "F");
         DrawFormatStringToHandle(textX + 83, textY, white,MainFont, "B");
     }
 
@@ -120,12 +120,14 @@ void EnhancementStone::Render() {
 void EnhancementStone::OpenEnhanceMenu() {
     isMenuOpen = true;
     GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop); // ゲーム停止
+    Player::GetInstance()->SetIsOpenMenu(true);
     SetMouseDispFlag(TRUE);
 }
 
 void EnhancementStone::CloseEnhanceMenu() {
     isMenuOpen = false;
     GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing); // ゲーム再開
+    Player::GetInstance()->SetIsOpenMenu(false);
     SetMouseDispFlag(FALSE);
 }
 

@@ -57,7 +57,7 @@ void StageCell::Render() {
 
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:階層移動する");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/  ボタン:階層移動する");
 		DrawFormatStringToHandle(textX, textY, white,MainFont, "X");
 		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 	}

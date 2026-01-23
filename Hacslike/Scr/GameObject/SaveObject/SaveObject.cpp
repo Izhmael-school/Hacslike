@@ -2,6 +2,7 @@
 #include"../../Manager/CollisionManager.h"
 #include"../../Manager/InputManager.h"
 #include"../../Component/Collider/Collider.h"
+#include "../Character/Player/Player.h"
 
 SaveObject* SaveObject::pInstance = nullptr;
 
@@ -71,10 +72,13 @@ void SaveObject::Update()
 	if(hitObject){
 		if (input.IsKeyDown(KEY_INPUT_E)|| input.IsButtonDown(XINPUT_GAMEPAD_B)) {
 			openSaveMenu = true;
+			Player::GetInstance()->SetIsOpenMenu(true);
 		}
 		if(openSaveMenu){
 			if (input.IsKeyDown(KEY_INPUT_ESCAPE) || input.IsButtonDown(XINPUT_GAMEPAD_A)) {
 				openSaveMenu = false;
+				Player::GetInstance()->SetIsOpenMenu(false);
+
 			}
 		}
 		
@@ -125,7 +129,7 @@ void SaveObject::Render()
 
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:セーブ/ロード");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/  ボタン:セーブ/ロード");
 		DrawFormatStringToHandle(textX, textY, white,MainFont, "E");
 		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
