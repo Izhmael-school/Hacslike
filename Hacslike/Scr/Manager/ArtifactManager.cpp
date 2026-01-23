@@ -7,6 +7,7 @@
 #include "AudioManager.h"
 #include "../GameObject/Character/Player/Player.h"
 #include "../Save/SaveIO.h" 
+#include "../GameSystem/GameSystem.h"
 
 
 ArtifactManager::ArtifactManager()
@@ -161,11 +162,14 @@ std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::ApplyArtifact()
 
 void ArtifactManager::Update(Player* player)
 {
+  
     for (auto& artifact : activeArtifact)
     {
         artifact->Update(player);
     }
 }
+
+
 
 /// <summary>
 /// íœ

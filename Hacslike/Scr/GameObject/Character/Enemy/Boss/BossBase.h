@@ -5,9 +5,7 @@
 
 class BossBase : public Enemy {
 public:
-	ArtifactSelectUI artifactSelectUI;
-	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
-	bool isSelectArtifact = false;
+	
 
 	// 追加フラグ：
 	// 死亡アニメーションが終了したかどうか（アニメ終了時のイベントで true にする）

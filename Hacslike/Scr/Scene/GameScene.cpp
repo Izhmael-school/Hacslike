@@ -169,9 +169,7 @@ void GameScene::Setup() {
 		// フロア情報・ステージデータを復元しているはずなので、floorCount をリセットしたり
 		// 再生成を行ってはいけない。
 	if (SaveManager::GetInstance().HasLoadedSave()) {
-		// プレイヤー関連のセットアップだけ行う（位置やカメラ設定など）。
-		Player::GetInstance()->PlayerSetUp();
-
+		
 		// フラグを消費しておく（次回の新規開始では通常の初期化を行うため）
 		SaveManager::GetInstance().ClearLoadedFlag();
 	}
