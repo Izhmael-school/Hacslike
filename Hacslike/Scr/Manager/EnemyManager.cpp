@@ -24,7 +24,6 @@ EnemyManager::EnemyManager() {
 }
 
 EnemyManager::~EnemyManager() {
-	DeleteAllEnemy();
 	MV1DeleteModel(originGoblinMHandle);
 	MV1DeleteModel(originSpiderMHandle);
 	MV1DeleteModel(originWolfMHandle);
@@ -36,65 +35,11 @@ EnemyManager::~EnemyManager() {
 	MV1DeleteModel(originDurahanMHandle);
 	MV1DeleteModel(originHobGoblinMHandle);
 
-	for (auto g : unuseGoblinArray) {
-		delete g;
-	}
 
-	for (auto s : unuseSpiderArray) {
-		delete s;
-	}
-
-	for (auto w : unuseWolfArray) {
-		delete w;
-	}
-
-	for (auto t : unuseTrollArray) {
-		delete t;
-	}
-
-	for (auto z : unuseZombieArray) {
-		delete z;
-	}
-
-	for (auto h : unuseHellHoundArray) {
-		delete h;
-	}
-
-	for (auto o : unuseOugerArray) {
-		delete o;
-	}
-
-	for (auto k : unuseKetbleperzArray) {
-		delete k;
-	}
-
-	for (auto d : unuseDurahanArray) {
-		delete d;
-	}
-
-	for (auto h : unuseHobGoblinArray) {
-		delete h;
-	}
-
-	for (auto e : pEnemyArray) {
-		delete e;
-	}
+	DeleteAllEnemy();
 }
 
 void EnemyManager::Start() {
-	originGoblinMHandle = MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1");
-	originSpiderMHandle = MV1LoadModel("Res/Model/Enemy/Spider/model.mv1");
-	originWolfMHandle = MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1");
-	originTrollMHandle = MV1LoadModel("Res/Model/Enemy/Troll/model.mv1");
-	originZombieMHandle = MV1LoadModel("Res/Model/Enemy/Zombie/model.mv1");
-	originHellHoundMHandle = MV1LoadModel("Res/Model/Enemy/HellHound/model.mv1");
-	originOugerMHandle = MV1LoadModel("Res/Model/Enemy/Ouger/model.mv1");
-	originKetbleperzMHandle = MV1LoadModel("Res/Model/Enemy/Ketbleperz/model.mv1");
-	originDurahanMHandle = MV1LoadModel("Res/Model/Enemy/Durahan/model.mv1");
-	originHobGoblinMHandle = MV1LoadModel("Res/Model/Enemy/HobGoblin/model.mv1");
-
-	pEnemyArray.clear();
-
 	AudioManager* manager = &AudioManager::GetInstance();
 	manager->Load(audioFilePath + "SwordSwing.mp3", "SwordSwing", false);
 	manager->Load(audioFilePath + "Impact.mp3", "Impact", false);
@@ -106,12 +51,40 @@ void EnemyManager::Start() {
 	manager->Load(audioFilePath + "Punch1.mp3", "Punch1", false);
 	manager->Load(audioFilePath + "Punch2.mp3", "Punch2", false);
 	manager->Load(audioFilePath + "HeadBang.mp3", "HeadBang", false);
+
+	EnemyUtility* goblin = new EnemyUtility([goblin]() {return new EnemyGoblin(goblin->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1"));
+	EnemyUtility* spider = new EnemyUtility([spider]() {return new EnemyGoblin(spider->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Spider/model.mv1"));
+	EnemyUtility* wolf = new EnemyUtility([wolf]() {return new EnemyGoblin(wolf->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1"));
+	EnemyUtility* troll = new EnemyUtility([troll]() {return new EnemyGoblin(troll->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Troll/model.mv1"));
+	EnemyUtility* Zombie = new EnemyUtility([Zombie]() {return new EnemyGoblin(Zombie->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Zombie/model.mv1"));
+	EnemyUtility* hellhound = new EnemyUtility([hellhound]() {return new EnemyGoblin(hellhound->originModelHandle); },MV1LoadModel("Res/Model/Enemy/HellHound/model.mv1"));
+	EnemyUtility* Ouger = new EnemyUtility([Ouger]() {return new EnemyGoblin(Ouger->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Ouger/model.mv1"));
+	EnemyUtility* ketbleperz = new EnemyUtility([ketbleperz]() {return new EnemyGoblin(ketbleperz->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Ketbleperz/model.mv1"));
+	EnemyUtility* durahan = new EnemyUtility([durahan]() {return new EnemyGoblin(durahan->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Durahan/model.mv1"));
+	EnemyUtility* hobgoblin = new EnemyUtility([hobgoblin]() {return new EnemyGoblin(hobgoblin->originModelHandle); },MV1LoadModel("Res/Model/Enemy/HobGoblin/model.mv1"));
+	
+	pUnuseEnemiesArray.push_back(goblin);
+	pUnuseEnemiesArray.push_back(spider);
+	pUnuseEnemiesArray.push_back(wolf);
+	pUnuseEnemiesArray.push_back(troll);
+	pUnuseEnemiesArray.push_back(Zombie);
+	pUnuseEnemiesArray.push_back(hellhound);
+	pUnuseEnemiesArray.push_back(Ouger);
+	pUnuseEnemiesArray.push_back(ketbleperz);
+	pUnuseEnemiesArray.push_back(durahan);
+	pUnuseEnemiesArray.push_back(hobgoblin);
 }
 
 void EnemyManager::Update() {
 	for (auto e : pEnemyArray) {
 		if (e == nullptr || !e->IsVisible()) continue;
 		e->Update();
+	}
+
+	for (int i = 0; i < unuseEnemy.size();) {
+		Enemy* e = unuseEnemy.front();
+		pEnemyArray.remove(e);
+		unuseEnemy.remove(e);
 	}
 }
 
@@ -121,7 +94,7 @@ void EnemyManager::Render() {
 		e->Render();
 	}
 
-	DrawFormatStringToHandle(100, 300, red,MainFont, "c“G”:%d‘Ì", pEnemyArray.size());
+	DrawFormatStringToHandle(100, 300, red, MainFont, "c“G”:%d‘Ì", pEnemyArray.size());
 }
 
 void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
@@ -132,8 +105,7 @@ void EnemyManager::SpawnEnemy(EnemyType type, VECTOR pos) {
 	if (e == nullptr) return;
 
 	pEnemyArray.push_back(e);
-	e->Setup();
-	e->SetType(type);
+
 	e->SetPosition(pos);
 }
 
@@ -168,126 +140,76 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 
 Enemy* EnemyManager::UseEnemy(EnemyType type) {
 	Enemy* e = nullptr;
-	std::vector<Enemy*>* enemyArray = nullptr;
 
-	switch (type) {
-	case Goblin:
-		enemyArray = &unuseGoblinArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle)));
-		break;
-	case Spider:
-		enemyArray = &unuseSpiderArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemySpider(MV1DuplicateModel(originSpiderMHandle)));
-		break;
-	case Wolf:
-		enemyArray = &unuseWolfArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyWolf(MV1DuplicateModel(originWolfMHandle)));
-		break;
-	case Troll:
-		enemyArray = &unuseTrollArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyTroll(MV1DuplicateModel(originTrollMHandle)));
-		break;
-	case Zombie:
-		enemyArray = &unuseZombieArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyZombie(MV1DuplicateModel(originZombieMHandle)));
-		break;
-	case HellHound:
-		enemyArray = &unuseHellHoundArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyHellHound(MV1DuplicateModel(originHellHoundMHandle)));
-		break;
-	case Ouger:
-		enemyArray = &unuseOugerArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyOuger(MV1DuplicateModel(originOugerMHandle)));
-		break;
-	case Ketbleperz:
-		enemyArray = &unuseKetbleperzArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyKetbleperz(MV1DuplicateModel(originKetbleperzMHandle)));
-		break;
-	case Durahan:
-		enemyArray = &unuseDurahanArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyDurahan(MV1DuplicateModel(originDurahanMHandle)));
-		break;
-	case HobGoblin:
-		enemyArray = &unuseHobGoblinArray;
-		if (enemyArray->size() == 0)
-			enemyArray->push_back(new EnemyHobGoblin(MV1DuplicateModel(originHobGoblinMHandle)));
-		break;
+	// w’è‚Ì“G‚Ì–¢g—p‚ª–³‚¯‚ê‚Î
+	if (pUnuseEnemiesArray[(int)type]->unuseArray.size() == 0) {
+		// “G‚Ì¶¬
+		e = pUnuseEnemiesArray[(int)type]->CreateEnemy();
+		/*switch (type) {
+		case Goblin:
+			e = new EnemyGoblin(MV1DuplicateModel(originGoblinMHandle));
+			break;
+		case Spider:
+			e = new EnemySpider(MV1DuplicateModel(originSpiderMHandle));
+			break;
+		case Wolf:
+			e = new EnemyWolf(MV1DuplicateModel(originWolfMHandle));
+			break;
+		case Troll:
+			e = new EnemyTroll(MV1DuplicateModel(originTrollMHandle));
+			break;
+		case Zombie:
+			e = new EnemyZombie(MV1DuplicateModel(originZombieMHandle));
+			break;
+		case HellHound:
+			e = new EnemyHellHound(MV1DuplicateModel(originHellHoundMHandle));
+			break;
+		case Ouger:
+			e = new EnemyOuger(MV1DuplicateModel(originOugerMHandle));
+			break;
+		case Ketbleperz:
+			e = new EnemyKetbleperz(MV1DuplicateModel(originKetbleperzMHandle));
+			break;
+		case Durahan:
+			e = new EnemyDurahan(MV1DuplicateModel(originDurahanMHandle));
+			break;
+		case HobGoblin:
+			e = new EnemyHobGoblin(MV1DuplicateModel(originHobGoblinMHandle));
+			break;
+		}*/
+	}
+	else {
+		e = pUnuseEnemiesArray[(int)type]->unuseArray.front();
+		pUnuseEnemiesArray[(int)type]->unuseArray.pop_front();
 	}
 
-	e = enemyArray->back();
-
-	if (e == nullptr) return nullptr;
-
-	enemyArray->pop_back();
-	CollisionManager::GetInstance().Register(e->GetCollider());
+	e->SetType(type);
 	e->Setup();
-	e->SetVisible(true);
-
 	return e;
 }
 
 void EnemyManager::UnuseEnemy(Enemy* enemy) {
+	// –¢g—pó‘Ô‰»
+	enemy->Teardown();
 
-	enemy->SetVisible(false);
-	CollisionManager::GetInstance().UnRegister(enemy->GetCollider());
+	pUnuseEnemiesArray[(int)enemy->GetType()]->unuseArray.push_back(enemy);
 
-	switch (enemy->GetType()) {
-	case Goblin:
-		unuseGoblinArray.push_back(enemy);
-		break;
-	case Spider:
-		unuseSpiderArray.push_back(enemy);
-		break;
-	case Wolf:
-		unuseWolfArray.push_back(enemy);
-		break;
-	case Troll:
-		unuseTrollArray.push_back(enemy);
-		break;
-	case Zombie:
-		unuseZombieArray.push_back(enemy);
-		break;
-	case HellHound:
-		unuseHellHoundArray.push_back(enemy);
-		break;
-	case Ouger:
-		unuseOugerArray.push_back(enemy);
-		break;
-	case Ketbleperz:
-		unuseKetbleperzArray.push_back(enemy);
-		break;
-	case Durahan:
-		unuseDurahanArray.push_back(enemy);
-		break;
-	case HobGoblin:
-		unuseHobGoblinArray.push_back(enemy);
-		break;
-	}
+	unuseEnemy.push_back(enemy);
 }
 
 void EnemyManager::UnuseAllEnemy() {
 
 	while (pEnemyArray.size() > 0) {
-		UnuseEnemy(pEnemyArray[0]);
-		CollisionManager::GetInstance().UnRegister(pEnemyArray[0]->GetCollider());
+		pEnemyArray.front()->Teardown();
+		UnuseEnemy(pEnemyArray.front());
 		pEnemyArray.erase(pEnemyArray.begin());
 	}
 }
 
 void EnemyManager::DeleteEnemy(Enemy* enemy) {
 	for (int i = 0, max = pEnemyArray.size(); i < max; i++) {
-		if (pEnemyArray[i] != enemy) continue;
 		CollisionManager::GetInstance().UnRegister(enemy->GetCollider());
-		pEnemyArray.erase(pEnemyArray.begin() + i);
+		pEnemyArray.remove(enemy);
 		delete enemy;
 		enemy = nullptr;
 	}
@@ -295,17 +217,43 @@ void EnemyManager::DeleteEnemy(Enemy* enemy) {
 
 void EnemyManager::DeleteAllEnemy() {
 	for (auto e : pEnemyArray) {
-		pEnemyArray.erase(pEnemyArray.begin());
+		pEnemyArray.remove(e);
+		if (e == nullptr) continue;
 		delete e;
 		e = nullptr;
 	}
 
 	pEnemyArray.clear();
-	pEnemyArray.shrink_to_fit();
+
+	for (auto list : pUnuseEnemiesArray) {
+		delete list;
+		//auto array = list->unuseArray;
+		//	// ”z—ñ‚©‚çÁ‚·
+		//for (auto e : array) {
+		//	// ”z—ñ‚©‚çÁ‚·
+		//	array.remove(e);
+		//	if (e == nullptr) continue;
+		//	delete e;
+		//	e = nullptr;
+		//}
+		//// ”z—ñ‰Šú‰»
+		//array.clear();
+	}
+
+	pUnuseEnemiesArray.clear();
+	pUnuseEnemiesArray.shrink_to_fit();
+
+	for (auto e : unuseEnemy) {
+		unuseEnemy.remove(e);
+		if (e == nullptr) continue;
+		delete e;
+		e = nullptr;
+	}
+
+	unuseEnemy.clear();
 }
 
-void EnemyManager::SaveTo(BinaryWriter& w)
-{
+void EnemyManager::SaveTo(BinaryWriter& w) {
 	// active “G”
 	uint32_t count = static_cast<uint32_t>(pEnemyArray.size());
 	w.WritePOD(count);
@@ -331,8 +279,7 @@ void EnemyManager::SaveTo(BinaryWriter& w)
 	}
 }
 
-void EnemyManager::LoadFrom(BinaryReader& r, uint32_t ver)
-{
+void EnemyManager::LoadFrom(BinaryReader& r, uint32_t ver) {
 	// Šù‘¶‚Ì“G‚ğˆê’UƒNƒŠƒA‚·‚é
 	UnuseAllEnemy();
 	DeleteAllEnemy();

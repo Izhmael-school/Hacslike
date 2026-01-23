@@ -73,6 +73,8 @@ public:
 
 	// 再使用時の初期化
 	void Setup();
+	// 未使用状態
+	void Teardown();
 	// 死んだとき実行する処理
 	void DeadExecute() override;
 	// Jsonファイルからステータスを持ってくる

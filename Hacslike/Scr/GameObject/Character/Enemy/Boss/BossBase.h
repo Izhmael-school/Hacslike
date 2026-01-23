@@ -33,7 +33,8 @@ public:
 
 private:
 
-	Gauge* hpBar;
+	Gauge<int>* hpBar;
+	Gauge<float>* attackSpanBar;
 
 
 	// ŠK’i‚ªoŒ»‚·‚éˆÊ’u

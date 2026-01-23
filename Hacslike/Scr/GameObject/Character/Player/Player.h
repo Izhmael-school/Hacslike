@@ -53,8 +53,8 @@ private:	//	メンバ変数
 	int remainExp;
 
 	bool canEnhance = false; // 強化可能フラグ
-	Gauge* hpBar;
-	Gauge* expBar;
+	Gauge<int>* hpBar;
+	Gauge<int>* expBar;
 #pragma endregion
 
 #pragma region 死亡処理関連
