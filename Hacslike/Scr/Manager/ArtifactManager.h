@@ -6,6 +6,8 @@
 #include <random>
 #include"SaveManager.h"
 #include"../GameObject/Artifact/ArtifactUI.h"
+#include <queue>
+#include "../GameObject/Character/Enemy/Boss/BossBase.h"
 
 class Player;
 class ArtifactSelectUI;
@@ -37,8 +39,9 @@ public:
 	/// </summary>
 	/// <param name="_artifact"></param>
 	std::vector<std::shared_ptr<ArtifactBase>> ApplyArtifact();
-
-
+	std::queue<BossBase*> bossDeathQueue; // ボス死亡イベントを保持するキュー
+public:
+	void RegisterBossDeath(BossBase* boss);
 	void Start();
 
 	void Update(Player* player);
@@ -59,8 +62,11 @@ public:
 	// --- Serialization ---
 	void SaveTo(BinaryWriter& w) const;
 	void LoadFrom(BinaryReader& r, uint32_t version);
+	
 
 private:
+	void ProcessBossDeath(Player* player); // アーティファクト選択処理を行う専用メソッド
+
 	// helper to create fresh instance by ID
 	std::shared_ptr<ArtifactBase> CreateArtifactByID(int id);
 
