@@ -66,7 +66,6 @@ void Enemy::Setup() {
 	atkSpan = 4;
 	atkTime = 0;
 	moveSpeed = 1;
-	CollisionManager::GetInstance().Register(pCollider);
 	SetVisible(true);
 }
 

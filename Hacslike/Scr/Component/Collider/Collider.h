@@ -28,7 +28,8 @@ public:// Getter // Setter
 	inline bool IsEnable() const { return isEnable; }
 	inline void SetEnable(bool _v) { isEnable = _v; }
 	// GameObject
-	inline GameObject* GetGameObject() const { return pGameObject; }
+	inline GameObject* GetGameObject() const { 
+		return pGameObject; }
 	inline void* SetGameObject(GameObject* _pObj) { pGameObject = _pObj; }
 	// Character
 	inline Character* GetCharacter() const { return pCharacter; }

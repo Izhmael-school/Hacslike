@@ -26,9 +26,8 @@ GameScene::~GameScene() {
 void GameScene::Start() {
 
 	Player* pPlayer = new Player();
-	pPlayer->CreateInstance();
 	pGameObjectArray.push_back(pPlayer);
-	
+
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
@@ -178,9 +177,9 @@ void GameScene::Setup() {
 	}
 	else {
 		// 新規開始 / ロード無し の通常フロー
+		Player::GetInstance()->PlayerSetUp();
 		StageManager::GetInstance().ResetFloorCount();
 		StageManager::GetInstance().NoFadeGenerate();
-		Player::GetInstance()->PlayerSetUp();
 	}
 }
 

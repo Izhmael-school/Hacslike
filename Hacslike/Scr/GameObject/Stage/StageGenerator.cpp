@@ -250,6 +250,8 @@ void StageGenerator::SetGameObjectRandomPos(GameObject* obj) {
 void StageGenerator::SetGameObject(GameObject* _obj, VECTOR _pos) {
 	VECTOR pos = VGet(_pos.x * CellSize, 0, _pos.z * CellSize);
 
+	if (_obj == nullptr) return;
+
 	_obj->SetPosition(pos);
 }
 

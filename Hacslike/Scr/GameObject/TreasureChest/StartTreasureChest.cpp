@@ -51,7 +51,7 @@ void StartTreasureChest::Start()
 	// コライダーを作る
 	SetCollider(new SphereCollider(this, VZero, 100));
 	// 生成時に CollisionManager に登録（OpenTreasureChest で UnRegister する対）
-	CollisionManager::GetInstance().Register(pCollider);
+	//CollisionManager::GetInstance().Register(pCollider);
 
 	TreasureChestModel = MV1LoadModel("Res/Model/DropObject/TreasureChest.mv1");
 	active = true;

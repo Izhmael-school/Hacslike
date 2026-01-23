@@ -36,6 +36,9 @@ void Camera::Update() {
 
 	//”¼Œa‚ðarmLength”{
 	sphere = VScale(sphere, armLenght);
+
+	if (pTarget == nullptr) return;
+
 	//’†S“_‚ð’Ç]‘ÎÛ‚ÌÀ•W•ª•½sˆÚ“®
 	sphere = VAdd(sphere, pTarget->GetPosition());
 

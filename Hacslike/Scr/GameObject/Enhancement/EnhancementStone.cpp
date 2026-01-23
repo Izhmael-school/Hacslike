@@ -52,7 +52,7 @@ void EnhancementStone::Start() {
     modelHandle = MV1LoadModel("Res/Model/EnhanceObject/EnhanceObject.mv1");
     if (!pCollider) {
         pCollider = new CapsuleCollider(this, VZero, VGet(0, 80, 0), 80.0f);
-        CollisionManager::GetInstance().Register(pCollider);
+        //CollisionManager::GetInstance().Register(pCollider);
     }
     pMenu->Start(); // ƒƒjƒ…[‚Ì‰Šú‰»
 }

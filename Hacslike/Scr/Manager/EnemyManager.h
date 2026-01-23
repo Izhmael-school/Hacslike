@@ -65,8 +65,8 @@ private:
 	EnemyUtility* hellhound;
 	EnemyUtility* ouger;
 	EnemyUtility* ketbleperz;
-	EnemyUtility* ;
-	EnemyUtility* spider;
+	EnemyUtility* durahan;
+	EnemyUtility* hobgoblin;
 
 public:
 	EnemyManager();
