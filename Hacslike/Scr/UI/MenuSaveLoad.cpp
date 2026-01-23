@@ -77,30 +77,27 @@ void MenuSaveLoad::Update() {
 
 void MenuSaveLoad::Render() {
     const auto& slots = SaveManager::GetInstance().GetSlots();
-    int baseX = 250;
-    int baseY = 16;
-    int BaseX = baseX + 10;
-    int BaseY = baseY + 30;
-    int boxW = 430;
-    int boxH = 280;
-    int lineHeight = 24;
-    int padding = 6;
-    int titleHeight = 22;
 
+    // ---- 全画面黒背景 ----
     const int bgColor = black;
-    const int borderColor = GetColor(200, 200, 200);
+    DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, bgColor, TRUE); // 全画面を黒で塗りつぶし
 
-    DrawBox(baseX, baseY, baseX + boxW, baseY + boxH, bgColor, TRUE);
-    DrawBox(baseX, baseY, baseX + boxW, baseY + titleHeight, borderColor, FALSE);
+    // ---- スロット描画の中央配置設定 ----
+    int lineHeight = 40; // 行の高さ
+    int slotWidth = 600; // スロット描画幅
+    int slotHeight = lineHeight * 10; // スロット全体の高さ（最大10個分）
+    int baseX = (WINDOW_WIDTH - slotWidth) / 2; // 中央のX座標
+    int baseY = (WINDOW_HEIGHT - slotHeight) / 2; // スロットの中央Y座標
+    
 
+    const int slotBaseX = baseX; // スロットのベースX座標
+    const int slotBaseY = baseY;
     // タイトル
     const char* title = "セーブ / ロード";
-    DrawStringToHandle(baseX + padding, baseY + 2, title, white,MainFont);
-
+    DrawStringToHandle(baseX , baseY - lineHeight, title, white, MainFont);
+    // スロットリストを描画
     for (int i = 0; i < 10; ++i) {
         const auto& s = slots[i];
-
-        // 時刻文字列作成
         char timestr[64] = "";
         if (s.exists) {
 #ifdef _MSC_VER
@@ -137,27 +134,53 @@ void MenuSaveLoad::Render() {
             timestr);
 #endif
 
-        int y = BaseY + i * lineHeight;
+        // スロットの描画
+        int y = slotBaseY + i * lineHeight; // スロットのY座標
         unsigned int color = (i == selectedSlot) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
-        DrawStringToHandle(BaseX, y, linebuf, color,MainFont);
+        DrawStringToHandle(slotBaseX, y, linebuf, color, MainFont);
     }
 
-    // ポップアップメニュー描画 (開いているとき)
+    // ---- セーブ/ロード/削除のコマンド表示 ----
     if (menuActive) {
-        const int popupW = 280;
-        const int popupH = 96;
-        int px = baseX + 10;
-        int py = BaseY + selectedSlot * lineHeight + 25; // 選択行の下あたりに表示
+        const int commandWidth = 400; // コマンド領域の幅
+        const int commandHeight = 120; // コマンド領域の高さ
+        const int commandX = baseX; // 中央に配置
+        const int commandY = baseY + slotHeight + 20; // スロットリストの下部
 
-        DrawBox(px, py, px + popupW, py + popupH - 20, GetColor(40, 40, 40), TRUE);
-        DrawBox(px, py, px + popupW, py + popupH - 20, GetColor(200, 200, 200), FALSE);
+        // コマンドの背景ボックスを描画
+        DrawBox(commandX, commandY, commandX + commandWidth, commandY + commandHeight, GetColor(40, 40, 40), TRUE);
+        DrawBox(commandX, commandY, commandX + commandWidth, commandY + commandHeight, GetColor(200, 200, 200), FALSE);
 
-        // メニューオプション
+        // コマンド文字列
         const char* opts[3] = { "セーブ", "ロード", "削除" };
         for (int i = 0; i < 3; ++i) {
             int col = (i == menuChoice) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
-            DrawStringToHandle(px + 12 + i * 100, py + 12, opts[i], col,MainFont);
+            DrawStringToHandle(commandX + 20 + i * 120, commandY + 50, opts[i], col, MainFont);
         }
-        DrawStringToHandle(px + 8, py + popupH - 50, "Enter: 決定  Esc: キャンセル", GetColor(180, 180, 180),MainFont);
+
+        // ヒントを追加表示
+        DrawStringToHandle(commandX + 20, commandY + 90, "Enter/Bボタン: 決定 Esc:キャンセル", GetColor(180, 180, 180), MainFont);
     }
+    // Zバッファ（奥行き）をチェックせずに描画する
+    SetUseZBuffer3D(FALSE);
+    // Zバッファに書き込みもしない（後の描画に影響を与えない）
+    SetWriteZBuffer3D(FALSE);
+
+    int StartX = (WINDOW_WIDTH / 2) - 200;
+    int StartY = (WINDOW_HEIGHT)-200;
+    int GoalX = (WINDOW_WIDTH / 2) + 200;
+    int GoalY = (WINDOW_HEIGHT)-150;
+    int textX = StartX + 80;
+    int textY = StartY + 17;
+
+    DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+    DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+    DrawFormatStringToHandle(textX + 40, textY, black, MainFont, "キー/  ボタン:閉じる");
+    DrawFormatStringToHandle(textX, textY, white, MainFont, "ESC");
+    DrawFormatStringToHandle(textX + 80, textY, white, MainFont, "A");
+
+    // Zバッファ（奥行き）をチェックせずに描画する
+    SetUseZBuffer3D(TRUE);
+    // Zバッファに書き込みもしない（後の描画に影響を与えない）
+    SetWriteZBuffer3D(TRUE);
 }

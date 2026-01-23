@@ -358,6 +358,8 @@ public:		//	Getter と Setter
 
 	inline void SetIsOpenMenu(bool _isOpenMenu) { isOpenMenu = _isOpenMenu; }
 
+	inline bool GetIsSelectArtifact() { return isSelectArtifact; }
+
 	/// <summary>
 	/// プレイヤーの前方向の取得
 	/// </summary>

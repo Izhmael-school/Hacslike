@@ -58,14 +58,18 @@ void StageManager::Update() {
 void StageManager::Render() {
 	generator->Render();
 
-	if(pSaveObject){
-		pSaveObject->Render();
-	}
 	if (pChest) {
 		pChest->Render();
 	}
-	if (pStone) {
-		pStone->Render();
+	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == false) {
+		if (pSaveObject) {
+			pSaveObject->Render();
+		}
+	}
+	if (SaveObject::GetInstance()->GetIsOpenSaveMenu() == false) {
+		if (pStone) {
+			pStone->Render();
+		}
 	}
 	DrawFormatStringToHandle(100, 100, red,MainFont, "階層 %d 階", floorCount - 1);
 }

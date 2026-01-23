@@ -85,11 +85,21 @@ void GameScene::Update() {
 
 void GameScene::Render() {
 
-	
-	StageManager::GetInstance().Render();
-	EnemyManager::GetInstance().Render();
-	for (auto pObj : pGameObjectArray) {
-		pObj->Render();
+	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == true
+		|| SaveObject::GetInstance()->GetIsOpenSaveMenu() == true) {
+		for (auto pObj : pGameObjectArray) {
+			pObj->Render();
+		}
+		StageManager::GetInstance().Render();
+		EnemyManager::GetInstance().Render();
+	}
+
+	else {
+		StageManager::GetInstance().Render();
+		EnemyManager::GetInstance().Render();
+		for (auto pObj : pGameObjectArray) {
+			pObj->Render();
+		}
 	}
 
 	Coin::GetInstance()->RenderAll();
