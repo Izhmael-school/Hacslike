@@ -70,6 +70,7 @@ void EnemyManager::Update() {
 		e->Update();
 	}
 
+	// pEnemyArrayから安全に消すため
 	for (int i = 0; i < unuseEnemy.size();) {
 		Enemy* e = unuseEnemy.front();
 		pEnemyArray.remove(e);
@@ -183,31 +184,8 @@ void EnemyManager::DeleteAllEnemy() {
 	pEnemyArray.clear();
 
 	for (auto list : pUnuseEnemiesArray) {
-		delete list;
-		//auto array = list->unuseArray;
-		//	// 配列から消す
-		//for (auto e : array) {
-		//	// 配列から消す
-		//	array.remove(e);
-		//	if (e == nullptr) continue;
-		//	delete e;
-		//	e = nullptr;
-		//}
-		//// 配列初期化
-		//array.clear();
+		list->DeleteAllEnemy();
 	}
-
-	pUnuseEnemiesArray.clear();
-	pUnuseEnemiesArray.shrink_to_fit();
-
-	for (auto e : unuseEnemy) {
-		unuseEnemy.remove(e);
-		if (e == nullptr) continue;
-		delete e;
-		e = nullptr;
-	}
-
-	unuseEnemy.clear();
 }
 
 void EnemyManager::SaveTo(BinaryWriter& w) {

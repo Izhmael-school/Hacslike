@@ -3,7 +3,6 @@
 #include <vector>
 #include "../Definition.h"
 #include"../Manager/SaveManager.h"
-
 #include <functional>
 
 class Enemy;
@@ -20,15 +19,22 @@ struct EnemyUtility {
 
 	~EnemyUtility() {
 		// 未使用リスト内のデータ削除
-		for (auto e : unuseArray) {
+		DeleteAllEnemy();
+
+		// モデルの削除
+		MV1DeleteModel(originModelHandle);
+	}
+
+	void DeleteAllEnemy() {
+		while(unuseArray.size() != 0) {
+			Enemy* e = unuseArray.front();
 			unuseArray.remove(e);
 			if (e == nullptr) continue;
 			delete e;
 			e = nullptr;
 		}
 
-		// モデルの削除
-		MV1DeleteModel(originModelHandle);
+		unuseArray.clear();
 	}
 
 	inline void SetCreateFunc(std::function<Enemy* ()> _createFunc) { CreateEnemy = _createFunc; }
