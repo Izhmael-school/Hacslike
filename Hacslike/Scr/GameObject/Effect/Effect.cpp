@@ -13,15 +13,13 @@ Effect::~Effect() {
 }
 
 void Effect::Start() {
-
+	
 }
 
 void Effect::Update() {
 	//非表示なら更新しない
 	if (!isVisible)
 		return;
-
-	
 
 	//エフェクトの再生
 	if (playingHandle == INVALID)
