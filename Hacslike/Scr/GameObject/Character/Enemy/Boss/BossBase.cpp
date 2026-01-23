@@ -39,9 +39,8 @@ void BossBase::Start() {
 	pAnimator->SetModelHandle(modelHandle);
 	// アニメーションのロード
 	LoadAnimation();
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {
-		deadAnimEnded = true;
-		}, pAnimator->GetTotalTime("dead"));
+	
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	hpBar = new Gauge(hp,maxHp, WINDOW_WIDTH / 4, 700.0f, WINDOW_WIDTH / 2, 15.0f);
 	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 715.0f, WINDOW_WIDTH / 2, 5.0f);
 
@@ -51,38 +50,12 @@ void BossBase::Update() {
 	Enemy::Update();
 	
 	if(isDead) BossSlainUI::GetInstance()->Update();
-	Player* pPlayer = Player::GetInstance();
-	if (isSelectArtifact) {
-		int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
-		if (Selected != -1) {
-
-			if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
-				ArtifactManager::GetInstance().ApplySelectedArtifact(pPlayer, artifactChioces[Selected]);
-				pendingDelete = true;
-			}
-			isSelectArtifact = false;
-
-			// アーティファクト選択完了後の削除処理：
-			// 死亡アニメが既に終わっていればすぐ削除、そうでなければ pendingDelete を立ててアニメ終了時に削除する
-			if (deadAnimEnded) {
-				EnemyManager::GetInstance().DeleteEnemy(this);
-				return; // 削除要求を出したらこのオブジェクトは消えるので以降処理しない
-			}
-			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
-
-		}
-	}
-
-	// アニメが終わっていて削除保留が立っているならここで削除
-	if (pendingDelete && deadAnimEnded) {
-		EnemyManager::GetInstance().DeleteEnemy(this);
-		return;
-	}
+	
 }
 
 void BossBase::Render() {
 	Enemy::Render();
-	artifactSelectUI.Render(artifactChioces);
+	
 	if (!isDead) {
 		hpBar->Render();
 		DrawStringToHandle(WINDOW_WIDTH / 4, 700.0f - 20, name.c_str(), white,MainFont);
@@ -99,15 +72,6 @@ void BossBase::DeadExecute() {
 
 	AppearStair();
 	
-	if (!isSelectArtifact) {
-		
-		artifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
-		artifactSelectUI.StartSelection();
-		isSelectArtifact = true;
-		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-		
-	}
-	
-	
+
 }
 

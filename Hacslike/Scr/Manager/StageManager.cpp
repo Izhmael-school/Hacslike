@@ -58,14 +58,19 @@ void StageManager::Update() {
 void StageManager::Render() {
 	generator->Render();
 
-	if (pSaveObject) {
-		pSaveObject->Render();
-	}
+	
 	if (pChest) {
 		pChest->Render();
 	}
-	if (pStone) {
-		pStone->Render();
+	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == false) {
+		if (pSaveObject) {
+			pSaveObject->Render();
+		}
+	}
+	if (SaveObject::GetInstance()->GetIsOpenSaveMenu() == false) {
+		if (pStone) {
+			pStone->Render();
+		}
 	}
 
 	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);

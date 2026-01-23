@@ -423,6 +423,8 @@ void Player::Render() {
 	if (!isVisible)
 		return;
 
+	/*ArtifactManager::GetInstance().Render();*/
+
 #pragma region プレイヤーのHPやEXP(没)
 	//int cx = 0, cy = 800;   //	中心座標
 	//int r_outer = 200;		//	外側半径

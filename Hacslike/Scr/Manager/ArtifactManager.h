@@ -5,8 +5,10 @@
 #include <memory>
 #include <random>
 #include"SaveManager.h"
+#include"../GameObject/Artifact/ArtifactUI.h"
 
 class Player;
+class ArtifactSelectUI;
 
 class ArtifactManager : public Singleton<ArtifactManager>
 {
@@ -36,10 +38,10 @@ public:
 	/// <param name="_artifact"></param>
 	std::vector<std::shared_ptr<ArtifactBase>> ApplyArtifact();
 
+
 	void Start();
 
 	void Update(Player* player);
-
 
 	/// <summary>
 	/// çÌèú
