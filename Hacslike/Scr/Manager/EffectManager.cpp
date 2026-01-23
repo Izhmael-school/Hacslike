@@ -33,7 +33,6 @@ EffectManager::~EffectManager() {
  */
 void EffectManager::Load(std::string _filePath, std::string _name, float _magnification) {
 	int res = LoadEffekseerEffect(_filePath.c_str(), _magnification);
-
 	// ƒŠƒ\[ƒX‚ÌŠÇ—
 #if 0
 	effectResourceMap[_filePath.c_str()] = res;

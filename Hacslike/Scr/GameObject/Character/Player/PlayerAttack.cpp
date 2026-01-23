@@ -85,38 +85,48 @@ void PlayerAttack::AttackInput() {
 #pragma endregion
 
 #pragma region ため攻撃処理
-	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking() && pWeapon->GetType() != 3) {
+	// 1. 溜め開始：右クリック(MOUSE_INPUT_RIGHT)が押された瞬間
+	if (isChargeButtonDown && !isAttacking && !isCharging && !playerMovement->IsBlinking() && pWeapon->GetType() == 1) {
 		isAttacking = true;
-		if (pWeapon->GetType() == 1) {
-			chargeTime = 0.0f;
-			isCharging = true;
-			pPlayer->GetAnimator()->Play("GreatCharge1", 1.3f);
-		}
+		isCharging = true;
+		chargeTime = 0.0f;
+		pPlayer->GetAnimator()->Play("GreatCharge1", 1.3f);
 	}
 
 	if (isCharging) {
 		chargeTime += TimeManager::GetInstance().deltaTime;
-		if (chargeTime >= 0.65f)
+
+		// 溜め中のアニメーション遷移
+		if (chargeTime >= 0.65f) {
 			pPlayer->GetAnimator()->Play("GreatCharge2", 1.3f);
-
-		if (chargeTime >= maxChargeTime) {
-			isChargeButtonUp = true;
 		}
-	}
 
-	if (isChargeButtonUp && isCharging) {
-		isCharging = false;
-		isAttacking = true;
-		attackTimer = 0.0f;
-		hasGeneratedHitbox = false;
+		// 2. 攻撃発動：ボタンを離すか、最大溜めに達したとき
+		if (isChargeButtonUp || chargeTime >= maxChargeTime) {
+			isCharging = false;
+			isAttacking = true;
+			attackTimer = 0.0f;
+			hasGeneratedHitbox = false;
 
-		float ratio = chargeTime / maxChargeTime;
-		float chargeRatio = (ratio < 1.0f) ? ratio : 1.0f;
+			// --- ここで attackIndex を溜め時間に応じて分岐 ---
+			float ratio = chargeTime / maxChargeTime;
 
-		pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
-		attackIndex = 4;
-		AudioManager::GetInstance().PlayOneShot("chargeAttack");
-		Effect* pEffe = EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
+			if (ratio < 0.4f) {
+				attackIndex = 4; // 短い溜め
+			}
+			else if (ratio < 0.8f) {
+				attackIndex = 5; // 中間の溜め
+			}
+			else {
+				attackIndex = 6; // 最大溜め
+			}
+
+			// アニメーション名は既存のまま
+			pPlayer->GetAnimator()->Play("GreatCharge3", 1.3f);
+
+			AudioManager::GetInstance().PlayOneShot("chargeAttack");
+			EffectManager::GetInstance().Instantiate("ChargeBlad", pPlayer->GetPosition());
+		}
 	}
 #pragma endregion
 
@@ -258,8 +268,19 @@ void PlayerAttack::AttackInput() {
 				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
 					HitBoxReset();
 				}
+
 				if (attackIndex == 4 && attackTimer > 0.9f && attackTimer < 1.9f) {
-					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
+					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 判定を大きくする例
+					hasGeneratedHitbox = true;
+				}
+				// 溜め攻撃(中)の判定タイミング
+				if (attackIndex == 5 && attackTimer > 0.9f && attackTimer < 1.9f) {
+					CreateAttackHitbox(pWeapon->GetColLength(2) * 1.2f, pWeapon->GetColRadius(2) * 1.2f); // 判定を大きくする例
+					hasGeneratedHitbox = true;
+				}
+				// 溜め攻撃(強)の判定タイミング
+				if (attackIndex == 6 && attackTimer > 0.9f && attackTimer < 1.9f) {
+					CreateAttackHitbox(pWeapon->GetColLength(2) * 1.8f, pWeapon->GetColRadius(2) * 1.8f); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
 			}
