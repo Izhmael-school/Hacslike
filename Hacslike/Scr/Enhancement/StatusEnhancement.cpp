@@ -153,6 +153,8 @@ bool StatusEnhancement::Update() {
 					break;
 				case 1:
 					player->SetBaseAtk(player->GetBaseAtk() + totalBoost);
+					player->UpdateAtkFromEquipment();
+
 					break;
 				case 2:
 					player->SetDef(player->GetDef() + (float)totalBoost);

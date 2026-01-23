@@ -74,7 +74,7 @@ void EnhancementStone::Update() {
     // プレイヤーが範囲内にいて、Eキーかボタンが押されたら開く
     if (canEnhance) {
         auto& input = InputManager::GetInstance();
-        if (CheckHitKey(KEY_INPUT_E) == 1 || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
+        if (CheckHitKey(KEY_INPUT_F) == 1 || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
             OpenEnhanceMenu();
         }
     }
