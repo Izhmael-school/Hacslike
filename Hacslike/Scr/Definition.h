@@ -71,7 +71,8 @@
 #define COL_RADIUS_NUM (3)
 #define DEFAULT_COL_RADIUS std::array<float, COL_RADIUS_NUM>{80.0f, 110.0f, 150.0f}
 
-
+//	プレイヤー関連
+#define MAX_LV (42)
 
 //	=================================================================
 //		定数を定義する場所
