@@ -52,7 +52,7 @@ void SaveObject::Start()
 	
 	if(!pCol){
 		pCol = new CapsuleCollider(this, VZero, VGet(0, 20, 0), 80.0f);
-		CollisionManager::GetInstance().Register(pCol);
+		//CollisionManager::GetInstance().Register(pCol);
 	}
 	SetScale(1, 1, 1);
 }
