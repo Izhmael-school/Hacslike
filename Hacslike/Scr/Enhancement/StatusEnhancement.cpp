@@ -92,6 +92,83 @@ bool StatusEnhancement::Update() {
 		AudioManager::GetInstance().PlayOneShot("SelectSkill");
 	}
 
+#if _DEBUG
+	// デバッグコマンド: B + I + A + N + C + O キー同時押しで【全ステータス】をLvMAX
+	char keyStates[256];
+	GetHitKeyStateAll(keyStates); // 全256キーの状態を取得
+
+	// 1. 指定の6キーがすべて押されているか
+	bool isBiancoPressed = keyStates[KEY_INPUT_B] && keyStates[KEY_INPUT_I] &&
+		keyStates[KEY_INPUT_A] && keyStates[KEY_INPUT_N] &&
+		keyStates[KEY_INPUT_C] && keyStates[KEY_INPUT_O];
+
+	// 2. それ以外のキーが押されていないかチェック
+	bool noOtherKeys = true;
+	for (int i = 0; i < 256; i++) {
+		// チェック対象のキー（BIANCO）はスキップ
+		if (i == KEY_INPUT_B || i == KEY_INPUT_I || i == KEY_INPUT_A ||
+			i == KEY_INPUT_N || i == KEY_INPUT_C || i == KEY_INPUT_O) {
+			continue;
+		}
+
+		// もし一つでも押されているキーがあればfalse
+		if (keyStates[i] != 0) {
+			noOtherKeys = false;
+			break;
+		}
+	}
+
+	// 最終判定
+	if (isBiancoPressed && noOtherKeys) {
+		// stats配列の全要素（全項目）をループで回す
+		for (int i = 0; i < (int)stats.size(); ++i) {
+
+			// すでにLv50ならスキップ
+			if (stats[i].level >= 50) continue;
+
+			int remainingLevels = 50 - stats[i].level;
+			int boostValue = 0;
+
+			// インデックス(i)に応じて上昇値を設定
+			switch (i) {
+			case 0: boostValue = 10;  break; // HP
+			case 1: boostValue = 2;   break; // 攻撃
+			case 2: boostValue = 1;   break; // 防御
+			case 3: boostValue = 1;   break; // 会心率
+			case 4: boostValue = 500; break; // 会心ダメ
+			}
+
+			int totalBoost = boostValue * remainingLevels;
+
+			// UI表示用のデータを更新
+			stats[i].totalBonus += totalBoost;
+			stats[i].level = 50;
+
+			// Playerクラスの実数値に一括反映
+			if (player) {
+				switch (i) {
+				case 0:
+					player->SetMaxHp(player->GetMaxHp() + (float)totalBoost);
+					player->SetHp(player->GetMaxHp());
+					break;
+				case 1:
+					player->SetBaseAtk(player->GetBaseAtk() + totalBoost);
+					break;
+				case 2:
+					player->SetDef(player->GetDef() + (float)totalBoost);
+					break;
+				case 3:
+					player->SetCriticalHitRate(player->GetCriticalHitRate() + (float)totalBoost);
+					break;
+				case 4:
+					player->SetCriticalDamage(player->GetCriticalDamage() + (totalBoost / 100.0f));
+					break;
+				}
+			}
+		}
+	}
+#endif
+
 	// --- 強化実行処理 ---
 	if (input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
 		if (!stats.empty() && stats[selectedIndex].level < 50) {
