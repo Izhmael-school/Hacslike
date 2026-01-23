@@ -72,7 +72,7 @@ public:	// ゲッターとセッター
 #pragma endregion
 
 #pragma region Hp
-	inline void AddHp(int heal) { 
+	inline void AddHp(int heal) {
 		if (hp + heal < maxHp)
 			hp += heal;
 		else
@@ -134,7 +134,12 @@ public:	// ゲッターとセッター
 	//	経験値の設定
 	inline void SetExp(int _Exp) { exp = _Exp; }
 	//	経験値を足す処理
-	inline void AddExp(int _addExp) { exp += _addExp; }
+	inline void AddExp(int _addExp) {
+		if (Lv == MAX_LV)
+			exp = 0;
+		else
+			exp += _addExp;
+	}
 #pragma endregion
 
 #pragma region Lv
@@ -143,7 +148,13 @@ public:	// ゲッターとセッター
 	//	レベルの設定
 	inline void SetLv(int _Lv) { Lv = _Lv; }
 	//	レベルアップ
-	inline void LvUp(int _Lv) { Lv += _Lv; }
+	inline void LvUp(int _Lv) {
+		if (Lv == MAX_LV) {
+			Lv += 0;
+		}
+		else
+			Lv += _Lv;
+	}
 #pragma endregion
 
 	inline Character* GetPlayer() const { return Character::player; }
