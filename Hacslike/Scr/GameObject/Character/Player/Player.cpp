@@ -80,7 +80,7 @@ Player::~Player() {
 #pragma region シングルトン関連
 Player* Player::CreateInstance(VECTOR _pos) {
 	if (!instance) {
-		instance = new Player(_pos);
+		//instance = new Player(_pos);
 	}
 	return instance;
 }
@@ -261,8 +261,12 @@ void Player::Start() {
 
 	Inventory::InventoryItem* lastItem = GetInventory()->GetLastItem();
 
-	// 装備（EquipItem は Use() を内部で呼ぶ）
-	GetInventory()->EquipItem(lastItem->item.get());
+	// 装備（GetLastItem が nullptr でないことを確認してから）
+	if (lastItem != nullptr && lastItem->item) {
+		GetInventory()->EquipItem(lastItem->item.get());
+		// 装備処理後に確実に攻撃力を再計算して反映する
+		UpdateAtkFromEquipment();
+	}
 
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "Select", false);
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "Decision", false);
@@ -624,20 +628,22 @@ void Player::AddItem() {
 
 void Player::OpenMenu() {
 	// TAB または START でメニュー開閉
-	if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
-		isMenuUI = true;
-		AudioManager::GetInstance().PlayOneShot("Decision");
-		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-	}
-	else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isMenuUI) {
-		isMenuUI = false;
-		isItemUI = false;
-		isArtifactUI = false;
-		isSaveUI = false;
-		isMenuSelected = false; // 閉じたときにリセット
-		AudioManager::GetInstance().PlayOneShot("Decision");
-		GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+	if (!isOpenMenu) {
+		if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && !isMenuUI) {
+			isMenuUI = true;
+			AudioManager::GetInstance().PlayOneShot("Decision");
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+		}
+		else if (((input->IsKeyDown(KEY_INPUT_TAB)) || input->IsButtonDown(XINPUT_GAMEPAD_START)) && isMenuUI) {
+			isMenuUI = false;
+			isItemUI = false;
+			isArtifactUI = false;
+			isSaveUI = false;
+			isMenuSelected = false; // 閉じたときにリセット
+			AudioManager::GetInstance().PlayOneShot("Decision");
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 
+		}
 	}
 
 	if (isMenuUI) {
@@ -772,7 +778,7 @@ void Player::AddItemRender() {
 	if (hitItem) {
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:アイテムを取る");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/  ボタン:アイテムを取る");
 		DrawFormatStringToHandle(textX, textY, white,MainFont, "F");
 		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
@@ -828,7 +834,7 @@ void Player::GetArtifactRender() {
 	if (!isSelectArtifact) {
 		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/ ボタン:宝箱を開ける");
+		DrawFormatStringToHandle(textX + 10, textY, black,MainFont, "キー/  ボタン:宝箱を開ける");
 		DrawFormatStringToHandle(textX, textY, white,MainFont, "F");
 		DrawFormatStringToHandle(textX + 53, textY, white,MainFont, "B");
 
@@ -876,14 +882,6 @@ void Player::PlayerSetUp() {
 	// アーティファクトのクリア
 	ArtifactManager::GetInstance().ClearArtifact(this);
 
-	
-	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
-	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
-		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
-	);
-	
-	// インベントリに追加
-	GetInventory()->AddItem(std::move(stick));
 	maxHp = 100;
 	hp = maxHp;
 	atk = 5;
@@ -898,6 +896,66 @@ void Player::PlayerSetUp() {
 	isDead = false;
 	hitChest = false;
 	isSelectArtifact = false;
+
+	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
+	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
+		VZero, "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "Res/ItemIcon/stick.png"
+	);
+
+	// インベントリに追加
+	GetInventory()->AddItem(std::move(stick));
+	Inventory::InventoryItem* lastItem = GetInventory()->GetLastItem();
+
+	// 装備（GetLastItem が nullptr でないことを確認してから）
+	if (lastItem != nullptr && lastItem->item) {
+		GetInventory()->EquipItem(lastItem->item.get());
+		// 装備処理後に確実に攻撃力を再計算して反映する
+		UpdateAtkFromEquipment();
+	}
+}
+
+void Player::UpdateAtkFromEquipment()
+{
+	// 基本的にはインベントリの装備中アイテムを参照して effectValue を取得し、
+// baseAttack + (近接 or 遠距離補正) + effectValue を atk に適用する。
+	if (!GetInventory()) {
+		// フォールバック: 基本攻撃力のみ
+		SetAtk(GetBaseAtk() + GetProximityCorrection());
+		return;
+	}
+
+	std::string eqId = GetInventory()->GetEquippedItemID();
+	if (eqId.empty()) {
+		// 装備なしなら近接補正を使っておく（デフォルト）
+		SetAtk(GetBaseAtk() + GetProximityCorrection());
+		return;
+	}
+
+	Inventory::InventoryItem* pInvItem = GetInventory()->FindItemByID(eqId);
+	if (!pInvItem || !pInvItem->item) {
+		SetAtk(GetBaseAtk() + GetProximityCorrection());
+		return;
+	}
+
+	int bonus = pInvItem->item->GetEffectValue();
+	std::string name = pInvItem->item->GetName();
+	std::string icon = pInvItem->item->GetItemIcon();
+
+	// 武器が銃（遠距離）かどうかの簡易判定
+	bool isRanged = false;
+	if (name.find("銃") != std::string::npos || name.find("Gun") != std::string::npos || icon.find("Gun.png") != std::string::npos) {
+		isRanged = true;
+	}
+
+	if (isRanged) {
+		SetAtk(GetBaseAtk() + GetRangedCorrection() + bonus);
+	}
+	else {
+		SetAtk(GetBaseAtk() + GetProximityCorrection() + bonus);
+	}
+
+
+
 }
 
 float Player::RuneCost(int L) {

@@ -103,6 +103,7 @@ private:	//	メンバ変数
 	bool blinkVisible = true;      // 現在表示中かどうか
 	bool isSaveUI = false;
 	int menuIndex = 0;
+	bool isOpenMenu = false;
 	// 最大メニュー数（増えてもここを変えるだけ）
 	const int MENU_COUNT = 2;
 	// セーブメニュー表示用ポインタ（インベントリやアーティファクトと同様に管理する）
@@ -235,6 +236,9 @@ public:		//	メンバ関数
 
 	// 強化可能フラグを書き換える (CapsuleHitBoxで使用)
 	void SetCanEnhance(bool _flag) { canEnhance = _flag; }
+
+	// 装備の効果を考慮して atk を再計算して適用する
+	void UpdateAtkFromEquipment();
 #pragma endregion
 
 #pragma region GetterとSetter
@@ -351,6 +355,8 @@ public:		//	Getter と Setter
 	inline bool GetIsDead() const { return isDead; }
 
 	inline bool GetisItemUI() const { return isItemUI; }
+
+	inline void SetIsOpenMenu(bool _isOpenMenu) { isOpenMenu = _isOpenMenu; }
 
 	/// <summary>
 	/// プレイヤーの前方向の取得

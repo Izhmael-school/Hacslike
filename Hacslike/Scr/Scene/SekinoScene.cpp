@@ -27,10 +27,11 @@ SekinoScene::~SekinoScene() {
 }
 
 void SekinoScene::Start() {
-	Player* pPlayer = new Player();
-	pGameObjectArray.push_back(pPlayer);
+	//
+
+	/*pGameObjectArray.push_back(pPlayer);
 	pPlayer->AddMaxHp(10000000);
-	pPlayer->AddHp(pPlayer->GetMaxHp());
+	pPlayer->AddHp(pPlayer->GetMaxHp());*/
 	Weapon* pWeapon = new Weapon("sabel");
 	Enemy* e = EnemyManager().GetInstance().UseEnemy(Spider);
 	pGameObjectArray.push_back(e);
@@ -38,7 +39,7 @@ void SekinoScene::Start() {
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
-	pCamera->SetTarget(pPlayer);
+	//pCamera->SetTarget(pPlayer);
 
 	StageManager::GetInstance().NoFadeGenerate();
 }
