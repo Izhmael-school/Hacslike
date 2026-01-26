@@ -70,8 +70,8 @@ void BossBase::DeadExecute() {
 
 	BossSlainUI::GetInstance()->Start();
 
+	ArtifactManager::GetInstance().SetBossDesiegen(true);
 	AppearStair();
 	
-	ArtifactManager::GetInstance().SetBossDesiegen(true);
 }
 

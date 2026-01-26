@@ -316,6 +316,37 @@ void Player::Update() {
 
 	ArtifactManager::GetInstance().Update(this);
 
+	GetBossArtifact();
+
+	
+
+#pragma region スキル選択
+	if (exp >= maxExp && !isSelectingSkill) {
+		remainExp = exp - maxExp;
+		exp = remainExp;
+		RuneCost(Lv);
+		LvUp(1);
+		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
+		skillUI.StartSelection();
+		isSelectingSkill = true;
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+		SetMouseDispFlag(TRUE);
+	}
+	if (isSelectingSkill && !isSelectBossArtifact) {
+		// ★スキル選択中の処理
+		int selected = skillUI.UpdateSelection();
+		if (selected != -1) {
+
+			if (player && selected >= 0 && selected < (int)skillChoices.size()) {
+				SkillManager::GetInstance().ApplySelectedSkill(this, skillChoices[selected]);
+			}
+			isSelectingSkill = false;
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+
+		}
+	}
+#pragma endregion
+
 	selectMenu();
 
 	OpenMenu();
@@ -338,24 +369,8 @@ void Player::Update() {
 	if (isArtifactUI) {
 		artifactUI.Update();
 	}
-	GetBossArtifact();
-	//// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
-	//if (isSaveUI) {
-	//	if (!pSaveMenu) {
-	//		// menuIndex によって Save/Load を切り替えたいならここで判定
-	//		pSaveMenu = new MenuSaveLoad(MenuSaveLoad::SaveMode);
-	//		pSaveMenu->Open();
-	//	}
-	//	// メニューの入力処理等を行う
-	//	pSaveMenu->Update();
-	//}
-	//else {
-	//	// メニューを閉じたら破棄して状態をリセット
-	//	if (pSaveMenu) {
-	//		delete pSaveMenu;
-	//		pSaveMenu = nullptr;
-	//	}
-	//}
+	
+	
 
 #if _DEBUG
 	if (input->IsKeyDown(KEY_INPUT_3)) {
@@ -371,32 +386,7 @@ void Player::Update() {
 
 #endif
 
-#pragma region スキル選択
-	if (exp >= maxExp && !isSelectingSkill) {
-		remainExp = exp - maxExp;
-		exp = remainExp;
-		RuneCost(Lv);
-		LvUp(1);
-		skillChoices = SkillManager::GetInstance().GenerateSkillChoices();
-		skillUI.StartSelection();
-		isSelectingSkill = true;
-		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-		SetMouseDispFlag(TRUE);
-	}
-	if (isSelectingSkill) {
-		// ★スキル選択中の処理
-		int selected = skillUI.UpdateSelection();
-		if (selected != -1) {
 
-			if (player && selected >= 0 && selected < (int)skillChoices.size()) {
-				SkillManager::GetInstance().ApplySelectedSkill(this, skillChoices[selected]);
-			}
-			isSelectingSkill = false;
-			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
-
-		}
-	}
-#pragma endregion
 
 
 
@@ -531,14 +521,21 @@ void Player::Render() {
 
 	inventory.UseItemShortcutRender();
 
-	if (isSelectingSkill) {
-		skillUI.Render(skillChoices);
-	}
-
 	if (isSelectArtifact) {
 		artifactSelectUI.Render(artifactChioces);
 	}
+	
 	artifactSelectUI.Render(bossArtifactChioces);
+	
+	
+	
+	if (isSelectingSkill) {
+		if(!isSelectBossArtifact){
+			skillUI.Render(skillChoices);
+			
+		}
+	}
+
 
 	AddItemRender();
 	if (hitChest) {
@@ -834,7 +831,7 @@ void Player::GetBossArtifact()
 	   artifactSelectUI.StartSelection();
 	   ArtifactManager::GetInstance().SetBossDesiegen(false);
 	   GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-	   
+	   isSelectBossArtifact = true;
 	}
 	else {
 		int Selected = artifactSelectUI.UpdateSelection(bossArtifactChioces);
@@ -842,11 +839,10 @@ void Player::GetBossArtifact()
 
 			if (player && Selected >= 0 && Selected < (int)bossArtifactChioces.size()) {
 				ArtifactManager::GetInstance().ApplySelectedArtifact(this, bossArtifactChioces[Selected]);
-
-				
 			}
 
 			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+			isSelectBossArtifact = false;
 		}
 	}
 }

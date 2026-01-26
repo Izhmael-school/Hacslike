@@ -15,8 +15,20 @@ int ArtifactSelectUI::UpdateSelection(const std::vector < std::shared_ptr<Artifa
 
 	if (!isActive) return -1;
 
-	const int artifactCount = (int)artifact.size();  // ← ※適切な変数に置き換えてください
+	// 出現アニメ中は無効
+	if (isAppearing)
+	{
+		animTimer++;
+		if (animTimer >= animDuration)
+		{
+			animTimer = animDuration;
+			isAppearing = false;
+		}
+		return -1;
+	}
 
+	const int artifactCount = (int)artifact.size();  // ← ※適切な変数に置き換えてください
+	
 	// ▼ カーソル操作はアーティファクトが2つ以上あるときのみ
 	if (artifactCount > 1) {
 		// 左キー → 左回り (0 -> 1 -> 2 -> 0)
@@ -51,6 +63,14 @@ void ArtifactSelectUI::Render(const std::vector<std::shared_ptr<ArtifactBase>>& 
 	const int centerY = 180;
 	const int gap = 300;
 
+	// 出現アニメ補間
+	float t = animTimer / animDuration;
+	if (t > 1.0f) t = 1.0f;
+	float easeOut = 1 - pow(1 - t, 3);
+	float scale = 0.5f + easeOut * 0.5f;
+	float offsetY = -200 + easeOut * 200;
+	int alpha = (int)(easeOut * 255);
+
 	for (int i = 0; i < (int)artifact.size(); ++i) {
 		// index = 0 を中央、1を左、2を右にする
 		int offsetX = 0;
@@ -81,4 +101,77 @@ void ArtifactSelectUI::Render(const std::vector<std::shared_ptr<ArtifactBase>>& 
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+	//-------------------------------------
+	//  花火の上限チェック
+	//-------------------------------------
+	// 花火の継続生成処理
+	static int fireworkTimer = 0;
+	fireworkTimer++;
+	const int MAX_FIREWORK = 250;
+	if (fireworks.size() < MAX_FIREWORK) {
+		if (fireworkTimer > 40) {
+			fireworkTimer = 0;
+			FireworkParticle fw;
+			fw.x = 300 + GetRand(600);
+			fw.y = 600;
+			fw.vx = 0;
+			fw.vy = -6.0f - GetRand(4);
+			fw.color = GetColor(255, 200 - GetRand(50), 100 + GetRand(100));
+			fw.life = 0;
+			fw.maxLife = 60 + GetRand(30);
+			fw.exploded = false;
+			fireworks.push_back(fw);
+		}
+	}
+
+
+	//-------------------------------------
+	//  描画（BlendMode はまとめて1回）
+	//-------------------------------------
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
+	for (auto& fw : fireworks)
+	{
+		if (!fw.exploded) {
+			// 上へ
+			fw.y += fw.vy;
+			fw.vy += 0.15f;
+			DrawCircle((int)fw.x, (int)fw.y, 3, fw.color, TRUE);
+
+			fw.life++;
+
+			// 爆発
+			if (fw.life > fw.maxLife / 2 && fireworks.size() < MAX_FIREWORK) {
+				fw.exploded = true;
+
+				for (int j = 0; j < 16; ++j) { // 40 → 16 に減らす
+					FireworkParticle p;
+					p.x = fw.x;
+					p.y = fw.y;
+					float angle = (float)(DX_PI * 2 * j / 16);
+					float s = 2.0f + GetRand(20) / 20.0f;
+					p.vx = cosf(angle) * s;
+					p.vy = sinf(angle) * s;
+					p.color = fw.color;
+					p.life = 0;
+					p.maxLife = fw.maxLife / 2;
+					p.exploded = true;
+					fireworks.push_back(p);
+				}
+			}
+		}
+		else {
+			fw.x += fw.vx;
+			fw.y += fw.vy;
+			fw.vy += 0.05f;
+			fw.life++;
+
+			float a = 1.0f - (float)fw.life / fw.maxLife;
+			if (a < 0) a = 0;
+
+			DrawCircle((int)fw.x, (int)fw.y, 2, fw.color, TRUE);
+		}
+	}
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

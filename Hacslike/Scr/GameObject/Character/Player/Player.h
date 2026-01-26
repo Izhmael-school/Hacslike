@@ -84,6 +84,7 @@ private:	//	メンバ変数
 	// 追加: 接触中の宝箱オブジェクトを保持するポインタ
 	StartTreasureChest* hitChestObj = nullptr;
 	bool isSelectArtifact = false;
+	bool isSelectBossArtifact = false;
 	ArtifactSelectUI artifactSelectUI;
 	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
 	std::vector<std::shared_ptr<ArtifactBase>> bossArtifactChioces;
