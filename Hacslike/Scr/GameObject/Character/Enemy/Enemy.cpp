@@ -34,7 +34,7 @@ void Enemy::Start() {
 	// 大きすぎるため1/10
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	// アニメーションイベントの設定
-	SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); },pAnimator->GetTotalTime("dead"));
+	SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	SetAnimEvent("idle01", [this]() {SetAttacking(false); });
 	// 攻撃中の移動制御
 
@@ -80,10 +80,31 @@ void Enemy::Update() {
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
 
-	if (IsDead()) {
+	// アニメーションの更新
+	if (pAnimator != nullptr)
 		pAnimator->Update();
+
+	if (IsDead())
 		return;
+
+	if (atking) {
+	area.Update();
+		// 攻撃当たり判定の更新
+		for (auto c : attackColliderList) {
+			if (c->GetCollider() == nullptr) continue;
+
+			c->Update();
+		}
 	}
+
+
+	// 当たり判定の更新
+	if (pCollider != nullptr) {
+		pCollider->SetMatrix(matrix);
+		pCollider->Update();
+	}
+
+	if (isAttack()) return;
 
 	// レイの更新
 	WallDetectionVision_Fan(GetPlayer()->GetPosition());
@@ -92,18 +113,6 @@ void Enemy::Update() {
 	// 徘徊行動
 	Wander();
 
-	// アニメーションの更新
-	if (pAnimator != nullptr) {
-		pAnimator->Update();
-		area.Update();
-	}
-
-	// 攻撃当たり判定の更新
-	for (auto c : attackColliderList) {
-		if (c->GetCollider() == nullptr) continue;
-
-		c->Update();
-	}
 
 	// 攻撃当たり判定の削除
 	for (auto itr = attackColliderList.begin(); itr != attackColliderList.end(); ) {
@@ -117,14 +126,6 @@ void Enemy::Update() {
 		delete c;
 		itr = attackColliderList.erase(itr); // eraseの戻り値を使って次の要素へ
 	}
-
-	// 当たり判定の更新
-	if (pCollider != nullptr) {
-		pCollider->SetMatrix(matrix);
-		pCollider->Update();
-	}
-
-	if (isAttack()) return;
 
 	if (rayAnswer && !isTouch)
 		pAnimator->Play("run");
@@ -261,8 +262,8 @@ bool Enemy::Vision_Ray() {
 		DrawLine3D(start, end, yellow);
 #endif
 		return false;
-		}
 	}
+}
 
 /// <summary>
 /// MV1CollCheck_Sphereを用いたRay

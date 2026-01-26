@@ -28,18 +28,18 @@ SekinoScene::~SekinoScene() {
 
 void SekinoScene::Start() {
 	//
-
-	/*pGameObjectArray.push_back(pPlayer);
+	Player* pPlayer = new Player();
+	pGameObjectArray.push_back(pPlayer);
 	pPlayer->AddMaxHp(10000000);
-	pPlayer->AddHp(pPlayer->GetMaxHp());*/
+	pPlayer->AddHp(pPlayer->GetMaxHp());
 	Weapon* pWeapon = new Weapon("sabel");
 	Enemy* e = EnemyManager().GetInstance().UseEnemy(Spider);
-	pGameObjectArray.push_back(e);
+	//pGameObjectArray.push_back(e);
 	e->SetPosition(VGet(200, 0, 800));
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
-	//pCamera->SetTarget(pPlayer);
+	pCamera->SetTarget(pPlayer);
 
 	StageManager::GetInstance().NoFadeGenerate();
 }
@@ -48,6 +48,8 @@ void SekinoScene::Update() {
 	for (auto pObj : pGameObjectArray) {
 		pObj->Update();
 	}
+
+	EnemyManager::GetInstance().Update();
 }
 
 void SekinoScene::Render() {
@@ -55,6 +57,8 @@ void SekinoScene::Render() {
 	for (auto pObj : pGameObjectArray) {
 		pObj->Render();
 	}
+
+	EnemyManager::GetInstance().Render();
 
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
