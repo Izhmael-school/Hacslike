@@ -167,7 +167,7 @@ void EnemyManager::UnuseAllEnemy() {
 void EnemyManager::DeleteEnemy(Enemy* enemy) {
 	for (int i = 0, max = pEnemyArray.size(); i < max; i++) {
 		CollisionManager::GetInstance().UnRegister(enemy->GetCollider());
-		pEnemyArray.remove(enemy);
+		unuseEnemy.push_back(enemy);
 		delete enemy;
 		enemy = nullptr;
 	}

@@ -141,7 +141,7 @@ void SphereHitBox::CreateCollider() {
 	if (!pCollider) {
 		pCollider = new SphereCollider(this, VZero, radius);
 		pCollider->SetEnable(true);
-		CollisionManager::GetInstance().Register(pCollider);
+		//CollisionManager::GetInstance().Register(pCollider);
 	}
 }
 
