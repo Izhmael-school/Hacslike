@@ -330,11 +330,11 @@ void Player::Update() {
 		skillUI.StartSelection();
 		isSelectingSkill = true;
 		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-		SetMouseDispFlag(TRUE);
 	}
 	if (isSelectingSkill && !isSelectBossArtifact) {
 		// ★スキル選択中の処理
-		int selected = skillUI.UpdateSelection();
+		SetMouseDispFlag(TRUE);
+		int selected = skillUI.UpdateSelection(skillChoices);
 		if (selected != -1) {
 
 			if (player && selected >= 0 && selected < (int)skillChoices.size()) {
@@ -793,6 +793,7 @@ void Player::GetArtifact() {
 	if (hitChest) {
 		if (!isSelectArtifact) {
 			if (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
+				SetMouseDispFlag(TRUE);
 				artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
 				artifactSelectUI.StartSelection();
 				isSelectArtifact = true;
@@ -826,7 +827,7 @@ void Player::GetArtifact() {
 void Player::GetBossArtifact()
 {
 	if (ArtifactManager::GetInstance().GetBossDesiegen() == true) {
-	   
+	   SetMouseDispFlag(TRUE);
 	   bossArtifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
 	   artifactSelectUI.StartSelection();
 	   ArtifactManager::GetInstance().SetBossDesiegen(false);

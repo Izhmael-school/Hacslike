@@ -37,7 +37,7 @@ public:
     /// XV
     /// </summary>
     /// <returns></returns>
-    int UpdateSelection();
+    int UpdateSelection(const std::vector<std::shared_ptr<Skill>>& skills);
     /// <summary>
     /// •`‰æ
     /// </summary>

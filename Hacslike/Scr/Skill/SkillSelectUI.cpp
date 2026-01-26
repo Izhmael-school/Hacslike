@@ -8,7 +8,7 @@
 
 void SkillSelectUI::StartSelection()
 {
-    selectedIndex = 1; // 真ん中から開始
+    selectedIndex = 0; // 真ん中から開始
     isActive = true;
 
 
@@ -35,9 +35,10 @@ void SkillSelectUI::StartSelection()
     AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 }
 
-int SkillSelectUI::UpdateSelection()
+int SkillSelectUI::UpdateSelection(const std::vector<std::shared_ptr<Skill>>& skills)
 {
     InputManager* input = &InputManager::GetInstance();
+    const int skillCount = (int)skills.size();
     if (!isActive) return -1;
 
     // 出現アニメ中は無効
@@ -73,8 +74,16 @@ int SkillSelectUI::UpdateSelection()
 
     for (int i = 0; i < 3; i++)
     {
-        int x = startX + i * gap;
-        int y = startY + (int)offsetY;
+        const int centerX = 640; // 画面中央（解像度1280x720の場合）
+        const int centerY = 180;
+        // index = 0 を中央、1を左、2を右にする
+        int offsetX = 0;
+        if (i == 0) offsetX = 0;
+        else if (i == 1) offsetX = -gap;
+        else if (i == 2) offsetX = gap;
+
+        int x = centerX + offsetX - cardWidth / 2;
+        int y = centerY;
 
         int cx = x + cardWidth / 2;
         int cy = y + cardHeight / 2;
@@ -128,19 +137,14 @@ int SkillSelectUI::UpdateSelection()
     }
     else {
         if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
-            selectedIndex--;
-            if(selectedIndex <= -1){
-                selectedIndex = 2;
-            }
+            selectedIndex = (selectedIndex + 1)% skillCount;
             inputCooldown = 10;  // 10F = 約0.16秒
             
             AudioManager::GetInstance().PlayOneShot("SelectSkill");
         }
         else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
-            selectedIndex++;
-            if (selectedIndex >= 3) {
-                selectedIndex = 0;
-            }
+            selectedIndex = (selectedIndex + skillCount - 1) % skillCount;
+
             inputCooldown = 10;
             AudioManager::GetInstance().PlayOneShot("SelectSkill");
         }
@@ -165,8 +169,8 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
     if (!isActive) return;
     if (skills.empty()) return;
 
-    const int startX = 200;
-    const int startY = 180;
+    const int centerX = 640; // 画面中央（解像度1280x720の場合）
+    const int centerY = 180;
     const int gap = 300;
 
     // 出現アニメ補間
@@ -179,8 +183,15 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
 
     for (int i = 0; i < (int)skills.size(); ++i)
     {
-        int x = startX + i * gap;
-        int y = startY + (int)offsetY;
+        // index = 0 を中央、1を左、2を右にする
+        int offsetX = 0;
+        if (i == 0) offsetX = 0;
+        else if (i == 1) offsetX = -gap;
+        else if (i == 2) offsetX = gap;
+
+        int x = centerX + offsetX - cardWidth / 2;
+        int y = centerY;
+
         int color = (i == selectedIndex) ? yellow : GetColor(50, 50, 50);
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);

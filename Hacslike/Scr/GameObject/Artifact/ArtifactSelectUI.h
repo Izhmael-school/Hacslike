@@ -33,5 +33,6 @@ public:
 	int UpdateSelection(const std::vector < std::shared_ptr<ArtifactBase>>& artifact);
 	void Render(const std::vector < std::shared_ptr<ArtifactBase>>& artifact);
 	bool IsActive() const { return isActive; }
+
 };
 

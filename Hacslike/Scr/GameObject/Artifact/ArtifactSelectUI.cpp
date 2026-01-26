@@ -4,15 +4,35 @@
 #include "../../Manager/AudioManager.h"
 
 void ArtifactSelectUI::StartSelection() {
+	//真ん中を0にするため
 	selectIndex = 0;
 	isActive = true;
+	// 出現演出初期化
+	animTimer = 0.0f;
+	isAppearing = true;
+
+
+	// 花火初期化
+	fireworks.clear();
+	for (int i = 0; i < 5; ++i) {
+		FireworkParticle fw;
+		fw.x = 300 + i * 250; // スキルカードの下あたり
+		fw.y = 600;           // 画面下
+		fw.vx = 0;
+		fw.vy = -6.0f - i;    // 上方向へ打ち上げ
+		fw.color = GetColor(255, 200 - i * 30, 100 + i * 20);
+		fw.life = 0;
+		fw.maxLife = 60 + i * 10;
+		fw.exploded = false;
+		fireworks.push_back(fw);
+	}
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "SelectSkill", false);
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "DecisionSkill", false);
 }
 
 int ArtifactSelectUI::UpdateSelection(const std::vector < std::shared_ptr<ArtifactBase>>& artifact) {
 	InputManager* input = &InputManager::GetInstance();
-
+	const int artifactCount = (int)artifact.size();  // ← ※適切な変数に置き換えてください
 	if (!isActive) return -1;
 
 	// 出現アニメ中は無効
@@ -26,21 +46,104 @@ int ArtifactSelectUI::UpdateSelection(const std::vector < std::shared_ptr<Artifa
 		}
 		return -1;
 	}
+	//-------------------------------------
+	// ▼ マウスによるカード選択（NEW）
+	//-------------------------------------
+	int mx, my;
+	GetMousePoint(&mx, &my);
 
-	const int artifactCount = (int)artifact.size();  // ← ※適切な変数に置き換えてください
-	
+	hoverIndex = -1;
+
+
+	const int startX = 200;
+	const int startY = 180;
+	const int gap = 300;
+
+	// 出現アニメ補間（Render と同じ計算）
+	float t = animTimer / animDuration;
+	if (t > 1.0f) t = 1.0f;
+	float easeOut = 1 - pow(1 - t, 3);
+	float scale = 0.5f + easeOut * 0.5f;
+	float offsetY = -200 + easeOut * 200;
+
+	//マウス選択
+	for (int i = 0; i < artifactCount; i++)
+	{
+
+		const int centerX = 640; // 画面中央（解像度1280x720の場合）
+		const int centerY = 180;
+		// index = 0 を中央、1を左、2を右にする
+		int offsetX = 0;
+		if (i == 0) offsetX = 0;
+		else if (i == 1) offsetX = -gap;
+		else if (i == 2) offsetX = gap;
+
+		int x = centerX + offsetX - cardWidth / 2;
+		int y = centerY;
+		
+		int cx = x + cardWidth / 2;
+		int cy = y + cardHeight / 2;
+		int halfW = (int)(cardWidth * 0.5f * scale);
+		int halfH = (int)(cardHeight * 0.5f * scale);
+
+		int left = cx - halfW;
+		int right = cx + halfW;
+		int top = cy - halfH;
+		int bottom = cy + halfH;
+
+		if (mx >= left && mx <= right && my >= top && my <= bottom)
+		{
+			hoverIndex = i;
+		}
+	}
+
+	// ★ マウスがカードの上にある場合、選択カーソルを移動
+	if (hoverIndex != -1)
+	{
+		if (selectIndex != hoverIndex)
+		{
+			selectIndex = hoverIndex;
+			AudioManager::GetInstance().PlayOneShot("SelectSkill");
+		}
+
+		// ★ 左クリックで決定
+		if (input->IsMouseDown(MOUSE_INPUT_LEFT))
+		{
+			isActive = false;
+			AudioManager::GetInstance().PlayOneShot("DecisionSkill");
+			SetMouseDispFlag(FALSE);
+			return selectIndex;
+		}
+	}
+
+	// 出現演出中は入力無効
+	if (isAppearing)
+	{
+		animTimer++;
+		if (animTimer >= animDuration)
+		{
+			animTimer = animDuration;
+			isAppearing = false;
+		}
+		return -1;
+	}
+
+	if (inputCooldown > 0) {
+		inputCooldown--;
+	}
 	// ▼ カーソル操作はアーティファクトが2つ以上あるときのみ
-	if (artifactCount > 1) {
+	else if (artifactCount > 1 && inputCooldown<=0) 
+	{
 		// 左キー → 左回り (0 -> 1 -> 2 -> 0)
 		if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
 			selectIndex = (selectIndex + 1) % artifactCount;
-			WaitTimer(150);
+			inputCooldown = 10;
 			AudioManager::GetInstance().PlayOneShot("SelectSkill");
 		}
 		// 右キー → 右回り
 		else if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
 			selectIndex = (selectIndex + artifactCount - 1) % artifactCount;
-			WaitTimer(150);
+			inputCooldown = 10;
 			AudioManager::GetInstance().PlayOneShot("SelectSkill");
 		}
 	}
@@ -49,6 +152,8 @@ int ArtifactSelectUI::UpdateSelection(const std::vector < std::shared_ptr<Artifa
 	if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B)) {
 		isActive = false;
 		AudioManager::GetInstance().PlayOneShot("DecisionSkill");
+		SetMouseDispFlag(FALSE);
+
 		return selectIndex;
 	}
 
