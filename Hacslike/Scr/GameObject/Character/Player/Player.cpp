@@ -338,7 +338,7 @@ void Player::Update() {
 	if (isArtifactUI) {
 		artifactUI.Update();
 	}
-
+	GetBossArtifact();
 	//// セーブメニュー（isSaveUI フラグが立っていれば生成して Update を呼ぶ）
 	//if (isSaveUI) {
 	//	if (!pSaveMenu) {
@@ -538,6 +538,7 @@ void Player::Render() {
 	if (isSelectArtifact) {
 		artifactSelectUI.Render(artifactChioces);
 	}
+	artifactSelectUI.Render(bossArtifactChioces);
 
 	AddItemRender();
 	if (hitChest) {
@@ -823,6 +824,31 @@ void Player::GetArtifact() {
 	}
 	else return;
 
+}
+
+void Player::GetBossArtifact()
+{
+	if (ArtifactManager::GetInstance().GetBossDesiegen() == true) {
+	   
+	   bossArtifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
+	   artifactSelectUI.StartSelection();
+	   ArtifactManager::GetInstance().SetBossDesiegen(false);
+	   GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+	   
+	}
+	else {
+		int Selected = artifactSelectUI.UpdateSelection(bossArtifactChioces);
+		if (Selected != -1) {
+
+			if (player && Selected >= 0 && Selected < (int)bossArtifactChioces.size()) {
+				ArtifactManager::GetInstance().ApplySelectedArtifact(this, bossArtifactChioces[Selected]);
+
+				
+			}
+
+			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+		}
+	}
 }
 
 void Player::GetArtifactRender() {

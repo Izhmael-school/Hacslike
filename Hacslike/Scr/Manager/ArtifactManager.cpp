@@ -34,13 +34,6 @@ ArtifactManager::~ArtifactManager()
 }
 
 
-void ArtifactManager::RegisterBossDeath(BossBase* boss)
-{
-    if (!boss) return;
-
-    bossDeathQueue.push(boss); // キューにボスを登録
-}
-
 void ArtifactManager::Start()
 {
     AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す36.mp3", "ArtifactGet", false);
@@ -129,27 +122,7 @@ void ArtifactManager::ApplySelectedArtifact(Player* _player, std::shared_ptr<Art
     }
 }
 
-void ArtifactManager::ProcessBossDeath(Player* player)
-{
-    while (!bossDeathQueue.empty()) {
-        BossBase* boss = bossDeathQueue.front();
-        bossDeathQueue.pop(); // キューから削除
 
-        // アーティファクト選択処理
-        std::vector<std::shared_ptr<ArtifactBase>> artifactChoices = GenerateArtifactChoices();
-        if (!artifactChoices.empty()) {
-            ArtifactSelectUI artifactUI;
-            artifactUI.StartSelection();
-            while (artifactUI.IsActive()) {
-                int selectedIndex = artifactUI.UpdateSelection(artifactChoices);
-                if (selectedIndex >= 0) {
-                    ApplySelectedArtifact(player, artifactChoices[selectedIndex]);
-                    break; // 選択完了
-                }
-            }
-        }
-    }
-}
 
 /// <summary>
 /// ゲームスタート時にランダムで一つ選出
@@ -191,10 +164,6 @@ std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::ApplyArtifact()
 
 void ArtifactManager::Update(Player* player)
 {
-    // ボス死亡イベントの処理
-    if (!bossDeathQueue.empty()) {
-        ProcessBossDeath(player);
-    }
     for (auto& artifact : activeArtifact)
     {
         artifact->Update(player);

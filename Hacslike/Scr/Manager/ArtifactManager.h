@@ -32,6 +32,11 @@ public:
 	/// <param name="artifact"></param>
 	std::vector<std::shared_ptr<ArtifactBase>> GenerateArtifactChoices();
 
+	/// <summary>
+	/// アーティファクトの適応
+	/// </summary>
+	/// <param name="_player"></param>
+	/// <param name="_artifact"></param>
 	void ApplySelectedArtifact(Player* _player, std::shared_ptr<ArtifactBase> _artifact);
 
 	/// <summary>
@@ -39,9 +44,11 @@ public:
 	/// </summary>
 	/// <param name="_artifact"></param>
 	std::vector<std::shared_ptr<ArtifactBase>> ApplyArtifact();
-	std::queue<BossBase*> bossDeathQueue; // ボス死亡イベントを保持するキュー
+
+	bool bossDesiegen = false;
+
 public:
-	void RegisterBossDeath(BossBase* boss);
+	
 	void Start();
 
 	void Update(Player* player);
@@ -56,8 +63,10 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const inline std::vector<std::shared_ptr<ArtifactBase>>& GetActiveArtifact() const { return activeArtifact; }
-
 	const std::vector<std::shared_ptr<ArtifactBase>>& GetObtainedArtifacts() const { return obtainedArtifacts; }
+
+	inline bool GetBossDesiegen() { return bossDesiegen; }
+	inline void SetBossDesiegen(bool boss) { bossDesiegen = boss; }
 
 	// --- Serialization ---
 	void SaveTo(BinaryWriter& w) const;
@@ -65,7 +74,6 @@ public:
 	
 
 private:
-	void ProcessBossDeath(Player* player); // アーティファクト選択処理を行う専用メソッド
 
 	// helper to create fresh instance by ID
 	std::shared_ptr<ArtifactBase> CreateArtifactByID(int id);

@@ -72,7 +72,6 @@ void BossBase::DeadExecute() {
 
 	AppearStair();
 	
-	// ArtifactManager‚Éƒ{ƒXŽ€–S‚ð’Ê’m
-	//ArtifactManager::GetInstance().RegisterBossDeath(this); // this‚ð“n‚·
+	ArtifactManager::GetInstance().SetBossDesiegen(true);
 }
 

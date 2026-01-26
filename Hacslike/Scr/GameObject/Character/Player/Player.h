@@ -86,6 +86,8 @@ private:	//	メンバ変数
 	bool isSelectArtifact = false;
 	ArtifactSelectUI artifactSelectUI;
 	std::vector<std::shared_ptr<ArtifactBase>> artifactChioces;
+	std::vector<std::shared_ptr<ArtifactBase>> bossArtifactChioces;
+
 #pragma endregion
 
 #pragma region スキル
@@ -218,6 +220,8 @@ public:		//	メンバ関数
 	void AddItemRender();
 
 	void GetArtifact();
+
+	void GetBossArtifact();
 
 	void GetArtifactRender();
 
