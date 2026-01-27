@@ -6,6 +6,8 @@
 
 #include <DxLib.h>
 
+#include <set>
+
 class SphereHitBox : public GameObject{
 private:
 
@@ -19,12 +21,16 @@ private:
 	float timer;			//	時間
 	bool active;			//	アクティブ
 	int chain;				//	チェイン
+	float magnification;
 
 	SphereCollider* pCollider;	//	コライダー
 
 	std::vector<VECTOR> targetPoints; // 目的地リスト
 	int currentTargetIndex = 0;       // 現在の目的地番号
 	float moveSpeed = 30.0f;          // 移動速度
+
+	std::set<Character*> hitCharacters;
+	bool isPenetrating = true;         
 
 public:
 	/// <summary>
@@ -34,7 +40,7 @@ public:
 	/// <param name="_offset"></param>
 	/// <param name="_radius"></param>
 	/// <param name="_lifeTime"></param>
-	SphereHitBox(Character* _ownwr, VECTOR _offset,float _radius, float _lifeTime);
+	SphereHitBox(Character* _ownwr, VECTOR _offset,float _radius, float _lifeTime, float _magnification = 1);
 
 	/// <summary>
 	/// コンストラクタ
@@ -99,7 +105,7 @@ public:
 	/// <param name="_radius"></param>
 	/// <param name="_life"></param>
 	void Reset(Character* _owner, const VECTOR& startPos, const VECTOR& _velocity,
-		float _radius, float _life);
+		float _radius, float _life, float _magnification);
 
 	/// <summary>
 	/// 弾用のリセット

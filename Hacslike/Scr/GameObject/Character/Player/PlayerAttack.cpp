@@ -34,7 +34,8 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, addRadius()
 	, currentChainCount()
 	, maxChainCount()
-	, animName(){
+	, animName()
+	, magnification(1){
 	pSpherePool = &BulletPool::GetInstance();
 	pCapsulePool = &CapsuleHitPool::GetInstance();
 	Start();
@@ -60,6 +61,11 @@ void PlayerAttack::Start() {
 void PlayerAttack::Update() {
 	if (!pPlayer->GetIsDead())
 		AttackInput();
+
+	// 攻撃フラグが折れているなら、判定フラグも強制的に折る
+	if (!isAttacking) {
+		hasGeneratedHitbox = false;
+	}
 
 	pSpherePool->Update();
 	pCapsulePool->Update();
@@ -238,12 +244,15 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f) {
+					magnification = 1;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f) {
+					magnification = 1.2f;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f) {
+					magnification = 5;
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f) {
@@ -378,7 +387,7 @@ void PlayerAttack::CreateHitBox(VECTOR _pos, float _radius) {
 void PlayerAttack::CreateAttackHitbox(float _length, float _radius) {
 	VECTOR forward = pPlayer->GetForward();
 	VECTOR spawnPos = VAdd(pPlayer->GetPosition(), VAdd(VScale(forward, 100.0f), VGet(0, 100, 0)));
-	pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f);
+	pSpherePool->Spawn(pPlayer, spawnPos, VGet(0, 0, 0), _radius, 0.25f, magnification);
 	Effect* pEffe = EffectManager::GetInstance().Instantiate("Hit", spawnPos);
 }
 #pragma endregion

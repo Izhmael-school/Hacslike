@@ -53,14 +53,14 @@ static void CleanupColliderForBullet(SphereHitBox* b) {
 /// <param name="radius"></param>
 /// <param name="life"></param>
 /// <returns></returns>
-SphereHitBox* BulletPool::Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life) {
+SphereHitBox* BulletPool::Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life, float magnification) {
 	for (auto b : pool) {
 		if (b->GetActive()) continue;
 			// --- 再利用前に古いコライダーの残滓がないか安全にクリーンアップ ---
 			CleanupColliderForBullet(b);
 
 			// Reset で内部状態を初期化（位置・速度・有効化フラグは Reset でやる設計）
-			b->Reset(owner, pos, vel, radius, life);
+			b->Reset(owner, pos, vel, radius, life, magnification);
 
 			// Spawn 後は必ず Collider を登録して有効化する（Reset が登録しない設計の場合）
 			auto newCol = b->GetCollider();

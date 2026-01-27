@@ -90,6 +90,16 @@ public:	// ゲッターとセッター
 #pragma region Attack
 	// 攻撃力の取得
 	inline int GetAtk() const { return atk; }
+	//	クリティカル込みの攻撃力の取得
+	inline int GetCriticalAtk() const {
+		if (GetRand(99) < criticalHitRate) {
+			printfDx("会心の一撃！\n");
+			return atk * (criticalDamage / 100);
+		}
+		else {
+			return atk;
+		}
+	}
 	// 攻撃力の設定
 	inline void SetAtk(int _atk) { atk = _atk; }
 	// 攻撃フラグの取得

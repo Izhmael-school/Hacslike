@@ -21,7 +21,7 @@ public:
 	/// <param name="radius"></param>
 	/// <param name="life"></param>
 	/// <returns></returns>
-	SphereHitBox* Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life);
+	SphereHitBox* Spawn(Character* owner, const VECTOR& pos, const VECTOR& vel, float radius, float life, float magnification = 1);
 
 	/// <summary>
 	///	íeópÇÃê∂ê¨
