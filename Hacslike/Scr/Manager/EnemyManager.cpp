@@ -141,6 +141,7 @@ Enemy* EnemyManager::UseEnemy(EnemyType type) {
 		pUnuseEnemiesArray[(int)type]->unuseArray.pop_front();
 	}
 
+	CollisionManager::GetInstance().CheckRegister(e->GetCollider());
 	e->SetType(type);
 	e->Setup();
 	return e;

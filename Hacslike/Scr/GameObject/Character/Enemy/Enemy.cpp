@@ -36,7 +36,11 @@ void Enemy::Start() {
 	// 大きすぎるため1/10
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	// アニメーションイベントの設定
-	SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	if (isBoss)
+		pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
+	else
+		SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
+
 	SetAnimEvent("idle01", [this]() {SetAttacking(false); });
 	// 攻撃中の移動制御
 
@@ -139,7 +143,10 @@ void Enemy::Update() {
 
 
 	// 攻撃のリキャスト
-	atkTime += TimeManager::GetInstance().deltaTime;
+	if (atkTime >= atkSpan)
+		atkTime = atkSpan;
+	else
+		atkTime += TimeManager::GetInstance().deltaTime;
 }
 
 void Enemy::Render() {
@@ -181,6 +188,8 @@ void Enemy::SetStatusData(int enemyID) {
 		name = e["name"];
 		moveSpeed = e["spd"];
 		mPath = e["mPath"];
+		criticalHitRate = e["cRate"];
+		criticalDamage = e["cDamageRate"];
 		vision.rayAngle = e["rAngle"];
 		vision.rayCount = e["rCount"];
 		vision.rayLenght = e["rLenght"];
@@ -452,18 +461,18 @@ void Enemy::SetAnimEvent(std::string animName, std::function<void()> func, float
 	anim->SetEvent(func, time);
 }
 
-void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis) {
+void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis, float mag) {
 	float speed = pAnimator->GetAnimSpeed(animName);
-	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis), position), speed,
-		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS()));
+	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, mag]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(dis), position), speed,
+		[this, radius, dis, colliderLifeTime, mag]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS(), mag));
 	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(dis)));
 		}); });
 }
 
-void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis) {
+void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis, float mag) {
 	float speed = pAnimator->GetAnimSpeed(animName);
-	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
-		[this, radius, dis, colliderLifeTime]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS()));
+	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos, mag]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
+		[this, radius, dis, colliderLifeTime, mag]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS(), mag));
 	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(dis)));
 		}); });
 }
@@ -604,7 +613,11 @@ void Enemy::OnTriggerEnter(Collider* _pOther) {
 	}
 }
 
-void Enemy::OnTriggerStay(Collider* _pOther) {}
+void Enemy::OnTriggerStay(Collider* _pOther) {
+	GameObject* _pObj = _pOther->GetGameObject();
+	if (_pObj->GetTag() != "Player" || atking || isDead) return;
+	LookTarget(_pObj->GetPosition());
+}
 
 void Enemy::OnTriggerExit(Collider* _pOther) {
 	if (_pOther->GetGameObject()->CompareTag("Player")) {

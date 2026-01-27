@@ -14,15 +14,25 @@ void EnemyOuger::Start() {
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 0, 0), VGet(0,200, 0), 120);
 
+	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
+	attack01ColliderRadius = 150;
+	attack02ColliderRadius = 175;
+	attack03ColliderRadius = 250;
+	attack01ColliderSpawnTime = 17;
+	attack02ColliderSpawnTime = 16;
+	attack03ColliderSpawnTime = 48;
+
+	deadAnimationTime = 47;
+
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", 17, 2, 150, 200);
-	SetAnimEventForAttackCollider("attack02", 16, 2, 175, 200);
-	SetAnimEventForAttackCollider("attack03", 48, 2, 250, 250);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 200);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 200);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 250,2.0f);
 	// Œø‰Ê‰¹
-	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, 17);
-	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, 16);
-	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Punch2"); }, 48);
-	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 47);
+	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, attack01ColliderSpawnTime);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, attack02ColliderSpawnTime);
+	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Punch2"); }, attack03ColliderSpawnTime);
+	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 }
 
 void EnemyOuger::Update() {

@@ -12,18 +12,29 @@ void EnemyDurahan::Start() {
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 0, 0), VGet(0, 500, 0), 100);
 
+	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
+	attack01ColliderRadius = 200;
+	attack02ColliderRadius = 75;
+	float attack02ColliderRadius02 = 50;
+	attack03ColliderRadius = 150;
+	attack01ColliderSpawnTime = 43;
+	attack02ColliderSpawnTime = 19;
+	attack03ColliderSpawnTime = 31;
+
+	deadAnimationTime = 33;
+
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", 43, 2, 200, 250);
-	SetAnimEventForAttackCollider("attack02", 19, 2, 75, 350);
-	SetAnimEventForAttackCollider("attack02", 19, 2, 50, 250);
-	SetAnimEventForAttackCollider("attack02", 19, 2, 50, 175);
-	SetAnimEventForAttackCollider("attack02", 19, 2, 50, 100);
-	SetAnimEventForAttackCollider("attack03", 31, 2, 150, 400);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 250,2.0f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 350);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 250,0.6f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 175,0.6f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 100,0.6f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 400,1.5f);
 	// Œø‰Ê‰¹
-	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, 43);
-	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, 19);
-	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, 19);
-	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); },33 );
+	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, attack01ColliderSpawnTime);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, attack02ColliderSpawnTime);
+	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, attack03ColliderSpawnTime);
+	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 }
 
 void EnemyDurahan::Update() {

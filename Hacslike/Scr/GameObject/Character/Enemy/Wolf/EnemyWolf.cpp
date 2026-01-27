@@ -14,18 +14,30 @@ void EnemyWolf::Start() {
 	Enemy::Start();
 	// “–‚½‚è”»’è‚ÌÝ’è
 	pCollider = new SphereCollider(this, position, 100);
+
+	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
+	attack01ColliderRadius = 100;
+	attack02ColliderRadius = 100;
+	float attack02ColliderRadius02 = 75;
+	float attack02ColliderRadius03 = 50;
+	attack01ColliderSpawnTime = 15;
+	attack02ColliderSpawnTime = 12;
+	float attack02ColliderSpawnTime02 = 18;
+	float attack02ColliderSpawnTime03 = 22;
+
+	deadAnimationTime = 23;
+
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", 15, 2, 100, 150);
-	SetAnimEventForAttackCollider("attack02", 12, 2, 100, 100);
-	SetAnimEventForAttackCollider("attack02", 18, 2, 75, 100);
-	SetAnimEventForAttackCollider("attack02", 22, 2, 50, 100);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, attack03ColliderSpawnTime, attack01ColliderRadius, 150);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, attack03ColliderSpawnTime, attack02ColliderRadius, 100,0.6f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime02, attack03ColliderSpawnTime, attack02ColliderRadius02, 100,0.2f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime03, attack03ColliderSpawnTime, attack02ColliderRadius03, 100, 0.2f);
 	// Œø‰Ê‰¹
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 15);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 12);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 18);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 22);
-	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, 28);
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 23);
+	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack01ColliderSpawnTime);
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack02ColliderSpawnTime);
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack02ColliderSpawnTime02);
+	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack02ColliderSpawnTime03);
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 
 }
 

@@ -5,7 +5,7 @@
 
 template <typename Value>
 
-class Gauge{
+class Gauge {
 private:
 	// 徐々に減る演出用
 	float currentDecreaseValue;
@@ -25,11 +25,13 @@ public:
 	unsigned int frameColor = black;
 
 	// 徐々に減るゲージの色
-	unsigned int backColor = GetColor(50,175,50);
+	unsigned int backColor = GetColor(50, 175, 50);
 	// 徐々に減るスピード
 	float speed;
+
+	bool isDecrease;
 public:
-	Gauge(Value& _currentValue, Value& _maxValue, float x, float y, float w, float h)
+	Gauge(Value& _currentValue, Value& _maxValue, float x, float y, float w, float h, float _isDecrease = true)
 		:maxValue(_maxValue)
 		, currentValue(_currentValue)
 		, currentDecreaseValue(-1)
@@ -37,7 +39,8 @@ public:
 		, posY(y)
 		, width(w)
 		, height(h)
-		, speed(1) {
+		, speed(1)
+		, isDecrease(_isDecrease) {
 		currentDecreaseValue = width * ((float)currentValue / (float)maxValue);
 	}
 
@@ -67,18 +70,22 @@ public:
 
 		// 背景
 		DrawBox(posX, posY, posX + width, posY + height, bottomColor, true);
-		// 前よりゲージが減っているか
-		if (barWidth < currentDecreaseValue) {
-			// 徐々に減る
-			DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, backColor, true);
-			// HP
-			DrawBox(posX, posY, posX + barWidth, posY + height, topColor, true);
+		// 徐々に減るか
+		if (isDecrease) {
+			// 前よりゲージが減っているか
+			if (barWidth < currentDecreaseValue) {
+				// 徐々に減る
+				DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, backColor, true);
+				DrawBox(posX, posY, posX + barWidth, posY + height, topColor, true);
+			}
+			else {
+				DrawBox(posX, posY, posX + barWidth, posY + height, backColor, true);
+				// 徐々に増える
+				DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, topColor, true);
+			}
 		}
 		else {
-			// HP
-			DrawBox(posX, posY, posX + barWidth, posY + height, backColor, true);
-			// 徐々に増える
-			DrawBox(posX, posY, posX + currentDecreaseValue, posY + height, topColor, true);
+			DrawBox(posX, posY, posX + barWidth, posY + height, topColor, true);
 		}
 
 		// 枠

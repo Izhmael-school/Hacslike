@@ -291,6 +291,17 @@ void CollisionManager::Register(Collider* _pCol) {
 	}
 }
 
+void CollisionManager::CheckRegister(Collider* _pCol) {
+	if (_pCol == nullptr) return;
+
+	for (auto c : pColliderArray) {
+		if (c != _pCol) continue;
+
+		Register(_pCol);
+		break;
+	}
+}
+
 void CollisionManager::UnRegister(Collider* _pCol) {
 	//2í—Ş‚Ìl‚¦•û‚ğ‹LÚ
 
