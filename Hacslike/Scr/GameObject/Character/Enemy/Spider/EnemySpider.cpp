@@ -17,11 +17,17 @@ void EnemySpider::Start() {
 	// “–‚½‚è”»’è‚ÌÝ’è
 	pCollider = new SphereCollider(this,position,100);
 
+	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
+	attack01ColliderRadius = 100;
+	attack01ColliderSpawnTime = 14;
+
+	deadAnimationTime = 9;
+
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", 14, 2, 100, 100);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 100);
 	// UŒ‚‚ÌŒø‰Ê‰¹
-	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SpiderAttack"); }, 14);
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 9);
+	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SpiderAttack"); }, attack01ColliderSpawnTime);
+	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 
 }
 

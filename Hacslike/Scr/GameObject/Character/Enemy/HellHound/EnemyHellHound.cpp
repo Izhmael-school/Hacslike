@@ -13,17 +13,30 @@ void EnemyHellHound::Start() {
 	Enemy::Start();
 	// “–‚½‚è”»’è‚Ìİ’è
 	pCollider = new CapsuleCollider(this, VGet(0, 0, 0), VGet(0, 350, 0), 120);
+
+	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
+	attack01ColliderRadius = 150;
+	attack02ColliderRadius = 125;
+	float attack02ColliderRadius02 = 100;
+	float attack02ColliderRadius03 = 75;
+	attack01ColliderSpawnTime = 16;
+	attack02ColliderSpawnTime = 12;
+	float attack02ColliderSpawnTime02 = 22;
+	float attack02ColliderSpawnTime03 = 32;
+
+	deadAnimationTime = 19;
+
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", 16, 2, 150, 250);
-	SetAnimEventForAttackCollider("attack02", 12, 2, 125, 140);
-	SetAnimEventForAttackCollider("attack02", 22, 2, 100, 140);
-	SetAnimEventForAttackCollider("attack02", 32, 2, 75, 140);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 250);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 140,0.7f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime02, colliderLifeTime, attack02ColliderRadius02, 140,0.3f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime03, colliderLifeTime, attack02ColliderRadius03, 140,0.3f);
 	// Œø‰Ê‰¹
-	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 16);
-	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 12);
-	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 22);
-	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, 32);
-	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, 19);
+	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, attack01ColliderSpawnTime);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, attack02ColliderSpawnTime);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, attack02ColliderSpawnTime02);
+	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, attack02ColliderSpawnTime03);
+	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 }
 
 void EnemyHellHound::Update() {

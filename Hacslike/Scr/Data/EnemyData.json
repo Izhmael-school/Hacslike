@@ -7,8 +7,10 @@
     "hp": 50,
     "atk": 10,
     "def": -10,
-    "spd":  150,
+    "spd": 150,
     "exp": 15,
+    "cRate": 10,
+    "cDamageRate": 100,
     "rLenght": 700,
     "rAngle": 75,
     "rCount": 30
@@ -24,6 +26,8 @@
     "def": 10,
     "spd": 170,
     "exp": 200,
+    "cRate": 15,
+    "cDamageRate": 150,
     "rLenght": 2000,
     "rAngle": 360,
     "rCount": 120
@@ -39,6 +43,8 @@
     "def": 5,
     "spd": 120,
     "exp": 50,
+    "cRate": 10,
+    "cDamageRate": 100,
     "rLenght": 500,
     "rAngle": 200,
     "rCount": 50
@@ -54,6 +60,8 @@
     "def": 5,
     "spd": 200,
     "exp": 50,
+    "cRate": 5,
+    "cDamageRate": 150,
     "rLenght": 700,
     "rAngle": 360,
     "rCount": 120
@@ -69,6 +77,8 @@
     "def": 15,
     "spd": 100,
     "exp": 150,
+    "cRate": 10,
+    "cDamageRate": 100,
     "rLenght": 1000,
     "rAngle": 90,
     "rCount": 30
@@ -84,6 +94,8 @@
     "def": 0,
     "spd": 70,
     "exp": 70,
+    "cRate": 20,
+    "cDamageRate": 100,
     "rLenght": 300,
     "rAngle": 100,
     "rCount": 30
@@ -99,6 +111,8 @@
     "def": 10,
     "spd": 220,
     "exp": 70,
+    "cRate": 15,
+    "cDamageRate": 150,
     "rLenght": 900,
     "rAngle": 360,
     "rCount": 120
@@ -114,6 +128,8 @@
     "def": 10,
     "spd": 170,
     "exp": 70,
+    "cRate": 10,
+    "cDamageRate": 200,
     "rLenght": 700,
     "rAngle": 100,
     "rCount": 30
@@ -129,6 +145,8 @@
     "def": 50,
     "spd": 250,
     "exp": 500,
+    "cRate": 5,
+    "cDamageRate": 300,
     "rLenght": 500,
     "rAngle": 310,
     "rCount": 70
@@ -144,6 +162,8 @@
     "def": 150,
     "spd": 120,
     "exp": 700,
+    "cRate": 10,
+    "cDamageRate": 150,
     "rLenght": 1000,
     "rAngle": 75,
     "rCount": 30
@@ -159,6 +179,8 @@
     "def": 10,
     "spd": 160,
     "exp": 100,
+    "cRate": 10,
+    "cDamageRate": 100,
     "rLenght": 800,
     "rAngle": 90,
     "rCount": 30
@@ -174,6 +196,8 @@
     "def": 10,
     "spd": 220,
     "exp": 100,
+    "cRate": 15,
+    "cDamageRate": 150,
     "rLenght": 2000,
     "rAngle": 360,
     "rCount": 120
@@ -189,6 +213,8 @@
     "def": 10,
     "spd": 180,
     "exp": 100,
+    "cRate": 15,
+    "cDamageRate": 150,
     "rLenght": 2000,
     "rAngle": 360,
     "rCount": 120
@@ -204,6 +230,8 @@
     "def": 10,
     "spd": 300,
     "exp": 100,
+    "cRate": 5,
+    "cDamageRate": 300,
     "rLenght": 2000,
     "rAngle": 360,
     "rCount": 120
@@ -219,6 +247,8 @@
     "def": 10,
     "spd": 170,
     "exp": 100,
+    "cRate": 10,
+    "cDamageRate": 150,
     "rLenght": 2000,
     "rAngle": 360,
     "rCount": 120

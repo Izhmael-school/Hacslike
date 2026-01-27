@@ -32,6 +32,7 @@ void BossBase::AppearStair() {
 }
 
 void BossBase::Start() {
+	isBoss = true;
 	Enemy::Start();
 	SetModelHandleDup(MV1LoadModel(MergeString(mPath, "boss.mv1").c_str()));
 	SetScale(VGet(0.2f, 0.2f, 0.2f));
@@ -39,11 +40,9 @@ void BossBase::Start() {
 	pAnimator->SetModelHandle(modelHandle);
 	// アニメーションのロード
 	LoadAnimation();
-	
-	pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	hpBar = new Gauge(hp,maxHp, WINDOW_WIDTH / 4, 700.0f, WINDOW_WIDTH / 2, 15.0f);
-	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 715.0f, WINDOW_WIDTH / 2, 5.0f);
-
+	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 715.0f, WINDOW_WIDTH / 2, 5.0f,false);
+	attackSpanBar->ChangeColor(cyan, blue, black, blue);
 }
 
 void BossBase::Update() {
@@ -58,6 +57,7 @@ void BossBase::Render() {
 	
 	if (!isDead) {
 		hpBar->Render();
+		attackSpanBar->Render();
 		DrawStringToHandle(WINDOW_WIDTH / 4, 700.0f - 20, name.c_str(), white,MainFont);
 		
 	}

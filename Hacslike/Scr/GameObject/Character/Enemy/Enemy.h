@@ -62,6 +62,7 @@ protected:
 	Ray_Fan vision;
 	// 攻撃前の攻撃範囲表示
 	AttackArea area;
+	bool isBoss = false;
 
 	// 道のり
 	std::list<VECTOR> moveRoots;
@@ -69,6 +70,17 @@ protected:
 	VECTOR currentRoot;
 	VECTOR prevRoot;
 	bool isBack; // 来た道を戻ってるか
+
+	// 攻撃関連
+	float attack01ColliderSpawnTime;
+	float attack02ColliderSpawnTime;
+	float attack03ColliderSpawnTime;
+	float colliderLifeTime = 2;
+	float attack01ColliderRadius;
+	float attack02ColliderRadius;
+	float attack03ColliderRadius;
+
+	float deadAnimationTime;
 
 public:
 	Enemy();
@@ -96,8 +108,8 @@ public:
 	VECTOR AttackAreaPos(VECTOR pos,float dis = 1);
 	// アニメーションイベントの登録
 	void SetAnimEvent(std::string animName,std::function<void()> func,float time = 0);
-	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,float dis);
-	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,VECTOR pos,float dis = 1);
+	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,float dis,float mag = 1);
+	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,VECTOR pos,float dis = 1,float mag = 1);
 	
 private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
