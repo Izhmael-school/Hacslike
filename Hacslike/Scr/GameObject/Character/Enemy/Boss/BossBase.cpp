@@ -66,11 +66,13 @@ void BossBase::Render() {
 
 void BossBase::DeadExecute() {
 	if (hp > 0) return;
+
+	if (!isDead) {
+		ArtifactManager::GetInstance().SetBossDesiegen(true);
+	}
 	Enemy::DeadExecute();
 
 	BossSlainUI::GetInstance()->Start();
-
-	ArtifactManager::GetInstance().SetBossDesiegen(true);
 	AppearStair();
 	
 }
