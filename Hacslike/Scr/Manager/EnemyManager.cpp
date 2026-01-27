@@ -141,6 +141,7 @@ Enemy* EnemyManager::UseEnemy(EnemyType type) {
 		pUnuseEnemiesArray[(int)type]->unuseArray.pop_front();
 	}
 
+	
 	e->SetType(type);
 	e->Setup();
 	return e;

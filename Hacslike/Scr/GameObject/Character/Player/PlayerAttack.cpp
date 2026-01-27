@@ -45,7 +45,7 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 /// 初期化
 /// </summary>
 void PlayerAttack::Start() {
-	EffectManager::GetInstance().Load("Res/Effect/CharegeAttackEfk.efk", "ChargeBlad", 20.0f);
+	EffectManager::GetInstance().Load("Res/Effect/CharegeAttackEfk.efk", "ChargeBlad", 30.0f);
 	EffectManager::GetInstance().Load("Res/Effect/DA.efk", "DA", 10.0f);
 	EffectManager::GetInstance().Load("Res/Effect/HIt.efk", "Hit", 20.0f);
 
