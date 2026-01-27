@@ -106,10 +106,11 @@ void SaveObject::Update()
 
 void SaveObject::Render()
 {
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	MV1SetMatrix(modelHandle, matrix);
-	MV1DrawModel(modelHandle);
-
+	if (isVisible) {
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		MV1SetMatrix(modelHandle, matrix);
+		MV1DrawModel(modelHandle);
+	}
 #if _DEBUG
 	if (pCol != nullptr) {
 		pCol->Render();

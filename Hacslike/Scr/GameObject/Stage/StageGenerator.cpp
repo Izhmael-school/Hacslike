@@ -684,6 +684,9 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 		cell = nullptr;
 		break;
 	}
+	pSaveObject->SetVisible(false);
+	pChest->SetVisible(false);
+	pStone->SetVisible(false);
 }
 
 void StageGenerator::DrawMap() {

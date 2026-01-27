@@ -83,9 +83,11 @@ void EnhancementStone::Update() {
 }
 
 void EnhancementStone::Render() {
-    if (modelHandle != -1) {
-        MV1SetMatrix(modelHandle, matrix);
-        MV1DrawModel(modelHandle);
+    if (modelHandle != -1 ) {
+        if (isVisible) {
+            MV1SetMatrix(modelHandle, matrix);
+            MV1DrawModel(modelHandle);
+        }
     }
 
     // Zバッファ（奥行き）をチェックせずに描画する

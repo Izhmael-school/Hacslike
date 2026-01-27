@@ -206,6 +206,8 @@ void StageManager::GenerateStage(int stageID) {
 			// 位置は StageGenerator 側のセル座標（generator->SetGameObject がスケール変換してくれる）
 			generator->SetGameObject(so, sd.saveObjectPos);
 			generator->pSaveObject = so;
+			generator->pSaveObject->SetVisible(true);
+
 		}
 	}
 	{
@@ -214,6 +216,8 @@ void StageManager::GenerateStage(int stageID) {
 		if (chest) {
 			generator->SetGameObject(chest, sd.chestObjectPos);
 			generator->pChest = chest;
+			generator->pChest->SetVisible(true);
+		
 		}
 	}
 	{
@@ -222,6 +226,7 @@ void StageManager::GenerateStage(int stageID) {
 		if (stone) {
 			generator->SetGameObject(stone, sd.enhancementStonePos);
 			generator->pStone = stone;
+			generator->pStone->SetVisible(true);
 		}
 	}
 	// ボスの配置
