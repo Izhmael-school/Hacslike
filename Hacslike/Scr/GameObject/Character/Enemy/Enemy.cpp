@@ -17,7 +17,9 @@ Enemy::Enemy()
 	, atkSpan(4)
 	, goalPos(VGet(-1, -1, -1))
 	, nextWanderSpan(Random(1, 4))
-	, nextWanderTime(nextWanderSpan) {}
+	, nextWanderTime(nextWanderSpan)
+	, currentRoot(position)
+	, prevRoot(currentRoot) {}
 
 Enemy::~Enemy() {
 	attackAnimationList.clear();
@@ -65,7 +67,10 @@ void Enemy::Setup() {
 	nextWanderTime = nextWanderSpan;
 	atkSpan = 4;
 	atkTime = 0;
-	moveSpeed = 1;
+	isBack = false;
+	moveRoots.clear();
+	currentRoot = position;
+	prevRoot = currentRoot;
 	SetVisible(true);
 }
 
@@ -88,7 +93,7 @@ void Enemy::Update() {
 		return;
 
 	if (atking) {
-	area.Update();
+		area.Update();
 		// 攻撃当たり判定の更新
 		for (auto c : attackColliderList) {
 			if (c->GetCollider() == nullptr) continue;
@@ -104,16 +109,6 @@ void Enemy::Update() {
 		pCollider->Update();
 	}
 
-	if (isAttack()) return;
-
-	// レイの更新
-	WallDetectionVision_Fan(GetPlayer()->GetPosition());
-	// 追跡行動
-	Tracking();
-	// 徘徊行動
-	Wander();
-
-
 	// 攻撃当たり判定の削除
 	for (auto itr = attackColliderList.begin(); itr != attackColliderList.end(); ) {
 		SphereHitBox* c = *itr;
@@ -126,6 +121,16 @@ void Enemy::Update() {
 		delete c;
 		itr = attackColliderList.erase(itr); // eraseの戻り値を使って次の要素へ
 	}
+
+	if (isAttack()) return;
+
+	// レイの更新
+	WallDetectionVision_Fan(GetPlayer()->GetPosition());
+	// 追跡行動
+	Tracking();
+	// 徘徊行動
+	Wander();
+
 
 	if (rayAnswer && !isTouch)
 		pAnimator->Play("run");
@@ -153,7 +158,7 @@ void Enemy::Render() {
 		c->Render();
 	}
 
-	//DrawVisionFanDebug();
+	DrawVisionFanDebug();
 #endif
 
 	MV1SetMatrix(modelHandle, matrix);
@@ -174,7 +179,11 @@ void Enemy::SetStatusData(int enemyID) {
 		def = e["def"];
 		exp = e["exp"];
 		name = e["name"];
+		moveSpeed = e["spd"];
 		mPath = e["mPath"];
+		vision.rayAngle = e["rAngle"];
+		vision.rayCount = e["rCount"];
+		vision.rayLenght = e["rLenght"];
 		break;
 	}
 
@@ -391,16 +400,25 @@ void Enemy::Wander() {
 		int z = std::round(position.z / CellSize);
 		// 今いる部屋の番号を取得する
 		int roomNum = StageManager::GetInstance().GetNowRoomNum(VGet(x, 0, z));
-		// 部屋の番号から部屋のサイズを取得する
-		int rx = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rx);
-		int ry = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::ry);
-		int rw = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rw);
-		int rh = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rh);
+		// 部屋じゃなかったら
+		if (roomNum == -1) {
+			VECTOR g = moveRoots.back();
+			moveRoots.pop_back();
+			goalPos = g;
+			isBack = true;
+		}
+		else {
+			// 部屋の番号から部屋のサイズを取得する
+			int rx = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rx);
+			int ry = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::ry);
+			int rw = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rw);
+			int rh = StageManager::GetInstance().GetRoomStatus(roomNum, RoomStatus::rh);
 
-		int moveX = Random(rx, rx + rw - 1);
-		int moveY = Random(ry, ry + rh - 1);
+			int moveX = Random(rx, rx + rw - 1);
+			int moveY = Random(ry, ry + rh - 1);
 
-		goalPos = VGet(moveX * CellSize, 0, moveY * CellSize);
+			goalPos = VGet(moveX * CellSize, 0, moveY * CellSize);
+		}
 	}
 
 	pAnimator->Play("walk");
@@ -411,8 +429,18 @@ void Enemy::Wander() {
 	//ゴール地点に近づいたら
 	if (position.x >= goalPos.x - 50 && position.x < goalPos.x + 50 &&
 		position.z >= goalPos.z - 50 && position.z < goalPos.z + 50) {
-		nextWanderTime = 0;
-		goalPos = VGet(-1, -1, -1);
+
+		VECTOR mapPos = ChangeMapPos(position);
+
+		if (StageManager::GetInstance().GetMapData(mapPos.x, mapPos.z) == (int)Room) {
+			nextWanderTime = 0;
+			moveRoots.clear();
+			isBack = false;
+			goalPos = VGet(-1, -1, -1);
+		}
+		else {
+			goalPos = VGet(-1, -1, -1);
+		}
 	}
 }
 
@@ -456,19 +484,22 @@ VECTOR Enemy::AttackAreaPos(VECTOR pos, float dis) {
 
 void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 	VECTOR dir = VSub(targetPos, position);
-	float angle = atan2f(dir.x, dir.z);
-	rotation.y = Rad2Deg(angle);
-
-	return;
-
 	dir = Normalize(dir);
-	axis = Normalize(axis);
-	float dot = Dot(axis, dir);
-	float theta = acosf(dot);
-	VECTOR cross = Cross(axis, dir);
-	cross = Normalize(cross);
+	dir.y = 0;
 
-	rotation.y += Rad2Deg(theta) * (cross.y >= 0 ? 1 : -1);
+	float targetYaw = atan2f(dir.x, dir.z);
+	float currentYaw = Deg2Rad(rotation.y);
+
+	float diff = targetYaw - currentYaw;
+
+	while (diff > DX_PI_F) diff -= DX_TWO_PI_F;
+	while (diff < -DX_PI_F) diff += DX_TWO_PI_F;
+
+	// 
+	float rotateSpeed = Deg2Rad(180.0f) * TimeManager::GetInstance().deltaTime;
+	diff = std::clamp(diff, -rotateSpeed, rotateSpeed);
+
+	rotation.y += Rad2Deg(diff);
 }
 
 /// <summary>
@@ -492,11 +523,25 @@ void Enemy::Tracking() {
 
 void Enemy::Move(VECTOR targetPos) {
 	VECTOR dir = VSub(targetPos, position);
+	VECTOR nDir = VNorm(dir);
 	float d = TimeManager::GetInstance().deltaTime;
-	VECTOR velocity = VGet(dir.x * moveSpeed, 0, dir.z * moveSpeed);
-	VECTOR pos = VAdd(position, VScale(velocity, d));
+	float move = moveSpeed * d;
+	VECTOR pos = VAdd(position, VScale(nDir, move));
 	// 壁の判定を確認して移動する
-	SetPosition(CheckWallToWallRubbing(pos));
+	VECTOR wPos = CheckWallToWallRubbing(pos);
+
+	if (CompareVECTOR(wPos, VZero)) return;
+
+	SetPosition(wPos);
+	prevRoot = currentRoot;
+	currentRoot = position;
+
+	if (CompareVECTOR(prevRoot, VZero)) return;
+
+	VECTOR mapPos = ChangeMapPos(position);
+
+	if (StageManager::GetInstance().GetMapData(mapPos.x, mapPos.z) == (int)Room || isBack) return;
+	moveRoots.push_back(prevRoot);
 }
 
 void Enemy::DrawVisionFanDebug() {
@@ -553,7 +598,9 @@ void Enemy::OnTriggerEnter(Collider* _pOther) {
 
 	if (_pOther->GetGameObject()->CompareTag("Player")) {
 		isTouch = true;
-		pAnimator->Play("idle01");
+
+		if (!isAttack())
+			pAnimator->Play("idle01");
 	}
 }
 

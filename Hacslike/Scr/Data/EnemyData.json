@@ -7,7 +7,11 @@
     "hp": 50,
     "atk": 10,
     "def": -10,
-    "exp": 15
+    "spd":  150,
+    "exp": 15,
+    "rLenght": 700,
+    "rAngle": 75,
+    "rCount": 30
   },
 
   {
@@ -18,7 +22,11 @@
     "hp": 100,
     "atk": 35,
     "def": 10,
-    "exp": 200
+    "spd": 170,
+    "exp": 200,
+    "rLenght": 2000,
+    "rAngle": 360,
+    "rCount": 120
   },
 
   {
@@ -29,7 +37,11 @@
     "hp": 30,
     "atk": 20,
     "def": 5,
-    "exp": 50
+    "spd": 120,
+    "exp": 50,
+    "rLenght": 500,
+    "rAngle": 200,
+    "rCount": 50
   },
 
   {
@@ -40,7 +52,11 @@
     "hp": 45,
     "atk": 20,
     "def": 5,
-    "exp": 50
+    "spd": 200,
+    "exp": 50,
+    "rLenght": 700,
+    "rAngle": 360,
+    "rCount": 120
   },
 
   {
@@ -51,7 +67,11 @@
     "hp": 150,
     "atk": 30,
     "def": 15,
-    "exp": 150
+    "spd": 100,
+    "exp": 150,
+    "rLenght": 1000,
+    "rAngle": 90,
+    "rCount": 30
   },
 
   {
@@ -62,7 +82,11 @@
     "hp": 100,
     "atk": 60,
     "def": 0,
-    "exp": 70
+    "spd": 70,
+    "exp": 70,
+    "rLenght": 300,
+    "rAngle": 100,
+    "rCount": 30
   },
 
   {
@@ -73,7 +97,11 @@
     "hp": 200,
     "atk": 30,
     "def": 10,
-    "exp": 70
+    "spd": 220,
+    "exp": 70,
+    "rLenght": 900,
+    "rAngle": 360,
+    "rCount": 120
   },
 
   {
@@ -84,7 +112,11 @@
     "hp": 200,
     "atk": 30,
     "def": 10,
-    "exp": 70
+    "spd": 170,
+    "exp": 70,
+    "rLenght": 700,
+    "rAngle": 100,
+    "rCount": 30
   },
 
   {
@@ -95,7 +127,11 @@
     "hp": 500,
     "atk": 150,
     "def": 50,
-    "exp": 500
+    "spd": 250,
+    "exp": 500,
+    "rLenght": 500,
+    "rAngle": 310,
+    "rCount": 70
   },
 
   {
@@ -106,7 +142,11 @@
     "hp": 300,
     "atk": 250,
     "def": 150,
-    "exp": 700
+    "spd": 120,
+    "exp": 700,
+    "rLenght": 1000,
+    "rAngle": 75,
+    "rCount": 30
   },
 
   {
@@ -117,7 +157,11 @@
     "hp": 150,
     "atk": 100,
     "def": 10,
-    "exp": 100
+    "spd": 160,
+    "exp": 100,
+    "rLenght": 800,
+    "rAngle": 90,
+    "rCount": 30
   },
 
   {
@@ -128,7 +172,11 @@
     "hp": 500,
     "atk": 100,
     "def": 10,
-    "exp": 100
+    "spd": 220,
+    "exp": 100,
+    "rLenght": 2000,
+    "rAngle": 360,
+    "rCount": 120
   },
 
   {
@@ -139,7 +187,11 @@
     "hp": 500,
     "atk": 100,
     "def": 10,
-    "exp": 100
+    "spd": 180,
+    "exp": 100,
+    "rLenght": 2000,
+    "rAngle": 360,
+    "rCount": 120
   },
 
   {
@@ -150,7 +202,11 @@
     "hp": 500,
     "atk": 100,
     "def": 10,
-    "exp": 100
+    "spd": 300,
+    "exp": 100,
+    "rLenght": 2000,
+    "rAngle": 360,
+    "rCount": 120
   },
 
   {
@@ -161,6 +217,10 @@
     "hp": 500,
     "atk": 100,
     "def": 10,
-    "exp": 100
+    "spd": 170,
+    "exp": 100,
+    "rLenght": 2000,
+    "rAngle": 360,
+    "rCount": 120
   }
 ]

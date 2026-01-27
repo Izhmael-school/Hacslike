@@ -51,6 +51,7 @@
 #define offsetS (1)		// 調節用
 #define CellSize (200)	// 1マスの大きさ 
 #define CellCorrection (CellSize / 2) // 壁判定用の補正値
+#define ExchangeCellSize(x) (std::floor(CellSize / x))
 #define MAP_SIZE (4)
 
 #define NextCellEnd (300) // 隣のセルの端っこ

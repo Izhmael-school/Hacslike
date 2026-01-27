@@ -41,16 +41,16 @@ void EnemyManager::Start() {
 	manager->Load(audioFilePath + "Punch2.mp3", "Punch2", false);
 	manager->Load(audioFilePath + "HeadBang.mp3", "HeadBang", false);
 
-	goblin = new EnemyUtility([this]() {return new EnemyGoblin(goblin->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1"));
-	spider = new EnemyUtility([this]() {return new EnemySpider(spider->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Spider/model.mv1"));
-	wolf = new EnemyUtility([this]() {return new EnemyWolf(wolf->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1"));
-	troll = new EnemyUtility([this]() {return new EnemyTroll(troll->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Troll/model.mv1"));
-	zombie = new EnemyUtility([this]() {return new EnemyZombie(zombie->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Zombie/model.mv1"));
-	hellhound = new EnemyUtility([this]() {return new EnemyHellHound(hellhound->originModelHandle); },MV1LoadModel("Res/Model/Enemy/HellHound/model.mv1"));
-	ouger = new EnemyUtility([this]() {return new EnemyOuger(ouger->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Ouger/model.mv1"));
-	ketbleperz = new EnemyUtility([this]() {return new EnemyKetbleperz(ketbleperz->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Ketbleperz/model.mv1"));
-	durahan = new EnemyUtility([this]() {return new EnemyDurahan(durahan->originModelHandle); },MV1LoadModel("Res/Model/Enemy/Durahan/model.mv1"));
-	hobgoblin = new EnemyUtility([this]() {return new EnemyHobGoblin(hobgoblin->originModelHandle); },MV1LoadModel("Res/Model/Enemy/HobGoblin/model.mv1"));
+	goblin = new EnemyUtility([this]() {return new EnemyGoblin(MV1DuplicateModel(goblin->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Goblin/model.mv1"));
+	spider = new EnemyUtility([this]() {return new EnemySpider(MV1DuplicateModel(spider->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Spider/model.mv1"));
+	wolf = new EnemyUtility([this]() {return new EnemyWolf(MV1DuplicateModel(wolf->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Wolf/model.mv1"));
+	troll = new EnemyUtility([this]() {return new EnemyTroll(MV1DuplicateModel(troll->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Troll/model.mv1"));
+	zombie = new EnemyUtility([this]() {return new EnemyZombie(MV1DuplicateModel(zombie->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Zombie/model.mv1"));
+	hellhound = new EnemyUtility([this]() {return new EnemyHellHound(MV1DuplicateModel(hellhound->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/HellHound/model.mv1"));
+	ouger = new EnemyUtility([this]() {return new EnemyOuger(MV1DuplicateModel(ouger->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Ouger/model.mv1"));
+	ketbleperz = new EnemyUtility([this]() {return new EnemyKetbleperz(MV1DuplicateModel(ketbleperz->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Ketbleperz/model.mv1"));
+	durahan = new EnemyUtility([this]() {return new EnemyDurahan(MV1DuplicateModel(durahan->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/Durahan/model.mv1"));
+	hobgoblin = new EnemyUtility([this]() {return new EnemyHobGoblin(MV1DuplicateModel(hobgoblin->originModelHandle)); },MV1LoadModel("Res/Model/Enemy/HobGoblin/model.mv1"));
 	
 	pUnuseEnemiesArray.push_back(goblin);
 	pUnuseEnemiesArray.push_back(spider);
