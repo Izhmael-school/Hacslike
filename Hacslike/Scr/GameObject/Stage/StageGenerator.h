@@ -8,6 +8,11 @@
 
 class StageCell;
 
+// forward
+class SaveObject;
+class StartTreasureChest;
+class EnhancementStone;
+
 struct StageData {
 	int id;
 	int stageData[mapWidth_Large][mapHeight_Large];
@@ -55,6 +60,9 @@ public:
 	StageCell* unuseStair;
 	StageCell* useStair;
 	int gr;
+	SaveObject* pSaveObject = nullptr;
+	StartTreasureChest* pChest = nullptr;
+	EnhancementStone* pStone = nullptr;
 
 public:
 	StageGenerator();

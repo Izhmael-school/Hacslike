@@ -4,11 +4,11 @@
 #include "../CommonModule.h"
 #include "AudioManager.h"
 #include"../Save/SaveIO.h"
-#include "../GameObject/SaveObject/SaveObject.h"
-#include"../GameObject/TreasureChest/StartTreasureChest.h"
-#include "../GameObject/Enhancement/EnhancementStone.h"
 #include"../GameObject/Coin/Coin.h"
 #include "ItemDropManager.h"
+#include"../GameObject/SaveObject/SaveObject.h"
+#include"../GameObject/TreasureChest/StartTreasureChest.h"
+#include"../GameObject/Enhancement/EnhancementStone.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -32,15 +32,9 @@ StageManager::~StageManager() {
 void StageManager::Update() {
 	generator->Update();
 
-	if (pSaveObject) {
-		pSaveObject->Update();
-	}
-	if (pChest) {
-		pChest->Update();
-	}
-	if (pStone) {
-		pStone->Update();
-	}
+	
+
+	
 #if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) {
 		LoadFloorData();
@@ -57,21 +51,6 @@ void StageManager::Update() {
 
 void StageManager::Render() {
 	generator->Render();
-
-	
-	if (pChest) {
-		pChest->Render();
-	}
-	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == false) {
-		if (pSaveObject) {
-			pSaveObject->Render();
-		}
-	}
-	if (SaveObject::GetInstance()->GetIsOpenSaveMenu() == false) {
-		if (pStone) {
-			pStone->Render();
-		}
-	}
 
 	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);
 	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, white, false);
@@ -226,7 +205,7 @@ void StageManager::GenerateStage(int stageID) {
 		if (so) {
 			// 位置は StageGenerator 側のセル座標（generator->SetGameObject がスケール変換してくれる）
 			generator->SetGameObject(so, sd.saveObjectPos);
-			pSaveObject = so;
+			generator->pSaveObject = so;
 		}
 	}
 	{
@@ -234,7 +213,7 @@ void StageManager::GenerateStage(int stageID) {
 		StartTreasureChest* chest = StartTreasureChest::GetInstance();
 		if (chest) {
 			generator->SetGameObject(chest, sd.chestObjectPos);
-			pChest = chest;
+			generator->pChest = chest;
 		}
 	}
 	{
@@ -242,7 +221,7 @@ void StageManager::GenerateStage(int stageID) {
 		EnhancementStone* stone = EnhancementStone::GetInstance();
 		if (stone) {
 			generator->SetGameObject(stone, sd.enhancementStonePos);
-			pStone = stone;
+			generator->pStone = stone;
 		}
 	}
 	// ボスの配置

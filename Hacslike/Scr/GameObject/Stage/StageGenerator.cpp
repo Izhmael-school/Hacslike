@@ -2,6 +2,9 @@
 #include "StageGenerator.h"
 #include "../Character/Character.h"
 #include"../../Save/SaveIO.h"
+#include"../SaveObject/SaveObject.h"
+#include"../TreasureChest/StartTreasureChest.h"
+#include"../Enhancement/EnhancementStone.h"
 #include <climits>
 
 
@@ -109,6 +112,10 @@ void StageGenerator::Update() {
 	if (useStair != nullptr)
 		useStair->Update();
 
+	pSaveObject->Update();
+	pChest->Update();
+	pStone->Update();
+	
 }
 
 void StageGenerator::Render() {
@@ -127,6 +134,17 @@ void StageGenerator::Render() {
 		useStair->Render();
 
 	DrawMap();
+	pChest->Render();
+	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == false) {
+		if (pSaveObject) {
+			pSaveObject->Render();
+		}
+	}
+	if (SaveObject::GetInstance()->GetIsOpenSaveMenu() == false) {
+		if (pStone) {
+			pStone->Render();
+		}
+	}
 }
 
 void StageGenerator::ClearStage() {
