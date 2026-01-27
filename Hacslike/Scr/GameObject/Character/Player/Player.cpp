@@ -316,8 +316,9 @@ void Player::Update() {
 
 	ArtifactManager::GetInstance().Update(this);
 
-	GetBossArtifact();
-
+	if (!hitChest) {
+		GetBossArtifact();
+	}
 	
 
 #pragma region スキル選択
@@ -807,13 +808,6 @@ void Player::GetArtifact() {
 				if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
 					ArtifactManager::GetInstance().ApplySelectedArtifact(this, artifactChioces[Selected]);
 
-					// 修正: 接触中の宝箱インスタンスがあればそのインスタンスを消す
-					if (hitChestObj) {
-						//hitChestObj->OpenTreasureChest();
-						// 終了処理
-						hitChestObj = nullptr;
-						hitChest = false;
-					}
 				}
 
 				GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
@@ -835,11 +829,11 @@ void Player::GetBossArtifact()
 	   isSelectBossArtifact = true;
 	}
 	else {
-		int Selected = artifactSelectUI.UpdateSelection(bossArtifactChioces);
-		if (Selected != -1) {
+		int bossSelected = artifactSelectUI.UpdateSelection(bossArtifactChioces);
+		if (bossSelected != -1) {
 
-			if (player && Selected >= 0 && Selected < (int)bossArtifactChioces.size()) {
-				ArtifactManager::GetInstance().ApplySelectedArtifact(this, bossArtifactChioces[Selected]);
+			if (player && bossSelected >= 0 && bossSelected < (int)bossArtifactChioces.size()) {
+				ArtifactManager::GetInstance().ApplySelectedArtifact(this, bossArtifactChioces[bossSelected]);
 			}
 
 			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
