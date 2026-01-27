@@ -37,6 +37,8 @@ private:	//	変数
 
 	std::string animName;
 
+	float magnification;
+
 	//	ダッシュ攻撃関連
 	bool isDashAttack;			//	ダッシュ攻撃してるかどうか
 	bool checkDashAttack;		//	ダッシュ攻撃が可能かどうか

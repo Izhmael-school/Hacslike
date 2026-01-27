@@ -12,7 +12,7 @@
 /// <param name="_offset"></param>
 /// <param name="_radius"></param>
 /// <param name="_lifeTime"></param>
-SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, float _lifeTime)
+SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, float _lifeTime, float _magnification)
 	: owner(_owner)
 	, offset(_offset)
 	, radius(_radius)
@@ -21,7 +21,8 @@ SphereHitBox::SphereHitBox(Character* _owner, VECTOR _offset, float _radius, flo
 	, lifeTime(_lifeTime)
 	, velocity()
 	, active(true)
-	, chain(){
+	, chain()
+	, magnification(_magnification){
 
 	position = VAdd(owner ? owner->GetPosition() : VGet(0, 0, 0), offset); // ←ここで初期位置を決定
 	Start();
@@ -40,7 +41,9 @@ SphereHitBox::SphereHitBox()
 	, velocity()
 	, active(false)
 	, character(NULL)
-	, position() {
+	, position()
+	, chain()
+	, magnification(){
 }
 
 /// <summary>
@@ -162,13 +165,15 @@ void SphereHitBox::Move(const VECTOR& vel) {
 /// <param name="_radius"></param>
 /// <param name="_life"></param>
 void SphereHitBox::Reset(Character* _owner, const VECTOR& startPos,
-	const VECTOR& _velocity, float _radius, float _life) {
+	const VECTOR& _velocity, float _radius, float _life, float _magnification) {
 	owner = _owner;
 	position = startPos;
 	velocity = _velocity;
 	radius = _radius;
 	lifeTime = _life;
 	timer = 0.0f;
+	magnification = _magnification;
+	hitCharacters.clear(); // リストを空にする
 	active = true;
 
 	if (pCollider) {
@@ -182,6 +187,7 @@ void SphereHitBox::Reset(Character* _owner, const VECTOR& startPos,
 		CreateCollider();
 		pCollider->GetGameObject()->SetPosition(position);
 	}
+
 
 	CollisionManager::GetInstance().Register(pCollider);
 
@@ -226,16 +232,43 @@ void SphereHitBox::BulletReset(Character* _owner, const VECTOR& startPos, const 
 /// </summary>
 /// <param name="_pCol"></param>
 void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
-	if (owner == nullptr) return;
+	//if (owner == nullptr) return;
+
+	//Character* pTarget = _pCol->GetCharacter();
+
+	//// 当たり判定処理
+	//if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
+	//	owner->GetTag() != pTarget->GetTag() && active) {
+	//	_pCol->GetCharacter()->Damage(owner->GetAtk() * magnification);
+	//	AudioManager::GetInstance().PlayOneShot("damage");
+	//	active = false;
+	//}
+	if (owner == nullptr || !active) return;
 
 	Character* pTarget = _pCol->GetCharacter();
+	if (!pTarget) return;
 
-	// 当たり判定処理
-	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) &&
-		owner->GetTag() != pTarget->GetTag() && active) {
-		_pCol->GetCharacter()->Damage(owner->GetAtk());
-		AudioManager::GetInstance().PlayOneShot("damage");
-		active = false;
+	// 1. 勢力チェック（自分と同じタグには当たらない）
+	if (owner->GetTag() == pTarget->GetTag()) return;
+
+	// 2. 敵かプレイヤーかチェック
+	if (pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) {
+
+		// 3. すでにこの敵に当たっているかチェック（二重ヒット防止）
+		if (hitCharacters.find(pTarget) == hitCharacters.end()) {
+
+			// ダメージ処理
+			pTarget->Damage(owner->GetCriticalAtk() * magnification);
+			AudioManager::GetInstance().PlayOneShot("damage");
+
+			// 当たったリストに追加
+			hitCharacters.insert(pTarget);
+
+			// 貫通しない設定なら、ここで非アクティブにする
+			if (!isPenetrating) {
+				active = false;
+			}
+		}
 	}
 }
 
