@@ -89,3 +89,10 @@ inline std::string MergeString(const Args&... args) {
 
     return mergedText;
 }
+
+inline bool CompareVECTOR(VECTOR _vec1,VECTOR _vec2) {
+    if (_vec1.x != _vec2.x) return false;
+    if (_vec1.y != _vec2.y) return false;
+    if (_vec1.z != _vec2.z) return false;
+    return true;
+}

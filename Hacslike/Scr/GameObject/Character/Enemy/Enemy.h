@@ -63,6 +63,13 @@ protected:
 	// UŒ‚‘O‚ÌUŒ‚”ÍˆÍ•\¦
 	AttackArea area;
 
+	// “¹‚Ì‚è
+	std::list<VECTOR> moveRoots;
+
+	VECTOR currentRoot;
+	VECTOR prevRoot;
+	bool isBack; // —ˆ‚½“¹‚ğ–ß‚Á‚Ä‚é‚©
+
 public:
 	Enemy();
 	~Enemy();

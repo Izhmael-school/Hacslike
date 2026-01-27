@@ -13,8 +13,7 @@
 #include "../Manager/StageManager.h"
 #include "../Manager/EnemyManager.h"
 
-SekinoScene::SekinoScene()
-{
+SekinoScene::SekinoScene() {
 	Start();
 }
 
@@ -33,9 +32,6 @@ void SekinoScene::Start() {
 	pPlayer->AddMaxHp(10000000);
 	pPlayer->AddHp(pPlayer->GetMaxHp());
 	Weapon* pWeapon = new Weapon("sabel");
-	Enemy* e = EnemyManager().GetInstance().UseEnemy(Spider);
-	//pGameObjectArray.push_back(e);
-	e->SetPosition(VGet(200, 0, 800));
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
@@ -111,6 +107,10 @@ void SekinoScene::Render() {
 #endif
 }
 
-void SekinoScene::Setup() {}
+void SekinoScene::Setup() {
+
+		EnemyManager().GetInstance().SpawnEnemy(Spider, VGet(200, 0, 800));
+
+}
 
 void SekinoScene::Teardown() {}
