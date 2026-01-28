@@ -131,6 +131,7 @@ void TitleScene::Update() {
 			// Confirm deletion quickly (for simplicity, immediate)
 			bool ok = SaveManager::GetInstance().Delete(selectedSlot);
 			if (ok) {
+				AudioManager::GetInstance().PlayOneShot("Decision");
 				snprintf(messageBuf, sizeof(messageBuf), "セーブデータを削除しました (Slot %02d)", selectedSlot + 1);
 				messageFramesLeft = 120;
 			}

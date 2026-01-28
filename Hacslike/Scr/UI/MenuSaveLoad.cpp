@@ -1,5 +1,6 @@
 #include "MenuSaveLoad.h"
 #include "../Manager/SaveManager.h"
+#include"../Manager/AudioManager.h"
 #include "DxLib.h"
 #include <ctime>
 #include <cstdio>
@@ -22,8 +23,14 @@ void MenuSaveLoad::Update() {
     InputManager* input = &InputManager::GetInstance();
     auto& slots = SaveManager::GetInstance().GetSlots();
     // 上下移動
-    if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) selectedSlot = (selectedSlot + 9) % 10;
-    if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) selectedSlot = (selectedSlot + 1) % 10;
+    if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) { 
+        selectedSlot = (selectedSlot + 9) % 10; 
+        AudioManager::GetInstance().PlayOneShot("Select");
+    }
+    if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN)) { 
+        selectedSlot = (selectedSlot + 1) % 10; 
+        AudioManager::GetInstance().PlayOneShot("Select");
+    }
 
     // Enter: スロット選択 -> ポップアップ開閉 or ポップアップ実行
     if (input->IsKeyUp(KEY_INPUT_RETURN) || input->IsButtonUp(XINPUT_GAMEPAD_B)) {
@@ -36,21 +43,15 @@ void MenuSaveLoad::Update() {
             // ポップアップ内で選択を実行
             switch (menuChoice) {
             case 0: // セーブ
+                AudioManager::GetInstance().PlayOneShot("Decision");
                 SaveManager::GetInstance().Save(selectedSlot);
                 break;
-            case 1: // ロード
-                // 存在チェックなどは SaveManager 内で行われる想定
-                ItemFactory::Instance().InitializeDefaultItems();
-                SaveManager::GetInstance().Load(selectedSlot);
-                break;
-            case 2: // 削除
-            {
+            case 1: // 削除
+                AudioManager::GetInstance().PlayOneShot("Decision");
                 SaveManager::GetInstance().Delete(selectedSlot);
-               
 #ifdef _DEBUG
                 printfDx("Slot %d を削除しました (exists=false)\n", selectedSlot + 1);
 #endif
-            }
             break;
             default:
                 break;
@@ -62,10 +63,10 @@ void MenuSaveLoad::Update() {
     // ポップアップが開いているときは、メニュー内の左右で選択を切り替える
     if (menuActive) {
         if (input->IsKeyDown(KEY_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
-            menuChoice = (menuChoice + 3 - 1) % 3;
+            menuChoice = (menuChoice + 2 - 1) % 2;
         }
         if (input->IsKeyDown(KEY_INPUT_RIGHT) || input->IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT)) {
-            menuChoice = (menuChoice + 1) % 3;
+            menuChoice = (menuChoice + 1) % 2;
         }
 
         // Esc: キャンセル
@@ -152,8 +153,8 @@ void MenuSaveLoad::Render() {
         DrawBox(commandX, commandY, commandX + commandWidth, commandY + commandHeight, GetColor(200, 200, 200), FALSE);
 
         // コマンド文字列
-        const char* opts[3] = { "セーブ", "ロード", "削除" };
-        for (int i = 0; i < 3; ++i) {
+        const char* opts[2] = { "セーブ", "削除" };
+        for (int i = 0; i < 2; ++i) {
             int col = (i == menuChoice) ? GetColor(255, 255, 0) : GetColor(220, 220, 220);
             DrawStringToHandle(commandX + 20 + i * 120, commandY + 50, opts[i], col, MainFont);
         }

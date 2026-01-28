@@ -60,6 +60,9 @@ void SmallHealItem::Render()
 void SmallHealItem::Use()
 {
 	Character::player->AddHp(healValue);
+	if(Character::player->GetHp()>= Character::player->GetMaxHp()){
+		Character::player->SetHp(Character::player->GetMaxHp());
+	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
 }
@@ -99,6 +102,9 @@ void MiddleHealItem::Update()
 void MiddleHealItem::Use()
 {
 	Character::player->AddHp(healValue);
+	if (Character::player->GetHp() >= Character::player->GetMaxHp()) {
+		Character::player->SetHp(Character::player->GetMaxHp());
+	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
 }
@@ -138,6 +144,9 @@ void LargeHealItem::Update()
 void LargeHealItem::Use()
 {
 	Character::player->AddHp(healValue);
+	if (Character::player->GetHp() >= Character::player->GetMaxHp()) {
+		Character::player->SetHp(Character::player->GetMaxHp());
+	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
 }

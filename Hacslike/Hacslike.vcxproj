@@ -93,6 +93,7 @@
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
     <ClCompile Include="Scr\UI\Gauge.cpp" />
     <ClCompile Include="Scr\UI\MenuSaveLoad.cpp" />
+    <ClCompile Include="Scr\UI\TitleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\CommonModule.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Scr\UI\GameEndUI.h" />
     <ClInclude Include="Scr\UI\Gauge.h" />
     <ClInclude Include="Scr\UI\MenuSaveLoad.h" />
+    <ClInclude Include="Scr\UI\TitleUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

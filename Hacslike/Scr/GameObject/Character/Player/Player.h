@@ -108,10 +108,11 @@ private:	//	メンバ変数
 	int menuIndex = 0;
 	bool isOpenMenu = false;
 	// 最大メニュー数（増えてもここを変えるだけ）
-	const int MENU_COUNT = 2;
+	const int MENU_COUNT = 3;
 	// セーブメニュー表示用ポインタ（インベントリやアーティファクトと同様に管理する）
 	MenuSaveLoad* pSaveMenu = nullptr;
 	int saveLoadChoice = 0; // 0: セーブ, 1: ロード
+	bool isTitleUI = false;
 	
 #pragma endregion
 
@@ -244,6 +245,8 @@ public:		//	メンバ関数
 
 	// 装備の効果を考慮して atk を再計算して適用する
 	void UpdateAtkFromEquipment();
+
+	
 #pragma endregion
 
 #pragma region GetterとSetter
