@@ -30,7 +30,7 @@ Character::~Character() {
 void Character::Damage(int rawDamage) {
 	int damage = rawDamage - def;
 
-	if (damage <= 0) damage = 1;
+	if (damage < 1) damage = 1;
 
 	if (hp - damage > 0)
 		hp -= damage;
