@@ -48,8 +48,8 @@ private:	//	メンバ変数
 #pragma region プレイヤーステータス関連
 	float hpRate;	//	HP量
 	int coinValue;			//	コイン枚数
-	float criticalHitRate;	//	会心率
-	float criticalDamage;	//	会心ダメ
+	//float criticalHitRate;	//	会心率
+	//float criticalDamage;	//	会心ダメ
 	int expValue;			//	Exp量
 	int maxExp;
 	int remainExp;

@@ -47,6 +47,11 @@ public:
     /// 描画処理
     /// </summary>
     void Render();
+    
+    /// <summary>
+    /// セットアップ
+    /// </summary>
+    void StatusSetUp(); // 追加
 
     /// <summary>
     /// 並行四辺形ゲージの描画
