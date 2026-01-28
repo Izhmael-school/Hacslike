@@ -38,8 +38,10 @@ void Enemy::Start() {
 	// アニメーションイベントの設定
 	if (isBoss)
 		pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
-	else
+	else {
 		SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
+		SetAnimEvent("dead", [this]() {EffectManager::GetInstance().Instantiate("",VZero); }, pAnimator->GetTotalTime("dead"));
+	}
 
 	SetAnimEvent("idle01", [this]() {SetAttacking(false); });
 	// 攻撃中の移動制御
