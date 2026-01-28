@@ -66,6 +66,7 @@ void Enemy::Setup() {
 	isTouch = false;
 	rayAnswer = false;
 	area.SetOwner(this);
+	area.DeleteObject();
 	atking = false;
 	isDead = false;
 	goalPos = VMinus;
