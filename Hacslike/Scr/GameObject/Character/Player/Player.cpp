@@ -369,7 +369,10 @@ void Player::Update() {
 	if (isArtifactUI) {
 		artifactUI.Update();
 	}
-	
+	// タイトルメニューがオンの間は更新を呼び出す
+	if (isTitleUI) {
+		titleUI.Update(); // TitleUI内部のロジックを処理
+	}
 	
 
 #if _DEBUG
@@ -512,6 +515,10 @@ void Player::Render() {
 	}
 	if (isArtifactUI) {
 		artifactUI.Render();
+	}
+	// タイトルの確認ダイアログ描画
+	if (isTitleUI) {
+		titleUI.Render();
 	}
 	/*if (isSaveUI) {
 		pSaveMenu->Render();
@@ -715,6 +722,7 @@ void Player::selectMenu() {
 			isItemUI = false;
 			isArtifactUI = false;
 			isTitleUI = true;
+			titleUI.Open();    // TitleUI の Open メソッドを呼び出し
 			break;
 		default:
 			break;
@@ -988,6 +996,18 @@ void Player::UpdateAtkFromEquipment() {
 
 
 
+}
+
+void Player::ResetUIStates()
+{
+	isMenuUI = false;        // メニュー画面
+	isItemUI = false;        // アイテムUI
+	isArtifactUI = false;    // アーティファクトUI
+	isTitleUI = false;       // タイトル確認画面
+	isSaveUI = false;        // セーブUI
+	isSelectingSkill = false;  // スキル選択
+	blinkTime = 0.0f;        // 選択の点滅状態
+	blinkVisible = true;
 }
 
 float Player::RuneCost(int L) {
