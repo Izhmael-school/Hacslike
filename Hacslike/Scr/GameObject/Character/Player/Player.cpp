@@ -150,9 +150,6 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	SetPosition(VECTOR{ px, py,pz });
 
 
-
-
-	// スキル・アーティファクトの復元も同様に
 }
 #pragma endregion
 
@@ -190,6 +187,8 @@ void Player::Start() {
 	deadTime = 0;
 
 	prevHP = GetHp();
+
+	isMenuUI = false;
 
 	// hpゲージの生成
 	if (hpBar == nullptr)
@@ -639,6 +638,7 @@ void Player::OpenMenu() {
 			isItemUI = false;
 			isArtifactUI = false;
 			isSaveUI = false;
+			isTitleUI = false;
 			isMenuSelected = false; // 閉じたときにリセット
 			AudioManager::GetInstance().PlayOneShot("Decision");
 			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
@@ -704,12 +704,17 @@ void Player::selectMenu() {
 		case 0:
 			isItemUI = true;
 			isArtifactUI = false;
-			isSaveUI = false;
+			isTitleUI = false;
 			break;
 		case 1:
 			isItemUI = false;
 			isArtifactUI = true;
-			isSaveUI = false;
+			isTitleUI = false;
+			break;
+		case 2:
+			isItemUI = false;
+			isArtifactUI = false;
+			isTitleUI = true;
 			break;
 		default:
 			break;
@@ -731,7 +736,7 @@ void Player::DrawMenu() {
 	const int margin = 10;
 
 	// ← ここにメニューを好きなだけ並べるだけで増やせる！
-	const char* menuNames[] = { "アイテム", "アーティファクト" };
+	const char* menuNames[] = { "アイテム", "アーティファクト","ゲーム終了" };
 	const int menuCount = sizeof(menuNames) / sizeof(menuNames[0]);
 
 	for (int i = 0; i < menuCount; i++) {
@@ -744,6 +749,7 @@ void Player::DrawMenu() {
 			// 選択中：ピンク枠 + 中黒
 			DrawBox(x - 4, boxY - 4, x + width + 4, boxY + height + 4, GetColor(255, 0, 255), TRUE);
 			DrawBox(x, boxY, x + width, boxY + height, GetColor(0, 0, 0), TRUE);
+			
 		}
 		else {
 			// 未選択：白枠 + 中黒
@@ -922,6 +928,7 @@ void Player::PlayerSetUp() {
 	isDead = false;
 	hitChest = false;
 	isSelectArtifact = false;
+	isTitleUI = false;
 
 	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(

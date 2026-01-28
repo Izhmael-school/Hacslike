@@ -217,6 +217,9 @@
     <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
       <Filter>Enhancement</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\UI\TitleUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -456,6 +459,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Scr\UI\GameEndUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\TitleUI.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
