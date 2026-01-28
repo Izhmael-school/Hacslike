@@ -18,6 +18,7 @@
 #include "../../../Manager/SaveManager.h"
 #include "../../../UI/MenuSaveLoad.h"
 #include "../../../UI/Gauge.h"
+#include "../../../UI/CircleGauge.h"
 
 class StartTreasureChest;
 
@@ -54,7 +55,7 @@ private:	//	メンバ変数
 
 	bool canEnhance = false; // 強化可能フラグ
 	Gauge<int>* hpBar;
-	Gauge<int>* expBar;
+	CircleGauge<int>* expBar;
 #pragma endregion
 
 #pragma region 死亡処理関連

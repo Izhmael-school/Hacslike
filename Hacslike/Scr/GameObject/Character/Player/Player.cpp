@@ -195,7 +195,7 @@ void Player::Start() {
 	if (hpBar == nullptr)
 		hpBar = new Gauge(hp, maxHp, 100, 100, 300, 25);
 	if (expBar == nullptr) {
-		expBar = new Gauge(exp, maxExp, 100, 125, 250, 15);
+		expBar = new CircleGauge(exp, maxExp, 100, 100, 50, 20,195,-15);
 		expBar->ChangeColor(yellow, GetColor(200, 200, 150), black, GetColor(240, 240, 100));
 	}
 

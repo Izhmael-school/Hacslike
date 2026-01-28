@@ -28,7 +28,7 @@ public:
 	unsigned int backColor = GetColor(50, 175, 50);
 	// 徐々に減るスピード
 	float speed;
-
+	// 徐々に減るか
 	bool isDecrease;
 public:
 	Gauge(Value& _currentValue, Value& _maxValue, float x, float y, float w, float h, float _isDecrease = true)
