@@ -72,7 +72,10 @@ void TitleScene::Update() {
 		if (input.IsButtonDown(XINPUT_GAMEPAD_A) || input.IsMouseDown(MOUSE_INPUT_LEFT) || input.IsKeyDown(KEY_INPUT_RETURN)) {
 			AudioManager::GetInstance().PlayOneShot("Decision");
 			if (titleMenuIndex == 0) {
-				
+				// ゲームシーンに戻る前にフラグリセット
+				if (Player::GetInstance()) {
+					Player::GetInstance()->ResetUIStates();
+				}
 				// Change to game scene
 				SceneManager::GetInstance().ChangeScene(SceneType::Game);
 			}

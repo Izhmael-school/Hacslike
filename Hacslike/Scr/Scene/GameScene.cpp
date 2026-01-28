@@ -27,7 +27,8 @@ void GameScene::Start() {
 
 	Player* pPlayer = new Player();
 	pGameObjectArray.push_back(pPlayer);
-
+	// プレイヤーのUI状態フラグをリセット
+	pPlayer->ResetUIStates();
 	Camera* pCamera = new Camera(VGet(0, 400.0f, -800.0f));
 	pGameObjectArray.push_back(pCamera);
 
