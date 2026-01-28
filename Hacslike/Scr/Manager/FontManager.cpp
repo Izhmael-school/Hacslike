@@ -4,6 +4,7 @@ FontManager::FontManager() {
 	//ƒtƒHƒ“ƒg‚Ì’Ç‰Á
 	AddFontResourceEx("Res/Font/ReggaeOne-Regular.ttf", FR_PRIVATE, NULL);
 	CreateFontData("Reggae One", -1, -1, DX_FONTTYPE_NORMAL, "MainFont");
+	CreateFontData("Reggae One", 50, 4, DX_FONTTYPE_NORMAL, "MainFont_Bold");
 }
 
 FontManager::~FontManager() {

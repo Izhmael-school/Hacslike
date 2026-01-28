@@ -64,6 +64,7 @@
 #define EnemyMax (50)
 
 #define MainFont (FontManager::GetInstance().UseFontHandle("MainFont"))
+#define MainFont_Bold (FontManager::GetInstance().UseFontHandle("MainFont_Bold"))
 
 //	•ŠíŠÖ˜A
 #define ATTACK_SPEED_NUM (4)

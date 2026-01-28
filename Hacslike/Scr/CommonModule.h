@@ -90,9 +90,67 @@ inline std::string MergeString(const Args&... args) {
     return mergedText;
 }
 
+/// <summary>
+/// 引数の座標が同じか
+/// </summary>
+/// <param name="_vec1"></param>
+/// <param name="_vec2"></param>
+/// <returns></returns>
 inline bool CompareVECTOR(VECTOR _vec1,VECTOR _vec2) {
     if (_vec1.x != _vec2.x) return false;
     if (_vec1.y != _vec2.y) return false;
     if (_vec1.z != _vec2.z) return false;
     return true;
+}
+
+/// <summary>
+/// 中央揃えのための座標計算（参照）
+/// </summary>
+/// <param name="_str"></param>
+/// <param name="_fontHandle"></param>
+/// <param name="posX"></param>
+/// <param name="posY"></param>
+/// <param name="exRateX"></param>
+/// <param name="exRateY"></param>
+inline void StringCenterPos(const TCHAR* _str,int _fontHandle,int* posX , int* posY,int exRateX = 1,int exRateY = 1) {
+    int w, h,line;
+
+    GetDrawStringSizeToHandle(&w, &h, &line, _str,(int)_tcslen(_str),_fontHandle);
+    *posX -= (int)(w * exRateX) / 2;
+    *posY -= (int)(h * exRateY) / 2;
+}
+
+/// <summary>
+/// 中央揃えのための座標計算（返り値）
+/// </summary>
+/// <param name="_str"></param>
+/// <param name="_fontHandle"></param>
+/// <param name="posX"></param>
+/// <param name="posY"></param>
+/// <param name="exRateX"></param>
+/// <param name="exRateY"></param>
+inline VECTOR StringCenterPos(const TCHAR* _str, int _fontHandle, int posX, int posY, int exRateX = 1, int exRateY = 1) {
+    int w, h, line;
+
+    GetDrawStringSizeToHandle(&w, &h, &line, _str, (int)_tcslen(_str), _fontHandle);
+    posX -= (int)(w * exRateX) / 2;
+    posY -= (int)(h * exRateY) / 2;
+
+    return VGet(posX, posY, 0);
+}
+
+/// <summary>
+/// 右詰めのための座標計算
+/// </summary>
+/// <param name="_str"></param>
+/// <param name="_fontHandle"></param>
+/// <param name="posX"></param>
+/// <param name="exRateX"></param>
+/// <returns></returns>
+inline int StringRightPos(const TCHAR* _str, int _fontHandle, int posX, int exRateX = 1) {
+    int w, h, line;
+
+    GetDrawStringSizeToHandle(&w, &h, &line, _str, (int)_tcslen(_str), _fontHandle);
+
+    return posX -= (int)(w * exRateX);
 }

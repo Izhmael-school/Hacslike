@@ -54,8 +54,6 @@ private:	//	メンバ変数
 	int remainExp;
 
 	bool canEnhance = false; // 強化可能フラグ
-	Gauge<int>* hpBar;
-	CircleGauge<int>* expBar;
 #pragma endregion
 
 #pragma region 死亡処理関連
@@ -113,10 +111,27 @@ private:	//	メンバ変数
 	// セーブメニュー表示用ポインタ（インベントリやアーティファクトと同様に管理する）
 	MenuSaveLoad* pSaveMenu = nullptr;
 	int saveLoadChoice = 0; // 0: セーブ, 1: ロード
-	bool isTitleUI = false;
-	
+
 #pragma endregion
 
+#pragma region ゲージ関連
+	Gauge<int>* hpBar;
+	int hpBarPosX = 145;
+	int hpBarPosY = 100;
+	int hpBarWidth = 300;
+	int hpBarHeight = 25;
+	CircleGauge<int>* expBar;
+	int expGaugePosX = 100;
+	int expGaugePosY = 100;
+	int expGaugeRadius = 50;
+	int expGaugeThickness = 20;
+	int expGaugeStartDeg = 195;
+	int expGaugeEndDeg = -15;
+	int uX = 100;
+	int uY = 100;
+	int lX = 100;
+	int lY = 70;
+#pragma endregion
 
 #pragma endregion
 
@@ -395,9 +410,9 @@ public:
 
 public:
 	// セーブ/ロード用の API（SaveManager 経由で呼ばれる）
-	void SaveTo(BinaryWriter& w) ;
+	void SaveTo(BinaryWriter& w);
 	void LoadFrom(BinaryReader& r, uint32_t saveVersion);
 	// メタ情報更新（セーブ時にメタへ書き込むため）
 	uint32_t GetLevelForSave() const { return (uint32_t)Lv; }
-	uint32_t GetFloorForSave() const; 
+	uint32_t GetFloorForSave() const;
 };
