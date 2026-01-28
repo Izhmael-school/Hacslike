@@ -75,6 +75,7 @@ void TitleScene::Update() {
 				// ゲームシーンに戻る前にフラグリセット
 				if (Player::GetInstance()) {
 					Player::GetInstance()->ResetUIStates();
+					GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 				}
 				// Change to game scene
 				SceneManager::GetInstance().ChangeScene(SceneType::Game);

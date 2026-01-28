@@ -316,8 +316,9 @@ void Player::Update() {
 
 	ArtifactManager::GetInstance().Update(this);
 
-	GetBossArtifact();
-
+	if (!hitChest) {
+		GetBossArtifact();
+	}
 
 
 #pragma region スキル選択
