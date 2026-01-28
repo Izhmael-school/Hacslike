@@ -189,13 +189,15 @@ void Player::Start() {
 
 	deadTime = 0;
 
+	SetFontSize(20);
+
 	prevHP = GetHp();
 
 	// hpゲージの生成
 	if (hpBar == nullptr)
-		hpBar = new Gauge(hp, maxHp, 100, 100, 300, 25);
+		hpBar = new Gauge(hp, maxHp, hpBarPosX, hpBarPosY, hpBarWidth, hpBarHeight);
 	if (expBar == nullptr) {
-		expBar = new CircleGauge(exp, maxExp, 100, 100, 50, 20,195,-15);
+		expBar = new CircleGauge(exp, maxExp, expGaugePosX, expGaugePosY, expGaugeRadius, expGaugeThickness, expGaugeStartDeg, expGaugeEndDeg);
 		expBar->ChangeColor(yellow, GetColor(200, 200, 150), black, GetColor(240, 240, 100));
 	}
 
@@ -274,6 +276,7 @@ void Player::Start() {
 		}, 0);
 	pAnimator->GetAnimation("Down2")->SetEvent([this]() {CollisionManager::GetInstance().UnRegister(pCollider); }, 0);
 
+	StringCenterPos("レベル", MainFont, &lX, &lY);
 
 	SetSpeed(1);
 }
@@ -318,7 +321,7 @@ void Player::Update() {
 
 	GetBossArtifact();
 
-	
+
 
 #pragma region スキル選択
 	if (exp >= maxExp && !isSelectingSkill) {
@@ -369,8 +372,8 @@ void Player::Update() {
 	if (isArtifactUI) {
 		artifactUI.Update();
 	}
-	
-	
+
+
 
 #if _DEBUG
 	if (input->IsKeyDown(KEY_INPUT_3)) {
@@ -499,9 +502,16 @@ void Player::Render() {
 	}
 #pragma endregion
 
+	DrawBox(hpBarPosX - 3, hpBarPosY - 3, hpBarPosX + hpBarWidth + 3, hpBarPosY + hpBarHeight + 3, black, true);
 	hpBar->Render();
+	DrawCircle(expGaugePosX - 1, expGaugePosY - 1, expGaugeRadius + 3, black);
 	expBar->Render();
-
+	DrawStringToHandle(lX, lY, "レベル", white, MainFont);
+	VECTOR uPos = StringCenterPos(std::to_string(Lv).c_str(), MainFont_Bold, uX, uY);
+	DrawFormatStringToHandle(uPos.x, uPos.y, white, MainFont_Bold, "%d", Lv);
+	string hpString = MergeString(std::to_string(hp), " / ", std::to_string(maxHp));
+	int hpValueUIPos = StringRightPos(hpString.c_str(),MainFont, hpBarPosX + hpBarWidth + 3);
+	DrawStringToHandle(hpValueUIPos, hpBarPosY - 3 - 20, hpString.c_str(), white,MainFont);
 #pragma region アイテムのインベントリ表示
 	inventory.ItemDropRender();
 	if (isMenuUI) {
@@ -524,15 +534,15 @@ void Player::Render() {
 	if (isSelectArtifact) {
 		artifactSelectUI.Render(artifactChioces);
 	}
-	
+
 	artifactSelectUI.Render(bossArtifactChioces);
-	
-	
-	
+
+
+
 	if (isSelectingSkill) {
-		if(!isSelectBossArtifact){
+		if (!isSelectBossArtifact) {
 			skillUI.Render(skillChoices);
-			
+
 		}
 	}
 
@@ -824,15 +834,14 @@ void Player::GetArtifact() {
 
 }
 
-void Player::GetBossArtifact()
-{
+void Player::GetBossArtifact() {
 	if (ArtifactManager::GetInstance().GetBossDesiegen() == true) {
-	   SetMouseDispFlag(TRUE);
-	   bossArtifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
-	   artifactSelectUI.StartSelection();
-	   ArtifactManager::GetInstance().SetBossDesiegen(false);
-	   GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
-	   isSelectBossArtifact = true;
+		SetMouseDispFlag(TRUE);
+		bossArtifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
+		artifactSelectUI.StartSelection();
+		ArtifactManager::GetInstance().SetBossDesiegen(false);
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
+		isSelectBossArtifact = true;
 	}
 	else {
 		int Selected = artifactSelectUI.UpdateSelection(bossArtifactChioces);

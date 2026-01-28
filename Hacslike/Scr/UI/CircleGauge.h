@@ -82,7 +82,7 @@ public:
 		backColor = back;
 	}
 
-	void DrawRing(float drawEndDeg, unsigned int color, int div = 64) {
+	void DrawRing(float drawEndDeg, unsigned int color, int div = 128) {
 		for (int i = 0; i < div; i++) {
 			float t0 = (float)i / div;
 			float t1 = (float)(i + 1) / div;
