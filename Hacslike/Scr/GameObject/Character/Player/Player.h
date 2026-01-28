@@ -19,6 +19,7 @@
 #include "../../../UI/MenuSaveLoad.h"
 #include "../../../UI/Gauge.h"
 #include "../../../UI/CircleGauge.h"
+#include "../../../UI/TitleUI.h"
 
 class StartTreasureChest;
 
@@ -111,6 +112,8 @@ private:	//	メンバ変数
 	// セーブメニュー表示用ポインタ（インベントリやアーティファクトと同様に管理する）
 	MenuSaveLoad* pSaveMenu = nullptr;
 	int saveLoadChoice = 0; // 0: セーブ, 1: ロード
+	bool isTitleUI = false;
+	TitleUI titleUI;
 
 #pragma endregion
 
@@ -261,6 +264,8 @@ public:		//	メンバ関数
 
 	// 装備の効果を考慮して atk を再計算して適用する
 	void UpdateAtkFromEquipment();
+
+	void ResetUIStates();
 
 	
 #pragma endregion
