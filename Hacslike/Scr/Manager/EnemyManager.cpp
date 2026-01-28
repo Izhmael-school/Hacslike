@@ -62,6 +62,8 @@ void EnemyManager::Start() {
 	pUnuseEnemiesArray.push_back(ketbleperz);
 	pUnuseEnemiesArray.push_back(durahan);
 	pUnuseEnemiesArray.push_back(hobgoblin);
+
+	EffectManager::GetInstance().Load("Res/Effect/Death.efk", "Dead", 10.0f);
 }
 
 void EnemyManager::Update() {

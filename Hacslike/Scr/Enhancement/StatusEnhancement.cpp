@@ -160,7 +160,7 @@ bool StatusEnhancement::Update() {
 					player->SetDef(player->GetDef() + (float)totalBoost);
 					break;
 				case 3:
-					player->SetCriticalHitRate(player->GetCriticalHitRate() + (float)totalBoost);
+					player->SetCriticalHitRate(player->GetCriticalHitRate() + (totalBoost / 100.0f));
 					break;
 				case 4:
 					player->SetCriticalDamage(player->GetCriticalDamage() + (totalBoost / 100.0f));
@@ -469,4 +469,15 @@ void StatusEnhancement::LoadFrom(BinaryReader& r, uint32_t ver) {
 		// 会心ダメ
 		player->SetCriticalDamage(1.5f + (g_instance->stats[4].totalBonus / 100.0f));
 	}
+
+}
+
+void StatusEnhancement::StatusSetUp() {
+	// 1. UI用データの初期化
+	for (auto& s : stats) {
+		s.level = 0;
+		s.totalBonus = 0;
+	}
+	allMax = false;
+	selectedIndex = 0;
 }

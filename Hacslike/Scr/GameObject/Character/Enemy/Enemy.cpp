@@ -39,8 +39,8 @@ void Enemy::Start() {
 	if (isBoss)
 		pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	else {
+		SetAnimEvent("dead", [this]() {EffectManager::GetInstance().Instantiate("Dead",this->GetPosition()); }, pAnimator->GetTotalTime("dead") - 5);
 		SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
-		SetAnimEvent("dead", [this]() {EffectManager::GetInstance().Instantiate("",VZero); }, pAnimator->GetTotalTime("dead"));
 	}
 
 	SetAnimEvent("idle01", [this]() {SetAttacking(false); });
