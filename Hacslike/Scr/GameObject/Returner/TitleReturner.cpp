@@ -43,7 +43,7 @@ TitleReturner::~TitleReturner() {
 }
 
 void TitleReturner::Start() {
-	modelHandle = MV1LoadModel(".mv1");
+	modelHandle = MV1LoadModel("Res/Model/Stage/MagicCircle.mv1");
 	if (!pCollider) {
 		pCollider = new SphereCollider(this, VZero, 100);
 	}
