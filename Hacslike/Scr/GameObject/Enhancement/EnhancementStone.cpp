@@ -1,6 +1,5 @@
 #include "EnhancementStone.h"
 #include "../Character/Player/Player.h"
-#include "../../Component/Collider/Collider.h"
 #include "../../Manager/CollisionManager.h"
 #include "../../Manager/InputManager.h"
 #include "../../GameSystem/GameSystem.h"
@@ -51,7 +50,7 @@ EnhancementStone::~EnhancementStone() {
 void EnhancementStone::Start() {
     modelHandle = MV1LoadModel("Res/Model/EnhanceObject/EnhanceObject.mv1");
     if (!pCollider) {
-        pCollider = new CapsuleCollider(this, VZero, VGet(0, 80, 0), 80.0f);
+        pCollider = new SphereCollider(this, VZero, 80);
         //CollisionManager::GetInstance().Register(pCollider);
     }
     pMenu->Start(); // ƒƒjƒ…[‚Ì‰Šú‰»
