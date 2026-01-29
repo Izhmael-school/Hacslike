@@ -220,6 +220,10 @@
     <ClCompile Include="Scr\UI\TitleUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\UI\CircleGauge.cpp" />
+    <ClCompile Include="Scr\UI\DamagePopup.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -462,6 +466,10 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Scr\UI\TitleUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\CircleGauge.h" />
+    <ClInclude Include="Scr\UI\DamagePopup.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

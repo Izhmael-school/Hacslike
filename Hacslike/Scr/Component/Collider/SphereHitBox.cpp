@@ -258,7 +258,7 @@ void SphereHitBox::OnTriggerEnter(Collider* _pCol) {
 		if (hitCharacters.find(pTarget) == hitCharacters.end()) {
 
 			// ダメージ処理
-			pTarget->Damage(owner->GetCriticalAtk() * magnification);
+			pTarget->Damage(owner, owner->GetCriticalAtk() * magnification);
 			AudioManager::GetInstance().PlayOneShot("damage");
 
 			// 当たったリストに追加

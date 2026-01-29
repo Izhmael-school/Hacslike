@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "../../UI/DamagePopup.h"
 
 
 Character::Character(VECTOR _pos, std::string tag, int _Lv, int _Exp, int _speed)
@@ -26,10 +27,20 @@ Character::~Character() {
 	MV1DeleteModel(modelHandle);
 }
 
-void Character::Damage(int rawDamage) {
-	int damage = rawDamage - def;
+void Character::Damage(Character* attacker, int rawDamage) {
+	if (IsDead()) return;
 
+	int damage = rawDamage - def;
 	if (damage < 1) damage = 1;
+
+	// 攻撃者(attacker)が存在すれば、その瞬間のクリティカルフラグをもらう
+	bool critFlag = false;
+	if (attacker != nullptr) {
+		critFlag = attacker->IsCritical();
+	}
+
+	// 第3引数にフラグを渡す新しいCreateを呼ぶ
+	DamagePopup::Create(this, damage, critFlag);
 
 	if (hp - damage > 0)
 		hp -= damage;
@@ -37,7 +48,6 @@ void Character::Damage(int rawDamage) {
 		hp = 0;
 		DeadExecute();
 	}
-
 }
 
 void Character::CheckWall() {

@@ -92,6 +92,7 @@
     <ClCompile Include="Scr\Skill\Skill.cpp" />
     <ClCompile Include="Scr\Skill\SkillSelectUI.cpp" />
     <ClCompile Include="Scr\UI\CircleGauge.cpp" />
+    <ClCompile Include="Scr\UI\DamagePopup.cpp" />
     <ClCompile Include="Scr\UI\Gauge.cpp" />
     <ClCompile Include="Scr\UI\MenuSaveLoad.cpp" />
     <ClCompile Include="Scr\UI\TitleUI.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Scr\Skill\SkillSelectUI.h" />
     <ClInclude Include="Scr\UI\BossSlainUI.h" />
     <ClInclude Include="Scr\UI\CircleGauge.h" />
+    <ClInclude Include="Scr\UI\DamagePopup.h" />
     <ClInclude Include="Scr\UI\GameEndUI.h" />
     <ClInclude Include="Scr\UI\Gauge.h" />
     <ClInclude Include="Scr\UI\MenuSaveLoad.h" />

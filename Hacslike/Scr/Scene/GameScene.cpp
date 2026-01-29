@@ -9,6 +9,7 @@
 #include "../GameSystem/GameSystem.h"
 #include "../GameObject/Enhancement/EnhancementStone.h"
 #include "../GameObject/SaveObject/SaveObject.h"
+#include "../UI/DamagePopup.h"
 
 
 GameScene::GameScene() {
@@ -51,7 +52,6 @@ void GameScene::Update() {
 	InputManager* input = &InputManager::GetInstance();
 	StageManager::GetInstance().Update();
 	EnemyManager::GetInstance().Update();
-	CollisionManager::GetInstance().Update();
 
 	for (auto pObj : pGameObjectArray) {
 		pObj->Update();
@@ -77,6 +77,11 @@ void GameScene::Update() {
 #endif
 
 	Coin::GetInstance()->UpdateAll();
+	DamagePopup::UpdateAll();
+
+
+
+
 }
 
 
@@ -110,9 +115,6 @@ void GameScene::Render() {
 	// エフェクトの描画
 	EffectManager::GetInstance().Render();
 
-#if _DEBUG
-	CollisionManager::GetInstance().Render();
-#endif
 
 #if _DEBUG 線
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
@@ -163,6 +165,8 @@ void GameScene::Render() {
 		}
 	}
 #endif
+
+	DamagePopup::RenderAll();
 }
 
 void GameScene::Setup() {
