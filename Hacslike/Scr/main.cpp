@@ -89,7 +89,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Effekseer_Sync3DSetting();
 		// 更新処理
 		SceneManager::GetInstance().Update();
-		CollisionManager::GetInstance().Update();
 		TimeManager::GetInstance().Update();
 		InputManager::GetInstance().Update();
 		AudioManager::GetInstance().Update();
@@ -99,9 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 描画処理
 		SceneManager::GetInstance().Render();
-#if _DEBUG
-		CollisionManager::GetInstance().Render();
-#endif
+
 		// エスケープキーでウィンドウを閉じる
 		//if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE))
 		//	break;

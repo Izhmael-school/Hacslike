@@ -166,6 +166,7 @@ void Player::Start() {
 	if (!isVisible)
 		return;
 	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
+	CollisionManager::GetInstance().UnRegister(pCollider);
 	//CollisionManager::GetInstance().Register(pCollider);
 
 	modelHandle = PLAYER_MODEL_HANDLE;
@@ -932,7 +933,7 @@ void Player::PlayerSetUp() {
 	criticalHitRate = 10;
 	criticalDamage = 100;
 	SetSpeed(1);
-	CollisionManager::GetInstance().Register(pCollider);
+	CollisionManager::GetInstance().CheckRegister(pCollider);
 	isDead = false;
 	hitChest = false;
 	isSelectArtifact = false;

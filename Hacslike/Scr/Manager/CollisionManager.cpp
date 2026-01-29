@@ -276,7 +276,7 @@ void CollisionManager::Register(Collider* _pCol) {
 	index++;
 
 	int i = 0;
-	while(1){
+	while (1) {
 		if (i == index)
 			break;
 
@@ -287,7 +287,7 @@ void CollisionManager::Register(Collider* _pCol) {
 			prevs[i].push_back(false);
 			currents[i].push_back(false);
 		}
-			i++;
+		i++;
 	}
 }
 
@@ -295,11 +295,17 @@ void CollisionManager::CheckRegister(Collider* _pCol) {
 	if (_pCol == nullptr) return;
 
 	for (auto c : pColliderArray) {
-		if (c != _pCol) continue;
-
-		Register(_pCol);
+		if (c != pColliderArray.back())
+			if (c != _pCol) continue;
+			else return;
+		else {
+			if (c != _pCol) Register(_pCol);
+			else return;
+		}
+		
 		break;
 	}
+	Register(_pCol);
 }
 
 void CollisionManager::UnRegister(Collider* _pCol) {
@@ -326,10 +332,6 @@ void CollisionManager::UnRegister(Collider* _pCol) {
 		}
 	}
 
-	//指定された要素の削除
-	pColliderArray.erase(itr);
-	prevs.erase(prevs.begin() + Index);
-	currents.erase(currents.begin() + Index);
 
 	//衝突結果配列の要素も削除
 	for (auto& p : prevs) {
@@ -343,6 +345,10 @@ void CollisionManager::UnRegister(Collider* _pCol) {
 		//currents.erase(currents.begin() + index);
 		index = p.size();
 	}
+	//指定された要素の削除
+	pColliderArray.erase(itr);
+	prevs.erase(prevs.begin() + Index);
+	currents.erase(currents.begin() + Index);
 }
 
 void CollisionManager::UnRegisterAll() {
