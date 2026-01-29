@@ -52,6 +52,7 @@ public:
 public:
 	void Update();
 	void Render();
+	void DrawMap();
 	void LoadFloorData();
 	void LoadFloorTexture();
 

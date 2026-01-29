@@ -252,7 +252,7 @@ void PlayerAttack::AttackInput() {
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f) {
-					magnification = 5;
+					magnification = 1.5;
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f) {

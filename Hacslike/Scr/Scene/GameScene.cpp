@@ -103,6 +103,7 @@ void GameScene::Render() {
 		for (auto pObj : pGameObjectArray) {
 			pObj->Render();
 		}
+		StageManager::GetInstance().DrawMap();
 	}
 
 	Coin::GetInstance()->RenderAll();

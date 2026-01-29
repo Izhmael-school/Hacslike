@@ -51,10 +51,10 @@ void StageManager::Update() {
 
 void StageManager::Render() {
 	generator->Render();
+}
 
-	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);
-	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, white, false);
-	DrawFormatStringToHandle(950 + ((WINDOW_WIDTH - 950) / 3), WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 25, red, MainFont, "第 %d 階層", floorCount - 1);
+void StageManager::DrawMap() {
+	generator->DrawMap();
 }
 
 void StageManager::LoadFloorData() {

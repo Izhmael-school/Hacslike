@@ -133,7 +133,6 @@ void StageGenerator::Render() {
 	if (useStair != nullptr)
 		useStair->Render();
 
-	DrawMap();
 	pChest->Render();
 	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == false) {
 		if (pSaveObject) {
@@ -691,6 +690,10 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 
 void StageGenerator::DrawMap() {
 	if (Character::player == nullptr) return;
+
+	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);
+	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, white, false);
+	DrawFormatStringToHandle(950 + ((WINDOW_WIDTH - 950) / 3), WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 25, red, MainFont, "第 %d 階層", StageManager::GetInstance().floorCount - 1);
 
 	// プレイヤーのポジション取得
 	VECTOR playerPos = Character::player->GetPosition();
