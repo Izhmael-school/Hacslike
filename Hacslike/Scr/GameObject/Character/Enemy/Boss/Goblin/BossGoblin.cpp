@@ -22,7 +22,8 @@ void BossGoblin::Start() {
 	attack02ColliderRadius = 150;
 	float attack02ColliderRadius02 = 120;
 	attack03ColliderRadius = 200;
-	attack01ColliderSpawnTime = 14;
+	float attack03ColliderRadius02 = 100;
+	attack01ColliderSpawnTime = 13;
 	attack02ColliderSpawnTime = 12;
 	float attack02ColliderSpawnTime02 = 24;
 	attack03ColliderSpawnTime = 33;
@@ -31,9 +32,16 @@ void BossGoblin::Start() {
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 150);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime - 2, colliderLifeTime, attack01ColliderRadius, VGet(150,0,0),150, 0.3f);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime + 2, colliderLifeTime, attack01ColliderRadius, VGet(-150,0,0),150,0.7f);
 	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 150, 0.5f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime - 2, colliderLifeTime, attack02ColliderRadius,  VGet(150, 0, 0) ,150 , 0.2f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime + 2, colliderLifeTime, attack02ColliderRadius, VGet(-150, 0, 0) ,150 , 0.3f);
 	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime02, colliderLifeTime, attack02ColliderRadius02, 150, 0.5f);
-	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 150, 1.5f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime02 - 2, colliderLifeTime, attack02ColliderRadius02, VGet(150, 0, 0), 150, 0.2f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime02 + 2, colliderLifeTime, attack02ColliderRadius02, VGet(-150, 0, 0), 150, 0.3f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 250, 1.5f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius02, 0);
 	// UŒ‚‚ÌŒø‰Ê‰¹
 	pAnimator->GetAnimation("attack01")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack01ColliderSpawnTime);
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack02ColliderSpawnTime);

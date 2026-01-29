@@ -12,26 +12,34 @@ void BossDurahan::Start() {
 	BossBase::Start();
 
 	// “–‚½‚è”»’è‚Ìİ’è
-	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
+	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 200);
 
 	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
 	attack01ColliderRadius = 200;
-	attack02ColliderRadius = 75;
-	float attack02ColliderRadius02 = 50;
-	attack03ColliderRadius = 150;
+	float attack01ColliderRadius02 = 400;
+	attack02ColliderRadius = 200;
+	float attack02ColliderRadius02 = 100;
+	attack03ColliderRadius = 300;
 	attack01ColliderSpawnTime = 43;
+	float attack01ColliderSpawnTime02 = 18;
+	float attack01ColliderSpawnTime03 = 25;
+	float attack01ColliderSpawnTime04 = 35;
 	attack02ColliderSpawnTime = 19;
 	attack03ColliderSpawnTime = 31;
 
 	deadAnimationTime = 33;
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 250, 2.0f);
-	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 350);
-	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 250, 0.6f);
-	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 175, 0.6f);
-	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 100, 0.6f);
-	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 400, 1.5f);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 450, 2.0f);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime02, colliderLifeTime, attack01ColliderRadius02, 0, 0.5f);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime03, colliderLifeTime, attack01ColliderRadius02, 0, 0.5f);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime04, colliderLifeTime, attack01ColliderRadius02, 0, 0.5f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 700);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 500, 0.6f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 350, 0.6f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius02, 200, 0.6f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 600, 1.5f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius / 2, 100);
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, attack01ColliderSpawnTime);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, attack02ColliderSpawnTime);

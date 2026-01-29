@@ -13,10 +13,11 @@ void BossKetbleperz::Start() {
 	BossBase::Start();
 
 	// “–‚½‚è”»’è‚Ìİ’è
-	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
+	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 450);
 
 	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
 	attack01ColliderRadius = 200;
+	float attack01ColliderRadius02 = 400;
 	attack02ColliderRadius = 200;
 	attack03ColliderRadius = 200;
 	attack01ColliderSpawnTime = 23;
@@ -26,9 +27,12 @@ void BossKetbleperz::Start() {
 	deadAnimationTime = 40;
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
-	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 200);
-	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 200);
-	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 200);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 300);
+	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius02, 300,0.5f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 300);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 450);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 600);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 400,2);
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, attack01ColliderSpawnTime);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, attack02ColliderSpawnTime);
