@@ -52,6 +52,7 @@ void GameScene::Update() {
 	InputManager* input = &InputManager::GetInstance();
 	StageManager::GetInstance().Update();
 	EnemyManager::GetInstance().Update();
+	CollisionManager::GetInstance().Update();
 
 	for (auto pObj : pGameObjectArray) {
 		pObj->Update();
@@ -117,6 +118,9 @@ void GameScene::Render() {
 
 
 #if _DEBUG 線
+
+	CollisionManager::GetInstance().Render();
+
 	// オブジェクトの位置関係がわかるように地面にラインを描画する
 	{
 		VECTOR pos1, pos2;
