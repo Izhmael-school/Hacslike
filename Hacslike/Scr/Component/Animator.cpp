@@ -37,6 +37,11 @@ void Animator::Update() {
 			e.isAction = true;
 			e.animEvent();
 		}
+
+		// イベント内でアニメーションを切り替えたか
+		/*AnimationClip<void>* pChangeAnim = GetAnimation(currentAnimation);
+		if (pChangeAnim != pCurrentAnim)
+			pCurrentAnim = pChangeAnim;*/
 	}
 
 	// 終了時間を超えたら
@@ -44,7 +49,7 @@ void Animator::Update() {
 		// 再生フラグを落とす
 		isPlaying = false;
 		pCurrentAnim->playTime = 0.0f;
-
+		//currentAnimation = INVALID;
 		// 再生していたアニメーションがループ再生するかどうか
 		if (pCurrentAnim->isLoop) {
 			isPlaying = true;

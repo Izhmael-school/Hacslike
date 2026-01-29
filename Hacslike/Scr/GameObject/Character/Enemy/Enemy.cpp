@@ -476,8 +476,8 @@ void Enemy::SetAnimEventForAttackCollider(std::string animName, float collidersp
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis, float mag) {
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos, mag]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
-		[this, radius, pos,dis, colliderLifeTime, mag]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(pos,dis), radius, colliderLifeTime / GetFPS(), mag));
-	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(pos,dis)));
+		[this, radius, pos, dis, colliderLifeTime, mag]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(pos, dis), radius, colliderLifeTime / GetFPS(), mag));
+	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(pos, dis)));
 		}); });
 }
 
@@ -538,7 +538,11 @@ void Enemy::Move(VECTOR targetPos) {
 	VECTOR dir = VSub(targetPos, position);
 	VECTOR nDir = VNorm(dir);
 	float d = TimeManager::GetInstance().deltaTime;
-	float move = moveSpeed * d;
+	float move;
+	if (rayAnswer)
+		move = (moveSpeed * 1.5f) * d;
+	else
+		move = moveSpeed * d;
 	VECTOR pos = VAdd(position, VScale(nDir, move));
 	// •Ç‚Ì”»’è‚ðŠm”F‚µ‚ÄˆÚ“®‚·‚é
 	VECTOR wPos = CheckWallToWallRubbing(pos);
@@ -604,6 +608,10 @@ void Enemy::Attack() {
 		atkTime = 0;
 		int rand = Random(0, attackAnimationList.size() - 1);
 		pAnimator->Play(attackAnimationList[rand]);
+	}
+	else {
+
+		pAnimator->Play("idle01");
 	}
 }
 
