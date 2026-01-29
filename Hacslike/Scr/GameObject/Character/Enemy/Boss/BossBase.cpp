@@ -5,6 +5,7 @@
 #include "../../../../GameSystem/GameSystem.h"
 #include"../../Player/Player.h"
 #include "../../../../UI/BossSlainUI.h"
+#include "../../../Returner/TitleReturner.h"
 
 BossBase::BossBase(VECTOR _appearPos)
 	:appearPos(_appearPos) {
@@ -35,7 +36,7 @@ void BossBase::SpawnReturnCircle() {
 	VECTOR pos = ChangeMapPos(circlePos);
 
 	// サークルを出す
-
+	TitleReturner::GetInstance()->SetPosition(pos);
 }
 
 void BossBase::Start() {
