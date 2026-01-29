@@ -3,7 +3,7 @@
 #include "../../Enhancement/StatusEnhancement.h"
 #include "../../Component/Collider/Collider.h"
 
-class CapsuleHitBox;
+class SphereHitBox;
 
 class EnhancementStone : public GameObject {
 public:
