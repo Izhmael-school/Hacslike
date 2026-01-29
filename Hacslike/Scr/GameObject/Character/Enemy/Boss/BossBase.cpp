@@ -1,5 +1,6 @@
 #include "BossBase.h"
 #include "../../../../CommonModule.h"
+#include "../../../../ExpansionMethod.h"
 #include"../../../../Manager/ArtifactManager.h"
 #include "../../../../GameSystem/GameSystem.h"
 #include"../../Player/Player.h"
@@ -7,8 +8,6 @@
 
 BossBase::BossBase()
 	:appearPos() {
-	vision.rayAngle = 360;
-	vision.rayCount = 120;
 }
 
 BossBase::~BossBase() {
@@ -17,6 +16,7 @@ BossBase::~BossBase() {
 }
 
 void BossBase::AppearStair() {
+	if (CompareVECTOR(appearPos, VMinus)) return;
 	auto cells = StageManager::GetInstance().generator->cells;
 	for (auto c : cells) {
 		if (c->GetDataPos().x != appearPos.x || c->GetDataPos().z != appearPos.z) continue;
@@ -29,6 +29,13 @@ void BossBase::AppearStair() {
 		StageManager::GetInstance().SetMapData(appearPos.x, appearPos.z, (int)Stair);
 		break;
 	}
+}
+
+void BossBase::SpawnReturnCircle() {
+	VECTOR pos = ChangeMapPos(circlePos);
+
+	// サークルを出す
+
 }
 
 void BossBase::Start() {
@@ -74,6 +81,6 @@ void BossBase::DeadExecute() {
 
 	BossSlainUI::GetInstance()->Start();
 	AppearStair();
-	
+	SpawnReturnCircle();
 }
 

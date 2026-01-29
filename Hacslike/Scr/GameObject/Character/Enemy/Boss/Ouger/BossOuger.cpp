@@ -41,6 +41,10 @@ void BossOuger::Start() {
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, attack02ColliderSpawnTime);
 	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Punch2"); }, attack03ColliderSpawnTime);
 	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
+
+	VECTOR pos = appearPos;
+	SetAppearPos(VAdd(pos, VLeft));
+	SetCirclePos(VAdd(pos, VRight));
 }
 
 void BossOuger::Update() {

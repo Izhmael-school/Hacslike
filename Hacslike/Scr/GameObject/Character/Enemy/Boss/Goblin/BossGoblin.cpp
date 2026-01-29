@@ -48,6 +48,10 @@ void BossGoblin::Start() {
 	pAnimator->GetAnimation("attack02")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("SwordSwing"); }, attack02ColliderSpawnTime02);
 	pAnimator->GetAnimation("attack03")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Impact"); }, attack03ColliderSpawnTime);
 	pAnimator->GetAnimation("dead")->SetEvent([this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
+
+	VECTOR pos = appearPos;
+	SetAppearPos(VAdd(pos, VLeft));
+	SetCirclePos(VAdd(pos, VRight));
 }
 
 void BossGoblin::Update() {

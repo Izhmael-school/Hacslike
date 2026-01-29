@@ -39,6 +39,9 @@ void BossKetbleperz::Start() {
 	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("HeadBang"); }, attack03ColliderSpawnTime);
 	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 
+	VECTOR pos = appearPos;
+	SetAppearPos(VAdd(pos, VLeft));
+	SetCirclePos(VAdd(pos, VRight));
 }
 
 void BossKetbleperz::Update() {

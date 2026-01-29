@@ -20,6 +20,7 @@ protected:
 
 protected:
 	void AppearStair();
+	void SpawnReturnCircle();
 
 public:
 public:
@@ -35,11 +36,14 @@ private:
 	Gauge<int>* hpBar;
 	Gauge<float>* attackSpanBar;
 
-
+protected:
 	// 階段が出現する位置
 	VECTOR appearPos;
+	// 魔法陣が出る位置
+	VECTOR circlePos;
 
 public:
 	inline void SetAppearPos(VECTOR pos) { appearPos = pos; }
+	inline void SetCirclePos(VECTOR pos) { circlePos = pos; }
 };
 
