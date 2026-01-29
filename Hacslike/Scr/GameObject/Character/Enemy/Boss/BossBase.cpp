@@ -55,7 +55,7 @@ void BossBase::Update() {
 void BossBase::Render() {
 	Enemy::Render();
 	
-	if (!isDead) {
+	if (!isDead && rayAnswer) {
 		hpBar->Render();
 		attackSpanBar->Render();
 		DrawStringToHandle(WINDOW_WIDTH / 4, 700.0f - 20, name.c_str(), white,MainFont);

@@ -57,6 +57,8 @@ public:
 
 	void Render() {
 		float value = static_cast<float>(currentValue) / static_cast<float>(maxValue);
+		if (value > 1) value = 1;
+
 		float barWidth = width * value;
 
 		float diff = barWidth - currentDecreaseValue;

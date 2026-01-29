@@ -125,6 +125,8 @@ public:
 
 	void Render() {
 		float rate = (float)currentValue / (float)maxValue;
+		if (rate > 1) rate = 1;
+
 		float targetAngle = startDeg + (endDeg - startDeg) * rate;
 
 		float diff = targetAngle - currentDecreaseAngle;
