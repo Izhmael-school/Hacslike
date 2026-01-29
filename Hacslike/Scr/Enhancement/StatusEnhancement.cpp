@@ -264,11 +264,10 @@ void StatusEnhancement::Render() {
 
 	// タイトル (中央寄せ)
 	unsigned int titleColor = allMax ? GetColor(255, 255, 255) : GetColor(200, 200, 200);
-	DrawString(centerX - 150, 60, "STATUS ENHANCEMENT", titleColor);
 
 	// 所持コイン表示 (右上)
 	unsigned int coinColor = GetColor(255, 215, 0);
-	DrawFormatString(WINDOW_WIDTH - 280, 60, coinColor, "COINS: %d", playerCoins);
+	DrawFormatStringToHandle(WINDOW_WIDTH - 280, 60, coinColor, MainFont, "COINS: %d", playerCoins);
 
 	for (int i = 0; i < (int)stats.size(); i++) {
 		int x = gaugeStartX;
@@ -282,12 +281,12 @@ void StatusEnhancement::Render() {
 		}
 
 		// 項目名・レベル・ボーナス (ゲージの左側)
-		DrawString(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255));
-		DrawFormatString(x - 140, y + 32, (stats[i].level >= 50 ? GetColor(255, 215, 0) : GetColor(150, 150, 150)), "Lv.%d", stats[i].level);
+		DrawStringToHandle(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255), MainFont);
+		DrawFormatStringToHandle(x - 140, y + 32, (stats[i].level >= 50 ? GetColor(255, 215, 0) : GetColor(150, 150, 150)), MainFont, "Lv.%d", stats[i].level);
 		if (stats[i].name == "会心ダメ")
-			DrawFormatString(x - 140, y + 62, GetColor(0, 255, 150), "+%d%%", stats[i].totalBonus / 100);
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d%%", stats[i].totalBonus / 100);
 		else
-			DrawFormatString(x - 140, y + 62, GetColor(0, 255, 150), "+%d", stats[i].totalBonus);
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d", stats[i].totalBonus);
 
 		// ゲージ描画 (ここで大きいサイズが適用される)
 		DrawParallelGauge(x, y, stats[i].level, stats[i].color);
@@ -296,15 +295,15 @@ void StatusEnhancement::Render() {
 		if (stats[i].level < 50) {
 			int cost = 3 + (stats[i].level * 2);
 			unsigned int cCol = (playerCoins >= cost) ? GetColor(255, 255, 255) : GetColor(255, 50, 50);
-			DrawFormatString(x + 750, y + 15, cCol, "COST: %d", cost);
+			DrawFormatStringToHandle(x + 750, y + 15, cCol, MainFont,"COST: %d", cost);
 		}
 		else {
-			DrawString(x + 750, y + 15, "MAX", GetColor(255, 215, 0));
+			DrawStringToHandle(x + 750, y + 15, "MAX", GetColor(255, 215, 0), MainFont);
 		}
 	}
 
 	if (allMax) {
-		DrawString(centerX - 200, WINDOW_HEIGHT - 80, "ULTIMATE RAINBOW ACHIEVED", GetColor(255, 255, 255));
+		DrawStringToHandle(centerX - 200, WINDOW_HEIGHT - 80, "ULTIMATE RAINBOW ACHIEVED", GetColor(255, 255, 255), MainFont);
 	}
 
 	int StartX = (WINDOW_WIDTH / 2) - 200;
@@ -316,9 +315,9 @@ void StatusEnhancement::Render() {
 
 	DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
 	DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
-	DrawFormatString(textX + 50, textY, black, "キー/  ボタン:閉じる");
-	DrawFormatString(textX + 20, textY, white, "ESC");
-	DrawFormatString(textX + 93, textY, white, "A");
+	DrawFormatStringToHandle(textX + 50, textY, black, MainFont, "キー/  ボタン:閉じる");
+	DrawFormatStringToHandle(textX + 20, textY, white, MainFont, "ESC");
+	DrawFormatStringToHandle(textX + 93, textY, white, MainFont, "A");
 
 	SetUseLighting(TRUE);
 	SetUseZBuffer3D(TRUE);

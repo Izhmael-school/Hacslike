@@ -93,7 +93,6 @@ public:	// ゲッターとセッター
 	//	クリティカル込みの攻撃力の取得
 	inline int GetCriticalAtk() const {
 		if (GetRand(99) < criticalHitRate) {
-			printfDx("会心の一撃！\n");
 			return atk * (1 + (criticalDamage / 100));
 		}
 		else {
