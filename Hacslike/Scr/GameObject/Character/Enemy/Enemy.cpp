@@ -476,8 +476,8 @@ void Enemy::SetAnimEventForAttackCollider(std::string animName, float collidersp
 void Enemy::SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis, float mag) {
 	float speed = pAnimator->GetAnimSpeed(animName);
 	SetAnimEvent(animName, [this, radius, speed, colliderspawnTime, dis, colliderLifeTime, pos, mag]() {area.CreateArea(radius, colliderspawnTime, VAdd(AttackAreaPos(pos, dis), position), speed,
-		[this, radius, dis, colliderLifeTime, mag]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(dis), radius, colliderLifeTime / GetFPS(), mag));
-	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(dis)));
+		[this, radius, pos,dis, colliderLifeTime, mag]() { attackColliderList.push_back(new SphereHitBox(this, AttackAreaPos(pos,dis), radius, colliderLifeTime / GetFPS(), mag));
+	EffectManager::GetInstance().Instantiate("Hit", VAdd(position, AttackAreaPos(pos,dis)));
 		}); });
 }
 

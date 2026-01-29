@@ -12,12 +12,14 @@ void BossOuger::Start() {
 	BossBase::Start();
 
 	// “–‚½‚è”»’è‚Ìİ’è
-	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 50);
+	pCollider = new CapsuleCollider(this, VGet(0, 30, 0), VGet(0, 800, 0), 100);
 
 	// UŒ‚ŠÖ˜A•Ï”‚Ì‘ã“ü
-	attack01ColliderRadius = 150;
+	attack01ColliderRadius = 200;
 	attack02ColliderRadius = 175;
-	attack03ColliderRadius = 250;
+	attack03ColliderRadius = 150;
+	float attack03ColliderRadius02 = 300;
+	float attack03ColliderRadius03 = 600;
 	attack01ColliderSpawnTime = 17;
 	attack02ColliderSpawnTime = 16;
 	attack03ColliderSpawnTime = 48;
@@ -26,8 +28,14 @@ void BossOuger::Start() {
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	SetAnimEventForAttackCollider("attack01", attack01ColliderSpawnTime, colliderLifeTime, attack01ColliderRadius, 200);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime - 2, colliderLifeTime, attack02ColliderRadius,VGet(-200,0,0), 200);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime - 1, colliderLifeTime, attack02ColliderRadius,VGet(-200,0,200), 200);
 	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime, colliderLifeTime, attack02ColliderRadius, 200);
-	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 250, 2.0f);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime + 1, colliderLifeTime, attack02ColliderRadius, VGet(200,0,200), 200);
+	SetAnimEventForAttackCollider("attack02", attack02ColliderSpawnTime + 2, colliderLifeTime, attack02ColliderRadius, VGet(200,0,0), 200);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius, 250, 2.5f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius02, 250, 1.0f);
+	SetAnimEventForAttackCollider("attack03", attack03ColliderSpawnTime, colliderLifeTime, attack03ColliderRadius03, 250, 0.5f);
 	// Œø‰Ê‰¹
 	SetAnimEvent("attack01", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, attack01ColliderSpawnTime);
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Punch1"); }, attack02ColliderSpawnTime);
