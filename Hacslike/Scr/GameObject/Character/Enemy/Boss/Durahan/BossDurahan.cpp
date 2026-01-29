@@ -1,6 +1,8 @@
 #include "BossDurahan.h"
 
-BossDurahan::BossDurahan() {
+BossDurahan::BossDurahan(VECTOR _appearPos)
+	:BossBase(_appearPos)
+{
 	Start();
 }
 

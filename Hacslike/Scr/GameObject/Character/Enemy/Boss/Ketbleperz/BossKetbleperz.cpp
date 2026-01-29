@@ -1,6 +1,8 @@
 #include "BossKetbleperz.h"
 
-BossKetbleperz::BossKetbleperz() {
+BossKetbleperz::BossKetbleperz(VECTOR _appearPos) 
+	:BossBase(_appearPos)
+{
 	Start();
 }
 

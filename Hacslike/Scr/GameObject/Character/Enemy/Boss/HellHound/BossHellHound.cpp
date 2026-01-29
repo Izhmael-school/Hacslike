@@ -1,6 +1,8 @@
 #include "BossHellHound.h"
 
-BossHellHound::BossHellHound() {
+BossHellHound::BossHellHound(VECTOR _appearPos) 
+	:BossBase(_appearPos)
+{
 	Start();
 }
 

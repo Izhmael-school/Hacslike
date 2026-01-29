@@ -106,24 +106,23 @@ void EnemyManager::SpawnBoss(EnemyType type, VECTOR pos) {
 	BossBase* boss = nullptr;
 	switch (type) {
 	case Goblin:
-		boss = new BossGoblin();
+		boss = new BossGoblin(pos);
 		break;
 	case HellHound:
-		boss = new BossHellHound();
+		boss = new BossHellHound(pos);
 		break;
 	case Ouger:
-		boss = new BossOuger();
+		boss = new BossOuger(pos);
 		break;
 	case Ketbleperz:
-		boss = new BossKetbleperz();
+		boss = new BossKetbleperz(pos);
 		break;
 	case Durahan:
-		boss = new BossDurahan();
+		boss = new BossDurahan(pos);
 		break;
 	default:
 		return;
 	}
-	boss->SetAppearPos(pos);
 	boss->SetPosition(VGet(pos.x * CellSize, 0, pos.z * CellSize));
 	boss->SetVisible(true);
 	boss->SetType(type);

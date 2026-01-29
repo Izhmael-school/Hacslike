@@ -6,8 +6,8 @@
 #include"../../Player/Player.h"
 #include "../../../../UI/BossSlainUI.h"
 
-BossBase::BossBase()
-	:appearPos() {
+BossBase::BossBase(VECTOR _appearPos)
+	:appearPos(_appearPos) {
 }
 
 BossBase::~BossBase() {

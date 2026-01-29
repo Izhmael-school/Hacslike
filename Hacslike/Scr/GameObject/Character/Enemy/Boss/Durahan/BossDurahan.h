@@ -2,7 +2,7 @@
 #include "../BossBase.h"
 class BossDurahan : public BossBase {
 public:
-	BossDurahan();
+	BossDurahan(VECTOR _appearPos);
 	~BossDurahan();
 
 public:

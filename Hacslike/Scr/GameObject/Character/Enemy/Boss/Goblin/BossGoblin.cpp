@@ -1,7 +1,9 @@
 #include "BossGoblin.h"
 #include "../../../../../Component/Collider/Collider.h"
 
-BossGoblin::BossGoblin() {
+BossGoblin::BossGoblin(VECTOR _appearPos) 
+	:BossBase(_appearPos)
+{
 	Start();
 }
 

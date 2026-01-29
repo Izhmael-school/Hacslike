@@ -2,7 +2,7 @@
 #include "../BossBase.h"
 class BossGoblin : public BossBase {
 public:
-	BossGoblin();
+	BossGoblin(VECTOR _appearPos);
 	~BossGoblin();
 
 public:

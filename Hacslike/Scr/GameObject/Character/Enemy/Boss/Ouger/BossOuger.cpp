@@ -1,6 +1,8 @@
 #include "BossOuger.h"
 
-BossOuger::BossOuger() {
+BossOuger::BossOuger(VECTOR _appearPos) 
+	:BossBase(_appearPos)
+{
 	Start();
 }
 

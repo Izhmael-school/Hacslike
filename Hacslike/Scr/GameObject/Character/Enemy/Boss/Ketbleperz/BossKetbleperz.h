@@ -2,7 +2,7 @@
 #include "../BossBase.h"
 class BossKetbleperz : public BossBase {
 public:
-	BossKetbleperz();
+	BossKetbleperz(VECTOR _appearPos);
 	~BossKetbleperz();
 
 	void Start() override;

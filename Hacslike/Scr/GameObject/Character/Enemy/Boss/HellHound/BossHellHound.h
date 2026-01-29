@@ -3,7 +3,7 @@
 
 class BossHellHound : public BossBase {
 public:
-	BossHellHound();
+	BossHellHound(VECTOR _appearPos);
 	~BossHellHound();
 
 	void Start() override;

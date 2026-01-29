@@ -15,7 +15,7 @@ public:
 
 
 protected:
-	BossBase();
+	BossBase(VECTOR _appearPos);
 	~BossBase();
 
 protected:

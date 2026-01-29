@@ -31,14 +31,10 @@ StageManager::~StageManager() {
 
 void StageManager::Update() {
 	generator->Update();
-
 	
-
-	
-#if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) {
 		LoadFloorData();
-		floorCount = 50;
+		
 		if (floorCount % BossFloorNum == 0) {
 			GenerateStage((int)(floorCount / BossFloorNum));
 		}
@@ -46,6 +42,7 @@ void StageManager::Update() {
 			GenerateStage();
 		}
 	}
+#if _DEBUG
 #endif
 }
 
