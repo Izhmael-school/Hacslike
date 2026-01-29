@@ -224,6 +224,9 @@
     <ClCompile Include="Scr\UI\DamagePopup.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\Returner\TitleReturner.cpp">
+      <Filter>GameObject\Returner</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -472,6 +475,9 @@
     <ClInclude Include="Scr\UI\DamagePopup.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\Returner\TitleReturner.h">
+      <Filter>GameObject\Returner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -611,6 +617,9 @@
     </Filter>
     <Filter Include="Enhancement">
       <UniqueIdentifier>{01c58468-8212-4efd-9876-67772217197a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Returner">
+      <UniqueIdentifier>{c31595dc-b838-49f6-9210-37dc07fb750c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
