@@ -160,7 +160,7 @@ bool StatusEnhancement::Update() {
 					player->SetDef(player->GetDef() + (float)totalBoost);
 					break;
 				case 3:
-					player->SetCriticalHitRate(player->GetCriticalHitRate() + (totalBoost / 100.0f));
+					player->SetCriticalHitRate(player->GetCriticalHitRate() + totalBoost);
 					break;
 				case 4:
 					player->SetCriticalDamage(player->GetCriticalDamage() + (totalBoost / 100.0f));
@@ -217,7 +217,7 @@ bool StatusEnhancement::Update() {
 						player->SetDef(player->GetDef() + (float)boostValue);
 						break;
 					case 3: // 会心率
-						player->SetCriticalHitRate(player->GetCriticalHitRate() + (float)boostValue);
+						player->SetCriticalHitRate(player->GetCriticalHitRate() + boostValue);
 						break;
 					case 4: // 会心ダメ
 						player->SetCriticalDamage(player->GetCriticalDamage() + (boostValue / 100.0f));

@@ -17,6 +17,7 @@ protected:	// メンバ変数
 
 	int criticalHitRate;
 	float criticalDamage;
+	bool isCritical = false;
 
 	int Lv;
 	int exp;
@@ -84,20 +85,21 @@ public:	// ゲッターとセッター
 	inline int GetMaxHp() const { return maxHp; }
 	inline void SetHp(int _hp) { hp = _hp; }
 	inline int GetHp() const { return hp; }
-	void Damage(int rawDamage);
+	void Damage(Character* attacker, int rawDamage);
 #pragma endregion
 
 #pragma region Attack
 	// 攻撃力の取得
 	inline int GetAtk() const { return atk; }
 	//	クリティカル込みの攻撃力の取得
-	inline int GetCriticalAtk() const {
+	inline int GetCriticalAtk() {
+		isCritical = false; // ★まずリセット！
 		if (GetRand(99) < criticalHitRate) {
-			return atk * (1 + (criticalDamage / 100));
+			isCritical = true;
+			// 1.5f などの計算のために 100.0f (float) で割る
+			return (int)(atk * (1.0f + (criticalDamage / 100.0f)));
 		}
-		else {
-			return atk;
-		}
+		return atk;
 	}
 	// 攻撃力の設定
 	inline void SetAtk(int _atk) { atk = _atk; }
@@ -117,6 +119,8 @@ public:	// ゲッターとセッター
 	inline float GetRangedCorrection() const { return rangedCorrection; }
 	//	遠距離攻撃力補正の設定
 	inline void SetRangedCorrection(float _rangedCorrection) { rangedCorrection = _rangedCorrection; }
+
+	inline bool IsCritical() const { return isCritical; }
 #pragma endregion
 
 #pragma region Defence
@@ -192,6 +196,9 @@ public:	// ゲッターとセッター
 	/// 死んだときの処理
 	/// </summary>
 	virtual void DeadExecute() = 0;
+
+
+
 
 };
 

@@ -112,7 +112,7 @@ void CapsuleHitBox::OnTriggerEnter(Collider* _pCol) {
 
 	//	“–‚½‚Á‚½‘ŠŽè‚Ìƒ^ƒO‚ª "Enemy" ‚© "Player" ‚©‚Â“–‚½‚Á‚½‘ÎÛ‚Æ“–‚½‚è”»’è‚ÌŽ‚¿Žå‚ªˆá‚¤ê‡
 	if ((pTarget->CompareTag("Enemy") || pTarget->CompareTag("Player")) && owner->GetTag() != pTarget->GetTag()) {
-		_pCol->GetCharacter()->Damage(pTarget->GetAtk());
+		_pCol->GetCharacter()->Damage(pTarget,pTarget->GetAtk());
 		AudioManager::GetInstance().PlayOneShot("damage");
 	}
 }

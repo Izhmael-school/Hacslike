@@ -381,7 +381,7 @@ void Player::Update() {
 		AddExp(maxExp);
 	}
 	else if (input->IsKeyDown(KEY_INPUT_2)) {
-		Damage(10 + def);
+		Damage(this, 10 + def);
 	}
 	if (input->IsButtonDown(XINPUT_GAMEPAD_Y) || input->IsKeyDown(KEY_INPUT_1)) {
 		AddHp(maxHp / 10);
