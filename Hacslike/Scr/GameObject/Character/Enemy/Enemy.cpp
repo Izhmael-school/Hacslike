@@ -357,8 +357,8 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 
 bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
 	// まず扇形の視界判定。視界外なら即 false
-	if (!Vision_Fan(targetPos)) return false;
-
+	if (!Vision_Fan(targetPos) && !isTouch) return false;
+	else if (isTouch) return true;
 	// 座標をマップデータの座標に変換
 	VECTOR targetMapPos = ChangeMapPos(targetPos);
 	VECTOR myMapPos = ChangeMapPos(position);
@@ -414,6 +414,7 @@ void Enemy::Wander() {
 		int roomNum = StageManager::GetInstance().GetNowRoomNum(VGet(x, 0, z));
 		// 部屋じゃなかったら
 		if (roomNum == -1) {
+			if (moveRoots.size() == 0) return;
 			VECTOR g = moveRoots.back();
 			moveRoots.pop_back();
 			goalPos = g;
@@ -601,7 +602,8 @@ void Enemy::DrawVisionFanDebug() {
 void Enemy::Attack() {
 	if (atkTime >= atkSpan) {
 		atkTime = 0;
-		pAnimator->Play(Random(attackAnimationList[0], attackAnimationList[attackAnimationList.size() - 1]));
+		int rand = Random(0, attackAnimationList.size() - 1);
+		pAnimator->Play(attackAnimationList[rand]);
 	}
 }
 

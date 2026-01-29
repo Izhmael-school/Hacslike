@@ -9,7 +9,7 @@ BossKetbleperz::~BossKetbleperz() {}
 void BossKetbleperz::Start() {
 
 	// ステータスの設定
-	SetStatusData(12);
+	SetStatusData(13);
 	BossBase::Start();
 
 	// 当たり判定の設定

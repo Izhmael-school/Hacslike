@@ -138,6 +138,8 @@ private:	//	メンバ変数
 
 #pragma endregion
 
+	bool isTitleUI;
+
 #pragma region コンストラクタとデストラクタ
 public:		//	コンストラクタとデストラクタ
 

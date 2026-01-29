@@ -8,7 +8,7 @@ BossDurahan::~BossDurahan() {}
 
 void BossDurahan::Start() {
 	// ステータスの設定
-	SetStatusData(13);
+	SetStatusData(14);
 	BossBase::Start();
 
 	// 当たり判定の設定
