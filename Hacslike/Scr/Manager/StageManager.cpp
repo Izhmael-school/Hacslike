@@ -32,6 +32,7 @@ StageManager::~StageManager() {
 void StageManager::Update() {
 	generator->Update();
 	
+#if _DEBUG
 	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) {
 		LoadFloorData();
 		
@@ -42,7 +43,6 @@ void StageManager::Update() {
 			GenerateStage();
 		}
 	}
-#if _DEBUG
 #endif
 }
 
@@ -146,6 +146,9 @@ void StageManager::GenerateStage() {
 	auto data = LoadJsonFile("Scr/Data/EnemyData.json");
 
 	int max = floorData.spawnEnemyID.size();
+
+	if (max == 0) return;
+
 	std::vector<EnemyData> spawnEnemyDataList;
 
 	// スポーンする可能性のある敵のデータを取得しておく

@@ -11,11 +11,14 @@ Collider::Collider(GameObject* _pObj)
 	,matrix(MGetIdent())
 {
 	pCharacter = static_cast<Character*>(pGameObject);
-	CollisionManager::GetInstance().Register(this);
+	CollisionManager::GetInstance().CheckRegister(this);
 }
 
 // デストラクタ
-Collider::~Collider() {}
+Collider::~Collider() {
+	CollisionManager::GetInstance().UnRegister(this);
+
+}
 #pragma endregion
 
 #pragma region BoxCollider

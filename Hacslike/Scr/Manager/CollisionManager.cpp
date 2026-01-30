@@ -221,6 +221,8 @@ void CollisionManager::Update() {
 	for (int i = 0; i < currents.size(); i++) {
 		for (int j = i + 1; j < currents[i].size(); j++) {
 
+			if (pColliderArray[i] == nullptr || pColliderArray[j] == nullptr) continue;
+
 			// 非表示は処理しない
 			if (!pColliderArray[i]->GetGameObject()->IsVisible() || !pColliderArray[j]->GetGameObject()->IsVisible()) continue;
 
@@ -260,7 +262,7 @@ void CollisionManager::Render() {
 		if (pCol != nullptr) {
 
 			// 非表示は描画しない
-			if (!pCol->GetGameObject()->IsVisible()) return;
+			if (!pCol->GetGameObject()->IsVisible()) continue;
 
 			pCol->Render();
 		}
@@ -302,14 +304,15 @@ void CollisionManager::CheckRegister(Collider* _pCol) {
 			if (c != _pCol) Register(_pCol);
 			else return;
 		}
-		
+
 		break;
 	}
-	Register(_pCol);
+
+	if (pColliderArray.size() == 0)
+		Register(_pCol);
 }
 
 void CollisionManager::UnRegister(Collider* _pCol) {
-	//2種類の考え方を記載
 
 	//イテレータの考え方
 	//Vrctorの先頭から末尾までの中に_pColがあるかどうか調べる
@@ -320,35 +323,22 @@ void CollisionManager::UnRegister(Collider* _pCol) {
 		return;
 	}
 
-
-	//配列の要素の考え
-	int Index = -1;
-
-	//配列の中に検索する要素があるかどうか
-	for (int i = 0; i < pColliderArray.size(); i++) {
-		if (*itr == pColliderArray[i]) {
-			Index = i; //あったら要素番号に保存
-			break;
-		}
-	}
-
+	int Index = std::distance(pColliderArray.begin(), itr);
 
 	//衝突結果配列の要素も削除
 	for (auto& p : prevs) {
 		p.erase(p.begin() + Index);
 		index = p.size();
-
-		//prevs.erase(prevs.begin() + index);
 	}
 	for (auto& p : currents) {
 		p.erase(p.begin() + Index);
-		//currents.erase(currents.begin() + index);
 		index = p.size();
 	}
 	//指定された要素の削除
 	pColliderArray.erase(itr);
 	prevs.erase(prevs.begin() + Index);
 	currents.erase(currents.begin() + Index);
+
 }
 
 void CollisionManager::UnRegisterAll() {

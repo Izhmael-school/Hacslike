@@ -79,6 +79,8 @@ void Enemy::Setup() {
 	currentRoot = position;
 	prevRoot = currentRoot;
 	SetVisible(true);
+	CollisionManager::GetInstance().CheckRegister(GetCollider());
+
 }
 
 void Enemy::Teardown() {
