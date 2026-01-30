@@ -47,6 +47,7 @@ void TitleReturner::Start() {
 	if (!pCollider) {
 		pCollider = new SphereCollider(this, VZero, 100);
 	}
+	SetScale(VGet(0.2, 0.2, 0.2));
 }
 
 void TitleReturner::Update() {

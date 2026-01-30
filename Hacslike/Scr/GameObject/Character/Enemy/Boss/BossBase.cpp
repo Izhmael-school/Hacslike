@@ -33,9 +33,10 @@ void BossBase::AppearStair() {
 }
 
 void BossBase::SpawnReturnCircle() {
-	VECTOR pos = ChangeMapPos(circlePos);
-
+	VECTOR pos = ChangePosMap(circlePos);
+	pos.y = 1;
 	// サークルを出す
+	TitleReturner::GetInstance()->SetVisible(true);
 	TitleReturner::GetInstance()->SetPosition(pos);
 }
 
