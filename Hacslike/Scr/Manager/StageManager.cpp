@@ -9,6 +9,7 @@
 #include"../GameObject/SaveObject/SaveObject.h"
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
 #include"../GameObject/Enhancement/EnhancementStone.h"
+#include "../GameObject/Returner/TitleReturner.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -227,6 +228,12 @@ void StageManager::GenerateStage(int stageID) {
 			generator->SetGameObject(stone, sd.enhancementStonePos);
 			generator->pStone = stone;
 			generator->pStone->SetVisible(true);
+		}
+
+		TitleReturner* returner = TitleReturner::GetInstance();
+		if (returner) {
+			generator->pReturner = returner;
+			generator->pReturner->SetVisible(false);
 		}
 	}
 	// ボスの配置

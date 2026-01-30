@@ -12,6 +12,7 @@ class StageCell;
 class SaveObject;
 class StartTreasureChest;
 class EnhancementStone;
+class TitleReturner;
 
 struct StageData {
 	int id;
@@ -63,6 +64,7 @@ public:
 	SaveObject* pSaveObject = nullptr;
 	StartTreasureChest* pChest = nullptr;
 	EnhancementStone* pStone = nullptr;
+	TitleReturner* pReturner = nullptr;
 
 public:
 	StageGenerator();

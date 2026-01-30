@@ -13,3 +13,9 @@ inline VECTOR ChangeMapPos(VECTOR pos) {
 	int z = std::floor(pos.z / CellSize);
 	return VGet(x, 0, z);
 }
+
+inline VECTOR ChangePosMap(VECTOR pos) {
+	int x = std::floor(pos.x * CellSize);
+	int z = std::floor(pos.z * CellSize);
+	return VGet(x, 0, z);
+}

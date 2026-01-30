@@ -5,6 +5,7 @@
 #include"../SaveObject/SaveObject.h"
 #include"../TreasureChest/StartTreasureChest.h"
 #include"../Enhancement/EnhancementStone.h"
+#include "../Returner/TitleReturner.h"
 #include <climits>
 
 
@@ -115,6 +116,7 @@ void StageGenerator::Update() {
 	pSaveObject->Update();
 	pChest->Update();
 	pStone->Update();
+	pReturner->Update();
 	
 }
 
@@ -143,6 +145,10 @@ void StageGenerator::Render() {
 		if (pStone) {
 			pStone->Render();
 		}
+	}
+
+	if (pReturner) {
+		pReturner->Render();
 	}
 }
 
