@@ -200,7 +200,7 @@ void Player::Start() {
 	}
 
 #if _DEBUG
-	SetCoinValue(10000000000);
+	//SetCoinValue(10000000000);
 #endif
 
 	//	アニメーションの読み込み

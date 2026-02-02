@@ -203,6 +203,8 @@ public:
         return h;
     }
 
+    ItemBase* GetEquippedItem() const { return equippedItem; }
+
     // セーブ/ロード用の API（SaveManager 経由で呼ばれる）
     void SaveTo(BinaryWriter& w);
     void LoadFrom(BinaryReader& r, uint32_t saveVersion);

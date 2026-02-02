@@ -49,7 +49,23 @@ void GameScene::Start() {
 
 void GameScene::Update() {
 
+	
 	InputManager* input = &InputManager::GetInstance();
+
+	// --- デバッグ用：Mキーで売却画面を開始 ---
+	if (input->IsKeyDown(KEY_INPUT_M)) {
+		if (!salesManager.IsActive()) {
+			// プレイヤーのインベントリを渡して開始
+			salesManager.StartSellScene(Player::GetInstance()->GetInventory());
+		}
+	}
+
+	// SalesManagerが動作中の場合は、他の更新を止める（ポーズ状態にする）
+	if (salesManager.IsActive()) {
+		salesManager.Update();
+		return; // ここでリターンすることで、売却中に背後でゲームが進むのを防ぐ
+	}
+
 	StageManager::GetInstance().Update();
 	EnemyManager::GetInstance().Update();
 	CollisionManager::GetInstance().Update();
@@ -172,6 +188,10 @@ void GameScene::Render() {
 #endif
 
 	DamagePopup::RenderAll();
+
+	if (salesManager.IsActive()) {
+		salesManager.Render();
+	}
 }
 
 void GameScene::Setup() {
