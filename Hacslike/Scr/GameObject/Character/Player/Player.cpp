@@ -116,6 +116,7 @@ void Player::SaveTo(BinaryWriter& w) {
 	w.WritePOD(criticalDamage);
 	w.WritePOD(coinValue);
 	w.WritePOD(isSelectArtifact);
+	w.WritePOD(isDead);
 	// position
 	float px = GetPosition().x;
 	float py = GetPosition().y;
@@ -141,6 +142,7 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	r.ReadPOD(criticalDamage);
 	r.ReadPOD(coinValue);
 	r.ReadPOD(isSelectArtifact);
+	r.ReadPOD(isDead);
 	float px, py, pz;
 	r.ReadPOD(px);
 	r.ReadPOD(py);
