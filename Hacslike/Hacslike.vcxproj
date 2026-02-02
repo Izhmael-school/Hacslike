@@ -81,6 +81,7 @@
     <ClCompile Include="Scr\Manager\FontManager.cpp" />
     <ClCompile Include="Scr\Manager\InputManager.cpp" />
     <ClCompile Include="Scr\Manager\ItemDropManager.cpp" />
+    <ClCompile Include="Scr\Manager\SalesManager.cpp" />
     <ClCompile Include="Scr\Manager\SaveManager.cpp" />
     <ClCompile Include="Scr\Manager\SceneManager.cpp" />
     <ClCompile Include="Scr\Manager\SkillManager.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Scr\Manager\FontManager.h" />
     <ClInclude Include="Scr\Manager\InputManager.h" />
     <ClInclude Include="Scr\Manager\ItemDropManager.h" />
+    <ClInclude Include="Scr\Manager\SalesManager.h" />
     <ClInclude Include="Scr\Manager\SaveManager.h" />
     <ClInclude Include="Scr\Manager\SceneManager.h" />
     <ClInclude Include="Scr\Manager\SkillManager.h" />

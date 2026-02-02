@@ -227,6 +227,9 @@
     <ClCompile Include="Scr\GameObject\Returner\TitleReturner.cpp">
       <Filter>GameObject\Returner</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\Manager\SalesManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -477,6 +480,9 @@
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Returner\TitleReturner.h">
       <Filter>GameObject\Returner</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\SalesManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

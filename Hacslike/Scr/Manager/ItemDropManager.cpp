@@ -32,8 +32,8 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
     if (item)
     {
 #if _DEBUG
-        printfDx("「%s」を生成した！", item->GetName().c_str(), GetColor(255, 255, 255));
-        std::cout << item->GetName() << " をドロップ！\n";
+        //printfDx("「%s」を生成した！", item->GetName().c_str(), GetColor(255, 255, 255));
+        //std::cout << item->GetName() << " をドロップ！\n";
 
 #endif
         AudioManager::GetInstance().PlayOneShot("DropItem");

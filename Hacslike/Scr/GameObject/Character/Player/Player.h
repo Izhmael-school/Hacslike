@@ -307,6 +307,18 @@ public:		//	Getter と Setter
 	inline void SetCoinValue(int _coin) { coinValue = _coin; }
 
 	/// <summary>
+	/// コインの加算
+	/// </summary>
+	/// <param name="_coin"></param>
+	inline void AddCoinValue(int _coin) { coinValue += _coin; }
+
+	/// <summary>
+	/// コインの減算
+	/// </summary>
+	/// <param name="_coin"></param>
+	inline void SubCoinValue(int _coin) { coinValue -= _coin; }
+
+	/// <summary>
 	/// 入手コインの取得
 	/// </summary>
 	/// <returns></returns>

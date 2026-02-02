@@ -51,7 +51,8 @@ void TitleReturner::Start() {
 }
 
 void TitleReturner::Update() {
-	this->matrix = MGetTranslate(this->position);
+	if (!isVisible) return;
+	GameObject::Update();
 
 	if (pCollider) pCollider->Update();
 
@@ -60,13 +61,16 @@ void TitleReturner::Update() {
 		if (input.IsKeyDown(KEY_INPUT_X) || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
 			StageManager::GetInstance().ResetFloorCount();
 			StageManager::GetInstance().Generate();
+			EnemyManager::GetInstance().DeleteAllEnemy();
+			SetVisible(false);
+			return;
 		}
 	}
 
-	GameObject::Update();
 }
 
 void TitleReturner::Render() {
+	if (!isVisible) return;
 	if (modelHandle != -1) {
 		if (isVisible) {
 			MV1SetMatrix(modelHandle, matrix);

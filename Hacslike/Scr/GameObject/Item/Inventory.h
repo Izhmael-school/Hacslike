@@ -190,7 +190,19 @@ public:
     InventoryItem* FindHealBySize(HealSize size);
 
     void RefreshHealShortcut();
+
+    void RemoveItemAmount(int idx, int amount);
     
+    int GetIconHandleFromCache(const std::string& path) {
+        auto it = iconCache.find(path);
+        if (it != iconCache.end()) return it->second;
+
+        // キャッシュになければ読み込んで登録
+        int h = LoadGraph(path.c_str());
+        iconCache[path] = h;
+        return h;
+    }
+
     // セーブ/ロード用の API（SaveManager 経由で呼ばれる）
     void SaveTo(BinaryWriter& w);
     void LoadFrom(BinaryReader& r, uint32_t saveVersion);
