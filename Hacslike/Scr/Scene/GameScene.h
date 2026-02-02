@@ -5,6 +5,7 @@
 #include "../GameObject/Artifact/ArtifactSelectUI.h"
 #include "../Enhancement/StatusEnhancement.h"
 #include "../GameObject/Character/Player/Player.h"
+#include"../Manager/SalesManager.h"
 
 class GameScene : public BaseScene {
 protected:
@@ -16,6 +17,8 @@ protected:
 	bool isSelectingArtifact = false;
 
 	StatusEnhancement statusEnhancement;
+
+	SalesManager salesManager;
 
 	bool isEnhancing = false; // 最初は表示状態からスタート
 
