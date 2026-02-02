@@ -71,6 +71,8 @@ public:
 
 	inline void ResetFloorCount() { floorCount = 0; }
 
+	inline int GetFloorCount() { return floorCount; }
+
 private:
 	void GenerateStage();
 	void GenerateStage(int stageID);
