@@ -10,7 +10,7 @@
 #include "../GameObject/Enhancement/EnhancementStone.h"
 #include "../GameObject/SaveObject/SaveObject.h"
 #include "../UI/DamagePopup.h"
-
+#include "../GameObject/ItemShop/ItemShop.h"
 
 GameScene::GameScene() {
 	Start();
@@ -35,6 +35,10 @@ void GameScene::Start() {
 
 	pCamera->SetTarget(pPlayer);
 
+	//ItemShop* shop = new ItemShop();
+	//shop->SetPosition(1000, 0, 400);
+	//pGameObjectArray.push_back(shop);
+
 	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/NormalFloor.mp3", "NormalFloor", false);
 	AudioManager::GetInstance().ChangeVolume(0.1f, "NormalFloor");
 	EffectManager::GetInstance().Load("Res/Effect/Item.efkefc", "Item", 10.0f);
@@ -42,8 +46,8 @@ void GameScene::Start() {
 
 
 
-	
-	
+
+
 
 }
 
@@ -103,7 +107,9 @@ void GameScene::Render() {
 		for (auto pObj : pGameObjectArray) {
 			pObj->Render();
 		}
-		StageManager::GetInstance().DrawMap();
+
+		if (GameSystem::GetInstance()->GetGameStatus() == GameStatus::Playing)
+			StageManager::GetInstance().DrawMap();
 	}
 
 	Coin::GetInstance()->RenderAll();
@@ -179,7 +185,7 @@ void GameScene::Setup() {
 		// フロア情報・ステージデータを復元しているはずなので、floorCount をリセットしたり
 		// 再生成を行ってはいけない。
 	if (SaveManager::GetInstance().HasLoadedSave()) {
-		
+
 		// フラグを消費しておく（次回の新規開始では通常の初期化を行うため）
 		SaveManager::GetInstance().ClearLoadedFlag();
 	}

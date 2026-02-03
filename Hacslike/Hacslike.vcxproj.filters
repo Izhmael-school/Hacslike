@@ -213,19 +213,26 @@
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClCompile>
     <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp" />
-    <ClCompile Include="Scr\Manager\FontManager.cpp" />
     <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
       <Filter>Enhancement</Filter>
     </ClCompile>
     <ClCompile Include="Scr\UI\TitleUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\UI\CircleGauge.cpp" />
     <ClCompile Include="Scr\UI\DamagePopup.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Scr\GameObject\Returner\TitleReturner.cpp">
       <Filter>GameObject\Returner</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\UI\CircleGauge.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\FontManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\ItemShop\ItemShop.cpp">
+      <Filter>GameObject\Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -458,7 +465,6 @@
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h" />
-    <ClInclude Include="Scr\Manager\FontManager.h" />
     <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
       <Filter>Enhancement</Filter>
     </ClInclude>
@@ -471,12 +477,20 @@
     <ClInclude Include="Scr\UI\TitleUI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\UI\CircleGauge.h" />
     <ClInclude Include="Scr\UI\DamagePopup.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Scr\GameObject\Returner\TitleReturner.h">
       <Filter>GameObject\Returner</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\CircleGauge.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\FontManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\ItemShop\ItemShop.h">
+      <Filter>GameObject\Shop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -620,6 +634,9 @@
     </Filter>
     <Filter Include="GameObject\Returner">
       <UniqueIdentifier>{c31595dc-b838-49f6-9210-37dc07fb750c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Shop">
+      <UniqueIdentifier>{bf362d16-f063-45eb-91d5-3bb4b23fa1db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

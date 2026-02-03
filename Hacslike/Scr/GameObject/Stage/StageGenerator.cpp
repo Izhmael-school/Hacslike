@@ -6,6 +6,7 @@
 #include"../TreasureChest/StartTreasureChest.h"
 #include"../Enhancement/EnhancementStone.h"
 #include "../Returner/TitleReturner.h"
+#include "../ItemShop/ItemShop.h"
 #include <climits>
 
 
@@ -55,7 +56,7 @@ StageGenerator::StageGenerator()
 			roomStatus[w][h] = -1;
 		}
 	}
-	
+
 }
 
 StageGenerator::~StageGenerator() {
@@ -101,7 +102,7 @@ StageGenerator::~StageGenerator() {
 	MV1DeleteModel(groundModel);
 	MV1DeleteModel(roadModel);
 	MV1DeleteModel(stairModel);
-	
+
 }
 
 void StageGenerator::Update() {
@@ -117,7 +118,10 @@ void StageGenerator::Update() {
 	pChest->Update();
 	pStone->Update();
 	pReturner->Update();
-	
+
+	if (pItemShop) {
+		pItemShop->Update();
+	}
 }
 
 void StageGenerator::Render() {
@@ -149,6 +153,10 @@ void StageGenerator::Render() {
 
 	if (pReturner) {
 		pReturner->Render();
+	}
+
+	if (pItemShop) {
+		pItemShop->Render();
 	}
 }
 
@@ -193,6 +201,15 @@ void StageGenerator::ClearStage() {
 	maxArea = 0;
 	roomCount = 0;
 	line = 0;
+
+	if (pSaveObject)
+		pSaveObject->SetVisible(false);
+	if (pChest)
+		pChest->SetVisible(false);
+	if (pStone)
+		pStone->SetVisible(false);
+	if (pSaveObject)
+		pItemShop->SetVisible(false);
 }
 
 void StageGenerator::GenerateStageObject() {
@@ -558,6 +575,7 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.saveObjectPos = VGet(s["saveObjectPos"][0], 0, s["saveObjectPos"][1]);
 		stage.chestObjectPos = VGet(s["ChestObjectPos"][0], 0, s["ChestObjectPos"][1]);
 		stage.enhancementStonePos = VGet(s["enhancementStonePos"][0], 0, s["enhancementStonePos"][1]);
+		stage.itemShopPos = VGet(s["itemShopPos"][0], 0, s["itemShopPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
 		stage.bossType = s["bossType"];
 
@@ -602,8 +620,7 @@ void StageGenerator::LoadStageData(int stageID) {
 	}
 }
 
-void StageGenerator::LoadStageMeta(int stageID)
-{
+void StageGenerator::LoadStageMeta(int stageID) {
 	auto data = LoadJsonFile("Scr/Data/StageData.json");
 	for (auto s : data) {
 		if (s["id"] != stageID) continue;
@@ -613,6 +630,7 @@ void StageGenerator::LoadStageMeta(int stageID)
 		stage.saveObjectPos = VGet(s["saveObjectPos"][0], 0, s["saveObjectPos"][1]);
 		stage.chestObjectPos = VGet(s["ChestObjectPos"][0], 0, s["ChestObjectPos"][1]);
 		stage.enhancementStonePos = VGet(s["enhancementStonePos"][0], 0, s["enhancementStonePos"][1]);
+		stage.itemShopPos = VGet(s["itemShopPos"][0], 0, s["itemShopPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
 		stage.bossType = s["bossType"];
 		break;
@@ -689,9 +707,7 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 		cell = nullptr;
 		break;
 	}
-	pSaveObject->SetVisible(false);
-	pChest->SetVisible(false);
-	pStone->SetVisible(false);
+
 }
 
 void StageGenerator::DrawMap() {
@@ -777,12 +793,12 @@ bool StageGenerator::TransparencyWall(StageCell* cell) {
 }
 
 void StageGenerator::ChangeObjectTexture(int num, ObjectType changeObject) {
-	
+
 	std::vector<int>& floorDifList = StageManager::GetInstance().floorDifTexture;
 	std::vector<int>& floorNormalList = StageManager::GetInstance().floorNormalTexture;
 	std::vector<int>& wallDifList = StageManager::GetInstance().wallDifTexture;
 	std::vector<int>& wallNormalList = StageManager::GetInstance().wallNormalTexture;
-	
+
 	for (auto c : unuseRoad) {
 		int mHandle = c->GetModelHandle();
 		int difNum = MV1GetMaterialDifMapTexture(mHandle, 0);
@@ -798,7 +814,7 @@ void StageGenerator::ChangeObjectTexture(int num, ObjectType changeObject) {
 		MV1SetTextureGraphHandle(mHandle, difNum, floorDifList[num], false);
 		MV1SetTextureGraphHandle(mHandle, norNum, floorNormalList[num], false);
 	}
-	
+
 	for (auto c : unuseWall) {
 		int mHandle = c->GetModelHandle();
 		int difNum = MV1GetMaterialDifMapTexture(mHandle, 0);
@@ -864,8 +880,7 @@ VECTOR StageGenerator::GetRandomRoomRandomPos() {
 	return VGet(defaultPos.x + x * CellSize, 0, defaultPos.z + y * CellSize);
 }
 
-void StageGenerator::SaveTo(BinaryWriter& w)
-{
+void StageGenerator::SaveTo(BinaryWriter& w) {
 	// mapWidth / mapHeight は内部的に使われるが、念のため保存します
 	w.WritePOD(mapWidth);
 	w.WritePOD(mapHeight);
@@ -906,8 +921,7 @@ void StageGenerator::SaveTo(BinaryWriter& w)
 	w.WritePOD(roomCount);
 }
 
-void StageGenerator::LoadFrom(BinaryReader& r, uint32_t ver)
-{
+void StageGenerator::LoadFrom(BinaryReader& r, uint32_t ver) {
 	// まず現在のステージオブジェクトをクリア
 	ClearStage();
 
