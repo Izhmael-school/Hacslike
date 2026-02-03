@@ -35,7 +35,7 @@ void StageManager::Update() {
 	generator->Update();
 
 #if _DEBUG
-	if ((InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) && InputManager::GetInstance().IsButton(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKey(KEY_INPUT_LSHIFT)) {
+	if ((InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) && (InputManager::GetInstance().IsButton(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKey(KEY_INPUT_LSHIFT))) {
 		LoadFloorData();
 
 		if (floorCount % BossFloorNum == 0) {
