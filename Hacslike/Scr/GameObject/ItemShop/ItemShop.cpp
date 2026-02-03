@@ -6,6 +6,7 @@
 #include "../Item/Inventory.h"
 #include "../../Component/Collider/Collider.h"
 #include "../../GameSystem/GameSystem.h"
+#include "../../Manager/SalesManager.h"
 
 ItemShop::ItemShop()
 	:isTouch(false)
@@ -16,7 +17,7 @@ ItemShop::ItemShop()
 
 ItemShop::~ItemShop() {}
 
-void ItemShop::ChoiceItem(std::vector<std::string> _itemIDList,int _choiceCount) {
+void ItemShop::ChoiceItem(std::vector<std::string> _itemIDList, int _choiceCount) {
 	for (int i = 0; i < _choiceCount; i++) {
 
 		if (_itemIDList.size() == 0) return;
@@ -80,9 +81,9 @@ void ItemShop::OpenExecute() {
 	if (!isChoice) {
 		isChoice = true;
 
-		ChoiceItem(potionIDList,3);
-		ChoiceItem(weaponIDList,2);
-		ChoiceItem(allItemIDList,1);
+		ChoiceItem(potionIDList, 3);
+		ChoiceItem(weaponIDList, 2);
+		ChoiceItem(allItemIDList, 1);
 		SetPrace();
 	}
 
@@ -202,6 +203,10 @@ void ItemShop::Update() {
 
 		break;
 	case Sell:
+		if (!SalesManager::GetInstance().IsActive()) {
+			SalesManager::GetInstance().StartSellScene(Player::GetInstance()->GetInventory());
+		}
+		SalesManager::GetInstance().Update();
 		break;
 	}
 
@@ -245,6 +250,7 @@ void ItemShop::Render() {
 		DrawLineBox(imgPos.x, imgPos.y, imgPos.x + 150, imgPos.y + 150, yellow);
 		break;
 	case Sell:
+		SalesManager::GetInstance().Render();
 		break;
 	}
 

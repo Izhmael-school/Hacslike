@@ -5,867 +5,161 @@
 0:		ＤＸライブラリ Ver3.24b
 0:		論理プロセッサの数 : 20
 0:		ＯＳ  Windows11 ( Build 26100  )
-104:		現時点のＣＰＵ動作速度：大体3.62GHz
+104:		現時点のＣＰＵ動作速度：大体3.63GHz
 104:		ＭＭＸ命令を使用します
 104:		ＳＳＥ命令が使用可能です
 104:		ＳＳＥ２命令が使用可能です
 105:		ＣＰＵベンダ：GenuineIntel
 106:		ＣＰＵ名：12th Gen Intel(R) Core(TM) i7-12700KF
 106:	ＣＯＭの初期化... 成功
-171:	非同期読み込み処理の初期化...成功
-171:	ファイルアクセス処理の初期化...成功
-172:	メモリ総量:32560.15MB  空きメモリ領域:19664.00MB 
+172:	非同期読み込み処理の初期化...成功
+172:	ファイルアクセス処理の初期化...成功
+173:	メモリ総量:32560.08MB  空きメモリ領域:17040.67MB 
 173:	タイマーの精度を検査します
 173:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
-173:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
-173:	 
+174:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
+174:	 
 174:	ソフトの二重起動検査... 二重起動はされていませんでした
 175:	ウインドウクラスを登録します... 登録に成功しました
 176:	ウインドウモード起動用のウインドウを作成します
 176:	ディスプレイ情報のセットアップ開始
-176:		モニターの数：2  ディスプレイデバイスの数：4
-177:		No.0  モニター名：\\.\DISPLAY1　1920x1080　32bit　60Hz  96x96dpi
-177:		No.1  モニター名：\\.\DISPLAY2　1920x1080　32bit　60Hz  96x96dpi
-193:	ディスプレイ情報のセットアップ完了
-193:	ウインドウ矩形 ( 344, 89 )-( 1560, 928 )
-197:	ウインドウの作成に成功しました
-197:	ウインドウを表示します
-209:	ＩＭＥを無効にしました
-210:	ウインドウスタイルをウインドウモード用に変更します... 完了
-243:	XInput DLL の読み込み中... 成功
-243:	DirectInput関係初期化処理
-243:		DirectInput8 の取得を試みます...成功
-322:			引き続き初期化処理... 初期化成功
-323:		ジョイパッドの初期化... 
-323:			XInput 対応コントローラーのチェックを開始します
-323:				XInput 対応コントローラー No.0 をチェック
-323:				XInput 対応コントローラー No.0 の接続は確認できませんでした
-324:				XInput 対応コントローラー No.1 をチェック
-324:				XInput 対応コントローラー No.1 の接続は確認できませんでした
-324:				XInput 対応コントローラー No.2 をチェック
-324:				XInput 対応コントローラー No.2 の接続は確認できませんでした
-325:				XInput 対応コントローラー No.3 をチェック
-325:				XInput 対応コントローラー No.3 の接続は確認できませんでした
-325:			XInput 対応コントローラーのチェック完了
-325:			DirectInput 対応ジョイパッドの列挙を開始します
-469:			DirectInput 対応ジョイパッドの列挙終了
-469:		ジョイパッドの初期化は正常に終了しました
-469:		マウスデバイスの初期化... 初期化成功
-469:		キーボードデバイスの初期化... 初期化成功
-473:	DirectInput 関連の初期化は正常に終了しました
-475:	WASAPI の初期化を行います
-534:		デバイス名 : PHL 271E1 (NVIDIA High Definition Audio)
-603:		デフォルト遅延時間 : 10.000 ms
-603:		最小遅延時間       : 3.000 ms
-603:		遅延時間           : 10.000 ms
-604:		チャンネル数  　   : 2 ch
-604:		量子化ビット深度   : 32 bit
-604:		有効ビット深度　   : 32 bit
-604:		サンプリングレート : 48000 Hz
-604:		データ形式         : 浮動小数点型
-623:		動作モード         : 共有モード
-623:	WASAPI の初期化は正常に終了しました
-627:	d3d11.dll の読み込み.... 成功
-681:	dxgi.dll の読み込み.... 成功
-681:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
-681:	IDXGIFactory2 を作成します.... 成功
-696:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
-696:	IDXGIAdapter を列挙
-696:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8018MB
-697:			Output Device No.0 Name:\\.\DISPLAY1 ( 0, 0 )-( 1920, 1080 )
-697:			Output Device No.1 Name:\\.\DISPLAY2 ( 0, -1080 )-( 1920, 0 )
-697:		Adapter No.1 Desc:Microsoft Basic Render Driver  VRAM:0MB
-697:	API D3D11CreateDevice のアドレスを取得します.... 成功
-697:	IDXGIAdapter を取得します.... 成功
-698:	IDXGIAdapter1 を取得します.... 成功
-698:	IDXGIAdapter2 を取得します.... 成功
-698:	IDXGIAdapter3 を取得します.... 成功
-699:	IDXGIAdapter4 を取得します.... 成功
-699:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
-699:	ID3D11Device オブジェクトを取得します.... 成功
-854:	IDXGIDevice1 を取得します.... 成功
-854:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
-854:	[ウインドウモード 1200x800 ( 360, 127 )-( 1560, 927 )]
-854:	IDXGISwapChain2 を作成します.... 成功
-856:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
-856:	IDXGIOutput を取得します.... 成功
-856:	Graphics Device:NVIDIA GeForce RTX 3070
-856:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-857:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
-857:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
-857:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
-857:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-857:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-857:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
-858:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-858:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
-858:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-858:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
-858:	ＤＸＴ２テクスチャフォーマットは使えません
-858:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
-858:	ＤＸＴ４テクスチャフォーマットは使えません
-859:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
-859:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
-859:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
-859:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-859:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-859:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-859:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-859:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-860:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-860:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-860:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-860:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-860:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-860:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-860:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-860:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-860:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-861:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-861:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-861:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-861:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-861:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-861:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-861:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-861:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-861:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-861:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-861:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-862:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
-862:	同時にレンダリングできるバッファの数:8
-862:	最大テクスチャサイズ　幅:16384 高さ:16384
-862:	標準描画用の頂点バッファの作成.... 成功
-863:	シェーダーコード関係の初期化.... 成功
-873:	各種シェーダー用定数バッファの作成.... 成功
-874:	各種 ID3D11InputLayout の作成.... 成功
-883:	画像の単純転送処理の初期化... 成功
-884:	深度バッファを作成します.... 成功
-886:	フォントの初期化を行います
-888:	フォントの初期化は正常に終了しました
-966:	文字コードバッファの初期化を行います... 完了しました
-983:ＤＸライブラリの初期化処理終了
-6714:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
-6714:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
-6715:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
-6715:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
-6715:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
-6716:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
-6716:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
-6717:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
-6717:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
-6718:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
-6718:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
-6718:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
-6719:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
-6719:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
-6719:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
-6721:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
-6721:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
-6721:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
-6722:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
-6722:画像ファイル C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
-34393:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34394:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34395:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34395:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34396:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34399:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34399:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34399:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34401:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34403:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34404:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34405:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34405:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34419:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34419:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34420:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34421:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34421:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34424:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34425:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34425:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34425:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34435:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34436:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34437:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34437:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34439:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34441:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34441:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34442:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34442:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34445:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34445:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34446:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34446:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34446:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34453:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34454:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34454:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34454:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34461:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34462:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34466:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34466:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34467:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34467:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34467:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34469:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34471:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34471:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34472:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34472:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34475:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34475:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34476:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34476:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34476:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34479:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34479:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34480:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34481:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34481:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34483:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34484:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34485:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34485:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34485:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34488:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34489:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34489:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34490:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34492:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34493:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34493:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34493:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34517:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34518:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34519:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34519:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34519:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34527:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34527:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34528:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34528:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34529:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34545:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34546:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34546:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34547:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34549:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34550:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34551:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34551:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34551:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34567:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34568:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34570:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34570:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34570:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34582:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34582:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34583:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34584:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34584:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34587:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34587:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34589:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34589:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34589:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34592:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34593:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34593:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34594:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34597:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34597:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34598:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34599:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34599:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-34612:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34613:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34613:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34613:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34729:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34730:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34730:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34731:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34735:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34736:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34737:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34737:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34741:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34741:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34742:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34742:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34745:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34746:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34746:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34746:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34749:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34751:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34751:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34751:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34755:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34756:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34757:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34757:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34762:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34763:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34763:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34763:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34767:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34768:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34768:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34768:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34773:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34774:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34775:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34775:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34779:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\attack03.mv1
-34781:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\run.mv1
-34781:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\dropdown.mv1
-34781:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Wolf\situp.mv1
-34989:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack02.mv1
-34989:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\attack03.mv1
-34990:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\run.mv1
-34991:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\dropdown.mv1
-34991:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Spider\situp.mv1
-35310:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35321:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35335:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35335:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35336:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35338:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35339:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35339:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35341:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35341:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35348:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35378:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35379:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35381:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35382:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35383:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35385:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35387:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35387:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35389:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35392:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35392:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35394:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35396:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35396:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35399:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35400:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35401:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35403:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35405:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35405:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35408:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35409:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35410:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35410:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35410:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35413:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35413:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35414:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35415:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35415:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35417:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35418:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35419:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35419:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35419:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35421:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35423:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35423:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35426:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35426:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35428:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35428:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35428:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35431:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35432:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35433:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35434:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35434:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35437:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35438:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35439:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35439:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35439:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35441:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35444:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35444:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35447:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35448:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35448:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35451:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35453:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35454:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35456:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35457:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35458:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35458:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35458:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35461:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35462:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35466:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35467:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35467:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35469:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35471:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35472:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35473:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35473:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35475:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35477:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35477:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35480:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35481:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35481:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35482:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35482:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35485:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35486:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35487:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35487:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35487:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35490:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35490:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35492:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35492:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35492:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35495:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35496:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35497:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35497:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35497:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35500:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35500:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35502:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35502:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35503:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35506:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35507:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35508:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35508:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35509:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35511:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35512:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35513:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35513:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35513:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35716:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35719:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35719:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35722:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35724:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35725:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35727:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35730:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35731:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35734:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35736:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35737:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35739:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35740:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35741:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35741:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35741:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35744:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35746:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35747:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35749:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-35751:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-35752:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-35752:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-35752:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-35756:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35758:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35758:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-35761:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-35763:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-35763:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-36074:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-36076:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-36076:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-36079:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-36082:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-36083:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-36086:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-36088:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-36088:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-36091:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\idle02.mv1
-36093:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\dropdown.mv1
-36094:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Troll\situp.mv1
-36506:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-36516:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-36534:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-36534:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-36581:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-36581:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-36583:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-36583:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42029:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42064:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42064:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42067:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42067:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42069:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42069:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42071:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42072:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42073:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42073:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42076:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42077:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42078:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42081:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42083:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42083:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42086:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42086:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42088:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42088:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42090:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42091:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42092:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42092:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42095:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42097:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42097:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42101:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42102:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42103:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42103:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42106:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42107:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42108:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42108:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42111:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42111:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42113:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42113:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42115:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42116:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42118:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42118:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42121:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42122:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42124:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42124:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42127:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42129:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42129:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42132:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42133:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42134:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42134:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42137:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42138:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42139:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42139:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42143:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42143:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42145:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42145:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42148:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42148:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42150:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42150:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42154:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42156:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42156:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42159:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42161:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42162:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42164:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42166:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42167:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42170:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42171:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42171:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42172:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42174:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42175:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42177:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42177:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42179:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42181:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42182:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42182:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42185:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42186:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42187:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42187:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42190:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\idle02.mv1
-42191:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\attack03.mv1
-42192:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\dropdown.mv1
-42192:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HellHound\situp.mv1
-42195:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42197:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42197:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42201:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42203:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42203:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42206:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42208:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42208:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42211:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42213:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42213:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42218:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42219:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42221:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42225:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42227:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42227:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-42230:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-42232:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-42232:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-43447:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-43449:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-43450:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-43454:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-43456:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-43457:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-43460:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-43463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-43463:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44078:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44080:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44080:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44084:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44086:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44086:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44089:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44091:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44091:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44094:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44096:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44096:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44099:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44102:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44102:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44105:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44107:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44108:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44111:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44113:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44113:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44117:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\idle02.mv1
-44119:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\dropdown.mv1
-44119:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\HobGoblin\situp.mv1
-44197:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-44198:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-44199:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-44199:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-44201:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-44206:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\idle02.mv1
-44207:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\attack03.mv1
-44208:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\run.mv1
-44209:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\dropdown.mv1
-44209:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Zombie\situp.mv1
-44288:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44319:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44319:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44381:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44383:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44383:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44615:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44617:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44617:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44658:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44659:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44662:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44664:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44664:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44666:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44668:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44668:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44672:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44672:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44676:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44677:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44679:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44682:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44682:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44687:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44687:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44690:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44692:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44692:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44694:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44696:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44696:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44699:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44700:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44700:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44705:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44705:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44709:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44710:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44715:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44715:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44720:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44720:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44722:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44724:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44724:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44729:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44729:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44734:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44734:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44739:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44739:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44741:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44743:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44743:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44746:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44747:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44748:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44752:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44753:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44755:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44757:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44758:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44761:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44762:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44765:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44767:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44767:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44769:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44772:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44772:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44776:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44776:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44781:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44783:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44783:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44786:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-44788:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-44788:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-44792:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44793:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44798:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44798:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44803:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44803:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44808:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44808:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44812:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44813:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44818:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44818:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44979:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44979:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44983:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44984:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-44988:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-44989:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-45065:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-45067:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-45067:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-45072:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-45073:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-45074:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-45076:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-45078:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-45079:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-45082:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-45084:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-45085:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-45758:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-45760:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-45761:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-45763:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\idle02.mv1
-45765:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\dropdown.mv1
-45765:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ouger\situp.mv1
-46571:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-46572:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-46635:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\dropdown.mv1
-46635:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Ketbleperz\situp.mv1
-46938:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-46969:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-46970:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-46972:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-46975:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-46975:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-46978:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-46980:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-46980:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-46983:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-46985:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-46986:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-46988:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-46990:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-46991:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-46993:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-46995:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-46996:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-46998:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47000:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47000:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47002:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47004:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47004:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47011:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47013:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47013:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47018:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47021:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47021:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47293:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47296:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47296:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47299:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47302:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47302:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47305:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47307:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47308:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47312:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47314:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47314:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47318:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47319:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47321:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47325:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47327:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47327:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47330:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47332:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47332:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47335:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47337:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47338:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47341:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47343:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47343:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47346:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47348:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47349:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47352:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47354:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47354:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47357:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47359:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47359:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47363:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47366:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47366:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47370:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47372:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47373:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
-47377:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\idle02.mv1
-47379:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\dropdown.mv1
-47379:Model File Open Error : C:\Users\student2\Desktop\new\Hacslike\Hacslike\Res\Model\Enemy\Durahan\situp.mv1
+176:		モニターの数：1  ディスプレイデバイスの数：4
+177:		No.0  モニター名：\\.\DISPLAY1　1920x1080　32bit　75Hz  96x96dpi
+186:	ディスプレイ情報のセットアップ完了
+186:	ウインドウ矩形 ( 344, 89 )-( 1560, 928 )
+190:	ウインドウの作成に成功しました
+190:	ウインドウを表示します
+201:	ＩＭＥを無効にしました
+203:	ウインドウスタイルをウインドウモード用に変更します... 完了
+232:	XInput DLL の読み込み中... 成功
+232:	DirectInput関係初期化処理
+232:		DirectInput8 の取得を試みます...成功
+308:			引き続き初期化処理... 初期化成功
+309:		ジョイパッドの初期化... 
+309:			XInput 対応コントローラーのチェックを開始します
+310:				XInput 対応コントローラー No.0 をチェック
+310:				XInput 対応コントローラー No.0 の接続は確認できませんでした
+310:				XInput 対応コントローラー No.1 をチェック
+310:				XInput 対応コントローラー No.1 の接続は確認できませんでした
+311:				XInput 対応コントローラー No.2 をチェック
+311:				XInput 対応コントローラー No.2 の接続は確認できませんでした
+311:				XInput 対応コントローラー No.3 をチェック
+312:				XInput 対応コントローラー No.3 の接続は確認できませんでした
+312:			XInput 対応コントローラーのチェック完了
+312:			DirectInput 対応ジョイパッドの列挙を開始します
+461:			DirectInput 対応ジョイパッドの列挙終了
+461:		ジョイパッドの初期化は正常に終了しました
+462:		マウスデバイスの初期化... 初期化成功
+462:		キーボードデバイスの初期化... 初期化成功
+464:	DirectInput 関連の初期化は正常に終了しました
+467:	WASAPI の初期化を行います
+536:		デバイス名 : Realtek Digital Output (Realtek(R) Audio)
+671:		デフォルト遅延時間 : 10.000 ms
+726:		最小遅延時間       : 3.000 ms
+726:		遅延時間           : 10.000 ms
+729:		チャンネル数  　   : 8 ch
+729:		量子化ビット深度   : 32 bit
+729:		有効ビット深度　   : 32 bit
+729:		サンプリングレート : 48000 Hz
+730:		データ形式         : 浮動小数点型
+787:		動作モード         : 共有モード
+788:	WASAPI の初期化は正常に終了しました
+792:	d3d11.dll の読み込み.... 成功
+862:	dxgi.dll の読み込み.... 成功
+863:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
+863:	IDXGIFactory2 を作成します.... 成功
+872:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
+873:	IDXGIAdapter を列挙
+873:		Adapter No.0 Desc:NVIDIA GeForce RTX 3070  VRAM:8018MB
+873:			Output Device No.0 Name:\\.\DISPLAY1 ( 0, 0 )-( 1920, 1080 )
+874:		Adapter No.1 Desc:Microsoft Basic Render Driver  VRAM:0MB
+874:	API D3D11CreateDevice のアドレスを取得します.... 成功
+874:	IDXGIAdapter を取得します.... 成功
+875:	IDXGIAdapter1 を取得します.... 成功
+875:	IDXGIAdapter2 を取得します.... 成功
+875:	IDXGIAdapter3 を取得します.... 成功
+876:	IDXGIAdapter4 を取得します.... 成功
+876:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
+876:	ID3D11Device オブジェクトを取得します.... 成功
+1011:	IDXGIDevice1 を取得します.... 成功
+1012:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
+1012:	[ウインドウモード 1200x800 ( 360, 127 )-( 1560, 927 )]
+1012:	IDXGISwapChain2 を作成します.... 成功
+1013:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
+1013:	IDXGIOutput を取得します.... 成功
+1014:	Graphics Device:NVIDIA GeForce RTX 3070
+1014:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1014:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
+1014:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
+1014:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
+1014:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+1015:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+1015:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
+1015:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1015:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
+1015:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1015:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
+1015:	ＤＸＴ２テクスチャフォーマットは使えません
+1016:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
+1016:	ＤＸＴ４テクスチャフォーマットは使えません
+1016:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
+1016:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
+1016:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
+1016:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+1018:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+1018:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+1018:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+1018:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+1018:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+1018:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+1019:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+1019:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+1019:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+1019:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+1019:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+1019:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+1020:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1020:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+1020:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+1020:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+1020:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+1020:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+1021:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+1021:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+1021:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+1021:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+1021:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+1021:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+1021:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
+1021:	同時にレンダリングできるバッファの数:8
+1022:	最大テクスチャサイズ　幅:16384 高さ:16384
+1022:	標準描画用の頂点バッファの作成.... 成功
+1023:	シェーダーコード関係の初期化.... 成功
+1032:	各種シェーダー用定数バッファの作成.... 成功
+1032:	各種 ID3D11InputLayout の作成.... 成功
+1042:	画像の単純転送処理の初期化... 成功
+1043:	深度バッファを作成します.... 成功
+1044:	フォントの初期化を行います
+1046:	フォントの初期化は正常に終了しました
+1112:	文字コードバッファの初期化を行います... 完了しました
+1125:ＤＸライブラリの初期化処理終了
+7742:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
+7743:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
+7743:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
+7743:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
+7744:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
+7744:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
+7745:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
+7745:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
+7745:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
+7746:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
+7746:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
+7746:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
+7746:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
+7747:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
+7747:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
+7747:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
+7748:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\f.png がありません
+7748:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\fn.png がありません
+7748:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\w.png がありません
+7749:画像ファイル C:\Users\student2\Desktop\LastBB\Hacslike\Hacslike\Res\Model\Stage\Texture\wn.png がありません
