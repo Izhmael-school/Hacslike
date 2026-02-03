@@ -134,10 +134,15 @@ void ItemShop::Update() {
 	if (pCollider)
 		pCollider->Update();
 
+	int mouseX, mouseY;
+	GetMousePoint(&mouseX, &mouseY);
+	auto& input = InputManager::GetInstance();
+
 	// オブジェクトに触れてボタンを押したら
 	if (isTouch && state == Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN))) {
 		state = Menu;
 		OpenExecute();
+		SetMouseDispFlag(TRUE);
 		return;
 	}
 
@@ -148,6 +153,7 @@ void ItemShop::Update() {
 		else {
 			state = Invalid;
 			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing); // ゲーム再開
+			SetMouseDispFlag(FALSE);
 			return;
 		}
 
@@ -158,6 +164,15 @@ void ItemShop::Update() {
 
 	switch (state) {
 	case Menu:
+		if (mouseY >= 480 && mouseY <= 550) { // 「購入」の高さ
+			selectCommand = 0;
+			if (input.IsMouseDown(MOUSE_INPUT_LEFT)) state = Buy;
+		}
+		else if (mouseY >= 630 && mouseY <= 700) { // 「売却」の高さ
+			selectCommand = 1;
+			if (input.IsMouseDown(MOUSE_INPUT_LEFT)) state = Sell;
+		}
+
 		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_UP) ||
 			InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN))
 			if (selectCommand == 0) selectCommand = 1;
@@ -178,6 +193,26 @@ void ItemShop::Update() {
 
 		break;
 	case Buy:
+		for (int i = 0; i < (int)buyItem.size(); i++) {
+			BuyItemData& item = buyItem[i];
+			// アイテム画像の描画範囲 (150x150) にマウスがあるか判定
+			if (mouseX >= item.imagePos.x && mouseX <= item.imagePos.x + 150 &&
+				mouseY >= item.imagePos.y && mouseY <= item.imagePos.y + 150) {
+
+				selectBuyCommand = i; // マウスが乗っているアイテムを選択状態にする
+
+				// 左クリックで購入
+				if (input.IsMouseDown(MOUSE_INPUT_LEFT) && !item.isSell) {
+					Player* pP = Player::GetInstance();
+					if (item.prace <= pP->GetCoinValue()) {
+						pP->SubCoinValue(item.prace);
+						pP->GetInventory()->AddItem(std::move(buyItemData[i]));
+						item.isSell = true;
+					}
+				}
+			}
+		}
+
 		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_LEFT) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT)) {
 			selectBuyCommand--;
 			if ((selectBuyCommand == -1 || selectBuyCommand == 2))
