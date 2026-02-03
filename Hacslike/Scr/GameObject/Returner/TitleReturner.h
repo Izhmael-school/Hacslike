@@ -15,6 +15,12 @@ private:
 	
 	bool isVisible;
 
+	bool isShowResetUI = false;
+
+	bool ShowResetUI;       // UI表示フラグ
+	float resetUITimer;       // 表示時間カウント用変数
+	float resetUIDuration = 5.0f;  // UI表示時間（3秒）
+
 private:
 	/// <summary>
 	/// 自身のインスタンスを生成する
@@ -40,6 +46,12 @@ public:
 	void Start() override;
 	void Update() override;
 	void Render() override;
+
+	void ShowFloorResetUI();
+
+	inline void SetisShowResetUI(bool _s) { isShowResetUI = _s; }
+
+	inline bool GetisShowResetUI() { return isShowResetUI; }
 
 	void OnTriggerStay(Collider* _pCol) override;
 

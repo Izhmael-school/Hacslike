@@ -10,6 +10,9 @@
 
 #include "../Manager/InputManager.h"
 #include "../GameObject/Item/ItemFactory.h"
+#include"../Manager/StageManager.h"
+#include"../GameObject/Character/Player/Player.h"
+
 
 MenuSaveLoad::MenuSaveLoad(Mode m) : mode(m), selectedSlot(0), menuActive(false), menuChoice(0) {}
 
@@ -119,19 +122,19 @@ void MenuSaveLoad::Render() {
         char linebuf[256];
 #ifdef _MSC_VER
         sprintf_s(linebuf, sizeof(linebuf),
-            "Slot %02d [%s] Lv:%u Floor:%u %s",
+            "Slot %02d [%s] Lv:%d Floor:%d %s",
             i + 1,
             stateText,
-            static_cast<unsigned>(s.playerLevel),
-            static_cast<unsigned>(s.floor),
+            s.playerLevel,
+            s.floor,
             timestr);
 #else
         std::snprintf(linebuf, sizeof(linebuf),
-            "Slot %02d [%s] Lv:%u Floor:%u %s",
+            "Slot %02d [%s] Lv:%d Floor:%d %s",
             i + 1,
             stateText,
-            static_cast<unsigned>(s.playerLevel),
-            static_cast<unsigned>(s.floor),
+            Player::GetInstance()->GetPlayerLevel(),
+            StageManager::GetInstance().GetFloorCount(),
             timestr);
 #endif
 
