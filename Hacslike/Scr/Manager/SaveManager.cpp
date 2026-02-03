@@ -95,15 +95,8 @@ void SaveManager::RegisterSavers()
         StageManager::GetInstance().LoadFrom(r, ver);
         });
 
-    // Player save/load second
-    RegisterSaveHandler([](BinaryWriter& w) {
-        Player::GetInstance()->SaveTo(w);
-        });
-    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
-        Player::GetInstance()->LoadFrom(r, ver);
-        });
     // 追加: Inventory を個別に保存 / 読み込みするハンドラ
-    // （Player が Inventory を所有している場合）：
+   // （Player が Inventory を所有している場合）：
     RegisterSaveHandler([](BinaryWriter& w) {
         if (Player::GetInstance()) {
             // Player にアクセサ GetInventory() を実装しておくこと
@@ -118,6 +111,15 @@ void SaveManager::RegisterSavers()
         }
         });
 
+
+    // Player save/load second
+    RegisterSaveHandler([](BinaryWriter& w) {
+        Player::GetInstance()->SaveTo(w);
+        });
+    RegisterLoadHandler([](BinaryReader& r, uint32_t ver) {
+        Player::GetInstance()->LoadFrom(r, ver);
+        });
+   
     // 追加: ArtifactManager の保存 / 読み込みハンドラ
     RegisterSaveHandler([](BinaryWriter& w) {
         ArtifactManager::GetInstance().SaveTo(w);
@@ -190,8 +192,11 @@ bool SaveManager::Save(int slotIndex) {
     std::remove(final.c_str());
     std::rename(tmp.c_str(), final.c_str());
 
-    slots[slotIndex].exists = true;
-    slots[slotIndex].timestamp = std::time(nullptr);
+    SaveSlotMeta& meta = slots[slotIndex];
+    meta.exists = true;
+    meta.playerLevel = Player::GetInstance()->GetPlayerLevel(); // プレイヤーレベルを取得
+    meta.floor = StageManager::GetInstance().GetFloorCount();   // 階層を取得
+    meta.timestamp = std::time(nullptr);                       // 現在の時刻を保存
     SaveMeta();
     return true;
 }

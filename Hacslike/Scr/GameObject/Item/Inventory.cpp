@@ -851,6 +851,16 @@ void Inventory::AssignToShortcut(InventoryItem* invItem) {
 	}
 }
 
+ItemBase* Inventory::ItemByID(const std::string& id)
+{
+	for (auto& invItem : items) {
+		if (invItem.item->GetID() == id) {
+			return invItem.item.get();  // アイテムの生ポインタを返す
+		}
+	}
+	return nullptr;  // 見つからなかった場合
+}
+
 Inventory::InventoryItem* Inventory::FindItemByID(const std::string& id) {
 	for (auto& item : items) {
 		if (item.item->GetID() == id)
@@ -922,11 +932,14 @@ void Inventory::Save(BinaryWriter& w) {
 		w.WriteString(Id);
 		int qty = inv.quantity;
 		w.WritePOD(qty);
+		inv.item->SaveTo(w);
 #if _DEBUG
 		//printfDx("%sを保存\n", Id.c_str());
 #endif
 // 将来、アイテム固有状態を保存したければここで型名を書いて item->Serialize(w) を呼ぶ
 	}
+
+
 
 	// 装備中アイテム ID
 	eqId = GetEquippedItemID();
@@ -959,6 +972,7 @@ void Inventory::Load(BinaryReader& r) {
 		if (id.empty()) continue;
 		auto item = ItemFactory::Instance().CreateItem(id);
 		if (item) {
+
 			items.emplace_back(std::move(item), qty);
 		}
 		else {
@@ -974,6 +988,8 @@ void Inventory::Load(BinaryReader& r) {
 	if (!eqID.empty()) {
 		InventoryItem* p = FindItemByID(eqID);
 		if (p) equippedItem = p->item.get();
+		equippedItem->Use();
+		
 	}
 
 	// ショートカット復元

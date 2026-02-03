@@ -1,5 +1,6 @@
 #pragma once
 #include "../ItemBase.h"
+#include"../../../Save/SaveIO.h"
 
 class Player;
 
@@ -9,6 +10,7 @@ class ItemSword : public ItemBase
 private://メンバ変数
 
 	int attackValue;		 //攻撃力
+	int modelPath = 4;
 	std::string weaponType;  //武器の種類
 
 public://コンストラクタ
@@ -28,6 +30,9 @@ public://メンバ関数
 
 	void UnEquip()override;
 
+	void SaveTo(BinaryWriter& w) override;   
+	void LoadFrom(BinaryReader& r) override ;
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -36,7 +41,7 @@ public:
 	inline const std::string& GetWeaponType() const { return weaponType; }
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Invaled; }
-
+	inline void  SetAttackValue(int _v) { attackValue = _v; }
 
 };
 #pragma endregion
@@ -46,6 +51,7 @@ class ItemAxe : public ItemBase {
 private://メンバ変数
 
 	int attackValue; //攻撃力
+	int modelPath = 3;
 	std::string weaponType;  //武器の種類
 public://コンストラクタ
 
@@ -62,6 +68,9 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	void UnEquip()override;
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -70,6 +79,7 @@ public:
 	inline const std::string& GetWeaponType() const { return weaponType; }
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void  SetAttackValue(int _v) { attackValue = _v; }
 
 
 };
@@ -80,6 +90,7 @@ class ItemStick : public ItemBase {
 private://メンバ変数
 
 	int attackValue; //攻撃力
+	int modelPath = 10;
 	std::string weaponType;  //武器の種類
 public://コンストラクタ
 
@@ -96,6 +107,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	void UnEquip()override;
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
 public:
 	/// <summary>
    /// 武器の種類
@@ -104,6 +117,7 @@ public:
 	inline const std::string& GetWeaponType() const { return weaponType; }
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void  SetAttackValue(int _v) { attackValue = _v; }
 
 
 
@@ -116,6 +130,7 @@ class Greatsword : public ItemBase {
 private://メンバ変数
 
 	int attackValue; //攻撃力
+	int modelPath = 9;
 	std::string weaponType;  //武器の種類
 public://コンストラクタ
 
@@ -132,6 +147,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	void UnEquip()override;
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
 public:
 	/// <summary>
    /// 武器の種類
@@ -140,6 +157,7 @@ public:
 	inline const std::string& GetWeaponType() const { return weaponType; }
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void  SetAttackValue(int _v) { attackValue = _v; }
 
 
 };
@@ -149,6 +167,7 @@ public:
 class Spear : public ItemBase {
 
 	int attackValue; //攻撃力
+	int modelPath = 2;
 	std::string weaponType;  //武器の種類
 public://コンストラクタ
 
@@ -165,6 +184,8 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	void UnEquip()override;
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
 public:
 	/// <summary>
    /// 武器の種類
@@ -173,6 +194,7 @@ public:
 	inline const std::string& GetWeaponType() const { return weaponType; }
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void  SetAttackValue(int _v) { attackValue = _v; }
 
 
 }; 
@@ -198,6 +220,10 @@ public://メンバ関数
 	/// </summary>
 	void Use()override;
 	void UnEquip()override;
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -206,6 +232,7 @@ public:
 	inline const std::string& GetWeaponType() const { return weaponType; }
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void  SetAttackValue(int _v) { attackValue = _v; }
 
 
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "../GameObject.h"
+#include"../../Manager/SaveManager.h"
 
 class Player;
 
@@ -56,6 +57,8 @@ public://メンバ関数
     virtual void Use() = 0;
     virtual void UnEquip() {}; // 装備解除時に効果を外すため
     virtual void Update() {};
+    virtual void SaveTo(BinaryWriter& w) = 0;   // セーブ用関数
+    virtual void LoadFrom(BinaryReader& r) = 0;       // ロード用関数
     inline bool IsEffectFinished() const { return isEffectFinished; }
 public://ゲッター
     /// <summary>
@@ -79,6 +82,8 @@ public://ゲッター
     /// </summary>
     /// <returns></returns>
     inline int GetEffectValue() const { return itenEffectValue; }
+
+    inline void  SetAttackValue(int _v) { itenEffectValue = _v; }
 
     /// <summary>
     /// 説明の取得

@@ -27,6 +27,12 @@ void ItemHeal::Use()
 
 	Character::player->AddHp(healValue);
 }
+void ItemHeal::SaveTo(BinaryWriter& w)
+{
+}
+void ItemHeal::LoadFrom(BinaryReader& r)
+{
+}
 #pragma region ‰ñ•œŒn
 /// <summary>
 /// ‰ñ•œi¬j
@@ -54,6 +60,14 @@ void SmallHealItem::Update()
 }
 
 void SmallHealItem::Render()
+{
+}
+
+void SmallHealItem::SaveTo(BinaryWriter& w)
+{
+}
+
+void SmallHealItem::LoadFrom(BinaryReader& r)
 {
 }
 
@@ -99,6 +113,14 @@ void MiddleHealItem::Update()
 	
 }
 
+void MiddleHealItem::SaveTo(BinaryWriter& w)
+{
+}
+
+void MiddleHealItem::LoadFrom(BinaryReader& r)
+{
+}
+
 void MiddleHealItem::Use()
 {
 	Character::player->AddHp(healValue);
@@ -139,6 +161,14 @@ void LargeHealItem::Render()
 void LargeHealItem::Update()
 {
 	
+}
+
+void LargeHealItem::SaveTo(BinaryWriter& w)
+{
+}
+
+void LargeHealItem::LoadFrom(BinaryReader& r)
+{
 }
 
 void LargeHealItem::Use()
@@ -192,6 +222,14 @@ void AttactPotion::Update()
 		
 
 	}
+}
+
+void AttactPotion::SaveTo(BinaryWriter& w)
+{
+}
+
+void AttactPotion::LoadFrom(BinaryReader& r)
+{
 }
 
 void AttactPotion::Use()
@@ -249,6 +287,14 @@ void DefensePotion::Update()
 
 
 	}
+}
+
+void DefensePotion::SaveTo(BinaryWriter& w)
+{
+}
+
+void DefensePotion::LoadFrom(BinaryReader& r)
+{
 }
 
 void DefensePotion::Use()
@@ -330,6 +376,14 @@ void Grenade::Explode()
 	
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
 	
+}
+
+void Grenade::SaveTo(BinaryWriter& w)
+{
+}
+
+void Grenade::LoadFrom(BinaryReader& r)
+{
 }
 
 void Grenade::Use()

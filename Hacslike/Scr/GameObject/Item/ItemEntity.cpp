@@ -47,6 +47,14 @@ void ItemEntity::Use()
 {
 }
 
+void ItemEntity::SaveTo(BinaryWriter& w)
+{
+}
+
+void ItemEntity::LoadFrom(BinaryReader& r)
+{
+}
+
 std::unique_ptr<ItemBase> ItemEntity::TakeItem()
 {
 	return std::move(item);

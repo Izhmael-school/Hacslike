@@ -454,20 +454,20 @@ void StatusEnhancement::LoadFrom(BinaryReader& r, uint32_t ver) {
 	r.ReadPOD(g_instance->selectedIndex);
 
 	// 確保されているデータを元に必要なら Player へ反映（HPやATK等）
-	Player* player = Player::GetInstance();
-	if (player && !g_instance->stats.empty()) {
-		// HP
-		player->SetMaxHp(100 + g_instance->stats[0].totalBonus);
-		player->SetHp(player->GetMaxHp());
-		// 攻撃
-		player->SetAtk(10 + g_instance->stats[1].totalBonus);
-		// 防御
-		player->SetDef(g_instance->stats[2].totalBonus);
-		// 会心率
-		player->SetCriticalHitRate((float)(5 + g_instance->stats[3].totalBonus));
-		// 会心ダメ
-		player->SetCriticalDamage(1.5f + (g_instance->stats[4].totalBonus / 100.0f));
-	}
+	//Player* player = Player::GetInstance();
+	//if (player && !g_instance->stats.empty()) {
+	//	// HP
+	//	player->SetMaxHp(100 + g_instance->stats[0].totalBonus);
+	//	player->SetHp(player->GetMaxHp());
+	//	// 攻撃
+	//	player->SetAtk(10 + g_instance->stats[1].totalBonus);
+	//	// 防御
+	//	player->SetDef(g_instance->stats[2].totalBonus);
+	//	// 会心率
+	//	player->SetCriticalHitRate((float)(5 + g_instance->stats[3].totalBonus));
+	//	// 会心ダメ
+	//	player->SetCriticalDamage(1.5f + (g_instance->stats[4].totalBonus / 100.0f));
+	//}
 
 }
 

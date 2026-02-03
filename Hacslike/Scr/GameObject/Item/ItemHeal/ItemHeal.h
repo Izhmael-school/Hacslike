@@ -2,6 +2,7 @@
 #include "../ItemBase.h"
 #include"../../Bullet/BulletPool.h"
 #include"../../Effect/Effect.h"
+#include"../../../Save/SaveIO.h"
 
 
 
@@ -25,6 +26,10 @@ public://メンバ関数
 	/// アイテムを使用した時の効果
 	/// </summary>
 	void Use()override;
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
 };
 
 #pragma region 回復系
@@ -47,6 +52,11 @@ public://メンバ関数
 	void Update()override;
 
 	void Render()override;
+
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
 
 	/// <summary>
 	/// アイテムを使用した時の効果
@@ -79,6 +89,11 @@ public://メンバ関数
 
 	void Update()override;
 
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
+
 	/// <summary>
 	/// アイテムを使用した時の効果
 	/// </summary>
@@ -107,6 +122,11 @@ public://メンバ関数
 
 	void Render()override;
 	void Update()override;
+
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
 
 	/// <summary>
 	/// アイテムを使用した時の効果
@@ -143,6 +163,10 @@ public://メンバ関数
 
 	void Update()override;
 
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
+
 	/// <summary>
 	/// アイテムを使用した時の効果
 	/// </summary>
@@ -177,6 +201,10 @@ public://メンバ関数
 
 	void Update()override;
 
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
+
 	/// <summary>
 	/// アイテムを使用した時の効果
 	/// </summary>
@@ -209,6 +237,10 @@ public://メンバ関数
 	void Update()override;
 
 	void Explode();
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
 
 	/// <summary>
 	/// アイテムを使用した時の効果

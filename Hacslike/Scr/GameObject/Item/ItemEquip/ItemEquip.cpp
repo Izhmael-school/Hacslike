@@ -24,7 +24,7 @@ void ItemSword::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
-	Player::GetInstance()->ChangeWeapon(4);
+	Player::GetInstance()->ChangeWeapon(modelPath);
 	
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 	
@@ -34,6 +34,19 @@ void ItemSword::Use()
 void ItemSword::UnEquip()
 {
 }
+
+void ItemSword::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+	w.WritePOD(modelPath);
+}
+
+void ItemSword::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+	r.ReadPOD(modelPath);
+}
+
 #pragma endregion
 
 #pragma region ïÄ
@@ -56,7 +69,7 @@ void ItemAxe::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
-	Player::GetInstance()->ChangeWeapon(3);
+	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 
 	
@@ -64,6 +77,16 @@ void ItemAxe::Use()
 
 void ItemAxe::UnEquip()
 {
+}
+void ItemAxe::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+	w.WritePOD(modelPath);
+}
+void ItemAxe::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
@@ -83,13 +106,23 @@ void ItemStick::Render()
 
 void ItemStick::Use()
 {
-	Player::GetInstance()->ChangeWeapon(10);
+	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 
 }
 
 void ItemStick::UnEquip()
 {
+}
+void ItemStick::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+	w.WritePOD(modelPath);
+}
+void ItemStick::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
@@ -113,13 +146,23 @@ void Greatsword::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
 
-	Player::GetInstance()->ChangeWeapon(9);
+	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
 
 }
 
 void Greatsword::UnEquip()
 {
+}
+void Greatsword::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+	w.WritePOD(modelPath);
+}
+void Greatsword::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
@@ -151,6 +194,16 @@ void Spear::Use()
 void Spear::UnEquip()
 {
 }
+void Spear::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+	w.WritePOD(modelPath);
+}
+void Spear::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+	r.ReadPOD(modelPath);
+}
 #pragma endregion
 
 #pragma region èe
@@ -180,6 +233,12 @@ void gun::Use()
 }
 
 void gun::UnEquip()
+{
+}
+void gun::SaveTo(BinaryWriter& w)
+{
+}
+void gun::LoadFrom(BinaryReader& r)
 {
 }
 #pragma endregion

@@ -124,13 +124,20 @@ void Player::SaveTo(BinaryWriter& w) {
 	w.WritePOD(px);
 	w.WritePOD(py);
 	w.WritePOD(pz);
-
+	if (equippedItem) {
+		 // 武器が装備されている場合
+		w.WriteString(equippedItem->GetID());
+		equippedItem->SaveTo(w); // アイテムデータ保存
+	}
+	else {
+		
+	}
 }
 
 void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	static int loadCallCount = 0;
 	loadCallCount++;
-	printfDx("[Player::LoadFrom] called times=%d\n", loadCallCount);
+	/*printfDx("[Player::LoadFrom] called times=%d\n", loadCallCount);*/
 	r.ReadPOD(Lv);
 	r.ReadPOD(exp);
 	r.ReadPOD(maxExp);
@@ -148,8 +155,16 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	r.ReadPOD(py);
 	r.ReadPOD(pz);
 	SetPosition(VECTOR{ px, py,pz });
+	
+	CollisionManager::GetInstance().CheckRegister(pCollider);
 
-
+	std::string itemID = r.ReadString();
+    equippedItem = inventory.ItemByID(itemID);
+	if (equippedItem) {
+		equippedItem->LoadFrom(r); // セーブデータから攻撃力・モデルを復元
+		
+	}
+	
 }
 #pragma endregion
 
