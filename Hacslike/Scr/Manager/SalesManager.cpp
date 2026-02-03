@@ -108,15 +108,43 @@ void SalesManager::Update() {
         }
     }
     else if (state == State::Confirming) {
-        // 十字キーまたはスティックで「はい/いいえ」切り替え
+        // --- 追加: マウスによる「はい/いいえ」の選択判定 ---
+        int wx = (WINDOW_WIDTH - 400) / 2;
+        int wy = (WINDOW_HEIGHT - 150) / 2;
+
+        // 「はい」ボタンの範囲 (Renderの描画位置に合わせる)
+        int btn1X = wx + 70;
+        int btnY = wy + 90;
+        int btnW = 110;
+        int btnH = 40;
+
+        // 「いいえ」ボタンの範囲
+        int btn2X = wx + 220;
+
+        // マウスホバー判定
+        if (mouseY >= btnY && mouseY <= btnY + btnH) {
+            if (mouseX >= btn1X && mouseX <= btn1X + btnW) {
+                confirmIndex = 0; // はい
+                if (input.IsMouseDown(MOUSE_INPUT_LEFT)) goto CONFIRM_DECIDE;
+            }
+            else if (mouseX >= btn2X && mouseX <= btn2X + btnW) {
+                confirmIndex = 1; // いいえ
+                if (input.IsMouseDown(MOUSE_INPUT_LEFT)) goto CONFIRM_DECIDE;
+            }
+        }
+
+        // 既存のキーボード/スティック入力
         if (input.IsKeyDown(KEY_INPUT_LEFT) || input.IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT) || stickX < -0.5f) confirmIndex = 0;
         if (input.IsKeyDown(KEY_INPUT_RIGHT) || input.IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT) || stickX > 0.5f) confirmIndex = 1;
 
-        // Bボタンで確定、Aボタンで戻る
+        // Bボタンまたはマウス左クリックで確定
         if (input.IsKeyDown(KEY_INPUT_RETURN) || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
+        CONFIRM_DECIDE: // マウスクリック時もここへ飛ばす
             if (confirmIndex == 0) ExecuteSale();
             state = State::Selecting;
         }
+
+        // AボタンまたはEscでキャンセル
         if (input.IsKeyDown(KEY_INPUT_ESCAPE) || input.IsButtonDown(XINPUT_GAMEPAD_A)) {
             state = State::Selecting;
         }

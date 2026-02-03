@@ -257,7 +257,7 @@ void PlayerAttack::AttackInput() {
 				}
 				if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f) {
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
-					Effect* pEffe = EffectManager::GetInstance().Instantiate("DA", pPlayer->GetPosition());
+					//Effect* pEffe = EffectManager::GetInstance().Instantiate("DA", pPlayer->GetPosition());
 					hasGeneratedHitbox = true;
 				}
 			}
@@ -269,26 +269,32 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.3f) {
+					magnification = 1;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f) {
+					magnification = 1.1;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
+					magnification = 1.5;
 					HitBoxReset();
 				}
 
 				if (attackIndex == 4 && attackTimer > 0.9f && attackTimer < 1.9f) {
+					magnification = 1.3;
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
 				// 溜め攻撃(中)の判定タイミング
 				if (attackIndex == 5 && attackTimer > 0.9f && attackTimer < 1.9f) {
+					magnification = 1.6;
 					CreateAttackHitbox(pWeapon->GetColLength(2) * 1.2f, pWeapon->GetColRadius(2) * 1.2f); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
 				// 溜め攻撃(強)の判定タイミング
 				if (attackIndex == 6 && attackTimer > 0.9f && attackTimer < 1.9f) {
+					magnification = 2;
 					CreateAttackHitbox(pWeapon->GetColLength(2) * 1.8f, pWeapon->GetColRadius(2) * 1.8f); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
@@ -301,15 +307,19 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f) {
+					magnification = 1;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f) {
+					magnification = 1.2;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f) {
+					magnification = 1.6;
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.36f && attackTimer < 0.48f) {
+					magnification = 1.5;
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
 					hasGeneratedHitbox = true;
 				}
@@ -322,15 +332,19 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f) {
+					magnification = 1;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f) {
+					magnification = 1.2;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
+					magnification = 1.5;
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.32f && attackTimer < 0.5f) {
+					magnification = 1.7;
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
 					hasGeneratedHitbox = true;
 				}

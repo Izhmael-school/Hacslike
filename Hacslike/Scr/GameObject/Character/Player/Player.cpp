@@ -202,7 +202,7 @@ void Player::Start() {
 	}
 
 #if _DEBUG
-	//SetCoinValue(10000000000);
+	SetCoinValue(10000000000);
 #endif
 
 	//	アニメーションの読み込み
@@ -325,7 +325,7 @@ void Player::Update() {
 
 
 #pragma region スキル選択
-	if (exp >= maxExp && !isSelectingSkill) {
+	if (exp >= maxExp && !isSelectingSkill && !isSelectBossArtifact) {
 		remainExp = exp - maxExp;
 		exp = remainExp;
 		RuneCost(Lv);
