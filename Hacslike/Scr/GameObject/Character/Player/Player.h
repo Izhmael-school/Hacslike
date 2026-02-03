@@ -391,6 +391,8 @@ public:		//	Getter と Setter
 	/// <returns></returns>
 	inline PlayerMovement* GetPlayerMovement() const { return playerMovement; }
 
+	inline int GetPlayerLevel() { return Lv; }
+
 	/// <summary>
 	/// 死んでるかどうか
 	/// </summary>

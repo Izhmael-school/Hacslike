@@ -4,6 +4,7 @@
 #include "../../Manager/InputManager.h"
 #include "../../GameSystem/GameSystem.h"
 #include "../../Manager/StageManager.h"
+#include"../../Manager/TimeManager.h"
 
 TitleReturner* TitleReturner::pInstance = nullptr;
 
@@ -56,6 +57,7 @@ void TitleReturner::Update() {
 
 	if (pCollider) pCollider->Update();
 
+
 	if (canReturner) {
 		auto& input = InputManager::GetInstance();
 		if (input.IsKeyDown(KEY_INPUT_X) || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
@@ -63,9 +65,12 @@ void TitleReturner::Update() {
 			StageManager::GetInstance().Generate();
 			EnemyManager::GetInstance().DeleteAllEnemy();
 			SetVisible(false);
+			isShowResetUI = true;
 			return;
 		}
 	}
+
+
 
 }
 
@@ -102,6 +107,35 @@ void TitleReturner::Render() {
 	// 3. 他の3Dオブジェクトの描画のために設定を元に戻す
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
+}
+
+void TitleReturner::ShowFloorResetUI()
+{
+
+	TimeManager* time = &TimeManager::GetInstance();
+
+	// UI表示後のタイマー処理
+	if (isShowResetUI) {
+		resetUIDuration -= time->deltaTime;  // フレームごとの経過時間を減算
+		if (resetUIDuration <= 0.0f) {
+			isShowResetUI = false;  // UIを非表示
+			resetUIDuration = 5.0f;
+
+		}
+	}
+
+	int screenWidth = WINDOW_WIDTH;
+	int screenHeight = WINDOW_HEIGHT;
+
+	// 背景ボックス描画
+	DrawBox(0, screenHeight / 2 - 50, screenWidth, screenHeight / 2 + 50, black, TRUE);
+
+	// メインメッセージ描画
+	DrawStringToHandle(screenWidth / 2 - 50, screenHeight / 2 - 30, "帰還", blue, MainFont_Bold);
+	DrawStringToHandle(screenWidth / 2 - 80, (screenHeight / 2 - 30)+60, "フロア0に戻りました", white, MainFont);
+
+
+
 }
 
 void TitleReturner::OnTriggerStay(Collider* _pCol) {

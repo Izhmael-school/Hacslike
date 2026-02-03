@@ -10,6 +10,7 @@
 #include "../GameObject/Enhancement/EnhancementStone.h"
 #include "../GameObject/SaveObject/SaveObject.h"
 #include "../UI/DamagePopup.h"
+#include"../GameObject/Returner/TitleReturner.h"
 
 
 GameScene::GameScene() {
@@ -95,7 +96,7 @@ void GameScene::Update() {
 
 	Coin::GetInstance()->UpdateAll();
 	DamagePopup::UpdateAll();
-
+	TitleReturner::GetInstance()->ShowFloorResetUI();
 
 
 
@@ -132,6 +133,10 @@ void GameScene::Render() {
 	}
 	// エフェクトの描画
 	EffectManager::GetInstance().Render();
+
+	if(TitleReturner::GetInstance()->GetisShowResetUI() == true){
+		TitleReturner::GetInstance()->ShowFloorResetUI();
+	}
 
 
 #if _DEBUG 線
