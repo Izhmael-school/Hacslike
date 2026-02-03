@@ -28,7 +28,6 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
     std::string chosenId = itemIds[dis(gen)];
     auto item = ItemFactory::Instance().CreateItem(chosenId);
 
-
     if (item)
     {
 #if _DEBUG

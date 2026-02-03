@@ -13,6 +13,7 @@ class SaveObject;
 class StartTreasureChest;
 class EnhancementStone;
 class TitleReturner;
+class ItemShop;
 
 struct StageData {
 	int id;
@@ -21,6 +22,7 @@ struct StageData {
 	VECTOR saveObjectPos;
 	VECTOR chestObjectPos;
 	VECTOR enhancementStonePos;
+	VECTOR itemShopPos;
 	VECTOR bossSpawnPos;
 	int bossType;
 };
@@ -65,6 +67,7 @@ public:
 	StartTreasureChest* pChest = nullptr;
 	EnhancementStone* pStone = nullptr;
 	TitleReturner* pReturner = nullptr;
+	ItemShop* pItemShop = nullptr;
 
 public:
 	StageGenerator();

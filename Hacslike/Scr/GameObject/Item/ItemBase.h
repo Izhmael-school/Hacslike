@@ -32,6 +32,8 @@ protected: //メンバ変数
     std::string itemIcon;  //アイテムUI用のアイコン
     bool isEffectFinished = false;  // 効果が終わったらtrueに
 
+    int itemImageHandle = -1;
+
 public:
     static ItemBase* item;
 
@@ -91,6 +93,8 @@ public://ゲッター
     inline const std::string& GetItemIcon() const { return itemIcon; }
 
     inline const std::string& GetID() const { return id; }
+
+    inline const int GetItemImageHandle() const { return itemImageHandle; }
 
     virtual ItemType GetItemType() const = 0;  // 派生クラスで返す
     virtual HealSize GetHealType() const =0;

@@ -12,6 +12,8 @@ ItemBase::ItemBase(VECTOR _pos, std::string tag, const std::string& _id, const s
 	, itenEffectValue(_effectValue)
 	, itemIcon(_icon)
 	,id(_id){
+
+	itemImageHandle = LoadGraph(itemIcon.c_str());
 }
 
 ItemBase::~ItemBase()

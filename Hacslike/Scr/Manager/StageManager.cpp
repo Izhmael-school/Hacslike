@@ -10,6 +10,7 @@
 #include"../GameObject/TreasureChest/StartTreasureChest.h"
 #include"../GameObject/Enhancement/EnhancementStone.h"
 #include "../GameObject/Returner/TitleReturner.h"
+#include "../GameObject/ItemShop/ItemShop.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -32,11 +33,11 @@ StageManager::~StageManager() {
 
 void StageManager::Update() {
 	generator->Update();
-	
+
 #if _DEBUG
-	if (InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) {
+	if ((InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) && InputManager::GetInstance().IsButton(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKey(KEY_INPUT_LSHIFT)) {
 		LoadFloorData();
-		
+
 		if (floorCount % BossFloorNum == 0) {
 			GenerateStage((int)(floorCount / BossFloorNum));
 		}
@@ -199,43 +200,45 @@ void StageManager::GenerateStage(int stageID) {
 	// プレイヤーの配置
 	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
 	// JSON に書かれた saveObjectPos があれば SaveObject を生成して配置する
-	{
-		StageData sd = generator->GetStageData();
-		// SaveObject のシングルトンを取得（未生成なら生成される）
-		SaveObject* so = SaveObject::GetInstance();
-		if (so) {
-			// 位置は StageGenerator 側のセル座標（generator->SetGameObject がスケール変換してくれる）
-			generator->SetGameObject(so, sd.saveObjectPos);
-			generator->pSaveObject = so;
-			generator->pSaveObject->SetVisible(true);
+	StageData sd = generator->GetStageData();
 
-		}
-	}
-	{
-		StageData sd = generator->GetStageData();
-		StartTreasureChest* chest = StartTreasureChest::GetInstance();
-		if (chest) {
-			generator->SetGameObject(chest, sd.chestObjectPos);
-			generator->pChest = chest;
-			generator->pChest->SetVisible(true);
-		
-		}
-	}
-	{
-		StageData sd = generator->GetStageData();
-		EnhancementStone* stone = EnhancementStone::GetInstance();
-		if (stone) {
-			generator->SetGameObject(stone, sd.enhancementStonePos);
-			generator->pStone = stone;
-			generator->pStone->SetVisible(true);
-		}
+	// SaveObject のシングルトンを取得（未生成なら生成される）
+	SaveObject* so = SaveObject::GetInstance();
+	if (so) {
+		// 位置は StageGenerator 側のセル座標（generator->SetGameObject がスケール変換してくれる）
+		generator->SetGameObject(so, sd.saveObjectPos);
+		generator->pSaveObject = so;
+		generator->pSaveObject->SetVisible(true);
 
-		TitleReturner* returner = TitleReturner::GetInstance();
-		if (returner) {
-			generator->pReturner = returner;
-			generator->pReturner->SetVisible(false);
-		}
 	}
+
+
+	StartTreasureChest* chest = StartTreasureChest::GetInstance();
+	if (chest) {
+		generator->SetGameObject(chest, sd.chestObjectPos);
+		generator->pChest = chest;
+		generator->pChest->SetVisible(true);
+	}
+	EnhancementStone* stone = EnhancementStone::GetInstance();
+	if (stone) {
+		generator->SetGameObject(stone, sd.enhancementStonePos);
+		generator->pStone = stone;
+		generator->pStone->SetVisible(true);
+	}
+
+	TitleReturner* returner = TitleReturner::GetInstance();
+	if (returner) {
+		generator->pReturner = returner;
+		generator->pReturner->SetVisible(false);
+	}
+
+	ItemShop& shop = ItemShop::GetInstance();
+	if (&shop) {
+		generator->SetGameObject(&shop, sd.itemShopPos);
+		generator->pItemShop = &shop;
+		generator->pItemShop->SetVisible(true);
+	}
+
 	// ボスの配置
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
 
@@ -312,8 +315,7 @@ void StageManager::SaveTo(BinaryWriter& w) {
 	}
 }
 
-void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion)
-{
+void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 
 	// 階層情報
 	r.ReadPOD(floorCount);

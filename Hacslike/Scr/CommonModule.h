@@ -4,6 +4,8 @@
 #include <DxLib.h>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <list>
 
 inline nlohmann::json_abi_v3_12_0::json LoadJsonFile(const std::string& path) {
     std::ifstream file(path);
@@ -14,6 +16,10 @@ inline nlohmann::json_abi_v3_12_0::json LoadJsonFile(const std::string& path) {
     nlohmann::json data;
     file >> data;
     return data;
+}
+
+inline VECTOR VMult(VECTOR VEC1, VECTOR VEC2) {
+    return VGet(VEC1.x * VEC2.x, VEC1.y * VEC2.y, VEC1.z * VEC2.z);
 }
 
 inline int Random(int min, int max){ return (min)+GetRand(max - min); }
@@ -153,4 +159,67 @@ inline int StringRightPos(const TCHAR* _str, int _fontHandle, int posX, int exRa
     GetDrawStringSizeToHandle(&w, &h, &line, _str, (int)_tcslen(_str), _fontHandle);
 
     return posX -= (int)(w * exRateX);
+}
+
+/// <summary>
+/// 画像を座標の中心に描画するための計算
+/// </summary>
+/// <param name="gHandle"></param>
+/// <param name="pos"></param>
+/// <param name="exRateX"></param>
+/// <param name="exRateY"></param>
+/// <returns></returns>
+inline VECTOR ImageCenterPos(int gHandle,VECTOR pos,int exRateX = 1,int exRateY = 1) {
+    int x, y;
+    GetGraphSize(gHandle,&x,&y);
+
+    pos.x -= (int)(x * exRateX) / 2;
+    pos.y -= (int)(y * exRateY) / 2;
+
+    return pos;
+}
+
+/// <summary>
+/// 画像を座標の中心に描画するための計算
+/// </summary>
+/// <param name="gHandle"></param>
+/// <param name="pos"></param>
+/// <param name="exRateX"></param>
+/// <param name="exRateY"></param>
+/// <returns></returns>
+inline VECTOR ExpendImageCenterPos(VECTOR pos, int exRateX, int exRateY) {
+
+    pos.x -= (int)(exRateX) / 2;
+    pos.y -= (int)(exRateY) / 2;
+
+    return pos;
+}
+
+
+/// <summary>
+/// 画像の頂点の座標を取得
+/// </summary>
+inline VECTOR ImageTopPos(int gHandle, int exRateX = 1, int exRateY = 1) {
+    int x, y;
+    GetGraphSize(gHandle, &x, &y);
+
+    x = (int)(x * exRateX);
+    y = (int)(y * exRateY);
+
+    return VGet(x, y, 0);
+}
+
+template <class T>
+inline std::vector<T> MergeVector(std::vector<T> vec1, std::vector<T> vec2) {
+    std::vector<T> vec3;
+
+    for (T d : vec1) {
+        vec3.push_back(d);
+    }
+
+    for (T d : vec2) {
+        vec3.push_back(d);
+    }
+
+    return vec3;
 }
