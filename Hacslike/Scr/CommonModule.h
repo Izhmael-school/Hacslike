@@ -135,7 +135,7 @@ inline void StringCenterPos(const TCHAR* _str,int _fontHandle,int* posX , int* p
 /// <param name="posY"></param>
 /// <param name="exRateX"></param>
 /// <param name="exRateY"></param>
-inline VECTOR StringCenterPos(const TCHAR* _str, int _fontHandle, int posX, int posY, int exRateX = 1, int exRateY = 1) {
+inline VECTOR StringCenterPos(const TCHAR* _str, int _fontHandle, int posX, int posY, float exRateX = 1, float exRateY = 1) {
     int w, h, line;
 
     GetDrawStringSizeToHandle(&w, &h, &line, _str, (int)_tcslen(_str), _fontHandle);

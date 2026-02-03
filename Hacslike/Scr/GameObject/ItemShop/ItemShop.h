@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <list>
-#include "../GameObject.h"
+#include "../Character/Character.h"
 #include <iostream>
 #include <memory>
 #include "../../Component/Singleton.h"
@@ -30,7 +30,7 @@ struct BuyItemData {
 	void SetPrace(int value) { prace = value * 1.3f; }
 };
 
-class ItemShop : public GameObject , public Singleton<ItemShop> {
+class ItemShop : public Character , public Singleton<ItemShop> {
 
 public:
 	ItemShop();
@@ -54,6 +54,8 @@ private:
 	const int weaponChoiceNum = 1;
 	const int saleChoiceNum = 1;
 
+
+	unsigned int coinColor = GetColor(255, 215, 0);
 	// ID‚ÌƒŠƒXƒg
 	std::vector<std::string> potionIDList;
 	std::vector<std::string> weaponIDList;
@@ -87,7 +89,7 @@ private:
 	void DrawBuyItem(BuyItemData data);
 
 
-
+	void DeadExecute() override;
 	void OpenExecute();
 	void Setup();
 public:
@@ -96,6 +98,6 @@ public:
 	void Render() override;
 	void OnTriggerEnter(Collider* _pOhter) override;
 	void OnTriggerExit(Collider* _pOhter) override;
-
+	ShopState GetState() { return state; }
 };
 
