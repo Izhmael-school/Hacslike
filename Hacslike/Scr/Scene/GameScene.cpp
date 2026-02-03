@@ -110,7 +110,8 @@ void GameScene::Update() {
 void GameScene::Render() {
 
 	if (EnhancementStone::GetInstance()->GetIsOpenMenu() == true
-		|| SaveObject::GetInstance()->GetIsOpenSaveMenu() == true) {
+		|| SaveObject::GetInstance()->GetIsOpenSaveMenu() == true
+		|| ItemShop::GetInstance().GetState() != Invalid) {
 		for (auto pObj : pGameObjectArray) {
 			pObj->Render();
 		}

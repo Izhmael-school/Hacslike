@@ -73,6 +73,8 @@ void ItemShop::DrawBuyItem(BuyItemData data) {
 	DrawStringToHandle(data.pracePos.x, data.pracePos.y, MergeString(std::to_string(data.prace), "コイン").c_str(), white, MainFont);
 }
 
+void ItemShop::DeadExecute() {}
+
 void ItemShop::OpenExecute() {
 	GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop); // ゲーム停止
 
@@ -120,12 +122,20 @@ void ItemShop::Start() {
 
 	allItemIDList = MergeVector<std::string>(potionIDList, weaponIDList);
 	pCollider = new SphereCollider(this, position, 100);
+	int mHandle = MV1LoadModel("Res/Model/Shop/vending.mv1");
+	SetModelHandle(mHandle);
+	SetScale(VGet(150, 150, 150));
+	SetRotation(VGet(0, 90, 0));
 }
 
 void ItemShop::Update() {
 	GameObject::Update();
+
+	if (pCollider)
+		pCollider->Update();
+
 	// オブジェクトに触れてボタンを押したら
-	if (isTouch && state == Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B))) {
+	if (isTouch && state == Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN))) {
 		state = Menu;
 		OpenExecute();
 		return;
@@ -138,8 +148,13 @@ void ItemShop::Update() {
 		else {
 			state = Invalid;
 			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing); // ゲーム再開
-
+			return;
 		}
+
+	if (state == Invalid) return;
+
+	if (GameSystem::GetInstance()->GetGameStatus() == GameStatus::Playing)
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 
 	switch (state) {
 	case Menu:
@@ -150,7 +165,7 @@ void ItemShop::Update() {
 			else selectCommand = 0;
 
 		// 決定ボタンを押したら
-		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B)) {
+		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)) {
 			switch (selectCommand) {
 			case 0:
 				state = Buy;
@@ -190,7 +205,7 @@ void ItemShop::Update() {
 			BuyItemData& buy = buyItem[selectBuyCommand];
 			if (buy.prace <= pP->GetCoinValue() && !buy.isSell) {
 				// コインを減らす
-
+				pP->SubCoinValue(buy.prace);
 				// アイテムを渡す
 				pP->GetInventory()->AddItem(std::move(buyItemData[selectBuyCommand]));
 				buy.isSell = true;
@@ -209,26 +224,64 @@ void ItemShop::Update() {
 		SalesManager::GetInstance().Update();
 		break;
 	}
-
-	if (pCollider)
-		pCollider->Update();
 }
 
 void ItemShop::Render() {
 
-	if (!isTouch || state == Invalid) return;
+	MV1SetMatrix(modelHandle, matrix);
+	MV1DrawModel(modelHandle);
+
+	if (!isTouch && state == Invalid) return;
+
+	if (isTouch && state == Invalid) {
+		VECTOR screenPos = ConvWorldPosToScreenPos(VAdd(position, VGet(0, 100, 0)));
+		int StartX = (WINDOW_WIDTH / 2) - 200;
+		int StartY = (WINDOW_HEIGHT)-200;
+		int GoalX = (WINDOW_WIDTH / 2) + 200;
+		int GoalY = (WINDOW_HEIGHT)-150;
+		int textX = StartX + 80;
+		int textY = StartY + 17;
+
+		DrawBox(StartX, StartY, GoalX, GoalY, gray, TRUE);
+		DrawBox(StartX + 2, StartY + 2, GoalX - 2, GoalY - 2, white, FALSE);
+		DrawFormatStringToHandle(textX + 40, textY, black, MainFont, "キー/  ボタン:ショップ");
+		DrawFormatStringToHandle(textX + 30, textY, white, MainFont, "F");
+		DrawFormatStringToHandle(textX + 83, textY, white, MainFont, "B");
+		return;
+	}
+
+	SetUseZBuffer3D(FALSE);
+	SetWriteZBuffer3D(FALSE);
+	ClearDrawScreenZBuffer();
+	SetUseLighting(FALSE);
 
 	DrawFillBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, black);
 
 	string titleStr;
 	VECTOR strPos;
+	string buyTitle = "購入";
+	string sellTitle = "売却";
 	switch (state) {
 	case Menu:
-		DrawStringToHandle(300, 500, "購入", white, MainFont);
-		DrawStringToHandle(300, 600, "売却", white, MainFont);
-		DrawString(280, 500 + (100 * selectCommand), ">", white);
+		titleStr = "ショップ";
+		strPos = StringCenterPos(titleStr.c_str(), MainFont_Bold, WINDOW_WIDTH / 2, 100);
+		DrawStringToHandle(strPos.x, strPos.y, titleStr.c_str(), white, MainFont_Bold);
+		VECTOR buyTitlePos = StringCenterPos(buyTitle.c_str(), MainFont_Bold, WINDOW_WIDTH / 2, 500);
+		VECTOR sellTitlePos = StringCenterPos(sellTitle.c_str(), MainFont_Bold, WINDOW_WIDTH / 2, 650);
+		if (selectCommand == 0) {
+			DrawStringToHandle(buyTitlePos.x, buyTitlePos.y, buyTitle.c_str(), yellow, MainFont_Bold);
+			DrawStringToHandle(sellTitlePos.x, sellTitlePos.y, sellTitle.c_str(), white, MainFont_Bold);
+		}
+		else if (selectCommand == 1) {
+			DrawStringToHandle(buyTitlePos.x, buyTitlePos.y, buyTitle.c_str(), white, MainFont_Bold);
+			DrawStringToHandle(sellTitlePos.x, sellTitlePos.y, sellTitle.c_str(), yellow, MainFont_Bold);
+		}
 		break;
 	case Buy:
+		// 所持コイン表示 (右上)
+
+		DrawFormatStringToHandle(WINDOW_WIDTH - 280, 60, coinColor, MainFont, "COINS: %d", Player::GetInstance()->GetCoinValue());
+
 		titleStr = "購入";
 		strPos = StringCenterPos(titleStr.c_str(), MainFont_Bold, WINDOW_WIDTH / 2, 100);
 		DrawStringToHandle(strPos.x, strPos.y, titleStr.c_str(), white, MainFont_Bold);
@@ -258,6 +311,10 @@ void ItemShop::Render() {
 	if (pCollider)
 		pCollider->Render();
 #endif
+
+	SetUseLighting(TRUE);
+	SetUseZBuffer3D(TRUE);
+	SetWriteZBuffer3D(TRUE);
 }
 
 void ItemShop::OnTriggerEnter(Collider* _pOhter) {
