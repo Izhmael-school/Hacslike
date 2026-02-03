@@ -172,7 +172,7 @@ bool StatusEnhancement::Update() {
 #endif
 
 	// --- 強化実行処理 ---
-	if (input->IsMouse(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
+	if (input->IsMouseDown(MOUSE_INPUT_LEFT) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
 		if (!stats.empty() && stats[selectedIndex].level < 50) {
 
 			// コスト計算
