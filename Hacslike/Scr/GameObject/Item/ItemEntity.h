@@ -6,6 +6,7 @@
 #include"../GameObject.h"
 #include"../../Manager/CollisionManager.h"
 #include"../Effect/Effect.h"
+#include"../../Save/SaveIO.h"
 class ItemEntity : public ItemBase
 {
 public: //メンバ変数
@@ -37,6 +38,11 @@ public://メンバ関数
     /// アイテムを使用した時の効果
     /// </summary>
     void Use()override;
+
+
+    void SaveTo(BinaryWriter& w) override;
+    void LoadFrom(BinaryReader& r) override;
+
 
     // ??これを追加（インベントリに渡すため）
     std::unique_ptr<ItemBase> TakeItem();

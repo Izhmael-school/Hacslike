@@ -22,4 +22,12 @@ void ItemBase::Use()
 {
 }
 
+void ItemBase::SaveTo(BinaryWriter& w) 
+{
+}
+
+void ItemBase::LoadFrom(BinaryReader& r)
+{
+}
+
 ItemBase* ItemBase::item;

@@ -19,6 +19,7 @@ public:
         InventoryItem(std::unique_ptr<ItemBase> _item, int _quantity = 1);
       
     };
+
 /// <summary>
 /// アイテム取得表示用構造体
 /// </summary>
@@ -169,6 +170,8 @@ public:
     /// <param name="id"></param>
     /// <returns></returns>
     InventoryItem* FindItemByID(const std::string& id);
+
+    ItemBase* ItemByID(const std::string& id);
 
     /// <summary>
     /// 消す

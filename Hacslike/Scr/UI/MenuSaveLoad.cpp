@@ -133,8 +133,8 @@ void MenuSaveLoad::Render() {
             "Slot %02d [%s] Lv:%d Floor:%d %s",
             i + 1,
             stateText,
-            Player::GetInstance()->GetPlayerLevel(),
-            StageManager::GetInstance().GetFloorCount(),
+            s.playerLevel,
+            s.floor,
             timestr);
 #endif
 
