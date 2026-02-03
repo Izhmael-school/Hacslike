@@ -158,12 +158,7 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	
 	CollisionManager::GetInstance().CheckRegister(pCollider);
 
-	std::string itemID = r.ReadString();
-    equippedItem = inventory.ItemByID(itemID);
-	if (equippedItem) {
-		equippedItem->LoadFrom(r); // セーブデータから攻撃力・モデルを復元
-		
-	}
+
 	
 }
 #pragma endregion

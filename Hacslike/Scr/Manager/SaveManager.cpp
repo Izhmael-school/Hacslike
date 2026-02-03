@@ -111,7 +111,6 @@ void SaveManager::RegisterSavers()
         }
         });
 
-
     // Player save/load second
     RegisterSaveHandler([](BinaryWriter& w) {
         Player::GetInstance()->SaveTo(w);
@@ -120,6 +119,7 @@ void SaveManager::RegisterSavers()
         Player::GetInstance()->LoadFrom(r, ver);
         });
    
+
     // 追加: ArtifactManager の保存 / 読み込みハンドラ
     RegisterSaveHandler([](BinaryWriter& w) {
         ArtifactManager::GetInstance().SaveTo(w);

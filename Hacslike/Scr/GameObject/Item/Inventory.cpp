@@ -953,43 +953,84 @@ void Inventory::Save(BinaryWriter& w) {
 }
 
 void Inventory::Load(BinaryReader& r) {
+//	Clear();
+//
+//	uint32_t count = 0;
+//	r.ReadPOD(count);
+//
+//#if _DEBUG
+//	// printfDx("%d\n", count);
+//#endif
+//	for (uint32_t i = 0; i < count; ++i) {
+//		std::string id = r.ReadString();
+//#if _DEBUG
+//		//printfDx("%s\n", id.c_str());
+//#endif
+//		int qty = 0;
+//		r.ReadPOD(qty);
+//
+//		if (id.empty()) continue;
+//		auto item = ItemFactory::Instance().CreateItem(id);
+//		if (item) {
+//
+//			items.emplace_back(std::move(item), qty);
+//		}
+//		else {
+//			// ファクトリに登録されていない ID の場合はログ出力してスキップ
+//#if _DEBUG
+//			printfDx("%sのロードが失敗して\n", id.c_str());
+//#endif
+//		}
+//	}
+//
+//	// 装備中アイテム復元（ID を読んで items 内からポインタを探す）
+//	std::string eqID = r.ReadString();
+//	if (!eqID.empty()) {
+//		InventoryItem* p = FindItemByID(eqID);
+//		if (p) equippedItem = p->item.get();
+//		equippedItem->Use();
+//		
+//	}
+//
+//	// ショートカット復元
+//	slotUp.itemID = r.ReadString();
+//	slotRight.itemID = r.ReadString();
+//	slotLeft.itemID = r.ReadString();
+//	slotDown.itemID = r.ReadString();
 	Clear();
 
 	uint32_t count = 0;
-	r.ReadPOD(count);
+	r.ReadPOD(count); // アイテム数を取得
 
-#if _DEBUG
-	// printfDx("%d\n", count);
-#endif
 	for (uint32_t i = 0; i < count; ++i) {
-		std::string id = r.ReadString();
-#if _DEBUG
-		//printfDx("%s\n", id.c_str());
-#endif
+		std::string id = r.ReadString(); // アイテム ID を取得
 		int qty = 0;
-		r.ReadPOD(qty);
+		r.ReadPOD(qty); // アイテム個数を取得
 
 		if (id.empty()) continue;
-		auto item = ItemFactory::Instance().CreateItem(id);
-		if (item) {
 
+		// アイテムの生成（既存のファクトリを使用）
+		auto item = ItemFactory::Instance().CreateItem(id);
+
+		// 追加：アイテムが成功裏に生成された場合に固有データを復元
+		if (item) {
+			item->LoadFrom(r); // 固有データのロード
 			items.emplace_back(std::move(item), qty);
 		}
 		else {
-			// ファクトリに登録されていない ID の場合はログ出力してスキップ
+			// ファクトリに登録されていない ID の場合
 #if _DEBUG
-			printfDx("%sのロードが失敗して\n", id.c_str());
+			printfDx("%sのロードに失敗しました\n", id.c_str());
 #endif
 		}
 	}
 
-	// 装備中アイテム復元（ID を読んで items 内からポインタを探す）
+	// 装備中アイテム復元
 	std::string eqID = r.ReadString();
 	if (!eqID.empty()) {
 		InventoryItem* p = FindItemByID(eqID);
 		if (p) equippedItem = p->item.get();
 		equippedItem->Use();
-		
 	}
 
 	// ショートカット復元
@@ -997,7 +1038,6 @@ void Inventory::Load(BinaryReader& r) {
 	slotRight.itemID = r.ReadString();
 	slotLeft.itemID = r.ReadString();
 	slotDown.itemID = r.ReadString();
-
 
 }
 
