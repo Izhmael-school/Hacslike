@@ -120,6 +120,10 @@ void StageManager::LoadFloorTexture() {
 	}
 }
 
+StageCell* StageManager::GetStageObjectFromPos(VECTOR _dataPos) {
+	return generator->GetStageObjectFromPos(_dataPos);
+}
+
 int StageManager::GetMapData(int x, int y) {
 
 	if (x < 0 || y < 0 || x > mapWidth_Large || y > mapHeight_Large) return -1;

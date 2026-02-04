@@ -100,6 +100,8 @@ public:
 	StageCell* UseObject(ObjectType type);
 	void UnuseObject(StageCell*& cell);
 
+	StageCell* GetStageObjectFromPos(VECTOR _deltaPos);
+
 	// ƒ}ƒbƒv‚Ì•`‰æ
 	void DrawMap();
 	// •Ç‚Ì“§‰ß‚ð‚·‚é‚©‚Ç‚¤‚©

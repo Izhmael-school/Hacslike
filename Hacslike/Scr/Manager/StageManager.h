@@ -57,7 +57,7 @@ public:
 	void DrawMap();
 	void LoadFloorData();
 	void LoadFloorTexture();
-
+	StageCell* GetStageObjectFromPos(VECTOR _dataPos);
 	int GetMapData(int x,int y);
 	int SetMapData(int x,int y,int setValue);
 	int GetRoomStatus(int roomNum,RoomStatus status);

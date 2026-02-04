@@ -161,11 +161,13 @@ void StageGenerator::Render() {
 }
 
 void StageGenerator::ClearStage() {
-	for (auto c : cells) {
+
+	while (cells.size() > 0) {
+		StageCell* c = cells.front();
 		UnuseObject(c);
 	}
 
-	cells.clear();
+		cells.clear();
 
 	UnuseObject(useStair);
 
@@ -689,6 +691,7 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 	if (cell == nullptr) return;
 
 	cell->SetVisible(false);
+	cells.remove(cell);
 	switch (cell->GetObjectType()) {
 	case Room:
 		unuseRoom.push_back(cell);
@@ -709,6 +712,15 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 		break;
 	}
 
+}
+
+StageCell* StageGenerator::GetStageObjectFromPos(VECTOR _dataPos) {
+	for (auto c : cells) {
+		if (!CompareVECTOR(c->GetDataPos(), _dataPos)) continue;
+
+		return c;
+	}
+	return nullptr;
 }
 
 void StageGenerator::DrawMap() {
