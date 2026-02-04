@@ -243,9 +243,6 @@ void SalesManager::Render() {
         DrawBox(barX, startY + sliderY, barX + 6, startY + sliderY + sliderH, GetColor(180, 180, 180), TRUE);
     }
 
-    // ガイド
-    DrawString(90, 680, "B:決定  A:戻る  Wheel:スクロール  Stick/DPAD:選択", GetColor(150, 150, 150));
-
     // --- ダイアログ表示 (ここを修正) ---
     int wx = (WINDOW_WIDTH - 400) / 2;
     int wy = (WINDOW_HEIGHT - 150) / 2;
@@ -275,6 +272,5 @@ void SalesManager::Render() {
         DrawBox(wx, wy, wx + 400, wy + 150, GetColor(255, 255, 255), FALSE);
 
         DrawString(wx + 55, wy + 55, "装備中のため売却できません！", GetColor(255, 100, 100));
-        DrawString(wx + 120, wy + 105, "- A or B で戻る -", GetColor(200, 200, 200));
     }
 }
