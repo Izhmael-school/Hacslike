@@ -110,7 +110,7 @@ void Player::SaveTo(BinaryWriter& w) {
 	w.WritePOD(maxExp);
 	w.WritePOD(hp);
 	w.WritePOD(maxHp);
-	w.WritePOD(atk);
+	//w.WritePOD(atk);
 	w.WritePOD(def);
 	w.WritePOD(criticalHitRate);
 	w.WritePOD(criticalDamage);
@@ -124,14 +124,7 @@ void Player::SaveTo(BinaryWriter& w) {
 	w.WritePOD(px);
 	w.WritePOD(py);
 	w.WritePOD(pz);
-	if (equippedItem) {
-		 // 武器が装備されている場合
-		w.WriteString(equippedItem->GetID());
-		equippedItem->SaveTo(w); // アイテムデータ保存
-	}
-	else {
-		
-	}
+
 }
 
 void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
@@ -143,7 +136,7 @@ void Player::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 	r.ReadPOD(maxExp);
 	r.ReadPOD(hp);
 	r.ReadPOD(maxHp);
-	r.ReadPOD(atk);
+	//r.ReadPOD(atk);
 	r.ReadPOD(def);
 	r.ReadPOD(criticalHitRate);
 	r.ReadPOD(criticalDamage);
@@ -314,6 +307,9 @@ void Player::Update() {
 		playerMovement->Update();
 		playerAttack->Update();
 		pAnimator->Update();
+		if (!isOpenMenu) {
+			inventory.UseItemShortcutUpdate();
+		}
 	}
 
 	MV1SetMatrix(modelHandle, matrix);
@@ -367,7 +363,7 @@ void Player::Update() {
 
 	inventory.Update(this);
 	if (GameSystem::GetInstance()->IsPlayable()) {
-		inventory.UseItemShortcutUpdate();
+		
 
 	}
 
@@ -940,7 +936,7 @@ void Player::PlayerSetUp() {
 
 	maxHp = 100;
 	hp = maxHp;
-	atk = 5;
+	baseAttack = 5;
 	def = 2;
 	exp = 0;
 	maxExp = 100;

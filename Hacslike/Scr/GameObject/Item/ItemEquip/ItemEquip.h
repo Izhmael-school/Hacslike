@@ -33,6 +33,9 @@ public://メンバ関数
 	void SaveTo(BinaryWriter& w) override;   
 	void LoadFrom(BinaryReader& r) override ;
 
+	inline int GetEffectValue() const { return attackValue; }
+
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -70,6 +73,7 @@ public://メンバ関数
 	void UnEquip()override;
 	void SaveTo(BinaryWriter& w) override;
 	void LoadFrom(BinaryReader& r) override;
+	inline int GetEffectValue() const { return attackValue; }
 
 public:
 	/// <summary>
@@ -109,6 +113,8 @@ public://メンバ関数
 	void UnEquip()override;
 	void SaveTo(BinaryWriter& w) override;
 	void LoadFrom(BinaryReader& r) override;
+	inline int GetEffectValue() const { return attackValue; }
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -149,6 +155,8 @@ public://メンバ関数
 	void UnEquip()override;
 	void SaveTo(BinaryWriter& w) override;
 	void LoadFrom(BinaryReader& r) override;
+	inline int GetEffectValue() const { return attackValue; }
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -186,6 +194,8 @@ public://メンバ関数
 	void UnEquip()override;
 	void SaveTo(BinaryWriter& w) override;
 	void LoadFrom(BinaryReader& r) override;
+	inline int GetAttackValue() const { return attackValue; }
+
 public:
 	/// <summary>
    /// 武器の種類
@@ -223,6 +233,8 @@ public://メンバ関数
 
 	void SaveTo(BinaryWriter& w) override;
 	void LoadFrom(BinaryReader& r) override;
+	inline int GetEffectValue() const { return attackValue; }
+
 
 public:
 	/// <summary>

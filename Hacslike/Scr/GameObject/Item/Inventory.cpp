@@ -933,6 +933,8 @@ void Inventory::Save(BinaryWriter& w) {
 		int qty = inv.quantity;
 		w.WritePOD(qty);
 		inv.item->SaveTo(w);
+		printfDx("%d\n", inv.item->GetEffectValue());
+
 #if _DEBUG
 		//printfDx("%sを保存\n", Id.c_str());
 #endif
@@ -953,50 +955,7 @@ void Inventory::Save(BinaryWriter& w) {
 }
 
 void Inventory::Load(BinaryReader& r) {
-//	Clear();
-//
-//	uint32_t count = 0;
-//	r.ReadPOD(count);
-//
-//#if _DEBUG
-//	// printfDx("%d\n", count);
-//#endif
-//	for (uint32_t i = 0; i < count; ++i) {
-//		std::string id = r.ReadString();
-//#if _DEBUG
-//		//printfDx("%s\n", id.c_str());
-//#endif
-//		int qty = 0;
-//		r.ReadPOD(qty);
-//
-//		if (id.empty()) continue;
-//		auto item = ItemFactory::Instance().CreateItem(id);
-//		if (item) {
-//
-//			items.emplace_back(std::move(item), qty);
-//		}
-//		else {
-//			// ファクトリに登録されていない ID の場合はログ出力してスキップ
-//#if _DEBUG
-//			printfDx("%sのロードが失敗して\n", id.c_str());
-//#endif
-//		}
-//	}
-//
-//	// 装備中アイテム復元（ID を読んで items 内からポインタを探す）
-//	std::string eqID = r.ReadString();
-//	if (!eqID.empty()) {
-//		InventoryItem* p = FindItemByID(eqID);
-//		if (p) equippedItem = p->item.get();
-//		equippedItem->Use();
-//		
-//	}
-//
-//	// ショートカット復元
-//	slotUp.itemID = r.ReadString();
-//	slotRight.itemID = r.ReadString();
-//	slotLeft.itemID = r.ReadString();
-//	slotDown.itemID = r.ReadString();
+//	
 	Clear();
 
 	uint32_t count = 0;
@@ -1009,12 +968,14 @@ void Inventory::Load(BinaryReader& r) {
 
 		if (id.empty()) continue;
 
+
 		// アイテムの生成（既存のファクトリを使用）
 		auto item = ItemFactory::Instance().CreateItem(id);
 
 		// 追加：アイテムが成功裏に生成された場合に固有データを復元
 		if (item) {
 			item->LoadFrom(r); // 固有データのロード
+			printfDx("%d\n", item->GetEffectValue());
 			items.emplace_back(std::move(item), qty);
 		}
 		else {
