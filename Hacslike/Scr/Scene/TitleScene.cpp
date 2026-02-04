@@ -40,6 +40,7 @@ void TitleScene::Start() {
 	messageFramesLeft = 0;
 	memset(messageBuf, 0, sizeof(messageBuf));
 	fontHandle = FontManager::GetInstance().UseFontHandle("MainFont");
+	logoHandle = LoadGraph("Res/Title/TeamLogo.png");
 }
 
 void TitleScene::Update() {
@@ -174,6 +175,7 @@ void TitleScene::Render() {
 	// Title
 	DrawGraph(0, 0, titleHandle, TRUE);
 
+	DrawExtendGraph(WINDOW_WIDTH - 140, WINDOW_HEIGHT - 50, WINDOW_WIDTH, WINDOW_HEIGHT, logoHandle,true);
 	if (!inLoadMenu) {
 		// Title menu
 		DrawStringToHandle(550, 400, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white, fontHandle);
