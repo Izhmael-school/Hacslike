@@ -210,6 +210,8 @@ void StageGenerator::ClearStage() {
 		pChest->SetVisible(false);
 	if (pStone)
 		pStone->SetVisible(false);
+	if (pReturner)
+		pReturner->SetVisible(false);
 	if (pItemShop)
 		pItemShop->SetVisible(false);
 }

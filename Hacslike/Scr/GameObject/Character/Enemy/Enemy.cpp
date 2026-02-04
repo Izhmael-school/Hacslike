@@ -14,7 +14,7 @@ Enemy::Enemy()
 	, isTouch(false)
 	, rayAnswer(false)
 	, atkTime(0)
-	, atkSpan(4)
+	, atkSpan(Random(0, 4))
 	, goalPos(VGet(-1, -1, -1))
 	, nextWanderSpan(Random(1, 4))
 	, nextWanderTime(nextWanderSpan)
@@ -610,6 +610,7 @@ void Enemy::Attack() {
 		atkTime = 0;
 		int rand = Random(0, attackAnimationList.size() - 1);
 		pAnimator->Play(attackAnimationList[rand]);
+		atkSpan = Random(0,4);
 	}
 	else {
 
