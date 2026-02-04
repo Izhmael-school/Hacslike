@@ -244,6 +244,8 @@ void Enemy::DeadExecute() {
 	manager->TryDropItem(manager->GetItemDropRate(), position);
 	Coin::GetInstance()->SpawnCoin(VGet(position.x, 5.0f, position.z));
 
+	EnemyManager::GetInstance().AddKillCount();
+
 	pAnimator->Play("dead");
 }
 

@@ -212,15 +212,12 @@
     <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp">
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp" />
-    <ClCompile Include="Scr\Manager\FontManager.cpp" />
     <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
       <Filter>Enhancement</Filter>
     </ClCompile>
     <ClCompile Include="Scr\UI\TitleUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Scr\UI\CircleGauge.cpp" />
     <ClCompile Include="Scr\UI\DamagePopup.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -229,6 +226,18 @@
     </ClCompile>
     <ClCompile Include="Scr\Manager\SalesManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\UI\CircleGauge.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\Manager\FontManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\ItemShop\ItemShop.cpp">
+      <Filter>GameObject\ItemShop</Filter>
+    </ClCompile>
+    <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp">
+      <Filter>GameObject\SaveObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,8 +469,6 @@
     <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h">
       <Filter>GameObject\Character\Enemy\Zombie</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h" />
-    <ClInclude Include="Scr\Manager\FontManager.h" />
     <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
       <Filter>Enhancement</Filter>
     </ClInclude>
@@ -474,7 +481,6 @@
     <ClInclude Include="Scr\UI\TitleUI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Scr\UI\CircleGauge.h" />
     <ClInclude Include="Scr\UI\DamagePopup.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -483,6 +489,18 @@
     </ClInclude>
     <ClInclude Include="Scr\Manager\SalesManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\UI\CircleGauge.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\Manager\FontManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\ItemShop\ItemShop.h">
+      <Filter>GameObject\ItemShop</Filter>
+    </ClInclude>
+    <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h">
+      <Filter>GameObject\SaveObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -626,6 +644,12 @@
     </Filter>
     <Filter Include="GameObject\Returner">
       <UniqueIdentifier>{c31595dc-b838-49f6-9210-37dc07fb750c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\ItemShop">
+      <UniqueIdentifier>{8abbf23b-613f-4153-8a25-19fd1efce04d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\SaveObject">
+      <UniqueIdentifier>{07bb2c38-341f-48b8-aaa7-20b62de14226}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

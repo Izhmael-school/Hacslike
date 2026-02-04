@@ -62,6 +62,8 @@ private:
 
 	const std::string audioFilePath = "Res/Audio/SE/Enemy/";
 
+	int killEnemyCount = 0;
+
 private:
 	EnemyUtility* goblin;
 	EnemyUtility* spider;
@@ -94,5 +96,7 @@ public:
 	// セーブ / ロード
 	void SaveTo(BinaryWriter& w);
 	void LoadFrom(BinaryReader& r, uint32_t ver);
+	void AddKillCount() { killEnemyCount++; }
+	int GetKillCount() { return killEnemyCount; }
 };
 

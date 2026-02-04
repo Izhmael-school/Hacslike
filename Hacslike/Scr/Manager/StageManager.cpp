@@ -333,7 +333,7 @@ void StageManager::ChangeTexture(int num, ObjectType changeObject) {
 
 void StageManager::SaveTo(BinaryWriter& w) {
 	// 階層情報
-	w.WritePOD(floorCount);
+	w.WritePOD(floorCount - 1);
 
 	// ステージ状態を委譲して保存
 	if (generator) {

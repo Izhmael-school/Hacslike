@@ -86,6 +86,8 @@ void EnemyManager::Render() {
 		e->Render();
 	}
 
+	DrawString(100, 100, std::to_string(EnemyManager::GetInstance().GetKillCount()).c_str(), red);
+
 	//DrawFormatStringToHandle(100, 300, red, MainFont, "c“G”:%d‘Ì", pEnemyArray.size());
 }
 
