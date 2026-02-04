@@ -145,12 +145,12 @@ void CoinValue_raise::Update(Player* player)
 void CoinValue_raise::Apply(Player* player)
 {
     if (!player) return;
-    player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() + UpValue);
+    player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() * UpValue);
 }
 
 void CoinValue_raise::Remove(Player* player)
 {
-    player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() - UpValue);
+    player->SetCoinAcquisitionValue(player->GetCoinAcquisitionValue() / UpValue);
 
 }
 void CoinValue_raise::Save(BinaryWriter& w)

@@ -79,7 +79,7 @@ public:
 class CoinValue_raise : public ArtifactBase {
 	int UpValue;
 public:
-	CoinValue_raise(int value = 10);
+	CoinValue_raise(int value = 2);
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;
