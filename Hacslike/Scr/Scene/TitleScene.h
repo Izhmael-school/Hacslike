@@ -13,6 +13,8 @@ class TitleScene : public BaseScene {
 	int messageFramesLeft = 0;   // for temporary messages
 	char messageBuf[256] = { 0 };
 
+	int logoHandle;
+
 	int fontHandle;
 public:
 	TitleScene();

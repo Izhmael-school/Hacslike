@@ -92,7 +92,7 @@
   {
     "id": 10,
     "name": "Stick",
-    "modelPath": "Res/Weapon/stick.mv1",
+    "modelPath": "Res/Model/Weapon/stick.mv1",
     "type": 0,
     "attackSpeed": [ 0.25, 0.25, 0.25, 0.32 ],
     "colLength": [ 30.0, 40.0, 0.0 ],
