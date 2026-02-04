@@ -132,6 +132,7 @@ void ItemShop::Start() {
 }
 
 void ItemShop::Update() {
+	if (!isVisible) return;
 	GameObject::Update();
 
 	if (pCollider)
@@ -266,6 +267,7 @@ void ItemShop::Update() {
 }
 
 void ItemShop::Render() {
+	if (!isVisible) return;
 
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
