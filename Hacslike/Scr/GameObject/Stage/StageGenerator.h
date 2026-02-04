@@ -25,6 +25,7 @@ struct StageData {
 	VECTOR itemShopPos;
 	VECTOR bossSpawnPos;
 	int bossType;
+	string bgmName;
 };
 
 class StageGenerator {
@@ -98,6 +99,8 @@ public:
 	// ステージオブジェクトのプーリング
 	StageCell* UseObject(ObjectType type);
 	void UnuseObject(StageCell*& cell);
+
+	StageCell* GetStageObjectFromPos(VECTOR _deltaPos);
 
 	// マップの描画
 	void DrawMap();

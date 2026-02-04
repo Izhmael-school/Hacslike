@@ -28,6 +28,8 @@ void BossBase::AppearStair() {
 		stair->SetPosition(VGet(appearPos.x * CellSize, 0, appearPos.z * CellSize));
 		stair->SetDataPos(VGet(appearPos.x, 0, appearPos.z));
 		StageManager::GetInstance().SetMapData(appearPos.x, appearPos.z, (int)Stair);
+		StageCell* c = StageManager::GetInstance().GetStageObjectFromPos(VGet(appearPos.x, 0, appearPos.z));
+		StageManager::GetInstance().UnuseObject(c);
 		break;
 	}
 }
@@ -78,6 +80,8 @@ void BossBase::DeadExecute() {
 
 	if (!isDead) {
 		ArtifactManager::GetInstance().SetBossDesiegen(true);
+		AudioManager::GetInstance().Stop("all");
+		AudioManager::GetInstance().PlayOneShot("BossKill");
 	}
 	Enemy::DeadExecute();
 

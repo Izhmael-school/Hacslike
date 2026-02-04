@@ -13,6 +13,7 @@ struct FloorData {
 	int startFloor;
 	int endFloor;
 	std::vector<int> spawnEnemyID;
+	string bgmName;
 };
 
 struct EnemyData {
@@ -50,12 +51,13 @@ public:
 	// SaveObject ‚ğ StageManager ‚ªŠ—L‚µ‚Ä Update/Render ‚ğŒÄ‚Ô
 	
 public:
+	void Start();
 	void Update();
 	void Render();
 	void DrawMap();
 	void LoadFloorData();
 	void LoadFloorTexture();
-
+	StageCell* GetStageObjectFromPos(VECTOR _dataPos);
 	int GetMapData(int x,int y);
 	int SetMapData(int x,int y,int setValue);
 	int GetRoomStatus(int roomNum,RoomStatus status);

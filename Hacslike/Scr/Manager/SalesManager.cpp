@@ -166,7 +166,7 @@ void SalesManager::ExecuteSale() {
     Player::GetInstance()->AddCoinValue(items[currentIndex].item->GetValue());
     // インベントリから削除
     targetInventory->RemoveItemAmount(currentIndex, 1);
-
+    AudioManager::GetInstance().PlayOneShot("Buy");
     // 削除後のカーソル位置調整
     const auto& updatedItems = targetInventory->GetItems();
     if (currentIndex >= (int)updatedItems.size() && !updatedItems.empty()) {

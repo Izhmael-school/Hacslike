@@ -126,6 +126,9 @@ void ItemShop::Start() {
 	SetModelHandle(mHandle);
 	SetScale(VGet(150, 150, 150));
 	SetRotation(VGet(0, 90, 0));
+
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/NoMoney.mp3", "NoMoney", false);
+	AudioManager::GetInstance().Load("Res/Audio/SE/Player/Buy.mp3", "Buy", false);
 }
 
 void ItemShop::Update() {
@@ -244,10 +247,11 @@ void ItemShop::Update() {
 				// アイテムを渡す
 				pP->GetInventory()->AddItem(std::move(buyItemData[selectBuyCommand]));
 				buy.isSell = true;
+				AudioManager::GetInstance().PlayOneShot("Buy");
 			}
 			else {
 				// ビープ音を出す
-
+				AudioManager::GetInstance().PlayOneShot("NoMoney");
 			}
 		}
 

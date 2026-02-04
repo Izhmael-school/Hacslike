@@ -161,11 +161,13 @@ void StageGenerator::Render() {
 }
 
 void StageGenerator::ClearStage() {
-	for (auto c : cells) {
+
+	while (cells.size() > 0) {
+		StageCell* c = cells.front();
 		UnuseObject(c);
 	}
 
-	cells.clear();
+		cells.clear();
 
 	UnuseObject(useStair);
 
@@ -208,7 +210,7 @@ void StageGenerator::ClearStage() {
 		pChest->SetVisible(false);
 	if (pStone)
 		pStone->SetVisible(false);
-	if (pSaveObject)
+	if (pItemShop)
 		pItemShop->SetVisible(false);
 }
 
@@ -578,6 +580,7 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.itemShopPos = VGet(s["itemShopPos"][0], 0, s["itemShopPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
 		stage.bossType = s["bossType"];
+		stage.bgmName = s["floorBGMName"];
 
 		for (int i = 0; i < mapWidth_Large; i++) {
 			for (int j = 0; j < mapHeight_Large; j++) {
@@ -688,6 +691,7 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 	if (cell == nullptr) return;
 
 	cell->SetVisible(false);
+	cells.remove(cell);
 	switch (cell->GetObjectType()) {
 	case Room:
 		unuseRoom.push_back(cell);
@@ -708,6 +712,15 @@ void StageGenerator::UnuseObject(StageCell*& cell) {
 		break;
 	}
 
+}
+
+StageCell* StageGenerator::GetStageObjectFromPos(VECTOR _dataPos) {
+	for (auto c : cells) {
+		if (!CompareVECTOR(c->GetDataPos(), _dataPos)) continue;
+
+		return c;
+	}
+	return nullptr;
 }
 
 void StageGenerator::DrawMap() {
