@@ -87,7 +87,7 @@ void ItemFactory::InitializeDefaultItems()
 
     RegisterItem("Stick", []() {
         return std::make_unique<ItemStick>(VGet(0, 0, 0),
-        "–Ø‚Ì–_", "‚»‚±‚ç•Ó‚É—Ž‚¿‚Ä‚é–Ø‚Ì–_", 0, 10, "MeleeWeapon");
+        "–Ø‚Ì–_", "‚»‚±‚ç•Ó‚É—Ž‚¿‚Ä‚é–Ø‚Ì–_", 0, 5, "MeleeWeapon");
         });
 
     RegisterItem("Greatsword", []() {
