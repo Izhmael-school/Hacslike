@@ -105,12 +105,12 @@ public:
 	inline void SetType(EnemyType _type) { type = _type; }
 	// 攻撃の当たり判定の座標計算
 	VECTOR AttackAreaPos(float dis);
-	VECTOR AttackAreaPos(VECTOR pos,float dis = 1);
+	VECTOR AttackAreaPos(VECTOR pos, float dis = 1);
 	// アニメーションイベントの登録
-	void SetAnimEvent(std::string animName,std::function<void()> func,float time = 0);
-	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,float dis,float mag = 1);
-	void SetAnimEventForAttackCollider(std::string animName,float colliderspawnTime,float colliderLifeTime,float radius,VECTOR pos,float dis = 1,float mag = 1);
-	
+	void SetAnimEvent(std::string animName, std::function<void()> func, float time = 0);
+	void SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis, float mag = 1);
+	void SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis = 1, float mag = 1);
+
 private:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// 追跡行動
@@ -138,26 +138,28 @@ public:
 	// 出たとき
 	virtual void OnTriggerExit(Collider* _pOther) override;
 
-	public:
-		// 既に存在するメソッド群の補完として追加
-		VECTOR GetPosition() const { return position; }            // もし Character にあるなら不要
-		float GetRotationY() const { return rotation.y; }
-		void SetRotationY(float y) { rotation.y = y; }
+public:
+	// 既に存在するメソッド群の補完として追加
+	VECTOR GetPosition() const { return position; }            // もし Character にあるなら不要
+	float GetRotationY() const { return rotation.y; }
+	void SetRotationY(float y) { rotation.y = y; }
 
-		float GetHP() const { return hp; }
-		void SetHP(float v) { hp = v; }
+	float GetHP() const { return hp; }
+	void SetHP(float v) { hp = v; }
 
-		bool IsDead() const { return isDead; }
-		void SetDeadState(bool d) {
-			isDead = d;
-			if (d) {
-				hp = 0;
-				// 表示やアニメ切替（報酬は与えない）
-				if (pAnimator) pAnimator->Play("dead");
-				SetVisible(false);
-			}
+	bool IsDead() const { return isDead; }
+	void SetDeadState(bool d) {
+		isDead = d;
+		if (d) {
+			hp = 0;
+			// 表示やアニメ切替（報酬は与えない）
+			if (pAnimator) pAnimator->Play("dead");
+			SetVisible(false);
 		}
-		// 必要なら collider 取得
-		Collider* GetCollider() const { return pCollider; }
+	}
+	// 必要なら collider 取得
+	Collider* GetCollider() const { return pCollider; }
+
+	bool IsBoss() { return isBoss; }
 };
 

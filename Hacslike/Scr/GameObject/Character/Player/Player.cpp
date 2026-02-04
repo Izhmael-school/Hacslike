@@ -100,6 +100,9 @@ void Player::DeadExecute() {
 	isDead = true;
 	GameEndUI::GetInstance()->Start();
 	pAnimator->Play("Down1", 0.9);
+	AudioManager::GetInstance().Stop("all");
+
+	AudioManager::GetInstance().PlayOneShot("PlayerDeath");
 }
 
 #pragma region セーブとロード
@@ -283,6 +286,7 @@ void Player::Start() {
 
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す2.mp3", "Select", false);
 	AudioManager::GetInstance().Load("Res/SE/決定ボタンを押す38.mp3", "Decision", false);
+
 
 	pAnimator->GetAnimation("Down1")->SetEvent([this]() {pAnimator->Play("Down2"); }, pAnimator->GetTotalTime("Down1"));
 	pAnimator->GetAnimation("Down2")->SetEvent([this]() {

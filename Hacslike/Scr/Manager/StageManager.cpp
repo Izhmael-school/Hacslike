@@ -17,6 +17,7 @@ StageManager::StageManager() {
 	AudioManager::GetInstance().Load("Res/Audio/SE/Stage/FloorDawn.mp3", "FloorDawn", false);
 
 	LoadFloorTexture();
+	Start();
 }
 
 StageManager::~StageManager() {
@@ -31,6 +32,23 @@ StageManager::~StageManager() {
 	}
 }
 
+void StageManager::Start() {
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/10f.mp3","floor10",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/20f.mp3","floor20",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/30f.mp3","floor30",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/40f.mp3","floor40",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/50f.mp3","floor50",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/PlayerDeath.mp3","PlayerDeath",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Durahan.mp3","Durahan",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ketbleperz.mp3","Ketbleperz",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ouger.mp3","Ouger",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/HellHound.mp3","HellHound",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Goblin.mp3","Goblin",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/FirstFloor.mp3","FirstFloor",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/BossKill.mp3","BossKill",false);
+
+}
+
 void StageManager::Update() {
 	generator->Update();
 
@@ -38,6 +56,7 @@ void StageManager::Update() {
 	if ((InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) && (InputManager::GetInstance().IsButton(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKey(KEY_INPUT_LSHIFT))) {
 		LoadFloorData();
 
+		AudioManager::GetInstance().Stop("all");
 		if (floorCount % BossFloorNum == 0) {
 			GenerateStage((int)(floorCount / BossFloorNum));
 		}
@@ -68,6 +87,10 @@ void StageManager::LoadFloorData() {
 		// ベクターの初期化
 		floorData.spawnEnemyID.clear();
 		floorData.spawnEnemyID.shrink_to_fit();
+
+		floorData.bgmName = d["floorBGMName"];
+
+		if (d["spawnEnemyID"].size() == 0) return;
 
 		for (int id : d["spawnEnemyID"]) {
 			floorData.spawnEnemyID.push_back(id);
@@ -178,6 +201,8 @@ void StageManager::GenerateStage() {
 		}
 
 	}
+
+	AudioManager::GetInstance().PlayBGM(floorData.bgmName);
 }
 
 void StageManager::GenerateStage(int stageID) {
@@ -243,9 +268,11 @@ void StageManager::GenerateStage(int stageID) {
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
 
 	int enemyType = generator->GetStageData().bossType;
+	AudioManager::GetInstance().PlayBGM(sd.bgmName);
 	if (enemyType == -1) return;
 
 	EnemyManager::GetInstance().SpawnBoss((EnemyType)enemyType, VGet(pos.x, 0, pos.z));
+
 }
 
 void StageManager::Generate() {
@@ -263,8 +290,6 @@ void StageManager::Generate() {
 		GenerateStage();
 	}
 
-	AudioManager::GetInstance().PlayBGM("NormalFloor", 0.3f);
-
 	FadeManager::GetInstance().FadeIn(0.5f);
 
 }
@@ -280,9 +305,6 @@ void StageManager::NoFadeGenerate() {
 	else {
 		GenerateStage();
 	}
-
-	AudioManager::GetInstance().PlayBGM("NormalFloor");
-	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
 }
 
 void StageManager::UnuseObject(StageCell* cell) {
@@ -359,8 +381,7 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 			printf("[Save] After fallback, created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
 		}
 	}
-	AudioManager::GetInstance().PlayBGM("NormalFloor");
-	AudioManager::GetInstance().ChangeVolume(0.3f, "NormalFloor");
+
 }
 
 

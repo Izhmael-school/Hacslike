@@ -161,6 +161,12 @@ void EnemyManager::UnuseAllEnemy() {
 
 	while (pEnemyArray.size() > 0) {
 		Enemy* e = pEnemyArray.front();
+		if (e->IsBoss()) {
+			pEnemyArray.remove(e);
+			DeleteEnemy(e);
+			return;
+		}
+
 		e->Teardown();
 		pUnuseEnemiesArray[(int)e->GetType()]->unuseArray.push_back(e);
 		pEnemyArray.remove(e);

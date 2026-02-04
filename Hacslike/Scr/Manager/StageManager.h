@@ -13,6 +13,7 @@ struct FloorData {
 	int startFloor;
 	int endFloor;
 	std::vector<int> spawnEnemyID;
+	string bgmName;
 };
 
 struct EnemyData {
@@ -50,6 +51,7 @@ public:
 	// SaveObject ‚ğ StageManager ‚ªŠ—L‚µ‚Ä Update/Render ‚ğŒÄ‚Ô
 	
 public:
+	void Start();
 	void Update();
 	void Render();
 	void DrawMap();

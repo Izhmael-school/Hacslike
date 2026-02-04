@@ -78,6 +78,8 @@ void BossBase::DeadExecute() {
 
 	if (!isDead) {
 		ArtifactManager::GetInstance().SetBossDesiegen(true);
+		AudioManager::GetInstance().Stop("all");
+		AudioManager::GetInstance().PlayOneShot("BossKill");
 	}
 	Enemy::DeadExecute();
 

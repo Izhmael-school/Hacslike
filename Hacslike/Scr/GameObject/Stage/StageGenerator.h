@@ -25,6 +25,7 @@ struct StageData {
 	VECTOR itemShopPos;
 	VECTOR bossSpawnPos;
 	int bossType;
+	string bgmName;
 };
 
 class StageGenerator {

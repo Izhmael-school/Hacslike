@@ -208,7 +208,7 @@ void StageGenerator::ClearStage() {
 		pChest->SetVisible(false);
 	if (pStone)
 		pStone->SetVisible(false);
-	if (pSaveObject)
+	if (pItemShop)
 		pItemShop->SetVisible(false);
 }
 
@@ -578,6 +578,7 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.itemShopPos = VGet(s["itemShopPos"][0], 0, s["itemShopPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
 		stage.bossType = s["bossType"];
+		stage.bgmName = s["floorBGMName"];
 
 		for (int i = 0; i < mapWidth_Large; i++) {
 			for (int j = 0; j < mapHeight_Large; j++) {
