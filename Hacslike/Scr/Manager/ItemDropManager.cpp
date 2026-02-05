@@ -45,6 +45,14 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
     }
 }
 
+void ItemDropManager::TryDropBossItem(float _dropRate, VECTOR _pos, int floor)
+{
+    if (!RandomChance(_dropRate)) return;
+
+
+
+}
+
 void ItemDropManager::Start()
 {
     AudioManager::GetInstance().Load("Res/SE/itemDrop.mp3", "DropItem", false);

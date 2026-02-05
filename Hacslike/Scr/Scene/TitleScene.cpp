@@ -119,6 +119,7 @@ void TitleScene::Update() {
 				/*if (p) {*/
 					// Load into managers and player
 					if (SaveManager::GetInstance().Load(selectedSlot)) {
+						Player::GetInstance()->ResetUIStates();
 						// After successful load, go to game scene
 						SceneManager::GetInstance().ChangeScene(SceneType::Game);
 						return;

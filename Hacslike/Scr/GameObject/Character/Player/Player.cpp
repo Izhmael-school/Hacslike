@@ -268,6 +268,7 @@ void Player::Start() {
 	// 装備（GetLastItem が nullptr でないことを確認してから）
 	if (lastItem != nullptr && lastItem->item) {
 		GetInventory()->EquipItem(lastItem->item.get());
+		lastItem->item->Use();
 		// 装備処理後に確実に攻撃力を再計算して反映する
 		UpdateAtkFromEquipment();
 	}
@@ -952,6 +953,7 @@ void Player::PlayerSetUp() {
 	hitChest = false;
 	isSelectArtifact = false;
 	isTitleUI = false;
+	isMenuUI = false;        // メニュー画面
 
 	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
@@ -965,6 +967,7 @@ void Player::PlayerSetUp() {
 	// 装備（GetLastItem が nullptr でないことを確認してから）
 	if (lastItem != nullptr && lastItem->item) {
 		GetInventory()->EquipItem(lastItem->item.get());
+		lastItem->item->Use();
 		// 装備処理後に確実に攻撃力を再計算して反映する
 		UpdateAtkFromEquipment();
 	}
@@ -1023,6 +1026,7 @@ void Player::ResetUIStates()
 	isSelectingSkill = false;  // スキル選択
 	blinkTime = 0.0f;        // 選択の点滅状態
 	blinkVisible = true;
+	isOpenMenu = false;
 }
 
 float Player::RuneCost(int L) {
