@@ -57,6 +57,8 @@ void StageManager::Update() {
 	if ((InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN)) && (InputManager::GetInstance().IsButton(XINPUT_GAMEPAD_DPAD_DOWN) || InputManager::GetInstance().IsKey(KEY_INPUT_LSHIFT))) {
 		LoadFloorData();
 
+		floorCount = 50;
+
 		AudioManager::GetInstance().Stop("all");
 		if (floorCount % BossFloorNum == 0) {
 			GenerateStage((int)(floorCount / BossFloorNum));
@@ -318,6 +320,14 @@ void StageManager::NoFadeGenerate() {
 	else {
 		GenerateStage();
 	}
+}
+
+void StageManager::CloseRoom() {
+	generator->CloseRoom();
+}
+
+void StageManager::OpenRoom() {
+	generator->OpenRoom();
 }
 
 void StageManager::UnuseObject(StageCell* cell) {

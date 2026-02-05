@@ -45,6 +45,8 @@ void BossBase::Update() {
 	GameObject::Update();
 	MV1SetMatrix(modelHandle, matrix);
 
+	if (isDead) BossSlainUI::GetInstance()->Update();
+
 	// アニメーションの更新
 	if (pAnimator != nullptr)
 		pAnimator->Update();
@@ -102,7 +104,7 @@ void BossBase::Update() {
 	else
 		atkTime += TimeManager::GetInstance().deltaTime;
 	
-	if(isDead) BossSlainUI::GetInstance()->Update();
+
 	
 }
 
@@ -132,5 +134,20 @@ void BossBase::DeadExecute() {
 	StageManager::GetInstance().generator->AppearStair();
 	StageManager::GetInstance().generator->SpawnReturnCircle();
 	StageManager::GetInstance().SetisBossSpawn(true);
+	StageManager::GetInstance().OpenRoom();
 }
+
+bool BossBase::WallDetectionVision_Fan(VECTOR targetPos) {
+	bool hit = Enemy::WallDetectionVision_Fan(targetPos);
+
+	// 初めてレイに引っかかったら
+	if (hit && !firstRayHit) {
+		StageManager::GetInstance().CloseRoom();
+		firstRayHit = true;
+	}
+
+	return hit;
+}
+
+
 
