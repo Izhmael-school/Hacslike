@@ -46,6 +46,63 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItem(const std::string& _id)
    
 }
 
+std::unique_ptr<ItemBase> ItemFactory::CreateItemForLoad(const std::string& _id)
+{
+    // ロード用: デフォルト値(0)で生成し、後でLoadFromで上書き
+    if (_id == "Potion_Small") {
+        return std::make_unique<SmallHealItem>(VGet(0, 0, 0),
+            "ポーション(小)", "体力を少し回復する", 50, 20);
+    }
+    else if (_id == "Potion_Middle") {
+        return std::make_unique<MiddleHealItem>(VGet(0, 0, 0),
+            "ポーション(中)", "体力を回復する", 80, 50);
+    }
+    else if (_id == "Potion_Large") {
+        return std::make_unique<LargeHealItem>(VGet(0, 0, 0),
+            "ポーション(大)", "体力を大幅に回復する", 110, 100);
+    }
+    else if (_id == "AttactPotion") {
+        return std::make_unique<AttactPotion>(VGet(0, 0, 0),
+            "攻撃のポーション", "2分間攻撃力が上がる", 110, 5, 120.0f);
+    }
+    else if (_id == "DefensePotion") {
+        return std::make_unique<DefensePotion>(VGet(0, 0, 0),
+            "防御のポーション", "2分間防御力が上がる", 110, 5, 120.0f);
+    }
+    else if (_id == "Grenade") {
+        return std::make_unique<Grenade>(VGet(0, 0, 0),
+            "グレネード", "3秒後に爆発する", 110, 80);
+    }
+    // 武器: ロード時はダミー値0で生成（LoadFromで上書きされる）
+    else if (_id == "Sword_Iron") {
+        return std::make_unique<ItemSword>(VGet(0, 0, 0),
+            "剣", "普通の剣", 150, 0, "MeleeWeapon");
+    }
+    else if (_id == "Axe") {
+        return std::make_unique<ItemAxe>(VGet(0, 0, 0),
+            "斧", "普通の斧", 200, 0, "MeleeWeapon");
+    }
+    else if (_id == "Stick") {
+        return std::make_unique<ItemStick>(VGet(0, 0, 0),
+            "木の棒", "その辺に落ちている木の棒", 0, 0, "MeleeWeapon");
+    }
+    else if (_id == "Greatsword") {
+        return std::make_unique<Greatsword>(VGet(0, 0, 0),
+            "グレートソード", "重い!痛い!強い!最高!", 500, 0, "MeleeWeapon");
+    }
+    else if (_id == "Spear") {
+        return std::make_unique<Spear>(VGet(0, 0, 0),
+            "槍", "槍", 230, 0, "MeleeWeapon");
+    }
+    else if (_id == "Gun") {
+        return std::make_unique<gun>(VGet(0, 0, 0),
+            "銃", "銃", 160, 0, "RangedWeapon");
+    }
+
+    printfDx("ItemFactory: ID '%s' はロード対象として登録されていません。\n", _id.c_str());
+    return nullptr;
+}
+
 std::unique_ptr<ItemBase> ItemFactory::CreateItem(const std::string& _id, BinaryReader& r)
 {
     auto it = itemTemplates.find(_id);
@@ -63,9 +120,10 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItem(const std::string& _id, Binary
 
 int ItemFactory::GenerateEffectValueSeed(const std::string& itemId, int baseValue, int variance)
 {
-    std::hash<std::string> hasher;
-    size_t hash = hasher(itemId);
-    std::mt19937 generator(static_cast<unsigned>(hash)); // itemId に基づく乱数を作成
+    // 時間ベースのシードで真の乱数を生成
+    static std::mt19937 generator(static_cast<unsigned>(
+        std::chrono::high_resolution_clock::now().time_since_epoch().count()
+        ));
 
     std::uniform_int_distribution<int> distribution(baseValue - variance, baseValue + variance);
     return distribution(generator);
