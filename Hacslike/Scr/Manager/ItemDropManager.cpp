@@ -48,7 +48,49 @@ void ItemDropManager::TryDropItem(float _dropRate, VECTOR _pos)
 void ItemDropManager::TryDropBossItem(float _dropRate, VECTOR _pos, int floor)
 {
     if (!RandomChance(_dropRate)) return;
+    std::vector<std::string> itemIds;
 
+    // 階層に応じてアイテムプールを設定
+    if (floor == 11) {
+        // 序盤階層：基本的な回復アイテムと武器
+        itemIds = { "Hammer" };
+    }
+    else if (floor == 21) {
+        // 中盤階層：強力な回復アイテムと上位武器
+        itemIds = { "Elixir" };
+    }
+    else if(floor == 31) {
+        // 後半階層：最高級アイテム
+        itemIds = {  "Hammer" };
+    }
+    else if (floor == 41) {
+        // 後半階層：最高級アイテム
+        itemIds = { "Elixir" };
+    }
+    else if (floor == 51) {
+        // 後半階層：最高級アイテム
+        itemIds = { "Elixir" };
+    }
+
+    static std::mt19937 gen(std::random_device{}());
+    std::uniform_int_distribution<> dis(0, static_cast<int>(itemIds.size()) - 1);
+
+    std::string chosenId = itemIds[dis(gen)];
+    auto item = ItemFactory::Instance().CreateItem(chosenId);
+
+    if (item)
+    {
+#if _DEBUG
+        //printfDx("ボス報酬「%s」を生成！", item->GetName().c_str(), GetColor(255, 255, 255));
+#endif
+        AudioManager::GetInstance().PlayOneShot("DropItem");
+        auto* eff = EffectManager::GetInstance().Instantiate("Item", _pos);
+
+        auto entity = std::make_unique<ItemEntity>(std::move(item), _pos, 50.0f);
+        entity->SetDropEffect(eff);
+
+        activeItems.push_back(std::move(entity));
+    }
 
 
 }

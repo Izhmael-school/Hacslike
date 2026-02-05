@@ -127,6 +127,9 @@ void BossBase::DeadExecute() {
 		ArtifactManager::GetInstance().SetBossDesiegen(true);
 		AudioManager::GetInstance().Stop("all");
 		AudioManager::GetInstance().PlayOneShot("BossKill");
+		// ボス専用アイテムをドロップ（100 % の確率で）
+			int currentFloor = StageManager::GetInstance().floorCount;
+		ItemDropManager::GetInstance().TryDropBossItem(1.0f, GetPosition(), currentFloor);
 	}
 	Enemy::DeadExecute();
 

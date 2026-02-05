@@ -136,6 +136,59 @@ public:
 };
 #pragma endregion
 
+#pragma region ÉnÉìÉ}Å[
+class Hammer : public ItemBase {
+private:
+	int attackValue;
+	int criticalHitRate = 30;
+	int criticalDamage = 80;
+	int modelPath = 0;
+	std::string weaponType;
+
+public:
+	Hammer(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0, const std::string& _weaponType = "");
+
+	void Start()override;
+	void Render()override;
+	void Use()override;
+	void UnEquip()override;
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
+	inline int GetEffectValue() const override { return attackValue; }
+
+	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void SetAttackValue(int _v) { attackValue = _v; }
+};
+#pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #pragma region èe
 class gun : public ItemBase {
 private:
