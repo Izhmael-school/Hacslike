@@ -85,14 +85,14 @@ void ArtifactManager::ApplySelectedArtifact(Player* _player, std::shared_ptr<Art
     if (!_artifact)
     {
 #if _DEBUG
-        printfDx("[ArtifactManager::ApplySelectedArtifact] _artifact が null\n");
+        //printfDx("[ArtifactManager::ApplySelectedArtifact] _artifact が null\n");
 #endif
         return;
     }
 
     // ====== アーティファクト効果の適用 ======
 #if _DEBUG
-    printfDx("[ArtifactManager::ApplySelectedArtifact] 適用: %s\n", _artifact->GetName().c_str());
+    //printfDx("[ArtifactManager::ApplySelectedArtifact] 適用: %s\n", _artifact->GetName().c_str());
 #endif
 
     _artifact->Apply(_player);  // ArtifactBaseにApplyEffect(Player*)がある前提
@@ -112,7 +112,7 @@ void ArtifactManager::ApplySelectedArtifact(Player* _player, std::shared_ptr<Art
     if (it != artifacrPool.end())
     {
 #if _DEBUG
-        printfDx("[ArtifactManager::ApplySelectedArtifact] プールから削除: %s\n", (*it)->GetName().c_str());
+       // printfDx("[ArtifactManager::ApplySelectedArtifact] プールから削除: %s\n", (*it)->GetName().c_str());
 #endif
         artifacrPool.erase(it);
     }
@@ -150,7 +150,7 @@ std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::ApplyArtifact()
     auto selectedArtifact = artifacrPool[randomIndex];
 
 #if _DEBUG
-    printfDx("[ArtifactManager::ApplyArtifact] ランダム選出: %s\n", selectedArtifact->GetName().c_str());
+    //printfDx("[ArtifactManager::ApplyArtifact] ランダム選出: %s\n", selectedArtifact->GetName().c_str());
 #endif
 
     // 適用処理（ArtifactBase の Apply 等があるならここで呼ぶ）
@@ -231,7 +231,7 @@ void ArtifactManager::LoadFrom(BinaryReader& r, uint32_t version)
         {
             // Unknown id: skip -- but reading of artifact-specific data must still be consistent.
 #if _DEBUG
-            printfDx("[ArtifactManager::LoadFrom] Unknown artifact id: %d\n", aid);
+            //printfDx("[ArtifactManager::LoadFrom] Unknown artifact id: %d\n", aid);
 #endif
             continue;
         }

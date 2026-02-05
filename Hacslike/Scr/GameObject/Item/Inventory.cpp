@@ -339,21 +339,21 @@ void Inventory::EquipItem(ItemBase* item) {
 
 	if (equippedItem == item) {
 #if _DEBUG
-		printfDx("すでに「%s」を装備中です。\n", item->GetName().c_str());
+		//printfDx("すでに「%s」を装備中です。\n", item->GetName().c_str());
 #endif
 		return;
 	}
 
 	if (equippedItem) {
 #if _DEBUG
-		printfDx("「%s」から「%s」に装備を切り替えました。\n",
-			equippedItem->GetName().c_str(), item->GetName().c_str());
+		//printfDx("「%s」から「%s」に装備を切り替えました。\n",
+			//equippedItem->GetName().c_str(), item->GetName().c_str());
 #endif
 		equippedItem->UnEquip();
 	}
 	else {
 #if _DEBUG
-		printfDx("「%s」を装備しました！\n", item->GetName().c_str());
+		//printfDx("「%s」を装備しました！\n", item->GetName().c_str());
 #endif
 	}
 
