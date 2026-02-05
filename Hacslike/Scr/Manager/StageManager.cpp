@@ -93,8 +93,6 @@ void StageManager::LoadFloorData() {
 
 		floorData.bgmName = d["floorBGMName"];
 
-		if (d["spawnEnemyID"].size() == 0) return;
-
 		for (int id : d["spawnEnemyID"]) {
 			floorData.spawnEnemyID.push_back(id);
 		}
