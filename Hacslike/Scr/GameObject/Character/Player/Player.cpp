@@ -320,7 +320,7 @@ void Player::Update() {
 	MV1SetMatrix(modelHandle, matrix);
 
 #if _DEBUG
-	//WeaponInput();
+	WeaponInput();
 #endif
 
 	//アイテムの取得
