@@ -111,7 +111,7 @@ public:
 	void SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis, float mag = 1);
 	void SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis = 1, float mag = 1);
 
-private:
+protected:
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// í«ê’çsìÆ
 	virtual void Tracking();

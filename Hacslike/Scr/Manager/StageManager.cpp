@@ -34,19 +34,19 @@ StageManager::~StageManager() {
 }
 
 void StageManager::Start() {
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/10f.mp3","floor10",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/20f.mp3","floor20",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/30f.mp3","floor30",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/40f.mp3","floor40",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/50f.mp3","floor50",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/PlayerDeath.mp3","PlayerDeath",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Durahan.mp3","Durahan",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ketbleperz.mp3","Ketbleperz",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ouger.mp3","Ouger",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/HellHound.mp3","HellHound",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Goblin.mp3","Goblin",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/FirstFloor.mp3","FirstFloor",false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/BossKill.mp3","BossKill",false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/10f.mp3", "floor10", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/20f.mp3", "floor20", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/30f.mp3", "floor30", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/40f.mp3", "floor40", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/50f.mp3", "floor50", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/PlayerDeath.mp3", "PlayerDeath", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Durahan.mp3", "Durahan", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ketbleperz.mp3", "Ketbleperz", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ouger.mp3", "Ouger", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/HellHound.mp3", "HellHound", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Goblin.mp3", "Goblin", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/FirstFloor.mp3", "FirstFloor", false);
+	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/BossKill.mp3", "BossKill", false);
 
 }
 
@@ -369,17 +369,18 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 			generator->mapWidth, generator->mapHeight, generator->roomCount);
 
 		// まず通常どおりオブジェクト生成
-		GenerateStage((int)(floorCount / BossFloorNum));
+		int bossID = (int)(floorCount / BossFloorNum);
+		GenerateStage(bossID);
 		size_t created = 0;
 		for (auto c : generator->cells) {
 			if (c) { c->Update(); ++created; }
 		}
 		if (generator->useStair) { generator->useStair->Update(); ++created; }
 
-		BossBase* boss = BossBase::GetInstance();
-		if(isLoadBossSpawn){
-			boss->AppearStair();
-			boss->SpawnReturnCircle();
+		if (isLoadBossSpawn) {
+			StageManager::GetInstance().generator->LoadStageData(bossID);
+			generator->AppearStair();
+			generator->SpawnReturnCircle();
 		}
 
 		printf("[Save] GenerateStageObject created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);

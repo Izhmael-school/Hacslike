@@ -1,6 +1,5 @@
 #include "BossBase.h"
 #include "../../../../CommonModule.h"
-#include "../../../../ExpansionMethod.h"
 #include"../../../../Manager/ArtifactManager.h"
 #include "../../../../GameSystem/GameSystem.h"
 #include"../../Player/Player.h"
@@ -21,31 +20,7 @@ BossBase::~BossBase() {
 		instance = nullptr; // 破棄時に解除
 }
 
-void BossBase::AppearStair() {
-	if (CompareVECTOR(appearPos, VMinus)) return;
-	auto cells = StageManager::GetInstance().generator->cells;
-	for (auto c : cells) {
-		if (c->GetDataPos().x != appearPos.x || c->GetDataPos().z != appearPos.z) continue;
 
-		StageManager::GetInstance().UnuseObject(c);
-		StageCell* stair = StageManager::GetInstance().UseObject(Stair);
-		StageManager::GetInstance().generator->useStair = stair;
-		stair->SetPosition(VGet(appearPos.x * CellSize, 0, appearPos.z * CellSize));
-		stair->SetDataPos(VGet(appearPos.x, 0, appearPos.z));
-		StageManager::GetInstance().SetMapData(appearPos.x, appearPos.z, (int)Stair);
-		StageCell* c = StageManager::GetInstance().GetStageObjectFromPos(VGet(appearPos.x, 0, appearPos.z));
-		StageManager::GetInstance().UnuseObject(c);
-		break;
-	}
-}
-
-void BossBase::SpawnReturnCircle() {
-	VECTOR pos = ChangePosMap(circlePos);
-	pos.y = 1;
-	// サークルを出す
-	TitleReturner::GetInstance()->SetVisible(true);
-	TitleReturner::GetInstance()->SetPosition(pos);
-}
 
 void BossBase::Start() {
 	isBoss = true;
@@ -59,10 +34,73 @@ void BossBase::Start() {
 	hpBar = new Gauge(hp,maxHp, WINDOW_WIDTH / 4, 700.0f, WINDOW_WIDTH / 2, 15.0f);
 	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 715.0f, WINDOW_WIDTH / 2, 5.0f,false);
 	attackSpanBar->ChangeColor(cyan, blue, black, blue);
+	StageData data = StageManager::GetInstance().generator->GetStageData();
+	SetAppearPos(data.stairSpawnPos);
+	SetReturnerPos(data.returnerSpawnPos);
 }
 
 void BossBase::Update() {
-	Enemy::Update();
+	if (!isVisible || !GameSystem::GetInstance()->IsPlayable()) return;
+	// 座標の更新等
+	GameObject::Update();
+	MV1SetMatrix(modelHandle, matrix);
+
+	// アニメーションの更新
+	if (pAnimator != nullptr)
+		pAnimator->Update();
+
+	if (IsDead())
+		return;
+
+	if (atking) {
+		area.Update();
+		// 攻撃当たり判定の更新
+		for (auto c : attackColliderList) {
+			if (c->GetCollider() == nullptr) continue;
+
+			c->Update();
+		}
+	}
+
+
+	// 当たり判定の更新
+	if (pCollider != nullptr) {
+		pCollider->SetMatrix(matrix);
+		pCollider->Update();
+	}
+
+	// 攻撃当たり判定の削除
+	for (auto itr = attackColliderList.begin(); itr != attackColliderList.end(); ) {
+		SphereHitBox* c = *itr;
+		if (c->GetActive()) {
+			++itr;
+			continue;
+		}
+
+		CollisionManager::GetInstance().UnRegister(c->GetCollider());
+		delete c;
+		itr = attackColliderList.erase(itr); // eraseの戻り値を使って次の要素へ
+	}
+
+	if (isAttack()) return;
+
+	// レイの更新
+	WallDetectionVision_Fan(GetPlayer()->GetPosition());
+	// 追跡行動
+	Tracking();
+
+
+	if (rayAnswer && !isTouch)
+		pAnimator->Play("run");
+	if (rayAnswer && isTouch)
+		Attack();
+
+
+	// 攻撃のリキャスト
+	if (atkTime >= atkSpan)
+		atkTime = atkSpan;
+	else
+		atkTime += TimeManager::GetInstance().deltaTime;
 	
 	if(isDead) BossSlainUI::GetInstance()->Update();
 	
@@ -91,8 +129,8 @@ void BossBase::DeadExecute() {
 	Enemy::DeadExecute();
 
 	BossSlainUI::GetInstance()->Start();
-	AppearStair();
-	SpawnReturnCircle();
+	StageManager::GetInstance().generator->AppearStair();
+	StageManager::GetInstance().generator->SpawnReturnCircle();
 	StageManager::GetInstance().SetisBossSpawn(true);
 }
 

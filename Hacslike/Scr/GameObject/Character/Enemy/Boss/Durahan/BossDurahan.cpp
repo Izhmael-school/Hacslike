@@ -48,9 +48,7 @@ void BossDurahan::Start() {
 	SetAnimEvent("attack03", [this]() {AudioManager::GetInstance().PlayOneShot("Axe"); }, attack03ColliderSpawnTime);
 	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 
-	VECTOR pos = appearPos;
-	SetAppearPos(VMinus);
-	SetCirclePos(pos);
+
 }
 
 void BossDurahan::Update() {

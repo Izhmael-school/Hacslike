@@ -52,9 +52,7 @@ void BossHellHound::Start() {
 	SetAnimEvent("attack02", [this]() {AudioManager::GetInstance().PlayOneShot("Bite2"); }, attack02ColliderSpawnTime03);
 	SetAnimEvent("dead", [this]() {AudioManager::GetInstance().PlayOneShot("Dawn"); }, deadAnimationTime);
 
-	VECTOR pos = appearPos;
-	SetAppearPos(VAdd(pos, VLeft));
-	SetCirclePos(VAdd(pos, VRight));
+
 }
 
 void BossHellHound::Update() {
