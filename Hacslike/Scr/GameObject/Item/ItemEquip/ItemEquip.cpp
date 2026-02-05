@@ -4,9 +4,9 @@
 #include"../../Character/Player/Player.h"
 #include"../../../Manager/AudioManager.h"
 
-#pragma region “
+#pragma region Œ•
 ItemSword::ItemSword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item","Sword_Iron", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/sword.png")
+	: ItemBase(VZero, "item", "Sword_Iron", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/sword.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -23,12 +23,10 @@ void ItemSword::Render()
 void ItemSword::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
-
 	Player::GetInstance()->ChangeWeapon(modelPath);
-	
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
-	
-	std::cout << name << " ‚ð‘•”õIUŒ‚—Í +" << attackValue << "I\n";
+
+	std::cout << name << " ‚ð‘•”õ!UŒ‚—Í +" << attackValue << "!\n";
 }
 
 void ItemSword::UnEquip()
@@ -38,20 +36,17 @@ void ItemSword::UnEquip()
 void ItemSword::SaveTo(BinaryWriter& w)
 {
 	w.WritePOD(attackValue);
-	w.WritePOD(modelPath);
 }
 
 void ItemSword::LoadFrom(BinaryReader& r)
 {
 	r.ReadPOD(attackValue);
-	r.ReadPOD(modelPath);
 }
-
 #pragma endregion
 
 #pragma region •€
 ItemAxe::ItemAxe(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item","Axe", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Axe.png")
+	: ItemBase(VZero, "item", "Axe", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Axe.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -68,31 +63,28 @@ void ItemAxe::Render()
 void ItemAxe::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
-
 	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
-
-	
 }
 
 void ItemAxe::UnEquip()
 {
 }
+
 void ItemAxe::SaveTo(BinaryWriter& w)
 {
 	w.WritePOD(attackValue);
-	w.WritePOD(modelPath);
 }
+
 void ItemAxe::LoadFrom(BinaryReader& r)
 {
 	r.ReadPOD(attackValue);
-	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
 #pragma region –Ø‚Ì–_
 ItemStick::ItemStick(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item","Stick", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/stick.png")
+	: ItemBase(VZero, "item", "Stick", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/stick.png")
 	, attackValue(_effectValue) {
 }
 
@@ -108,27 +100,26 @@ void ItemStick::Use()
 {
 	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
-
 }
 
 void ItemStick::UnEquip()
 {
 }
+
 void ItemStick::SaveTo(BinaryWriter& w)
 {
 	w.WritePOD(attackValue);
-	w.WritePOD(modelPath);
 }
+
 void ItemStick::LoadFrom(BinaryReader& r)
 {
 	r.ReadPOD(attackValue);
-	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
 #pragma region ƒOƒŒƒ\
 Greatsword::Greatsword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item","Greatsword", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
+	: ItemBase(VZero, "item", "Greatsword", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -145,24 +136,22 @@ void Greatsword::Render()
 void Greatsword::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
-
 	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
-
 }
 
 void Greatsword::UnEquip()
 {
 }
+
 void Greatsword::SaveTo(BinaryWriter& w)
 {
 	w.WritePOD(attackValue);
-	w.WritePOD(modelPath);
 }
+
 void Greatsword::LoadFrom(BinaryReader& r)
 {
 	r.ReadPOD(attackValue);
-	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
@@ -185,24 +174,22 @@ void Spear::Render()
 void Spear::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
-
 	Player::GetInstance()->ChangeWeapon(2);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
-
 }
 
 void Spear::UnEquip()
 {
 }
+
 void Spear::SaveTo(BinaryWriter& w)
 {
 	w.WritePOD(attackValue);
-	w.WritePOD(modelPath);
 }
+
 void Spear::LoadFrom(BinaryReader& r)
 {
 	r.ReadPOD(attackValue);
-	r.ReadPOD(modelPath);
 }
 #pragma endregion
 
@@ -216,7 +203,6 @@ gun::gun(VECTOR _pos, const std::string& _name, const std::string& _desc, int _v
 void gun::Start()
 {
 	AudioManager::GetInstance().Load("Res/SE/UseItem.mp3", "UseEquip", false);
-
 }
 
 void gun::Render()
@@ -226,19 +212,21 @@ void gun::Render()
 void gun::Use()
 {
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
-
 	Player::GetInstance()->ChangeWeapon(11);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetRangedCorrection() + attackValue);
-
 }
 
 void gun::UnEquip()
 {
 }
+
 void gun::SaveTo(BinaryWriter& w)
 {
+	w.WritePOD(attackValue);
 }
+
 void gun::LoadFrom(BinaryReader& r)
 {
+	r.ReadPOD(attackValue);
 }
 #pragma endregion

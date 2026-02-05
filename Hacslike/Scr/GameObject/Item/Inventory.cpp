@@ -969,8 +969,8 @@ void Inventory::Load(BinaryReader& r) {
 		if (id.empty()) continue;
 
 
-		// アイテムの生成（既存のファクトリを使用）
-		auto item = ItemFactory::Instance().CreateItem(id);
+		// ★★★ 修正: CreateItemForLoad を使用 ★★★
+		auto item = ItemFactory::Instance().CreateItemForLoad(id);
 
 		// 追加：アイテムが成功裏に生成された場合に固有データを復元
 		if (item) {

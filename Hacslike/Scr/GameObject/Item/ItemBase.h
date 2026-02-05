@@ -81,7 +81,7 @@ public://ゲッター
     /// アイテムの効果値
     /// </summary>
     /// <returns></returns>
-    inline int GetEffectValue() const { return itenEffectValue; }
+    virtual inline int GetEffectValue() const { return itenEffectValue; }
 
     inline void  SetAttackValue(int _v) { itenEffectValue = _v; }
 

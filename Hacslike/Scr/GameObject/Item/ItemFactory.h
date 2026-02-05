@@ -27,6 +27,12 @@ public: //メンバ関数
 	/// <returns></returns>
 	std::unique_ptr<ItemBase> CreateItem(const std::string& _id);
 
+	/// <summary>
+	/// アイテムの生成（ロード用 - デフォルト値で生成）
+	/// </summary>
+	std::unique_ptr<ItemBase> CreateItemForLoad(const std::string& _id);
+
+
 	std::unique_ptr<ItemBase> CreateItem(const std::string& _id, BinaryReader& r);
 
 	// 登録処理をまとめる関数を追加
