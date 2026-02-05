@@ -9,7 +9,11 @@ Effect::Effect(int& _resourceHandle)
 }
 
 Effect::~Effect() {
-
+	// オブジェクトが消えるときはエフェクトも強制停止させる
+	if (playingHandle != INVALID) {
+		StopEffekseer3DEffect(playingHandle);
+		playingHandle = INVALID;
+	}
 }
 
 void Effect::Start() {
