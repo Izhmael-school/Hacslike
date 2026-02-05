@@ -62,14 +62,15 @@ protected:
 	Ray_Fan vision;
 	// 攻撃前の攻撃範囲表示
 	AttackArea area;
+	// ボスか
 	bool isBoss = false;
 
 	// 道のり
 	std::list<VECTOR> moveRoots;
-
 	VECTOR currentRoot;
 	VECTOR prevRoot;
-	bool isBack; // 来た道を戻ってるか
+	// 来た道を戻ってるか
+	bool isBack;
 
 	// 攻撃関連
 	float attack01ColliderSpawnTime;
@@ -103,15 +104,16 @@ public:
 	// 敵の種類を取得
 	inline EnemyType GetType() const { return type; }
 	inline void SetType(EnemyType _type) { type = _type; }
-	// 攻撃の当たり判定の座標計算
-	VECTOR AttackAreaPos(float dis);
-	VECTOR AttackAreaPos(VECTOR pos, float dis = 1);
 	// アニメーションイベントの登録
 	void SetAnimEvent(std::string animName, std::function<void()> func, float time = 0);
 	void SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, float dis, float mag = 1);
 	void SetAnimEventForAttackCollider(std::string animName, float colliderspawnTime, float colliderLifeTime, float radius, VECTOR pos, float dis = 1, float mag = 1);
 
 protected:
+	// 攻撃の当たり判定の座標計算
+	VECTOR AttackAreaPos(float dis);
+	VECTOR AttackAreaPos(VECTOR pos, float dis = 1);
+	// ターゲットを見る
 	void LookTarget(VECTOR targetPos, VECTOR axis = VUp);
 	// 追跡行動
 	virtual void Tracking();

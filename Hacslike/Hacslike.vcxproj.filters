@@ -239,6 +239,7 @@
     <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp">
       <Filter>GameObject\SaveObject</Filter>
     </ClCompile>
+    <ClCompile Include="Scr\GameObject\StageObject\StageObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scr\Definition.h" />
@@ -502,6 +503,7 @@
     <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h">
       <Filter>GameObject\SaveObject</Filter>
     </ClInclude>
+    <ClInclude Include="Scr\GameObject\StageObject\StageObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Component">
@@ -650,6 +652,9 @@
     </Filter>
     <Filter Include="GameObject\SaveObject">
       <UniqueIdentifier>{07bb2c38-341f-48b8-aaa7-20b62de14226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StageObject">
+      <UniqueIdentifier>{da3571c7-3504-4105-8889-6630636ec752}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

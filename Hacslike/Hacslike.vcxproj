@@ -67,6 +67,7 @@
     <ClCompile Include="Scr\GameObject\Returner\TitleReturner.cpp" />
     <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp" />
     <ClCompile Include="Scr\GameObject\Slash\Slash.cpp" />
+    <ClCompile Include="Scr\GameObject\StageObject\StageObject.cpp" />
     <ClCompile Include="Scr\GameObject\Stage\StageCell.cpp" />
     <ClCompile Include="Scr\GameObject\Stage\StageGenerator.cpp" />
     <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Scr\GameObject\Returner\TitleReturner.h" />
     <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h" />
     <ClInclude Include="Scr\GameObject\Slash\Slash.h" />
+    <ClInclude Include="Scr\GameObject\StageObject\StageObject.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageCell.h" />
     <ClInclude Include="Scr\GameObject\Stage\StageGenerator.h" />
     <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h" />

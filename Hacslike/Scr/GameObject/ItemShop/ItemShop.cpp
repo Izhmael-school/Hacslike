@@ -73,12 +73,8 @@ void ItemShop::DrawBuyItem(BuyItemData data) {
 	DrawStringToHandle(data.pracePos.x, data.pracePos.y, MergeString(std::to_string(data.prace), "ƒRƒCƒ“").c_str(), white, MainFont);
 }
 
-void ItemShop::DeadExecute() {}
-
 void ItemShop::OpenExecute() {
 	GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop); // ƒQ[ƒ€’â~
-
-	Setup();
 
 	if (!isChoice) {
 		isChoice = true;

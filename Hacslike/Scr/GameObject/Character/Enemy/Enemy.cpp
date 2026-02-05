@@ -19,7 +19,16 @@ Enemy::Enemy()
 	, nextWanderSpan(Random(1, 4))
 	, nextWanderTime(nextWanderSpan)
 	, currentRoot(position)
-	, prevRoot(currentRoot) {}
+	, prevRoot(currentRoot) 
+	,attack01ColliderRadius(0)
+	,attack02ColliderRadius(0)
+	,attack03ColliderRadius(0)
+	,attack01ColliderSpawnTime(0)
+	,attack02ColliderSpawnTime(0)
+	,attack03ColliderSpawnTime(0)
+	,deadAnimationTime(0)
+	,isBack(false)
+{}
 
 Enemy::~Enemy() {
 	attackAnimationList.clear();
@@ -37,15 +46,18 @@ void Enemy::Start() {
 	SetScale(VGet(0.1f, 0.1f, 0.1f));
 	// アニメーションイベントの設定
 	if (isBoss)
+		// ボスなら死亡後に消す
 		pAnimator->GetAnimation("dead")->SetEvent([this]() {EnemyManager::GetInstance().DeleteEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	else {
+		// エフェクト
 		SetAnimEvent("dead", [this]() {EffectManager::GetInstance().Instantiate("Dead",this->GetPosition()); }, pAnimator->GetTotalTime("dead") - 5);
+		// 通常なら残す
 		SetAnimEvent("dead", [this]() {EnemyManager::GetInstance().UnuseEnemy(this); }, pAnimator->GetTotalTime("dead"));
 	}
 
 	SetAnimEvent("idle01", [this]() {SetAttacking(false); });
-	// 攻撃中の移動制御
 
+	// 攻撃中の移動制御
 	if (pAnimator->GetAnimation("attack01") != nullptr) {
 		SetAnimEvent("attack01", [this]() { SetAttacking(true); });
 		SetAnimEvent("attack01", [this]() { SetAttacking(false); }, pAnimator->GetTotalTime("attack01"));
@@ -354,7 +366,8 @@ bool Enemy::Vision_Fan(VECTOR targetPos) {
 	float fanCos = cosf(Deg2Rad(fan.rangeDegree / 2));
 
 	// 点が扇の範囲内にあるか比較
-	if (fanCos > dot) return rayAnswer = false; // 当たってない
+	if (fanCos > dot) 
+		return rayAnswer = false; // 当たってない
 
 	return rayAnswer = true;
 }
@@ -376,7 +389,7 @@ bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
 	// Bresenham の直線アルゴリズム用の差分と進行方向
 	VECTOR dir = VGet(abs(x1 - x0), 0, abs(z1 - z0));
 	VECTOR scale = VGet((x0 < x1) ? 1 : -1, 0, (z0 < z1) ? 1 : -1);
-	int err = dir.x - dir.z;           // 誤差項
+	int err = dir.x - dir.z;	// 誤差項
 
 	StageManager* manager = &StageManager::GetInstance();
 
