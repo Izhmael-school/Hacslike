@@ -66,6 +66,7 @@ void TitleReturner::Update() {
 			EnemyManager::GetInstance().DeleteAllEnemy();
 			SetVisible(false);
 			isShowResetUI = true;
+			StageManager::GetInstance().SetisBossSpawn(false);
 			return;
 		}
 	}

@@ -11,6 +11,7 @@
 #include"../GameObject/Enhancement/EnhancementStone.h"
 #include "../GameObject/Returner/TitleReturner.h"
 #include "../GameObject/ItemShop/ItemShop.h"
+#include"../GameObject/Character/Enemy/Boss/BossBase.h"
 
 StageManager::StageManager() {
 	generator = new StageGenerator();
@@ -246,7 +247,14 @@ void StageManager::GenerateStage(int stageID) {
 	if (chest) {
 		generator->SetGameObject(chest, sd.chestObjectPos);
 		generator->pChest = chest;
-		generator->pChest->SetVisible(true);
+
+		// 宝箱の位置が(0,0,0)の場合は非表示にする（ボスフロアでは宝箱を出さない）
+		if (sd.chestObjectPos.x == 0 && sd.chestObjectPos.z == 0) {
+			generator->pChest->SetVisible(false);
+		}
+		else {
+			generator->pChest->SetVisible(true);
+		}
 	}
 	EnhancementStone* stone = EnhancementStone::GetInstance();
 	if (stone) {
@@ -275,8 +283,9 @@ void StageManager::GenerateStage(int stageID) {
 	AudioManager::GetInstance().PlayBGM(sd.bgmName);
 	if (enemyType == -1) return;
 
-	EnemyManager::GetInstance().SpawnBoss((EnemyType)enemyType, VGet(pos.x, 0, pos.z));
-
+	if (!isLoadBossSpawn) {
+		EnemyManager::GetInstance().SpawnBoss((EnemyType)enemyType, VGet(pos.x, 0, pos.z));
+	}
 }
 
 void StageManager::Generate() {
@@ -334,7 +343,7 @@ void StageManager::ChangeTexture(int num, ObjectType changeObject) {
 void StageManager::SaveTo(BinaryWriter& w) {
 	// 階層情報
 	w.WritePOD(floorCount - 1);
-
+	w.WritePOD(isLoadBossSpawn);
 	// ステージ状態を委譲して保存
 	if (generator) {
 		generator->SaveTo(w);
@@ -345,6 +354,7 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 
 	// 階層情報
 	r.ReadPOD(floorCount);
+	r.ReadPOD(isLoadBossSpawn);
 	// sanity check
 	if (floorCount < 0 || floorCount > 10000) {
 		printf("[Save] suspicious floorCount read: %d -> clamped to 0\n", floorCount);
@@ -366,6 +376,12 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 		}
 		if (generator->useStair) { generator->useStair->Update(); ++created; }
 
+		BossBase* boss = BossBase::GetInstance();
+		if(isLoadBossSpawn){
+			boss->AppearStair();
+			boss->SpawnReturnCircle();
+		}
+
 		printf("[Save] GenerateStageObject created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
 
 		// もし何も生成されなかったら、読み込まれたデータが不完全な可能性が高いので回復処理を試みる
@@ -384,8 +400,9 @@ void StageManager::LoadFrom(BinaryReader& r, uint32_t saveVersion) {
 
 			printf("[Save] After fallback, created %zu StageCells, useStair=%p\n", created, (void*)generator->useStair);
 		}
-	}
 
+	}
+	isLoadBossSpawn = false;
 }
 
 

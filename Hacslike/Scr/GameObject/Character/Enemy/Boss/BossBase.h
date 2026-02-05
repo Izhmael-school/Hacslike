@@ -18,7 +18,7 @@ protected:
 	BossBase(VECTOR _appearPos);
 	~BossBase();
 
-protected:
+public:
 	void AppearStair();
 	void SpawnReturnCircle();
 
@@ -30,6 +30,8 @@ public:
 
 	void DeadExecute() override;
 
+	// Œ»İ‘¶İ‚µ‚Ä‚¢‚éƒ{ƒX‚ğæ“¾
+	static BossBase* GetInstance() { return instance; }
 
 private:
 
@@ -45,5 +47,7 @@ protected:
 public:
 	inline void SetAppearPos(VECTOR pos) { appearPos = pos; }
 	inline void SetCirclePos(VECTOR pos) { circlePos = pos; }
+private:
+	static BossBase* instance;
 };
 

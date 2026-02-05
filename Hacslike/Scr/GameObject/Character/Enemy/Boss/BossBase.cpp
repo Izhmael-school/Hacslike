@@ -7,13 +7,18 @@
 #include "../../../../UI/BossSlainUI.h"
 #include "../../../Returner/TitleReturner.h"
 
+BossBase* BossBase::instance = nullptr;
+
 BossBase::BossBase(VECTOR _appearPos)
 	:appearPos(_appearPos) {
+	instance = this;   // ¶¬Žž‚É“o˜^
 }
 
 BossBase::~BossBase() {
 	delete hpBar;
 	delete attackSpanBar;
+	if (instance == this)
+		instance = nullptr; // ”jŠüŽž‚É‰ðœ
 }
 
 void BossBase::AppearStair() {
@@ -88,5 +93,6 @@ void BossBase::DeadExecute() {
 	BossSlainUI::GetInstance()->Start();
 	AppearStair();
 	SpawnReturnCircle();
+	StageManager::GetInstance().SetisBossSpawn(true);
 }
 

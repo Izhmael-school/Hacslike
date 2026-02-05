@@ -26,8 +26,13 @@ public: //メンバ関数
 	/// <param name="id"></param>
 	/// <returns></returns>
 	std::unique_ptr<ItemBase> CreateItem(const std::string& _id);
+
+	std::unique_ptr<ItemBase> CreateItem(const std::string& _id, BinaryReader& r);
+
 	// 登録処理をまとめる関数を追加
 	void InitializeDefaultItems();
+
+	static int GenerateEffectValueSeed(const std::string& itemId, int baseValue, int variance);
 
 	// シングルトンなのでコンストラクタ等は非公開
 	ItemFactory() = default;

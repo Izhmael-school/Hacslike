@@ -35,6 +35,7 @@ void StageCell::Update() {
 		AudioManager::GetInstance().PlayOneShot("FloorDawn");
 		StageManager::GetInstance().Generate();
 		isTouch = false;
+		StageManager::GetInstance().SetisBossSpawn(false);
 		return;
 	}
 

@@ -1,6 +1,9 @@
 #include "ItemFactory.h"
 #include"ItemEquip/ItemEquip.h"
 #include"ItemHeal/ItemHeal.h"
+#include"../../Save/SaveIO.h"
+
+class BinaryReader;
 
 ItemFactory& ItemFactory::Instance()
 {
@@ -40,7 +43,34 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItem(const std::string& _id)
     printfDx("ItemFactory: ID '%s' のアイテムが登録されていません。\n", _id.c_str());
 
     return nullptr;
+   
 }
+
+std::unique_ptr<ItemBase> ItemFactory::CreateItem(const std::string& _id, BinaryReader& r)
+{
+    auto it = itemTemplates.find(_id);
+    if (it != itemTemplates.end()) {
+        auto item = it->second();
+
+        item->LoadFrom(r);
+
+        return item;
+    }
+
+    printfDx("ItemFactory: ID '%s' のアイテムが登録されていません。\n", _id.c_str());
+    return nullptr;
+}
+
+int ItemFactory::GenerateEffectValueSeed(const std::string& itemId, int baseValue, int variance)
+{
+    std::hash<std::string> hasher;
+    size_t hash = hasher(itemId);
+    std::mt19937 generator(static_cast<unsigned>(hash)); // itemId に基づく乱数を作成
+
+    std::uniform_int_distribution<int> distribution(baseValue - variance, baseValue + variance);
+    return distribution(generator);
+}
+
 
 void ItemFactory::InitializeDefaultItems()
 {
@@ -76,13 +106,15 @@ void ItemFactory::InitializeDefaultItems()
         });
 
     RegisterItem("Sword_Iron", []() {
+        int effectValue = GenerateEffectValueSeed("Sword_Iron", 15, 5);
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
-        "剣", "普通の剣", 150, GetRand(20) + 10 ,"MeleeWeapon");
+        "剣", "普通の剣", 150, effectValue,"MeleeWeapon");
         });
 
     RegisterItem("Axe", []() {
+        int effectValue = GenerateEffectValueSeed("Axe", 20, 10);
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
-        "斧", "普通の斧", 200, GetRand(30) + 10, "MeleeWeapon");
+        "斧", "普通の斧", 200, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Stick", []() {
@@ -91,13 +123,15 @@ void ItemFactory::InitializeDefaultItems()
         });
 
     RegisterItem("Greatsword", []() {
+        int effectValue = GenerateEffectValueSeed("Greatsword", 95, 25);
         return std::make_unique<Greatsword>(VGet(0, 0, 0),
-        "グレートソード", "重い！強い！かっこいい！", 500, GetRand(150) + 80, "MeleeWeapon");
+        "グレートソード", "重い！強い！かっこいい！", 500, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Spear", []() {
+        int effectValue = GenerateEffectValueSeed("Greatsword", 50,20 );
         return std::make_unique<Spear>(VGet(0, 0, 0),
-        "槍", "槍", 230, GetRand(80) + 40, "MeleeWeapon");
+        "槍", "槍", 230, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Gun", []() {
@@ -105,3 +139,4 @@ void ItemFactory::InitializeDefaultItems()
         "銃", "銃", 160, GetRand(100) + 40, "RangedWeapon");
         });
 }
+

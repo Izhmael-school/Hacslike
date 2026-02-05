@@ -46,6 +46,10 @@ public:
 	const int BossFloorNum = 10;
 	FloorData floorData;
 
+
+	//ロードした時のボスが生きているか死んでいるかの判定
+	bool isLoadBossSpawn = false;
+
 	const std::string TEXTURE_FILEPATH = "Res/Model/Stage/Texture/";
 
 	// SaveObject を StageManager が所有して Update/Render を呼ぶ
@@ -74,6 +78,10 @@ public:
 	inline void ResetFloorCount() { floorCount = 0; }
 
 	inline int GetFloorCount() { return floorCount; }
+
+	inline bool GetisBossSpawn() { return isLoadBossSpawn ; }
+
+	inline void SetisBossSpawn(bool _s) { isLoadBossSpawn = _s; }
 
 private:
 	void GenerateStage();

@@ -855,7 +855,6 @@ void Player::GetBossArtifact() {
 		bossArtifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
 		artifactSelectUI.StartSelection();
 		ArtifactManager::GetInstance().SetBossDesiegen(false);
-		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 		isSelectBossArtifact = true;
 	}
 	else {

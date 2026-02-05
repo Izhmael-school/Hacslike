@@ -47,6 +47,8 @@ void ArtifactManager::Start()
 std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::GenerateArtifactChoices()
 {
 
+
+    GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
     AudioManager::GetInstance().PlayOneShot("ArtifactGet");
 
     std::vector<std::shared_ptr<ArtifactBase>> choices;
