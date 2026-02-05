@@ -19,8 +19,7 @@ protected:
 	~BossBase();
 
 public:
-	void AppearStair();
-	void SpawnReturnCircle();
+
 
 public:
 public:
@@ -46,7 +45,7 @@ protected:
 
 public:
 	inline void SetAppearPos(VECTOR pos) { appearPos = pos; }
-	inline void SetCirclePos(VECTOR pos) { circlePos = pos; }
+	inline void SetReturnerPos(VECTOR pos) { circlePos = pos; }
 private:
 	static BossBase* instance;
 };

@@ -380,6 +380,7 @@ bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
 
 	StageManager* manager = &StageManager::GetInstance();
 
+
 	while (true) {
 		// ’Ê‰ß‚·‚éƒ^ƒCƒ‹‚ª•Ç‚È‚çŽ‹ŠE‚ÍŽÕ‚ç‚ê‚Ä‚¢‚é
 		if ((ObjectType)manager->GetMapData(x0, z0) == Wall) {

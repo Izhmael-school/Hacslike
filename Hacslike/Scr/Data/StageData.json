@@ -18,6 +18,8 @@
     "enhancementStonePos": [ 1, 4 ],
     "itemShopPos": [ 7, 4 ],
     "bossSpawnPos": [ 4, 1 ],
+    "stairSpawnPos": [ -1, -1 ],
+    "returnerSpawnPos": [ -1, -1 ],
     "bossType": -1,
     "floorBGMName": "FirstFloor"
   },
@@ -37,10 +39,12 @@
     ],
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
-    "ChestObjectPos": [ 0, 0 ],
+    "ChestObjectPos": [ -1, -1 ],
     "enhancementStonePos": [ 2, 4 ],
     "itemShopPos": [ 6, 3 ],
     "bossSpawnPos": [ 4, 15 ],
+    "stairSpawnPos": [ 3, 15 ],
+    "returnerSpawnPos": [ 5, 15 ],
     "bossType": 0,
     "floorBGMName": "Goblin"
   },
@@ -66,6 +70,8 @@
     "enhancementStonePos": [ 3, 4 ],
     "itemShopPos": [ 7, 3 ],
     "bossSpawnPos": [ 5, 15 ],
+    "stairSpawnPos": [ 4, 15 ],
+    "returnerSpawnPos": [ 6, 15 ],
     "bossType": 5,
     "floorBGMName": "HellHound"
   },
@@ -91,6 +97,8 @@
     "enhancementStonePos": [ 3, 4 ],
     "itemShopPos": [ 7, 3 ],
     "bossSpawnPos": [ 5, 16 ],
+    "stairSpawnPos": [ 4, 16 ],
+    "returnerSpawnPos": [ 6, 16 ],
     "bossType": 6,
     "floorBGMName": "Ouger"
   },
@@ -120,6 +128,8 @@
     "enhancementStonePos": [ 5, 4 ],
     "itemShopPos": [ 9, 3 ],
     "bossSpawnPos": [ 7, 16 ],
+    "stairSpawnPos": [ 6, 16 ],
+    "returnerSpawnPos": [ 8, 16 ],
     "bossType": 7,
     "floorBGMName": "Ketbleperz"
   },
@@ -148,6 +158,8 @@
     "itemShopPos": [ 8, 3 ],
     "enhancementStonePos": [ 4, 4 ],
     "bossSpawnPos": [ 6, 20 ],
+    "stairSpawnPos": [ -1, -1 ],
+    "returnerSpawnPos": [ 5, 20 ],
     "bossType": 8,
     "floorBGMName": "Durahan"
   }

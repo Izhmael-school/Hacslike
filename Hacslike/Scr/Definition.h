@@ -33,6 +33,8 @@
 #define VOne   (VGet(1,1,1))
 #define VMinus (VGet(-1,-1,-1))
 
+#define NoSpawn (VGet(-1,0,-1))
+
 // DxLib‚Ì“Ç‚İ‚İƒGƒ‰-
 #define INVALID (-1)
 

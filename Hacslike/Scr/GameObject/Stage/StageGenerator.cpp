@@ -7,6 +7,7 @@
 #include"../Enhancement/EnhancementStone.h"
 #include "../Returner/TitleReturner.h"
 #include "../ItemShop/ItemShop.h"
+#include "../../ExpansionMethod.h"
 #include <climits>
 
 
@@ -582,6 +583,8 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.itemShopPos = VGet(s["itemShopPos"][0], 0, s["itemShopPos"][1]);
 		stage.bossSpawnPos = VGet(s["bossSpawnPos"][0], 0, s["bossSpawnPos"][1]);
 		stage.bossType = s["bossType"];
+		stage.stairSpawnPos = VGet(s["stairSpawnPos"][0], 0, s["stairSpawnPos"][1]);
+		stage.returnerSpawnPos = VGet(s["returnerSpawnPos"][0], 0, s["returnerSpawnPos"][1]);
 		stage.bgmName = s["floorBGMName"];
 
 		for (int i = 0; i < mapWidth_Large; i++) {
@@ -1069,4 +1072,32 @@ bool StageGenerator::CheckEightDir(int x, int y) {
 
 	// 周囲がすべて壁なら処理不要
 	return false;
+}
+
+void StageGenerator::AppearStair() {
+	if (CompareVECTOR(stage.stairSpawnPos, NoSpawn)) return;
+	auto cells = StageManager::GetInstance().generator->cells;
+	for (auto c : cells) {
+		if (c->GetDataPos().x != stage.stairSpawnPos.x || c->GetDataPos().z != stage.stairSpawnPos.z) continue;
+
+		StageManager::GetInstance().UnuseObject(c);
+		StageCell* stair = StageManager::GetInstance().UseObject(Stair);
+		StageManager::GetInstance().generator->useStair = stair;
+		stair->SetPosition(VGet(stage.stairSpawnPos.x * CellSize, 0, stage.stairSpawnPos.z * CellSize));
+		stair->SetDataPos(VGet(stage.stairSpawnPos.x, 0, stage.stairSpawnPos.z));
+		StageManager::GetInstance().SetMapData(stage.stairSpawnPos.x, stage.stairSpawnPos.z, (int)Stair);
+		StageCell* c = StageManager::GetInstance().GetStageObjectFromPos(VGet(stage.stairSpawnPos.x, 0, stage.stairSpawnPos.z));
+		StageManager::GetInstance().UnuseObject(c);
+		break;
+	}
+}
+
+void StageGenerator::SpawnReturnCircle() {
+	
+	if (CompareVECTOR(stage.returnerSpawnPos, NoSpawn)) return;
+	VECTOR pos = ChangePosMap(stage.returnerSpawnPos);
+	pos.y = 1;
+	// サークルを出す
+	TitleReturner::GetInstance()->SetVisible(true);
+	TitleReturner::GetInstance()->SetPosition(pos);
 }

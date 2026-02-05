@@ -24,6 +24,8 @@ struct StageData {
 	VECTOR enhancementStonePos;
 	VECTOR itemShopPos;
 	VECTOR bossSpawnPos;
+	VECTOR stairSpawnPos;
+	VECTOR returnerSpawnPos;
 	int bossType;
 	string bgmName;
 };
@@ -95,6 +97,9 @@ public:
 	void SetGameObjectRandomPos(GameObject* obj);
 	// オブジェクトの設置
 	void SetGameObject(GameObject* _obj, VECTOR _pos);
+
+	void AppearStair();
+	void SpawnReturnCircle();
 
 	// ステージオブジェクトのプーリング
 	StageCell* UseObject(ObjectType type);
