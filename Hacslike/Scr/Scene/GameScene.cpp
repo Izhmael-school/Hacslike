@@ -88,8 +88,6 @@ void GameScene::Update() {
 	DamagePopup::UpdateAll();
 	TitleReturner::GetInstance()->ShowFloorResetUI();
 
-
-
 }
 
 
