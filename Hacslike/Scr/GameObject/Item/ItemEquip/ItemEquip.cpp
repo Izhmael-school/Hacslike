@@ -193,6 +193,64 @@ void Spear::LoadFrom(BinaryReader& r)
 }
 #pragma endregion
 
+#pragma region ÉnÉìÉ}Å[
+Hammer::Hammer(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
+	: ItemBase(VZero, "item", "Hammer", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Hammer.png")
+	, attackValue(_effectValue) {
+	Start();
+}
+
+void Hammer::Start()
+{
+}
+
+void Hammer::Render()
+{
+}
+
+void Hammer::Use()
+{
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
+	Player::GetInstance()->ChangeWeapon(modelPath);
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() + criticalHitRate);
+	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() + criticalDamage);
+
+
+}
+
+void Hammer::UnEquip()
+{
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() - criticalHitRate);
+	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() - criticalDamage);
+}
+
+void Hammer::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+}
+
+void Hammer::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+}
+#pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #pragma region èe
 gun::gun(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
 	: ItemBase(VZero, "item", "Gun", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Gun.png")
@@ -230,3 +288,4 @@ void gun::LoadFrom(BinaryReader& r)
 	r.ReadPOD(attackValue);
 }
 #pragma endregion
+

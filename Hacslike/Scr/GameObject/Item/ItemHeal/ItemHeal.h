@@ -136,6 +136,35 @@ public://メンバ関数
 	ItemType GetItemType() const override { return ItemType::Invaled; }
 	HealSize GetHealType() const override { return HealSize::Large; }
 };
+
+class Elixir : public ItemBase {
+	int healValue; //回復量
+
+public://コンストラクタ
+
+	Elixir(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0);
+
+public://メンバ関数
+
+	void Start()override;
+
+	void Render()override;
+	void Update()override;
+
+
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
+
+
+	/// <summary>
+	/// アイテムを使用した時の効果
+	/// </summary>
+	void Use()override;
+	inline bool IsEffectFinished() const { return isEffectFinished; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Large; }
+
+};
 #pragma endregion
 
 #pragma region バフ系

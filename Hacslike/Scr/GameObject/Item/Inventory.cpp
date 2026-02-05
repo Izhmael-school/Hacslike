@@ -368,6 +368,7 @@ static const std::unordered_map<std::string, std::string> itemEffectMap = {
 	{"ポーション(小)", "回復量"},
 	{"ポーション(中)", "回復量"},
 	{"ポーション(大)", "回復量"},
+	{"エリクサー","回復量"},
 	{"攻撃のポーション","効力"},
 	{"防御のポーション","効力"},
 	{"グレネード","威力"},
@@ -376,7 +377,7 @@ static const std::unordered_map<std::string, std::string> itemEffectMap = {
 	{"木の棒","攻撃力"},
 	{"グレートソード","攻撃力"},
 	{"槍","攻撃力"},
-	{"銃","攻撃力"},
+	{"ラッキーハンマー","攻撃力"},
 	// ここに増やすだけでOK！
 };
 
@@ -385,6 +386,7 @@ static const std::vector<std::string> itemOrder = {
 	"ポーション(小)",
 	"ポーション(中)",
 	"ポーション(大)",
+	"エリクサー",
 	"攻撃のポーション",
 	"防御のポーション",
 	"グレネード",
@@ -393,7 +395,8 @@ static const std::vector<std::string> itemOrder = {
 	"斧",
 	"グレートソード",
 	"槍",
-	"銃",
+	"ラッキーハンマー",
+	
 };
 
 /// <summary>
@@ -468,8 +471,8 @@ void Inventory::Render() {
 			const std::string curName = curInv.item->GetName();
 
 			// ===== 説明ボックス描画 =====
-			infoW = 240;
-			infoH = 80;
+			infoW = 260;
+			infoH = 100;
 			infoX = baseX + boxW + 10;
 			infoY = y - 4;
 
