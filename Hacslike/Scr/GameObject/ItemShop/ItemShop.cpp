@@ -143,7 +143,7 @@ void ItemShop::Update() {
 	auto& input = InputManager::GetInstance();
 
 	// オブジェクトに触れてボタンを押したら
-	if (isTouch && state == Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B) || InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN))) {
+	if (isTouch && state == Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B)/* || InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)*/)) {
 		state = Menu;
 		OpenExecute();
 		SetMouseDispFlag(TRUE);
