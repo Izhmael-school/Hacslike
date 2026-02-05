@@ -61,6 +61,10 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItemForLoad(const std::string& _id)
         return std::make_unique<LargeHealItem>(VGet(0, 0, 0),
             "ポーション(大)", "体力を大幅に回復する", 110, 100);
     }
+    else if (_id == "Elixir") {
+        return std::make_unique<LargeHealItem>(VGet(0, 0, 0),
+            "エリクサー", "体力を全回復する", 10000, 1000);
+    }
     else if (_id == "AttactPotion") {
         return std::make_unique<AttactPotion>(VGet(0, 0, 0),
             "攻撃のポーション", "2分間攻撃力が上がる", 110, 5, 120.0f);
@@ -93,6 +97,10 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItemForLoad(const std::string& _id)
     else if (_id == "Spear") {
         return std::make_unique<Spear>(VGet(0, 0, 0),
             "槍", "槍", 230, 0, "MeleeWeapon");
+    }
+    else if (_id == "Hammer") {
+        return std::make_unique<Hammer>(VGet(0, 0, 0),
+            "ラッキーハンマー", "オーガ戦の戦利品\n会心率と会心ダメージを上げる", 400, 0, "MeleeWeapon");
     }
     else if (_id == "Gun") {
         return std::make_unique<gun>(VGet(0, 0, 0),
@@ -148,6 +156,11 @@ void ItemFactory::InitializeDefaultItems()
         "ポーション(大)", "体力を大幅に回復する", 110, 100);
         });
 
+    RegisterItem("Elixir", []() {
+        return std::make_unique<Elixir>(VGet(0, 0, 0),
+        "エリクサー", "体力を全回復する", 1000, 10000);
+        });
+
     RegisterItem("AttactPotion", []() {
         return std::make_unique<AttactPotion>(VGet(0, 0, 0),
         "攻撃のポーション", "2分間攻撃力を上げる", 110, 5,120.0f);
@@ -164,13 +177,13 @@ void ItemFactory::InitializeDefaultItems()
         });
 
     RegisterItem("Sword_Iron", []() {
-        int effectValue = GenerateEffectValueSeed("Sword_Iron", 15, 5);
+        int effectValue = GenerateEffectValueSeed("Sword_Iron", 10, 5);
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
         "剣", "普通の剣", 150, effectValue,"MeleeWeapon");
         });
 
     RegisterItem("Axe", []() {
-        int effectValue = GenerateEffectValueSeed("Axe", 20, 10);
+        int effectValue = GenerateEffectValueSeed("Axe", 15, 8);
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
         "斧", "普通の斧", 200, effectValue, "MeleeWeapon");
         });
@@ -181,7 +194,7 @@ void ItemFactory::InitializeDefaultItems()
         });
 
     RegisterItem("Greatsword", []() {
-        int effectValue = GenerateEffectValueSeed("Greatsword", 95, 25);
+        int effectValue = GenerateEffectValueSeed("Greatsword", 90, 25);
         return std::make_unique<Greatsword>(VGet(0, 0, 0),
         "グレートソード", "重い！強い！かっこいい！", 500, effectValue, "MeleeWeapon");
         });
@@ -191,6 +204,13 @@ void ItemFactory::InitializeDefaultItems()
         return std::make_unique<Spear>(VGet(0, 0, 0),
         "槍", "槍", 230, effectValue, "MeleeWeapon");
         });
+
+    RegisterItem("Hammer", []() {
+        int effectValue = 30;
+        return std::make_unique<Hammer>(VGet(0, 0, 0),
+            "ラッキーハンマー", "オーガ戦の戦利品\n会心率と会心ダメージを上げる", 400, effectValue, "MeleeWeapon");
+        });
+
 
     RegisterItem("Gun", []() {
         return std::make_unique<gun>(VGet(0, 0, 0),

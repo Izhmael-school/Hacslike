@@ -181,6 +181,47 @@ void LargeHealItem::Use()
 	isEffectFinished = true;  // ★Playerが削除できるように
 }
 
+
+
+Elixir::Elixir(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
+	:ItemBase(VZero, "item", "Elixir", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/Elixir.png")
+	, healValue(_effectValue) {
+}
+
+void Elixir::Start()
+{
+	isEffectFinished = false;
+	AudioManager::GetInstance().Load("Res/SE/ゲージ回復3.mp3", "Heal", false);
+}
+
+void Elixir::Render()
+{
+}
+
+void Elixir::Update()
+{
+}
+
+void Elixir::SaveTo(BinaryWriter& w)
+{
+}
+
+void Elixir::LoadFrom(BinaryReader& r)
+{
+}
+
+void Elixir::Use()
+{
+	healValue = Character::player->GetMaxHp();
+	Character::player->AddHp(healValue);
+	if (Character::player->GetHp() >= Character::player->GetMaxHp()) {
+		Character::player->SetHp(Character::player->GetMaxHp());
+	}
+	AudioManager::GetInstance().PlayOneShot("Heal");
+	isEffectFinished = true;  // ★Playerが削除できるように
+}
+
+
 #pragma endregion
 
 #pragma region バフ系

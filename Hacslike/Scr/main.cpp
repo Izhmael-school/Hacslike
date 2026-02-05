@@ -21,7 +21,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ウィンドウのサイズを変更する
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	// 起動時のウィンドウのモードの設定
-	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
+	ChangeWindowMode(true);	// TRUE : ウィンドウモード FALSE : フルスクリーン
 	SetMainWindowText("Hacslike");
 	SetWindowIconID(333);
 
