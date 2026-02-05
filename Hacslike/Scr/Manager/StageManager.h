@@ -72,6 +72,9 @@ public:
 	void Generate();
 	void NoFadeGenerate();
 
+	void CloseRoom();
+	void OpenRoom();
+
 	void UnuseObject(StageCell* cell);
 	StageCell* UseObject(ObjectType type);
 

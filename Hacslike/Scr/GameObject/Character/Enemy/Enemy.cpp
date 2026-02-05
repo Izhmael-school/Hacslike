@@ -382,14 +382,14 @@ bool Enemy::WallDetectionVision_Fan(VECTOR targetPos) {
 
 
 	while (true) {
+		// ターゲット位置に到達したら終了
+		if (x0 == x1 && z0 == z1)
+			break;
+
 		// 通過するタイルが壁なら視界は遮られている
 		if ((ObjectType)manager->GetMapData(x0, z0) == Wall) {
 			return rayAnswer = false;
 		}
-
-		// ターゲット位置に到達したら終了
-		if (x0 == x1 && z0 == z1)
-			break;
 
 		// Bresenham の誤差計算で次のセルへ進む
 		int e2 = 2 * err;

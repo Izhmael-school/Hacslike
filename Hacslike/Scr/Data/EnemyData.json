@@ -28,7 +28,7 @@
     "exp": 1000,
     "cRate": 15,
     "cDamageRate": 150,
-    "rLenght": 2000,
+    "rLenght": 1000,
     "rAngle": 360,
     "rCount": 120
   },
@@ -198,7 +198,7 @@
     "exp": 1500,
     "cRate": 15,
     "cDamageRate": 150,
-    "rLenght": 2000,
+    "rLenght": 1000,
     "rAngle": 360,
     "rCount": 120
   },
@@ -215,7 +215,7 @@
     "exp": 3000,
     "cRate": 15,
     "cDamageRate": 150,
-    "rLenght": 2000,
+    "rLenght": 1000,
     "rAngle": 360,
     "rCount": 120
   },
@@ -232,7 +232,7 @@
     "exp": 5000,
     "cRate": 5,
     "cDamageRate": 300,
-    "rLenght": 2000,
+    "rLenght": 1000,
     "rAngle": 360,
     "rCount": 120
   },

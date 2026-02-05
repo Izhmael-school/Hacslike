@@ -13,7 +13,7 @@ public:
 	// アーティファクト選択後に削除保留中かどうか
 	bool pendingDelete = false;
 
-
+	bool firstRayHit = false;
 protected:
 	BossBase(VECTOR _appearPos);
 	~BossBase();
@@ -31,6 +31,8 @@ public:
 
 	// 現在存在しているボスを取得
 	static BossBase* GetInstance() { return instance; }
+
+	bool WallDetectionVision_Fan(VECTOR targetPos);
 
 private:
 

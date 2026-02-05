@@ -26,6 +26,7 @@ struct StageData {
 	VECTOR bossSpawnPos;
 	VECTOR stairSpawnPos;
 	VECTOR returnerSpawnPos;
+	vector<VECTOR> closePosArray;
 	int bossType;
 	string bgmName;
 };
@@ -122,6 +123,10 @@ public:
 	// 読み込んだステージデータの取得
 	inline StageData GetStageData() { return stage; }
 	
+	// ボス部屋に入ったら退路を塞ぐ
+	void CloseRoom();
+	void OpenRoom();
+
 	// シリアライズ / デシリアライズ
 	void SaveTo(BinaryWriter& w);
 	void LoadFrom(BinaryReader& r, uint32_t ver);

@@ -585,6 +585,20 @@ void StageGenerator::LoadStageData(int stageID) {
 		stage.bossType = s["bossType"];
 		stage.stairSpawnPos = VGet(s["stairSpawnPos"][0], 0, s["stairSpawnPos"][1]);
 		stage.returnerSpawnPos = VGet(s["returnerSpawnPos"][0], 0, s["returnerSpawnPos"][1]);
+
+		stage.closePosArray.clear();
+
+		for (const auto& p : s["closePos"]) {
+			if (!p.is_array()) {
+				continue;
+			}
+
+			int px = p[0].get<int>();
+			int pz = p[1].get<int>();
+
+			stage.closePosArray.push_back(VGet(px, 0, pz));
+		}
+
 		stage.bgmName = s["floorBGMName"];
 
 		for (int i = 0; i < mapWidth_Large; i++) {
@@ -896,6 +910,34 @@ VECTOR StageGenerator::GetRandomRoomRandomPos() {
 	int y = Random(roomStatus[RoomStatus::ry][rand], roomStatus[RoomStatus::ry][rand] + roomStatus[RoomStatus::rh][rand] - 1);
 
 	return VGet(defaultPos.x + x * CellSize, 0, defaultPos.z + y * CellSize);
+}
+
+void StageGenerator::CloseRoom() {
+	for (int i = 0, max = stage.closePosArray.size(); i < max; i++) {
+		int x = stage.closePosArray[i].x;
+		int z = stage.closePosArray[i].z;
+		StageCell* c = StageManager::GetInstance().GetStageObjectFromPos(VGet(x, 0, z));
+		StageManager::GetInstance().UnuseObject(c);
+		c = StageManager::GetInstance().UseObject(Wall);
+		c->SetPosition(x * CellSize, 0, z * CellSize);
+		c->SetDataPos(VGet(x, 0, z));
+		map[x][z] = Wall;
+		cells.push_back(c);
+	}
+}
+
+void StageGenerator::OpenRoom() {
+	for (int i = 0, max = stage.closePosArray.size(); i < max; i++) {
+		int x = stage.closePosArray[i].x;
+		int z = stage.closePosArray[i].z;
+		StageCell* c = StageManager::GetInstance().GetStageObjectFromPos(VGet(x, 0, z));
+		StageManager::GetInstance().UnuseObject(c);
+		c = StageManager::GetInstance().UseObject(Road);
+		c->SetPosition(x * CellSize, 0, z * CellSize);
+		c->SetDataPos(VGet(x, 0, z));
+		map[x][z] = Road;
+		cells.push_back(c);
+	}
 }
 
 void StageGenerator::SaveTo(BinaryWriter& w) {
