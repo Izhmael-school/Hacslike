@@ -133,7 +133,7 @@
     "id": 14,
     "name": "FangSword",
     "modelPath": "Res/Model/Weapon/FangSword.mv1",
-    "type": 0,
+    "type": 5,
     "attackSpeed": [ 0.3, 0.3, 0.3, 0.3 ],
     "colLength": [ 30.0, 40.0, 0.0 ],
     "colRadius": [ 80.0, 110.0, 150.0 ]
