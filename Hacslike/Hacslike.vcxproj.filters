@@ -1,679 +1,181 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Scr\main.cpp" />
-    <ClCompile Include="Scr\Component\Animator.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Component\Collider\CapsuleHitBox.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Component\Collider\Collider.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Component\Collider\SphereHitBox.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\GameObject.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Audio\Audio.cpp">
-      <Filter>GameObject\Item\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Camera\Camera.cpp">
-      <Filter>GameObject\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Character.cpp">
-      <Filter>GameObject\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Enemy.cpp">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Player\Player.cpp">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Weapon\Weapon.cpp">
-      <Filter>GameObject\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Stage\StageGenerator.cpp">
-      <Filter>GameObject\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Stage\StageCell.cpp">
-      <Filter>GameObject\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Slash\Slash.cpp">
-      <Filter>GameObject\Slash</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\AudioManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\CollisionManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\EffectManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\FadeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\InputManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\SceneManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\StageManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\TimeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Scene\SekinoScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Skill\Skill.cpp">
-      <Filter>Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Skill\SkillSelectUI.cpp">
-      <Filter>Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\SkillManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\EnemyManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\WeaponManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Item\ItemBase.cpp">
-      <Filter>GameObject\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Item\ItemFactory.cpp">
-      <Filter>GameObject\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Item\ItemEntity.cpp">
-      <Filter>GameObject\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Item\Inventory.cpp">
-      <Filter>GameObject\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\ItemDropManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Effect\Effect.cpp">
-      <Filter>GameObject\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Item\ItemHeal\ItemHeal.cpp">
-      <Filter>GameObject\Item\ItemHeal</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Item\ItemEquip\ItemEquip.cpp">
-      <Filter>GameObject\Item\ItemEquip</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Coin\Coin.cpp">
-      <Filter>GameObject\Coin</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Player\PlayerAttack.cpp">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Player\PlayerMovement.cpp">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Artifact\ArtifactBase.cpp">
-      <Filter>GameObject\Artifact</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Artifact\ArtifactSelectUI.cpp">
-      <Filter>GameObject\Artifact</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Artifact\ArtifactUI.cpp">
-      <Filter>GameObject\Artifact</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Scene\TitleScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Scene\GameScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\ArtifactManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\BossBase.cpp">
-      <Filter>GameObject\Character\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp">
-      <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\TreasureChest\StartTreasureChest.cpp">
-      <Filter>GameObject\TreasureChest</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameSystem\GameSystem.cpp">
-      <Filter>GameSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Bullet\BulletPool.cpp">
-      <Filter>GameObject\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\HitPool\CapsuleHitPool.cpp">
-      <Filter>GameObject\HitPool</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\SaveManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\UI\MenuSaveLoad.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Other\AttackArea.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.cpp">
-      <Filter>GameObject\Character\Enemy\Spider</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp">
-      <Filter>GameObject\Character\Enemy\Wolf</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\UI\Gauge.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.cpp">
-      <Filter>GameObject\Character\Enemy\Boss\HellHound</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Enhancement\EnhancementStone.cpp">
-      <Filter>GameObject\EnhanceObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp">
-      <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.cpp">
-      <Filter>GameObject\Character\Enemy\Boss\Ketbleperz</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp">
-      <Filter>GameObject\Character\Enemy\Boss\Durahan</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp">
-      <Filter>GameObject\Character\Enemy\HellHound</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp">
-      <Filter>GameObject\Character\Enemy\Durahan</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp">
-      <Filter>GameObject\Character\Enemy\Ketbleperz</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.cpp">
-      <Filter>GameObject\Character\Enemy\HobGoblin</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp">
-      <Filter>GameObject\Character\Enemy\Ouger</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.cpp">
-      <Filter>GameObject\Character\Enemy\Troll</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp">
-      <Filter>GameObject\Character\Enemy\Zombie</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Enhancement\StatusEnhancement.cpp">
-      <Filter>Enhancement</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\UI\TitleUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\UI\DamagePopup.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\Returner\TitleReturner.cpp">
-      <Filter>GameObject\Returner</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\SalesManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\UI\CircleGauge.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\Manager\FontManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\ItemShop\ItemShop.cpp">
-      <Filter>GameObject\ItemShop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\SaveObject\SaveObject.cpp">
-      <Filter>GameObject\SaveObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Scr\GameObject\StageObject\StageObject.cpp" />
+    <ClInclude Include="Src\CommonModule.h" />
+    <ClInclude Include="Src\Component\Animator.h" />
+    <ClInclude Include="Src\Component\Collider\CapsuleHitBox.h" />
+    <ClInclude Include="Src\Component\Collider\Collider.h" />
+    <ClInclude Include="Src\Component\Collider\SphereHitBox.h" />
+    <ClInclude Include="Src\Component\Singleton.h" />
+    <ClInclude Include="Src\Data\json.hpp" />
+    <ClInclude Include="Src\Definition.h" />
+    <ClInclude Include="Src\Enhancement\StatusEnhancement.h" />
+    <ClInclude Include="Src\ExpansionMethod.h" />
+    <ClInclude Include="Src\GameObject\Artifact\ArtifactBase.h" />
+    <ClInclude Include="Src\GameObject\Artifact\ArtifactSelectUI.h" />
+    <ClInclude Include="Src\GameObject\Artifact\ArtifactUI.h" />
+    <ClInclude Include="Src\GameObject\Audio\Audio.h" />
+    <ClInclude Include="Src\GameObject\Bullet\BulletPool.h" />
+    <ClInclude Include="Src\GameObject\Camera\Camera.h" />
+    <ClInclude Include="Src\GameObject\Character\Character.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Boss\BossBase.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Durahan\EnemyDurahan.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Enemy.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Goblin\EnemyGoblin.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\HellHound\EnemyHellHound.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Other\AttackArea.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Ouger\EnemyOuger.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Spider\EnemySpider.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Spider\SpiderBullet.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Troll\EnemyTroll.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Wolf\EnemyWolf.h" />
+    <ClInclude Include="Src\GameObject\Character\Enemy\Zombie\EnemyZombie.h" />
+    <ClInclude Include="Src\GameObject\Character\Player\Player.h" />
+    <ClInclude Include="Src\GameObject\Character\Player\PlayerAttack.h" />
+    <ClInclude Include="Src\GameObject\Character\Player\PlayerMovement.h" />
+    <ClInclude Include="Src\GameObject\Coin\Coin.h" />
+    <ClInclude Include="Src\GameObject\Effect\Effect.h" />
+    <ClInclude Include="Src\GameObject\Enhancement\EnhancementStone.h" />
+    <ClInclude Include="Src\GameObject\GameObject.h" />
+    <ClInclude Include="Src\GameObject\HitPool\CapsuleHitPool.h" />
+    <ClInclude Include="Src\GameObject\Item\Inventory.h" />
+    <ClInclude Include="Src\GameObject\Item\ItemBase.h" />
+    <ClInclude Include="Src\GameObject\Item\ItemEntity.h" />
+    <ClInclude Include="Src\GameObject\Item\ItemEquip\ItemEquip.h" />
+    <ClInclude Include="Src\GameObject\Item\ItemFactory.h" />
+    <ClInclude Include="Src\GameObject\Item\ItemHeal\ItemHeal.h" />
+    <ClInclude Include="Src\GameObject\ItemShop\ItemShop.h" />
+    <ClInclude Include="Src\GameObject\Returner\TitleReturner.h" />
+    <ClInclude Include="Src\GameObject\SaveObject\SaveObject.h" />
+    <ClInclude Include="Src\GameObject\Slash\Slash.h" />
+    <ClInclude Include="Src\GameObject\Stage\StageCell.h" />
+    <ClInclude Include="Src\GameObject\Stage\StageGenerator.h" />
+    <ClInclude Include="Src\GameObject\StageObject\StageObject.h" />
+    <ClInclude Include="Src\GameObject\TreasureChest\StartTreasureChest.h" />
+    <ClInclude Include="Src\GameObject\Weapon\Weapon.h" />
+    <ClInclude Include="Src\GameSystem\GameSystem.h" />
+    <ClInclude Include="Src\Manager\ArtifactManager.h" />
+    <ClInclude Include="Src\Manager\AudioManager.h" />
+    <ClInclude Include="Src\Manager\CollisionManager.h" />
+    <ClInclude Include="Src\Manager\EffectManager.h" />
+    <ClInclude Include="Src\Manager\EnemyManager.h" />
+    <ClInclude Include="Src\Manager\FadeManager.h" />
+    <ClInclude Include="Src\Manager\FontManager.h" />
+    <ClInclude Include="Src\Manager\InputManager.h" />
+    <ClInclude Include="Src\Manager\ItemDropManager.h" />
+    <ClInclude Include="Src\Manager\SalesManager.h" />
+    <ClInclude Include="Src\Manager\SaveManager.h" />
+    <ClInclude Include="Src\Manager\SceneManager.h" />
+    <ClInclude Include="Src\Manager\SkillManager.h" />
+    <ClInclude Include="Src\Manager\StageManager.h" />
+    <ClInclude Include="Src\Manager\TimeManager.h" />
+    <ClInclude Include="Src\Manager\WeaponManager.h" />
+    <ClInclude Include="Src\Save\SaveFormat.h" />
+    <ClInclude Include="Src\Save\SaveIO.h" />
+    <ClInclude Include="Src\Scene\BaseScene.h" />
+    <ClInclude Include="Src\Scene\GameScene.h" />
+    <ClInclude Include="Src\Scene\SekinoScene.h" />
+    <ClInclude Include="Src\Scene\TitleScene.h" />
+    <ClInclude Include="Src\Skill\Skill.h" />
+    <ClInclude Include="Src\Skill\SkillSelectUI.h" />
+    <ClInclude Include="Src\UI\BossSlainUI.h" />
+    <ClInclude Include="Src\UI\CircleGauge.h" />
+    <ClInclude Include="Src\UI\DamagePopup.h" />
+    <ClInclude Include="Src\UI\GameEndUI.h" />
+    <ClInclude Include="Src\UI\Gauge.h" />
+    <ClInclude Include="Src\UI\MenuSaveLoad.h" />
+    <ClInclude Include="Src\UI\TitleUI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scr\Definition.h" />
-    <ClInclude Include="Scr\Component\Animator.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Component\Collider\CapsuleHitBox.h">
-      <Filter>Component\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Component\Collider\Collider.h">
-      <Filter>Component\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Component\Collider\SphereHitBox.h">
-      <Filter>Component\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\GameObject.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Audio\Audio.h">
-      <Filter>GameObject\Item\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Camera\Camera.h">
-      <Filter>GameObject\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Character.h">
-      <Filter>GameObject\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Enemy.h">
-      <Filter>GameObject\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Player\Player.h">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Weapon\Weapon.h">
-      <Filter>GameObject\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Stage\StageGenerator.h">
-      <Filter>GameObject\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Stage\StageCell.h">
-      <Filter>GameObject\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Slash\Slash.h">
-      <Filter>GameObject\Slash</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\AudioManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\CollisionManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\EffectManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\FadeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\InputManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\SceneManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\StageManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\TimeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Scene\BaseScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Scene\SekinoScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Skill\Skill.h">
-      <Filter>Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Skill\SkillSelectUI.h">
-      <Filter>Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\SkillManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Goblin\EnemyGoblin.h">
-      <Filter>GameObject\Character\Enemy\Goblin</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\EnemyManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Component\Singleton.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\WeaponManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Item\ItemBase.h">
-      <Filter>GameObject\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Item\ItemFactory.h">
-      <Filter>GameObject\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Item\ItemEntity.h">
-      <Filter>GameObject\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Item\Inventory.h">
-      <Filter>GameObject\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\ItemDropManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Effect\Effect.h">
-      <Filter>GameObject\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Item\ItemHeal\ItemHeal.h">
-      <Filter>GameObject\Item\ItemHeal</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Item\ItemEquip\ItemEquip.h">
-      <Filter>GameObject\Item\ItemEquip</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Coin\Coin.h">
-      <Filter>GameObject\Coin</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Player\PlayerAttack.h">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Player\PlayerMovement.h">
-      <Filter>GameObject\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Artifact\ArtifactBase.h">
-      <Filter>GameObject\Artifact</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Artifact\ArtifactSelectUI.h">
-      <Filter>GameObject\Artifact</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Artifact\ArtifactUI.h">
-      <Filter>GameObject\Artifact</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Scene\TitleScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Scene\GameScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\CommonModule.h" />
-    <ClInclude Include="Scr\Manager\ArtifactManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\BossBase.h">
-      <Filter>GameObject\Character\Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.h">
-      <Filter>GameObject\Character\Enemy\Boss\Goblin</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\TreasureChest\StartTreasureChest.h">
-      <Filter>GameObject\TreasureChest</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameSystem\GameSystem.h">
-      <Filter>GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Bullet\BulletPool.h">
-      <Filter>GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\HitPool\CapsuleHitPool.h">
-      <Filter>GameObject\HitPool</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\ExpansionMethod.h" />
-    <ClInclude Include="Scr\Save\SaveFormat.h">
-      <Filter>Save</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\SaveManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Save\SaveIO.h">
-      <Filter>Save</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\MenuSaveLoad.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Other\AttackArea.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Spider\EnemySpider.h">
-      <Filter>GameObject\Character\Enemy\Spider</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Wolf\EnemyWolf.h">
-      <Filter>GameObject\Character\Enemy\Wolf</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Data\json.hpp">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\Gauge.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.h">
-      <Filter>GameObject\Character\Enemy\Boss\HellHound</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Enhancement\EnhancementStone.h">
-      <Filter>GameObject\EnhanceObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ouger\BossOuger.h">
-      <Filter>GameObject\Character\Enemy\Boss\Ouger</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.h">
-      <Filter>GameObject\Character\Enemy\Boss\Ketbleperz</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.h">
-      <Filter>GameObject\Character\Enemy\Boss\Durahan</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\HellHound\EnemyHellHound.h">
-      <Filter>GameObject\Character\Enemy\HellHound</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Durahan\EnemyDurahan.h">
-      <Filter>GameObject\Character\Enemy\Durahan</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.h">
-      <Filter>GameObject\Character\Enemy\Ketbleperz</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.h">
-      <Filter>GameObject\Character\Enemy\HobGoblin</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Ouger\EnemyOuger.h">
-      <Filter>GameObject\Character\Enemy\Ouger</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Troll\EnemyTroll.h">
-      <Filter>GameObject\Character\Enemy\Troll</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Character\Enemy\Zombie\EnemyZombie.h">
-      <Filter>GameObject\Character\Enemy\Zombie</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Enhancement\StatusEnhancement.h">
-      <Filter>Enhancement</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\BossSlainUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\GameEndUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\TitleUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\DamagePopup.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\Returner\TitleReturner.h">
-      <Filter>GameObject\Returner</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\SalesManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\UI\CircleGauge.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\Manager\FontManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\ItemShop\ItemShop.h">
-      <Filter>GameObject\ItemShop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\SaveObject\SaveObject.h">
-      <Filter>GameObject\SaveObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Scr\GameObject\StageObject\StageObject.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Component">
-      <UniqueIdentifier>{318b84e5-7174-4222-8088-e388b72e0656}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\Collider">
-      <UniqueIdentifier>{0bb0557a-aced-45e9-91cc-c479e17f66a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject">
-      <UniqueIdentifier>{3f15e8f0-8302-4070-849a-2e2fbd369c94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Camera">
-      <UniqueIdentifier>{8aae9422-8e3a-4268-bd49-db208677d067}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character">
-      <UniqueIdentifier>{e2c7785e-1510-46c1-9e0d-f84bf1ea9ee2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Slash">
-      <UniqueIdentifier>{ecab8d4a-65f9-4c4b-a9ab-49836cefbc99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Stage">
-      <UniqueIdentifier>{50664038-d06e-44bf-af18-ca38834573f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Weapon">
-      <UniqueIdentifier>{8b3b272b-df4d-424f-8e34-6408bdb9ccce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Player">
-      <UniqueIdentifier>{8ef351f5-fc2c-40aa-b638-c4b6efcc28d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy">
-      <UniqueIdentifier>{62ae85c9-5698-4b40-9f8a-a6a462514e4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Goblin">
-      <UniqueIdentifier>{a219a3e6-d131-4202-bec1-f06dfbc857c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{60a2c012-00a6-4899-b30f-b00b1c1186db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{470cd129-c04c-40d3-8364-e8a365e66f88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Skill">
-      <UniqueIdentifier>{38886fd7-c0df-4d54-a41a-acfb02702d27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{9c22449c-8c5f-4dc8-b792-756948c57e06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Item">
-      <UniqueIdentifier>{2eb2c29e-f13e-484a-b51c-e22f01bb7234}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Effect">
-      <UniqueIdentifier>{9ab45e6a-3322-40a3-a312-d90d1376f920}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Item\ItemHeal">
-      <UniqueIdentifier>{ba176c99-efdb-40cb-94e8-eb1b478aebda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Item\ItemEquip">
-      <UniqueIdentifier>{002c9761-79d1-48b7-bd8d-8ba2eb7205cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Coin">
-      <UniqueIdentifier>{cf11c74b-37cd-459d-beb5-37616f7d275f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Artifact">
-      <UniqueIdentifier>{a7499a45-694e-4c12-9831-fc61086869a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Boss">
-      <UniqueIdentifier>{fb92ef34-50ec-4690-9b08-379bd10701ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Boss\Goblin">
-      <UniqueIdentifier>{e7c9750c-1cb4-4b04-8b7f-684b5b3374b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Spider">
-      <UniqueIdentifier>{afa069cc-80d8-4d4d-9593-c7fe7e1031b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Wolf">
-      <UniqueIdentifier>{e8f61e93-2e52-4121-acf1-7bf69361c8cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\TreasureChest">
-      <UniqueIdentifier>{10acd316-f36c-40a9-88df-843bc15cbb1b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameSystem">
-      <UniqueIdentifier>{6fee0a9f-1d78-4254-a228-054ac0863059}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Bullet">
-      <UniqueIdentifier>{d5eaa3f7-5b1a-4058-9762-585cbc7cc67e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Item\Audio">
-      <UniqueIdentifier>{5ffde05c-23c3-4b06-8528-b1f874195b5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\HitPool">
-      <UniqueIdentifier>{536cda0b-462c-4d97-a4ff-26691146aa76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SaveFile">
-      <UniqueIdentifier>{41906fea-3342-43cb-b0bb-93b02c014e48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Save">
-      <UniqueIdentifier>{0c515826-4ced-463d-929f-88d06569b4e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{29d66693-ee73-4dea-a05a-4a7b0cbca8f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Boss\HellHound">
-      <UniqueIdentifier>{9b4ff774-0def-4bff-ad72-72b690896ca1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\EnhanceObject">
-      <UniqueIdentifier>{b08b3c80-0033-4eb8-b5b8-59f59f2bc31b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Boss\Ouger">
-      <UniqueIdentifier>{7355ea24-d14b-4858-8df7-11dd7a8b432a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Boss\Ketbleperz">
-      <UniqueIdentifier>{b713391c-7a79-4911-b297-f74071fb1eae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Boss\Durahan">
-      <UniqueIdentifier>{ac9c4305-e533-4d1b-bb87-8305993ab3e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\HellHound">
-      <UniqueIdentifier>{17e5aadf-1ab3-43a5-a48f-43d02d290f6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Durahan">
-      <UniqueIdentifier>{70583c7c-24aa-449e-827f-994274a73ebf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Ketbleperz">
-      <UniqueIdentifier>{3863a643-4074-4c00-a0f3-db22a404d82a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\HobGoblin">
-      <UniqueIdentifier>{cd9f6c2b-5ff5-4b2d-b30b-08b9f13eb0d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Ouger">
-      <UniqueIdentifier>{f53b84b9-d7b7-467d-ba27-a9f80e3dd1c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Troll">
-      <UniqueIdentifier>{516c8b66-50cf-4695-8149-202a9a9b0df6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Character\Enemy\Zombie">
-      <UniqueIdentifier>{6f658fd7-1abe-479a-8456-aab45f5681ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enhancement">
-      <UniqueIdentifier>{01c58468-8212-4efd-9876-67772217197a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Returner">
-      <UniqueIdentifier>{c31595dc-b838-49f6-9210-37dc07fb750c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\ItemShop">
-      <UniqueIdentifier>{8abbf23b-613f-4153-8a25-19fd1efce04d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\SaveObject">
-      <UniqueIdentifier>{07bb2c38-341f-48b8-aaa7-20b62de14226}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\StageObject">
-      <UniqueIdentifier>{da3571c7-3504-4105-8889-6630636ec752}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scr\Data\WeaponsData.json">
-      <Filter>Data</Filter>
-    </None>
-    <None Include="Scr\Data\StageData.json">
-      <Filter>Data</Filter>
-    </None>
-    <None Include="cpp.hint" />
-    <None Include="Scr\Data\SkillTreeData.json">
-      <Filter>Data</Filter>
-    </None>
-    <None Include="Scr\Data\EnemyData.json">
-      <Filter>Data</Filter>
-    </None>
-    <None Include="Scr\Data\FloorData.json">
-      <Filter>Data</Filter>
-    </None>
+    <ClCompile Include="Src\Component\Animator.cpp" />
+    <ClCompile Include="Src\Component\Collider\CapsuleHitBox.cpp" />
+    <ClCompile Include="Src\Component\Collider\Collider.cpp" />
+    <ClCompile Include="Src\Component\Collider\SphereHitBox.cpp" />
+    <ClCompile Include="Src\Enhancement\StatusEnhancement.cpp" />
+    <ClCompile Include="Src\GameObject\Artifact\ArtifactBase.cpp" />
+    <ClCompile Include="Src\GameObject\Artifact\ArtifactSelectUI.cpp" />
+    <ClCompile Include="Src\GameObject\Artifact\ArtifactUI.cpp" />
+    <ClCompile Include="Src\GameObject\Audio\Audio.cpp" />
+    <ClCompile Include="Src\GameObject\Bullet\BulletPool.cpp" />
+    <ClCompile Include="Src\GameObject\Camera\Camera.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Character.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\BossBase.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\Ketbleperz\BossKetbleperz.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\Ouger\BossOuger.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Durahan\EnemyDurahan.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Enemy.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Goblin\EnemyGoblin.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\HellHound\EnemyHellHound.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\HobGoblin\EnemyHobGoblin.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Ketbleperz\EnemyKetbleperz.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Other\AttackArea.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Ouger\EnemyOuger.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Spider\EnemySpider.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Spider\SpiderBullet.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Troll\EnemyTroll.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Wolf\EnemyWolf.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Zombie\EnemyZombie.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Player\Player.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Player\PlayerAttack.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Player\PlayerMovement.cpp" />
+    <ClCompile Include="Src\GameObject\Coin\Coin.cpp" />
+    <ClCompile Include="Src\GameObject\Effect\Effect.cpp" />
+    <ClCompile Include="Src\GameObject\Enhancement\EnhancementStone.cpp" />
+    <ClCompile Include="Src\GameObject\GameObject.cpp" />
+    <ClCompile Include="Src\GameObject\HitPool\CapsuleHitPool.cpp" />
+    <ClCompile Include="Src\GameObject\Item\Inventory.cpp" />
+    <ClCompile Include="Src\GameObject\Item\ItemBase.cpp" />
+    <ClCompile Include="Src\GameObject\Item\ItemEntity.cpp" />
+    <ClCompile Include="Src\GameObject\Item\ItemEquip\ItemEquip.cpp" />
+    <ClCompile Include="Src\GameObject\Item\ItemFactory.cpp" />
+    <ClCompile Include="Src\GameObject\Item\ItemHeal\ItemHeal.cpp" />
+    <ClCompile Include="Src\GameObject\ItemShop\ItemShop.cpp" />
+    <ClCompile Include="Src\GameObject\Returner\TitleReturner.cpp" />
+    <ClCompile Include="Src\GameObject\SaveObject\SaveObject.cpp" />
+    <ClCompile Include="Src\GameObject\Slash\Slash.cpp" />
+    <ClCompile Include="Src\GameObject\Stage\StageCell.cpp" />
+    <ClCompile Include="Src\GameObject\Stage\StageGenerator.cpp" />
+    <ClCompile Include="Src\GameObject\StageObject\StageObject.cpp" />
+    <ClCompile Include="Src\GameObject\TreasureChest\StartTreasureChest.cpp" />
+    <ClCompile Include="Src\GameObject\Weapon\Weapon.cpp" />
+    <ClCompile Include="Src\GameSystem\GameSystem.cpp" />
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Manager\ArtifactManager.cpp" />
+    <ClCompile Include="Src\Manager\AudioManager.cpp" />
+    <ClCompile Include="Src\Manager\CollisionManager.cpp" />
+    <ClCompile Include="Src\Manager\EffectManager.cpp" />
+    <ClCompile Include="Src\Manager\EnemyManager.cpp" />
+    <ClCompile Include="Src\Manager\FadeManager.cpp" />
+    <ClCompile Include="Src\Manager\FontManager.cpp" />
+    <ClCompile Include="Src\Manager\InputManager.cpp" />
+    <ClCompile Include="Src\Manager\ItemDropManager.cpp" />
+    <ClCompile Include="Src\Manager\SalesManager.cpp" />
+    <ClCompile Include="Src\Manager\SaveManager.cpp" />
+    <ClCompile Include="Src\Manager\SceneManager.cpp" />
+    <ClCompile Include="Src\Manager\SkillManager.cpp" />
+    <ClCompile Include="Src\Manager\StageManager.cpp" />
+    <ClCompile Include="Src\Manager\TimeManager.cpp" />
+    <ClCompile Include="Src\Manager\WeaponManager.cpp" />
+    <ClCompile Include="Src\Scene\GameScene.cpp" />
+    <ClCompile Include="Src\Scene\SekinoScene.cpp" />
+    <ClCompile Include="Src\Scene\TitleScene.cpp" />
+    <ClCompile Include="Src\Skill\Skill.cpp" />
+    <ClCompile Include="Src\Skill\SkillSelectUI.cpp" />
+    <ClCompile Include="Src\UI\CircleGauge.cpp" />
+    <ClCompile Include="Src\UI\DamagePopup.cpp" />
+    <ClCompile Include="Src\UI\Gauge.cpp" />
+    <ClCompile Include="Src\UI\MenuSaveLoad.cpp" />
+    <ClCompile Include="Src\UI\TitleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
