@@ -176,7 +176,7 @@ bool StatusEnhancement::Update() {
 		if (!stats.empty() && stats[selectedIndex].level < 50) {
 
 			// コスト計算
-			int cost = 3 + (stats[selectedIndex].level * 2);
+			int cost = 3 + (stats[selectedIndex].level * 4);
 
 			// コインが足りるかチェック
 			if (playerCoins >= cost) {
@@ -293,7 +293,7 @@ void StatusEnhancement::Render() {
 
 		// コスト表示 (ゲージが大きくなった分、xのオフセットを 640 -> 750 に拡大)
 		if (stats[i].level < 50) {
-			int cost = 3 + (stats[i].level * 2);
+			int cost = 3 + (stats[i].level * 4);
 			unsigned int cCol = (playerCoins >= cost) ? GetColor(255, 255, 255) : GetColor(255, 50, 50);
 			DrawFormatStringToHandle(x + 750, y + 15, cCol, MainFont,"COST: %d", cost);
 		}
