@@ -8,7 +8,7 @@
 struct StatData {
     std::string name;   // 項目名
     int level;          // 現在のレベル (0 ~ 50)
-    int totalBonus;     // 累積の上昇値 (素数を使わない加算値)
+    float totalBonus;     // 累積の上昇値 (素数を使わない加算値)
     unsigned int color; // ゲージの基本色
 };
 

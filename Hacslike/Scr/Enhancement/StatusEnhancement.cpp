@@ -127,14 +127,14 @@ bool StatusEnhancement::Update() {
 			if (stats[i].level >= 50) continue;
 
 			int remainingLevels = 50 - stats[i].level;
-			int boostValue = 0;
+			float boostValue = 0;
 
 			// インデックス(i)に応じて上昇値を設定
 			switch (i) {
 			case 0: boostValue = 10;  break; // HP
 			case 1: boostValue = 2;   break; // 攻撃
 			case 2: boostValue = 1;   break; // 防御
-			case 3: boostValue = 1;   break; // 会心率
+			case 3: boostValue = 0.8f;   break; // 会心率
 			case 4: boostValue = 500; break; // 会心ダメ
 			}
 
@@ -185,12 +185,12 @@ bool StatusEnhancement::Update() {
 				if (player) player->SetCoinValue(playerCoins);
 
 				// 各ステータスの上昇幅
-				int boostValue = 0;
+				float boostValue = 0;
 				switch (selectedIndex) {
 				case 0: boostValue = 10; break; // HP +10
 				case 1: boostValue = 2;  break; // 攻撃 +2
 				case 2: boostValue = 1;  break; // 防御 +1
-				case 3: boostValue = 1;  break; // 会心率 +1
+				case 3: boostValue = 0.8f;  break; // 会心率 +1
 				case 4: boostValue = 500;  break; // 会心ダメ +5
 				}
 
@@ -284,9 +284,11 @@ void StatusEnhancement::Render() {
 		DrawStringToHandle(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255), MainFont);
 		DrawFormatStringToHandle(x - 140, y + 32, (stats[i].level >= 50 ? GetColor(255, 215, 0) : GetColor(150, 150, 150)), MainFont, "Lv.%d", stats[i].level);
 		if (stats[i].name == "会心ダメ")
-			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d%%", stats[i].totalBonus / 100);
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d%%", (int)stats[i].totalBonus / 100);
+		else if (stats[i].name == "会心率")
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150), MainFont, "+%.1f%%", stats[i].totalBonus);
 		else
-			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d", stats[i].totalBonus);
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d", (int)stats[i].totalBonus);
 
 		// ゲージ描画 (ここで大きいサイズが適用される)
 		DrawParallelGauge(x, y, stats[i].level, stats[i].color);

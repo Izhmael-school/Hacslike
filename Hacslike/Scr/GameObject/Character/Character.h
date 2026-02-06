@@ -15,7 +15,7 @@ protected:	// ƒƒ“ƒo•Ï”
 	bool blocking;			// –hŒäƒtƒ‰ƒO
 	float speed;
 
-	int criticalHitRate;
+	float criticalHitRate;
 	float criticalDamage;
 	bool isCritical = false;
 

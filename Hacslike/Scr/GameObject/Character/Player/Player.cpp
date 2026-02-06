@@ -918,7 +918,7 @@ void Player::PlayerStatusRender() {
 	DrawFormatStringToHandle(930, 100, white, MainFont, "体力 　 　 　 : %d / %d", hp, maxHp);
 	DrawFormatStringToHandle(930, 120, white, MainFont, "攻撃力　　　 : %d", atk);
 	DrawFormatStringToHandle(930, 140, white, MainFont, "防御力　　　 : %d", def);
-	DrawFormatStringToHandle(930, 160, white, MainFont, "会心率　　　 : %.1d%%", criticalHitRate);
+	DrawFormatStringToHandle(930, 160, white, MainFont, "会心率　　　 : %.1f%%", criticalHitRate);
 	DrawFormatStringToHandle(930, 180, white, MainFont, "会心ダメージ : %.1f%%", criticalDamage);
 	DrawFormatStringToHandle(930, 200, white, MainFont, "コイン　　　 : %d枚", coinValue);
 
