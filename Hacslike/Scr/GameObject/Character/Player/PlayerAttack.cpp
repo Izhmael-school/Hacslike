@@ -140,6 +140,8 @@ void PlayerAttack::AttackInput() {
 	if (isButtonDown && !attackButtonPressed && !playerMovement->IsBlinking()) {
 		attackButtonPressed = true;
 
+		
+
 		// Sword
 		if (pWeapon->GetType() == 0) {
 			animName = "Atk" + std::to_string(attackIndex + 1);
@@ -222,6 +224,30 @@ void PlayerAttack::AttackInput() {
 			else if (canNextAttack && attackIndex < 3) {
 				AttackReset();
 				AudioManager::GetInstance().PlayOneShot("furi");
+			}
+		}
+		// Sword
+		else if (pWeapon->GetType() == 5) {
+			animName = "Atk" + std::to_string(attackIndex + 1);
+			if (!isAttacking && playerMovement->IsDashState() && checkDashAttack) {
+				isAttacking = true;
+				attackIndex = 4;
+				isDashAttack = true;
+				attackTimer = 0.0f;
+				hasGeneratedHitbox = false; // ★追加
+				playerMovement->LockDirection();
+				playerMovement->StopDash();
+				pPlayer->GetAnimator()->Play("Atk3", pWeapon->GetAnimationSpeed(attackIndex - 1));
+				AudioManager::GetInstance().PlayOneShot("Sword");
+			}
+			else if (!isAttacking) {
+				isAttacking = true;
+				AttackReset();
+				AudioManager::GetInstance().PlayOneShot("Sword");
+			}
+			else if (canNextAttack && attackIndex < 3) {
+				AttackReset();
+				AudioManager::GetInstance().PlayOneShot("Sword");
 			}
 		}
 	}
@@ -351,6 +377,35 @@ void PlayerAttack::AttackInput() {
 			}
 			if (attackTimer > (attackIndex >= 3 ? 2.78f : 1.0f)) { isAttacking = false; isDashAttack = false; canNextAttack = false; attackIndex = 0; hasGeneratedHitbox = false; }
 		}
+
+		else if (pWeapon->GetType() == 5) {
+			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
+			if (!hasGeneratedHitbox) { // ★追加
+				if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f) {
+					magnification = 1;
+					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
+					HitBoxReset();
+				}
+				if (attackIndex == 2 && attackTimer > 0.22f && attackTimer < 0.28f) {
+					magnification = 1.2f;
+					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
+					HitBoxReset();
+				}
+				if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f) {
+					magnification = 1.5;
+					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
+					HitBoxReset();
+				}
+				if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f) {
+					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
+					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
+					//Effect* pEffe = EffectManager::GetInstance().Instantiate("DA", pPlayer->GetPosition());
+					hasGeneratedHitbox = true;
+				}
+			}
+			if (attackTimer > 0.8f) { isAttacking = false; isDashAttack = false; canNextAttack = false; attackIndex = 0; hasGeneratedHitbox = false; }
+		}
+
 		else if (pWeapon->GetType() == 3) {
 			if (attackTimer > 0.4f && attackTimer < 1.0f) canNextAttack = true;
 		}
