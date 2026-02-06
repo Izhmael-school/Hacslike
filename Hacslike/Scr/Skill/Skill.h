@@ -161,7 +161,7 @@ public:
 class CriticalHitRateUpSkill : public Skill {
     float CriticalHitRateBoost;
 public:
-    CriticalHitRateUpSkill(float boost = 10.0f);
+    CriticalHitRateUpSkill(float boost = 5.0f);
     void Apply(Player* player) override;
     void Remove(Player* player) override;
     void ClearLevel() override;

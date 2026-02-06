@@ -201,7 +201,7 @@ void TitleScene::Render() {
 					snprintf(buf, sizeof(buf), "%02d: %s  (%s)", i + 1, slots[i].desc, tmStr.c_str());
 				}
 				else {
-					snprintf(buf, sizeof(buf), "%02d: Lv%d ŠK‘w:%d  %s", i + 1, slots[i].playerLevel, slots[i].floor, tmStr.c_str());
+					snprintf(buf, sizeof(buf), "%02d: Lv%d ŠK‘w:%d  %s", i + 1, slots[i].playerLevel, slots[i].floor -1, tmStr.c_str());
 				}
 			}
 			else {

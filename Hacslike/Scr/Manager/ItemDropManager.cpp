@@ -53,11 +53,11 @@ void ItemDropManager::TryDropBossItem(float _dropRate, VECTOR _pos, int floor)
     // 階層に応じてアイテムプールを設定
     if (floor == 11) {
         // 序盤階層：基本的な回復アイテムと武器
-        itemIds = { "Hammer" };
+        itemIds = { "Sickle" };
     }
     else if (floor == 21) {
         // 中盤階層：強力な回復アイテムと上位武器
-        itemIds = { "Elixir" };
+        itemIds = { "FangSword" };
     }
     else if(floor == 31) {
         // 後半階層：最高級アイテム
@@ -69,7 +69,7 @@ void ItemDropManager::TryDropBossItem(float _dropRate, VECTOR _pos, int floor)
     }
     else if (floor == 51) {
         // 後半階層：最高級アイテム
-        itemIds = { "Elixir" };
+        itemIds = { "DuraHammmer" };
     }
 
     static std::mt19937 gen(std::random_device{}());

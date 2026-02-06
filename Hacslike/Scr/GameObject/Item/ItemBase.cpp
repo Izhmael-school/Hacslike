@@ -3,11 +3,12 @@
 #include"../../Component/Collider/Collider.h"
 
 ItemBase::ItemBase(VECTOR _pos, std::string tag, const std::string& _id, const std::string& _name, const std::string& _desc, const std::string& _type,
-	int _value, int _effectValue, const std::string& _icon)
+	const std::string& _reality,int _value, int _effectValue, const std::string& _icon)
 	:GameObject(_pos, tag)
 	, name(_name)
 	, description(_desc)
 	, type(_type)
+	,Reality(_reality)
 	, value(_value)
 	, itenEffectValue(_effectValue)
 	, itemIcon(_icon)

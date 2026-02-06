@@ -26,8 +26,9 @@ class ItemBase : public GameObject
 protected: //メンバ変数
     std::string id;      // ← ファクトリ登録用ID
     std::string name;      //アイテムの名前
-    std::string  description;	//説明
+    std::string description;	//説明
     std::string type;      //アイテムのタイプ
+    std::string Reality;
     int value;             //アイテムの価値など
     int itenEffectValue;   //アイテムの効果値
     std::string itemIcon;  //アイテムUI用のアイコン
@@ -45,7 +46,8 @@ public://コンストラクタとデストラクタ
     /// <param name="_name"></param>
     /// <param name="_type"></param>
     /// <param name="_value"></param>
-    ItemBase(VECTOR _pos = VZero, std::string tag = "", const std::string& _id = "", const std::string& _name = "", const std::string& _desc = "", const std::string& _type = "", int _value = 0, int _effectValue = 0, const std::string& _icon = "");
+    ItemBase(VECTOR _pos = VZero, std::string tag = "", const std::string& _id = "", const std::string& _name = "", const std::string& _desc = "", 
+        const std::string& _type = "",const std::string& _reality = "", int _value = 0, int _effectValue = 0, const std::string& _icon = "");
     
 
     /// <summary>
@@ -71,6 +73,9 @@ public://ゲッター
     /// </summary>
     /// <returns></returns>
     inline const std::string& GetType() const { return type; }
+
+    inline const std::string& GetReality() const { return Reality; }
+
     /// <summary>
     /// 価値の取得
     /// </summary>
