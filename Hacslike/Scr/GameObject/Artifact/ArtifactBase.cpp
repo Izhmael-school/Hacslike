@@ -44,7 +44,7 @@ void ArtifactBase::Restore(Player* player)
 
 
 #pragma region HP‚ªˆê’è’lˆÈã‚¾‚ÆUŒ‚—Íã¸
-conditional_attack_power_raise_HP::conditional_attack_power_raise_HP(float boost)
+conditional_attack_power_raise_HP::conditional_attack_power_raise_HP(int boost)
     :ArtifactBase(1,"•s‹ü‚ÌˆóÍ", "HP‚ª7Š„‚èˆÈã‚ÌUŒ‚—Íã¸", "Res/ArtifactIcon/Attact_HP.png")
     , attackBoost(boost)
     , isBoosted(false) {

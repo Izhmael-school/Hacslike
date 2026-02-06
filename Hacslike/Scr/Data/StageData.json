@@ -13,7 +13,7 @@
       [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
     ],
     "playerSpawnPos": [ 4, 2 ],
-    "saveObjectPos": [ 0, 7 ],
+    "saveObjectPos": [ -1, -1 ],
     "ChestObjectPos": [ 4, 4 ],
     "enhancementStonePos": [ 1, 4 ],
     "itemShopPos": [ 7, 4 ],
