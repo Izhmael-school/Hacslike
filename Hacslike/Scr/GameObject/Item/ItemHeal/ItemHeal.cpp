@@ -10,7 +10,7 @@
 
 
 ItemHeal::ItemHeal(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item","" , _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item","" , _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 }
 
@@ -43,7 +43,7 @@ void ItemHeal::LoadFrom(BinaryReader& r)
 /// <param name="_value"></param>
 /// <param name="_effectValue"></param>
 SmallHealItem::SmallHealItem(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item","Potion_Small", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item","Potion_Small", _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 	Start();
 }
@@ -92,7 +92,7 @@ void SmallHealItem::Use()
 /// <param name="_value"></param>
 /// <param name="_effectValue"></param>
 MiddleHealItem::MiddleHealItem(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item","Potion_Middle", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item","Potion_Middle", _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 	Start();
 }
@@ -142,7 +142,7 @@ void MiddleHealItem::Use()
 /// <param name="_value"></param>
 /// <param name="_effectValue"></param>
 LargeHealItem::LargeHealItem(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", "Potion_Large", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/potion.png")
+	:ItemBase(VZero, "item", "Potion_Large", _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/potion.png")
 	, healValue(_effectValue) {
 	Start();
 }
@@ -184,7 +184,7 @@ void LargeHealItem::Use()
 
 
 Elixir::Elixir(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", "Elixir", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/Elixir.png")
+	:ItemBase(VZero, "item", "Elixir", _name, _desc, "Consumable","Rare", _value, _effectValue, "Res/ItemIcon/Elixir.png")
 	, healValue(_effectValue) {
 }
 
@@ -226,7 +226,7 @@ void Elixir::Use()
 
 #pragma region バフ系
 AttactPotion::AttactPotion(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue,float _time)
-	:ItemBase(VZero, "item","AttactPotion", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/attackPotion.png")
+	:ItemBase(VZero, "item","AttactPotion", _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/attackPotion.png")
 	, attactValue(_effectValue)
 	,originAttack(0.0f)
 	,isBoost(false)
@@ -291,7 +291,7 @@ void AttactPotion::Use()
 }
 
 DefensePotion::DefensePotion(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, float _time)
-	:ItemBase(VZero, "item", "DefensePotion", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/defensePotion.png")
+	:ItemBase(VZero, "item", "DefensePotion", _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/defensePotion.png")
 	, defenseValue(_effectValue)
 	, originDefense(0.0f)
 	, isBoost(false)
@@ -357,7 +357,7 @@ void DefensePotion::Use()
 
 #pragma region グレネード
 Grenade::Grenade(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue)
-	:ItemBase(VZero, "item", "Grenade", _name, _desc, "Consumable", _value, _effectValue, "Res/ItemIcon/grenade.png") 
+	:ItemBase(VZero, "item", "Grenade", _name, _desc, "Consumable", "Normal", _value, _effectValue, "Res/ItemIcon/grenade.png")
 	,timer(0.0f)
 	,damage(_effectValue)
 	,grenadeModel(INVALID)

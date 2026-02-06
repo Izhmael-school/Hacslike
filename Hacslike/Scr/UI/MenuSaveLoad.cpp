@@ -126,7 +126,7 @@ void MenuSaveLoad::Render() {
             i + 1,
             stateText,
             s.playerLevel,
-            s.floor,
+            s.floor -1,
             timestr);
 #else
         std::snprintf(linebuf, sizeof(linebuf),
@@ -134,7 +134,7 @@ void MenuSaveLoad::Render() {
             i + 1,
             stateText,
             s.playerLevel,
-            s.floor,
+            s.floor -1,
             timestr);
 #endif
 

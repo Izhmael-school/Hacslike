@@ -243,7 +243,7 @@ void ItemDropRateUpSkill::ApplyAllLevels(Player* player)
 //   会心率 UP
 // =============================
 CriticalHitRateUpSkill::CriticalHitRateUpSkill(float boost)
-    : Skill(8,"会心率アップ", "会心率が10上昇する", "Res/SkillIcon/CriticalUP.png", 5)
+    : Skill(8,"会心率アップ", "会心率が5上昇する", "Res/SkillIcon/CriticalUP.png", 5)
     , CriticalHitRateBoost(boost)
 {
 }

@@ -378,6 +378,9 @@ static const std::unordered_map<std::string, std::string> itemEffectMap = {
 	{"グレートソード","攻撃力"},
 	{"槍","攻撃力"},
 	{"ラッキーハンマー","攻撃力"},
+	{"凶悪な鎌","攻撃力"},
+	{"呪われた牙剣","攻撃力"},
+	{"神断の鉄槌","攻撃力"}
 	// ここに増やすだけでOK！
 };
 
@@ -396,7 +399,9 @@ static const std::vector<std::string> itemOrder = {
 	"グレートソード",
 	"槍",
 	"ラッキーハンマー",
-	
+	"凶悪な鎌",
+	"呪われた牙剣",
+	"神断の鉄槌",
 };
 
 /// <summary>
@@ -455,6 +460,7 @@ void Inventory::Render() {
 		const InventoryItem& inv = items[i];
 		const std::string& name = inv.item->GetName();
 		const std::string& type = inv.item->GetType();
+		const std::string& reality = inv.item->GetReality();
 		int quantity = inv.quantity;
 
 		// 選択行ハイライト
@@ -471,7 +477,7 @@ void Inventory::Render() {
 			const std::string curName = curInv.item->GetName();
 
 			// ===== 説明ボックス描画 =====
-			infoW = 260;
+			infoW = 300;
 			infoH = 100;
 			infoX = baseX + boxW + 10;
 			infoY = y - 4;
@@ -498,7 +504,12 @@ void Inventory::Render() {
 			}
 
 			// ===== 描画 =====
-			DrawStringToHandle(desPosX, desPosY, itemName.c_str(), white, MainFont);
+			if (reality == "Normal") {
+				DrawStringToHandle(desPosX, desPosY, itemName.c_str(), white, MainFont);
+			}
+			else if (reality == "Rare") {
+				DrawStringToHandle(desPosX, desPosY, itemName.c_str(), yellow, MainFont);
+			}
 			DrawStringToHandle(desPosX, desPosY + 20, itemDes.c_str(), white, MainFont);
 			DrawFormatStringToHandle(desPosX + 5, desPosY + infoH - 30, white, MainFont,
 				"%s : %d  価値 : %d", itemEffect.c_str(), itemEffectValue, itemValue);
@@ -548,8 +559,11 @@ void Inventory::Render() {
 		if (type == "Consumable") {
 			nameColor = palegreen;
 		}
-		else if (type == "Equipment") {
+		else if ((type == "Equipment")&&(reality == "Normal")) {
 			nameColor = white;
+		}
+		else if ((type == "Equipment") && (reality == "Rare")){
+			nameColor = yellow;
 		}
 
 		DrawStringToHandle(textX, y + 4, name.c_str(), nameColor, MainFont);

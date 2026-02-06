@@ -100,7 +100,19 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItemForLoad(const std::string& _id)
     }
     else if (_id == "Hammer") {
         return std::make_unique<Hammer>(VGet(0, 0, 0),
-            "ラッキーハンマー", "オーガ戦の戦利品\n会心率と会心ダメージを上げる", 400, 0, "MeleeWeapon");
+            "ラッキーハンマー", "オーガ戦の戦利品\n会心率をさげて会心ダメージを上げる", 400, 0, "MeleeWeapon");
+    }
+    else if (_id == "Sickle") {
+        return std::make_unique<Sickle>(VGet(0, 0, 0),
+            "凶悪な鎌", "ゴブリンリーダー戦の戦利品\n会心率と会心ダメージを上げる", 500, 0, "MeleeWeapon");
+    }
+    else if (_id == "FangSword") {
+        return std::make_unique<FangSword>(VGet(0, 0, 0),
+            "呪われた牙剣", "でかい犬戦の戦利品\n高い攻撃力を得られるが自身の傷つける", 300, 0, "MeleeWeapon");
+    }
+    else if (_id == "DuraHammmer") {
+        return std::make_unique<DuraHammmer>(VGet(0, 0, 0),
+            "神断の鉄槌", "デュラハン戦の戦利品\n高い攻撃力を持ち会心率と会心ダメージを上げる", 600, 0, "MeleeWeapon");
     }
     else if (_id == "Gun") {
         return std::make_unique<gun>(VGet(0, 0, 0),
@@ -208,10 +220,25 @@ void ItemFactory::InitializeDefaultItems()
     RegisterItem("Hammer", []() {
         int effectValue = 30;
         return std::make_unique<Hammer>(VGet(0, 0, 0),
-            "ラッキーハンマー", "オーガ戦の戦利品\n会心率と会心ダメージを上げる", 400, effectValue, "MeleeWeapon");
+            "ラッキーハンマー", "オーガ戦の戦利品\n会心率をさげて会心ダメージを上げる", 400, effectValue, "MeleeWeapon");
         });
 
+    RegisterItem("Sickle", []() {
+        int effectValue = 40;
+        return std::make_unique<Sickle>(VGet(0, 0, 0),
+            "凶悪な鎌", "ゴブリンリーダー戦の戦利品\n会心率と会心ダメージを上げる", 500, effectValue, "MeleeWeapon");
+        });
 
+    RegisterItem("FangSword", []() {
+        int effectValue = 150;
+        return std::make_unique<FangSword>(VGet(0, 0, 0),
+            "呪われた牙剣", "でかい犬戦の戦利品\n高い攻撃力を得られるが自身の傷つける", 300, effectValue, "MeleeWeapon");
+        });
+    RegisterItem("DuraHammmer", []() {
+        int effectValue = 200;
+        return std::make_unique<DuraHammmer>(VGet(0, 0, 0),
+            "神断の鉄槌", "デュラハン戦の戦利品\n高い攻撃力を持ち\n会心率と会心ダメージを上げる", 600, effectValue, "MeleeWeapon");
+        });
     RegisterItem("Gun", []() {
         return std::make_unique<gun>(VGet(0, 0, 0),
         "銃", "銃", 160, GetRand(100) + 40, "RangedWeapon");

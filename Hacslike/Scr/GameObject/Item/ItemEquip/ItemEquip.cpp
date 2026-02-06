@@ -6,7 +6,7 @@
 
 #pragma region 剣
 ItemSword::ItemSword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Sword_Iron", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/sword.png")
+	: ItemBase(VZero, "item", "Sword_Iron", _name, _desc, "Equipment","Normal", _value, _effectValue, "Res/ItemIcon/sword.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -46,7 +46,7 @@ void ItemSword::LoadFrom(BinaryReader& r)
 
 #pragma region 斧
 ItemAxe::ItemAxe(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Axe", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Axe.png")
+	: ItemBase(VZero, "item", "Axe", _name, _desc, "Equipment", "Normal", _value, _effectValue, "Res/ItemIcon/Axe.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -84,7 +84,7 @@ void ItemAxe::LoadFrom(BinaryReader& r)
 
 #pragma region 木の棒
 ItemStick::ItemStick(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Stick", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/stick.png")
+	: ItemBase(VZero, "item", "Stick", _name, _desc, "Equipment", "Normal", _value, _effectValue, "Res/ItemIcon/stick.png")
 	, attackValue(_effectValue) {
 }
 
@@ -119,7 +119,7 @@ void ItemStick::LoadFrom(BinaryReader& r)
 
 #pragma region グレソ
 Greatsword::Greatsword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Greatsword", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
+	: ItemBase(VZero, "item", "Greatsword", _name, _desc, "Equipment", "Normal", _value, _effectValue, "Res/ItemIcon/rune-sword.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -157,7 +157,7 @@ void Greatsword::LoadFrom(BinaryReader& r)
 
 #pragma region 槍
 Spear::Spear(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Spear", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/coiled-nail.png")
+	: ItemBase(VZero, "item", "Spear", _name, _desc, "Equipment", "Normal", _value, _effectValue, "Res/ItemIcon/coiled-nail.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -195,7 +195,7 @@ void Spear::LoadFrom(BinaryReader& r)
 
 #pragma region ハンマー
 Hammer::Hammer(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Hammer", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Hammer.png")
+	: ItemBase(VZero, "item", "Hammer", _name, _desc, "Equipment", "Rare", _value, _effectValue, "Res/ItemIcon/Hammer.png")
 	, attackValue(_effectValue) {
 	Start();
 }
@@ -213,7 +213,7 @@ void Hammer::Use()
 	AudioManager::GetInstance().PlayOneShot("UseEquip");
 	Player::GetInstance()->ChangeWeapon(modelPath);
 	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
-	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() + criticalHitRate);
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() - criticalHitRate);
 	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() + criticalDamage);
 
 
@@ -221,7 +221,7 @@ void Hammer::Use()
 
 void Hammer::UnEquip()
 {
-	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() - criticalHitRate);
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() + criticalHitRate);
 	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() - criticalDamage);
 }
 
@@ -236,8 +236,126 @@ void Hammer::LoadFrom(BinaryReader& r)
 }
 #pragma endregion
 
+#pragma region 鎌
+Sickle::Sickle(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
+	: ItemBase(VZero, "item", "Sickle", _name, _desc, "Equipment", "Rare", _value, _effectValue, "Res/ItemIcon/Sickle.png")
+	, attackValue(_effectValue) {
+	Start();
+}
 
+void Sickle::Start()
+{
+}
 
+void Sickle::Render()
+{
+}
+
+void Sickle::Use()
+{
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
+	Player::GetInstance()->ChangeWeapon(modelPath);
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() + criticalHitRate);
+	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() + criticalDamage);
+}
+
+void Sickle::UnEquip()
+{
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() - criticalHitRate);
+	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() - criticalDamage);
+}
+
+void Sickle::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+
+}
+
+void Sickle::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+
+}
+#pragma endregion
+
+#pragma region 牙剣
+FangSword::FangSword(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
+	: ItemBase(VZero, "item", "FangSword", _name, _desc, "Equipment", "Rare", _value, _effectValue, "Res/ItemIcon/FangSword.png")
+	, attackValue(_effectValue) {
+	Start();
+}
+
+void FangSword::Start()
+{
+}
+
+void FangSword::Render()
+{
+}
+
+void FangSword::Use()
+{
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
+	Player::GetInstance()->ChangeWeapon(modelPath);
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
+
+}
+
+void FangSword::UnEquip()
+{
+}
+
+void FangSword::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+}
+
+void FangSword::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+}
+#pragma endregion
+
+#pragma region デュラハンハンマー
+DuraHammmer::DuraHammmer(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
+	: ItemBase(VZero, "item", "DuraHammmer", _name, _desc, "Equipment", "Rare", _value, _effectValue, "Res/ItemIcon/DuraHammmer.png")
+	, attackValue(_effectValue) {
+	Start();
+}
+
+void DuraHammmer::Start()
+{
+}
+
+void DuraHammmer::Render()
+{
+}
+
+void DuraHammmer::Use()
+{
+	AudioManager::GetInstance().PlayOneShot("UseEquip");
+	Player::GetInstance()->ChangeWeapon(modelPath);
+	Player::GetInstance()->SetAtk(Player::GetInstance()->GetBaseAtk() + Player::GetInstance()->GetProximityCorrection() + attackValue);
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() + criticalHitRate);
+	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() + criticalDamage);
+}
+
+void DuraHammmer::UnEquip()
+{
+	Player::GetInstance()->SetCriticalHitRate(Player::GetInstance()->GetCriticalHitRate() - criticalHitRate);
+	Player::GetInstance()->SetCriticalDamage(Player::GetInstance()->GetCriticalDamage() - criticalDamage);
+}
+
+void DuraHammmer::SaveTo(BinaryWriter& w)
+{
+	w.WritePOD(attackValue);
+}
+
+void DuraHammmer::LoadFrom(BinaryReader& r)
+{
+	r.ReadPOD(attackValue);
+}
 
 
 
@@ -253,7 +371,7 @@ void Hammer::LoadFrom(BinaryReader& r)
 
 #pragma region 銃
 gun::gun(VECTOR _pos, const std::string& _name, const std::string& _desc, int _value, int _effectValue, const std::string& _weaponType)
-	: ItemBase(VZero, "item", "Gun", _name, _desc, "Equipment", _value, _effectValue, "Res/ItemIcon/Gun.png")
+	: ItemBase(VZero, "item", "Gun", _name, _desc, "Equipment", "Normal", _value, _effectValue, "Res/ItemIcon/Gun.png")
 	, attackValue(_effectValue) {
 	Start();
 }

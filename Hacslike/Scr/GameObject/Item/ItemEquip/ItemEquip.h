@@ -140,9 +140,9 @@ public:
 class Hammer : public ItemBase {
 private:
 	int attackValue;
-	int criticalHitRate = 30;
+	int criticalHitRate = 40;
 	int criticalDamage = 80;
-	int modelPath = 0;
+	int modelPath = 11;
 	std::string weaponType;
 
 public:
@@ -165,29 +165,90 @@ public:
 };
 #pragma endregion
 
+#pragma region 鎌
+class Sickle : public ItemBase {
+private:
+	int attackValue;
+	int criticalHitRate = 10;
+	int criticalDamage = 30;
+	int modelPath = 12;
+	std::string weaponType;
 
+public:
+	Sickle(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0, const std::string& _weaponType = "");
 
+	void Start()override;
+	void Render()override;
+	void Use()override;
+	void UnEquip()override;
 
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
 
+	inline int GetEffectValue() const override { return attackValue; }
 
+	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void SetAttackValue(int _v) { attackValue = _v; }
+};
+#pragma endregion
 
+#pragma region 牙剣
+class FangSword : public ItemBase {
+private:
+	int attackValue;
+	int modelPath = 14;
+	std::string weaponType;
 
+public:
+	FangSword(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0, const std::string& _weaponType = "");
 
+	void Start()override;
+	void Render()override;
+	void Use()override;
+	void UnEquip()override;
 
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
 
+	inline int GetEffectValue() const override { return attackValue; }
 
+	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void SetAttackValue(int _v) { attackValue = _v; }
+};
+#pragma endregion
 
+#pragma region デュラハンハンマー
+class DuraHammmer : public ItemBase {
+private:
+	int attackValue;
+	int criticalHitRate = 30;
+	int criticalDamage = 90;
+	int modelPath = 13;
+	std::string weaponType;
 
+public:
+	DuraHammmer(VECTOR _pos = VZero, const std::string& _name = "", const std::string& _desc = "", int _value = 0, int _effectValue = 0, const std::string& _weaponType = "");
 
+	void Start()override;
+	void Render()override;
+	void Use()override;
+	void UnEquip()override;
 
+	void SaveTo(BinaryWriter& w) override;
+	void LoadFrom(BinaryReader& r) override;
 
+	inline int GetEffectValue() const override { return attackValue; }
 
-
-
-
-
-
-
+	inline const std::string& GetWeaponType() const { return weaponType; }
+	ItemType GetItemType() const override { return ItemType::Invaled; }
+	HealSize GetHealType() const override { return HealSize::Invaled; }
+	inline void SetAttackValue(int _v) { attackValue = _v; }
+};
+#pragma endregion
 
 #pragma region 銃
 class gun : public ItemBase {
