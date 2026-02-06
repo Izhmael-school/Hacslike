@@ -48,6 +48,13 @@ void SalesManager::Update() {
     float stickY = input.IsJoypadSthick("L_Vertical");
     float stickX = input.IsJoypadSthick("L_Horizontal");
 
+    // --- 【1200x800基準のレスポンシブ座標計算】 ---
+    const int startX = (int)(WINDOW_WIDTH * 0.075f);  // 1200で90
+    const int endX = (int)(WINDOW_WIDTH * 0.916f);  // 1200で1100
+    const int startY = (int)(WINDOW_HEIGHT * 0.125f); // 800で100
+    const int itemH = (int)(WINDOW_HEIGHT * 0.106f); // 800で85
+    const int margin = (int)(WINDOW_HEIGHT * 0.0125f); // 800で10
+
     if (state == State::Selecting) {
         // --- 1. スクロール処理 (マウスホイール) ---
         if (wheel > 0) {
@@ -66,14 +73,10 @@ void SalesManager::Update() {
         }
 
         // --- 3. マウスによるホバー選択 & クリック ---
-        const int startX = 90;
-        const int endX = 1100;
-        const int startY = 100;
-        const int itemH = 85;
-        const int margin = 10;
         for (int i = 0; i < maxDisplay; ++i) {
             int targetIdx = scrollIndex + i;
             if (targetIdx >= (int)items.size()) break;
+
             int y = startY + (i * (itemH + margin));
             if (mouseX >= startX && mouseX <= endX && mouseY >= y && mouseY <= y + itemH) {
                 if (currentIndex != targetIdx) currentIndex = targetIdx;
@@ -108,18 +111,18 @@ void SalesManager::Update() {
         }
     }
     else if (state == State::Confirming) {
-        // --- 追加: マウスによる「はい/いいえ」の選択判定 ---
-        int wx = (WINDOW_WIDTH - 400) / 2;
-        int wy = (WINDOW_HEIGHT - 150) / 2;
+        // --- ダイアログのレスポンシブ座標 ---
+        int dialogW = (int)(WINDOW_WIDTH * 0.333f);  // 1200で400
+        int dialogH = (int)(WINDOW_HEIGHT * 0.187f); // 800で150
+        int wx = (WINDOW_WIDTH - dialogW) / 2;
+        int wy = (WINDOW_HEIGHT - dialogH) / 2;
 
-        // 「はい」ボタンの範囲 (Renderの描画位置に合わせる)
-        int btn1X = wx + 70;
-        int btnY = wy + 90;
-        int btnW = 110;
-        int btnH = 40;
+        int btnW = (int)(WINDOW_WIDTH * 0.091f);  // 1200で110
+        int btnH = (int)(WINDOW_HEIGHT * 0.05f);  // 800で40
+        int btnY = wy + (int)(dialogH * 0.6f);    // 150の60%位置
 
-        // 「いいえ」ボタンの範囲
-        int btn2X = wx + 220;
+        int btn1X = wx + (int)(dialogW * 0.175f); // 400の17.5%
+        int btn2X = wx + (int)(dialogW * 0.55f);  // 400の55%
 
         // マウスホバー判定
         if (mouseY >= btnY && mouseY <= btnY + btnH) {
@@ -133,24 +136,20 @@ void SalesManager::Update() {
             }
         }
 
-        // 既存のキーボード/スティック入力
         if (input.IsKeyDown(KEY_INPUT_LEFT) || input.IsButtonDown(XINPUT_GAMEPAD_DPAD_LEFT) || stickX < -0.5f) confirmIndex = 0;
         if (input.IsKeyDown(KEY_INPUT_RIGHT) || input.IsButtonDown(XINPUT_GAMEPAD_DPAD_RIGHT) || stickX > 0.5f) confirmIndex = 1;
 
-        // Bボタンまたはマウス左クリックで確定
         if (input.IsKeyDown(KEY_INPUT_RETURN) || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
-        CONFIRM_DECIDE: // マウスクリック時もここへ飛ばす
+        CONFIRM_DECIDE:
             if (confirmIndex == 0) ExecuteSale();
             state = State::Selecting;
         }
 
-        // AボタンまたはEscでキャンセル
         if (input.IsKeyDown(KEY_INPUT_ESCAPE) || input.IsButtonDown(XINPUT_GAMEPAD_A)) {
             state = State::Selecting;
         }
     }
     else if (state == State::Error) {
-        // A, B, Enter, 左クリックのいずれかでリストに戻る
         if (input.IsMouseDown(MOUSE_INPUT_LEFT) || input.IsKeyDown(KEY_INPUT_RETURN) ||
             input.IsButtonDown(XINPUT_GAMEPAD_A) || input.IsButtonDown(XINPUT_GAMEPAD_B)) {
             state = State::Selecting;
@@ -162,12 +161,10 @@ void SalesManager::ExecuteSale() {
     const auto& items = targetInventory->GetItems();
     if (currentIndex >= (int)items.size()) return;
 
-    // 売却額を加算
     Player::GetInstance()->AddCoinValue(items[currentIndex].item->GetValue());
-    // インベントリから削除
     targetInventory->RemoveItemAmount(currentIndex, 1);
     AudioManager::GetInstance().PlayOneShot("Buy");
-    // 削除後のカーソル位置調整
+
     const auto& updatedItems = targetInventory->GetItems();
     if (currentIndex >= (int)updatedItems.size() && !updatedItems.empty()) {
         currentIndex = (int)updatedItems.size() - 1;
@@ -177,16 +174,20 @@ void SalesManager::ExecuteSale() {
 void SalesManager::Render() {
     if (!isActive || !targetInventory) return;
 
+    // --- 【1200x800基準のレスポンシブ描画計算】 ---
+    const int startX = (int)(WINDOW_WIDTH * 0.075f);  // 90
+    const int endX = (int)(WINDOW_WIDTH * 0.916f);  // 1100
+    const int startY = (int)(WINDOW_HEIGHT * 0.1375f); // 110
+    const int itemH = (int)(WINDOW_HEIGHT * 0.106f);  // 85
+    const int margin = (int)(WINDOW_HEIGHT * 0.0125f); // 10
+
     // 背景描画
     DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GetColor(10, 10, 10), TRUE);
 
     // --- 所持金表示 ---
-    DrawFormatString(100, 45, GetColor(255, 255, 255), "--- 売却 ---    所持金: %d G", Player::GetInstance()->GetCoinValue());
+    DrawFormatString((int)(WINDOW_WIDTH * 0.083f), (int)(WINDOW_HEIGHT * 0.056f), GetColor(255, 255, 255), "--- 売却 ---    所持金: %d G", Player::GetInstance()->GetCoinValue());
 
     const auto& items = targetInventory->GetItems();
-    const int startY = 110;
-    const int itemH = 85;
-    const int margin = 10;
     ItemBase* equippedPtr = targetInventory->GetEquippedItem();
 
     for (int i = 0; i < maxDisplay; ++i) {
@@ -197,23 +198,25 @@ void SalesManager::Render() {
         int frameColor = (targetIdx == currentIndex) ? GetColor(255, 255, 0) : GetColor(200, 200, 200);
 
         // アイテム枠
-        DrawBox(90, y, 1100, y + itemH, frameColor, FALSE);
+        DrawBox(startX, y, endX, y + itemH, frameColor, FALSE);
         if (targetIdx == currentIndex) {
-            DrawBox(91, y + 1, 1099, y + itemH - 1, GetColor(40, 40, 10), TRUE);
+            DrawBox(startX + 1, y + 1, endX - 1, y + itemH - 1, GetColor(40, 40, 10), TRUE);
         }
 
         int textColor = (targetIdx == currentIndex) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
 
         // アイコン
         int iconHandle = targetInventory->GetIconHandleFromCache(items[targetIdx].item->GetItemIcon());
-        int iconSize = 64;
+        int iconSize = (int)(itemH * 0.75f); // 枠の75%サイズ
+        int iconX = startX + (int)(WINDOW_WIDTH * 0.016f);
         int iconY = y + (itemH - iconSize) / 2;
         if (iconHandle >= 0) {
-            DrawExtendGraph(110, iconY, 110 + iconSize, iconY + iconSize, iconHandle, TRUE);
+            DrawExtendGraph(iconX, iconY, iconX + iconSize, iconY + iconSize, iconHandle, TRUE);
         }
 
-        // テキスト (上下中央)
+        // テキスト位置
         int textY = y + (itemH / 2) - 8;
+        int textX = iconX + iconSize + (int)(WINDOW_WIDTH * 0.01f);
 
         std::string name = items[targetIdx].item->GetName();
         int attackVal = items[targetIdx].item->GetEffectValue();
@@ -221,21 +224,21 @@ void SalesManager::Render() {
         int price = items[targetIdx].item->GetValue();
 
         if (items[targetIdx].item.get() == equippedPtr) {
-            DrawString(185, textY, "E", GetColor(255, 100, 0));
+            DrawString(textX - (int)(WINDOW_WIDTH * 0.008f), textY, "E", GetColor(255, 100, 0));
         }
 
         if (name.find("ポーション") != std::string::npos || name.find("グレネード") != std::string::npos) {
-            DrawFormatString(220, textY, textColor, "%-20s (x%d)  価格:%5d G", name.c_str(), quantity, price);
+            DrawFormatString(textX + 25, textY, textColor, "%-20s (x%d)  価格:%5d G", name.c_str(), quantity, price);
         }
         else {
-            DrawFormatString(220, textY, textColor, "%-20s  攻撃力:%3d  価格:%5d G", name.c_str(), attackVal, price);
+            DrawFormatString(textX + 25, textY, textColor, "%-20s  攻撃力:%3d  価格:%5d G", name.c_str(), attackVal, price);
         }
     }
 
     // スクロールバー
     if ((int)items.size() > maxDisplay) {
         int barH = maxDisplay * (itemH + margin) - margin;
-        int barX = 1115;
+        int barX = endX + 15;
         DrawBox(barX, startY, barX + 6, startY + barH, GetColor(40, 40, 40), TRUE);
         float ratio = (float)maxDisplay / items.size();
         int sliderH = (int)(barH * ratio);
@@ -243,34 +246,36 @@ void SalesManager::Render() {
         DrawBox(barX, startY + sliderY, barX + 6, startY + sliderY + sliderH, GetColor(180, 180, 180), TRUE);
     }
 
-    // --- ダイアログ表示 (ここを修正) ---
-    int wx = (WINDOW_WIDTH - 400) / 2;
-    int wy = (WINDOW_HEIGHT - 150) / 2;
+    // ダイアログ表示
+    int dialogW = (int)(WINDOW_WIDTH * 0.333f);
+    int dialogH = (int)(WINDOW_HEIGHT * 0.187f);
+    int wx = (WINDOW_WIDTH - dialogW) / 2;
+    int wy = (WINDOW_HEIGHT - dialogH) / 2;
 
     if (state == State::Confirming) {
-        DrawBox(wx, wy, wx + 400, wy + 150, GetColor(20, 20, 20), TRUE);
-        DrawBox(wx, wy, wx + 400, wy + 150, GetColor(255, 255, 255), FALSE);
+        DrawBox(wx, wy, wx + dialogW, wy + dialogH, GetColor(20, 20, 20), TRUE);
+        DrawBox(wx, wy, wx + dialogW, wy + dialogH, GetColor(255, 255, 255), FALSE);
 
-        DrawString(wx + 65, wy + 40, "このアイテムを売却しますか？", GetColor(255, 255, 255));
+        DrawString(wx + (int)(dialogW * 0.16f), wy + (int)(dialogH * 0.26f), "このアイテムを売却しますか？", GetColor(255, 255, 255));
 
         int yColor = (confirmIndex == 0) ? GetColor(255, 255, 0) : GetColor(100, 100, 100);
         int nColor = (confirmIndex == 1) ? GetColor(255, 255, 0) : GetColor(100, 100, 100);
 
-        // --- ボタン位置修正 ---
-        // 「はい」ボタン
-        int btn1X = wx + 70;
-        DrawBox(btn1X, wy + 90, btn1X + 110, wy + 130, yColor, FALSE);
-        DrawString(btn1X + 22, wy + 102, "はい(B)", yColor);
+        int btnW = (int)(WINDOW_WIDTH * 0.091f);
+        int btnH = (int)(WINDOW_HEIGHT * 0.05f);
+        int btnY = wy + (int)(dialogH * 0.6f);
+        int btn1X = wx + (int)(dialogW * 0.175f);
+        int btn2X = wx + (int)(dialogW * 0.55f);
 
-        // 「いいえ」ボタン
-        int btn2X = wx + 220;
-        DrawBox(btn2X, wy + 90, btn2X + 110, wy + 130, nColor, FALSE);
-        DrawString(btn2X + 15, wy + 102, "いいえ(A)", nColor);
+        DrawBox(btn1X, btnY, btn1X + btnW, btnY + btnH, yColor, FALSE);
+        DrawString(btn1X + 22, btnY + 12, "はい(B)", yColor);
+
+        DrawBox(btn2X, btnY, btn2X + btnW, btnY + btnH, nColor, FALSE);
+        DrawString(btn2X + 15, btnY + 12, "いいえ(A)", nColor);
     }
     else if (state == State::Error) {
-        DrawBox(wx, wy, wx + 400, wy + 150, GetColor(60, 20, 20), TRUE);
-        DrawBox(wx, wy, wx + 400, wy + 150, GetColor(255, 255, 255), FALSE);
-
-        DrawString(wx + 55, wy + 55, "装備中のため売却できません！", GetColor(255, 100, 100));
+        DrawBox(wx, wy, wx + dialogW, wy + dialogH, GetColor(60, 20, 20), TRUE);
+        DrawBox(wx, wy, wx + dialogW, wy + dialogH, GetColor(255, 255, 255), FALSE);
+        DrawString(wx + (int)(dialogW * 0.13f), wy + (int)(dialogH * 0.36f), "装備中のため売却できません！", GetColor(255, 100, 100));
     }
 }

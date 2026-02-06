@@ -902,26 +902,45 @@ void Player::GetArtifactRender() {
 /// </summary>
 void Player::PlayerStatusRender() {
 
-	DrawBox(920, 20, WINDOW_WIDTH, 280, black, TRUE);
-	DrawBox(920, 20, WINDOW_WIDTH, 40, white, FALSE);
-	DrawFormatStringToHandle(930, 20, white, MainFont, "ステータス");
+	// --- 【1200x800基準のレスポンシブ計算】 ---
+	// 右端から270pxの位置を基準にする (270 / 1200 = 0.225)
+	int StatusX = WINDOW_WIDTH - (int)(WINDOW_WIDTH * 0.225f);
+
+	// パネル全体の横幅 (280 / 1200 = 0.233)
+	int panelLeft = WINDOW_WIDTH - (int)(WINDOW_WIDTH * 0.233f);
+	int panelBottom = (int)(WINDOW_HEIGHT * 0.3f); // 240 / 800 = 0.3
+	int titleHeight = (int)(WINDOW_HEIGHT * 0.05f); // 40 / 800 = 0.05
+
+	// 文字の間隔 (20px刻み -> 800で2.5%)
+	int lineGap = (int)(WINDOW_HEIGHT * 0.025f);
+	int startTextY = (int)(WINDOW_HEIGHT * 0.075f); // 60 / 800 = 0.075
+
+	// --- 描画処理 ---
+	// 背景の黒枠
+	DrawBox(panelLeft, 20, WINDOW_WIDTH, panelBottom, black, TRUE);
+	// タイトル部分の白枠
+	DrawBox(panelLeft, 20, WINDOW_WIDTH, titleHeight, white, FALSE);
+
+	// 「ステータス」の文字（右端から一定の距離に配置）
+	// 930pxは1200pxにおいて右から270pxなので、StatusXと同じ基準が使えます
+	DrawFormatStringToHandle(StatusX, 20, white, MainFont, "ステータス");
 
 	if (Lv == MAX_LV) {
-		DrawFormatStringToHandle(930, 60, white, MainFont, "レベル　　　 : MAX", Lv);
-		DrawFormatStringToHandle(930, 80, white, MainFont, "経験値　　 　: MAX", exp, maxExp);
+		DrawFormatStringToHandle(StatusX, startTextY, white, MainFont, "レベル　　　 : MAX");
+		DrawFormatStringToHandle(StatusX, startTextY + lineGap, white, MainFont, "経験値　　 　: MAX");
 	}
 	else {
-		DrawFormatStringToHandle(930, 60, white, MainFont, "レベル　　　 : %d", Lv);
-		DrawFormatStringToHandle(930, 80, white, MainFont, "経験値　　 　: %d / %d", exp, maxExp);
+		DrawFormatStringToHandle(StatusX, startTextY, white, MainFont, "レベル　　　 : %d", Lv);
+		DrawFormatStringToHandle(StatusX, startTextY + lineGap, white, MainFont, "経験値　　 　: %d / %d", exp, maxExp);
 	}
 
-	DrawFormatStringToHandle(930, 100, white, MainFont, "体力 　 　 　 : %d / %d", hp, maxHp);
-	DrawFormatStringToHandle(930, 120, white, MainFont, "攻撃力　　　 : %d", atk);
-	DrawFormatStringToHandle(930, 140, white, MainFont, "防御力　　　 : %d", def);
-	DrawFormatStringToHandle(930, 160, white, MainFont, "会心率　　　 : %.1f%%", criticalHitRate);
-	DrawFormatStringToHandle(930, 180, white, MainFont, "会心ダメージ : %.1f%%", criticalDamage);
-	DrawFormatStringToHandle(930, 200, white, MainFont, "コイン　　　 : %d枚", coinValue);
-
+	// 各項目を lineGap (2.5%) ずつずらして描画
+	DrawFormatStringToHandle(StatusX, startTextY + lineGap * 2, white, MainFont, "体力 　 　 　 : %d / %d", hp, maxHp);
+	DrawFormatStringToHandle(StatusX, startTextY + lineGap * 3, white, MainFont, "攻撃力　　　 : %d", atk);
+	DrawFormatStringToHandle(StatusX, startTextY + lineGap * 4, white, MainFont, "防御力　　　 : %d", def);
+	DrawFormatStringToHandle(StatusX, startTextY + lineGap * 5, white, MainFont, "会心率　　　 : %.1f%%", criticalHitRate);
+	DrawFormatStringToHandle(StatusX, startTextY + lineGap * 6, white, MainFont, "会心ダメージ : %.1f%%", criticalDamage);
+	DrawFormatStringToHandle(StatusX, startTextY + lineGap * 7, white, MainFont, "コイン　　　 : %d枚", coinValue);
 }
 
 /// <summary>

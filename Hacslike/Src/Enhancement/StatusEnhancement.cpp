@@ -57,9 +57,16 @@ bool StatusEnhancement::Update() {
 
 	// --- レイアウト基準（Renderと完全に同期させる） ---
 	int centerX = WINDOW_WIDTH / 2;
-	// ゲージサイズ拡大(w:65, gap:7)に基づき、10個分の幅を考慮して中央寄せ
-	int gaugeStartX = centerX - 370;
-	int baseY = 180;
+
+	// 【1200x800基準で再計算】
+	int curW = (int)(WINDOW_WIDTH * 0.0541f);    // 1200pxで65相当
+	int curGap = (int)(WINDOW_WIDTH * 0.0058f);  // 1200pxで7相当
+	int curSkew = (int)(curW * 0.276f);          // w=65で18相当
+	int totalGaugeWidth = (curW * 10) + (curGap * 9) + curSkew;
+
+	int gaugeStartX = centerX - (totalGaugeWidth / 2);
+	int baseY = (int)(WINDOW_HEIGHT * 0.225f);    // 800pxで180相当
+	int itemGap = (int)(WINDOW_HEIGHT * 0.1375f); // 800pxで110相当
 
 	// パッド（十字キー）による選択移動
 	if (input->IsButtonDown(XINPUT_GAMEPAD_DPAD_UP)) {
@@ -81,10 +88,10 @@ bool StatusEnhancement::Update() {
 
 	for (int i = 0; i < (int)stats.size(); i++) {
 		int x = gaugeStartX;
-		int y = baseY + i * 110; // 項目の縦間隔
+		int y = baseY + i * itemGap;
 
-		// 判定範囲：名前(x-150)からコスト表示(x+850)まで、高さはゲージ高さ(45)付近をカバー
-		if (mouseX >= x - 150 && mouseX <= x + 850 && mouseY >= y && mouseY <= y + 80) {
+		// 判定範囲：項目全体をカバー
+		if (mouseX >= x - 150 && mouseX <= x + totalGaugeWidth + 100 && mouseY >= y && mouseY <= y + (int)(itemGap * 0.75f)) {
 			selectedIndex = i;
 		}
 	}
@@ -254,53 +261,56 @@ void StatusEnhancement::Render() {
 	ClearDrawScreenZBuffer();
 	SetUseLighting(FALSE);
 
-	// --- 中央揃えのための計算 ---
+	// --- 【1200x800基準でレスポンシブ計算】 ---
 	int centerX = WINDOW_WIDTH / 2;
-	int gaugeStartX = centerX - 370;
-	int baseY = 180;
+	int curW = (int)(WINDOW_WIDTH * 0.0541f);
+	int curGap = (int)(WINDOW_WIDTH * 0.0058f);
+	int curSkew = (int)(curW * 0.276f);
+	int totalGaugeWidth = (curW * 10) + (curGap * 9) + curSkew;
+
+	int gaugeStartX = centerX - (totalGaugeWidth / 2);
+	int baseY = (int)(WINDOW_HEIGHT * 0.225f);
+	int itemGap = (int)(WINDOW_HEIGHT * 0.1375f);
 
 	// 背景パネル
 	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GetColor(5, 5, 10), TRUE);
 
-	// タイトル (中央寄せ)
-	unsigned int titleColor = allMax ? GetColor(255, 255, 255) : GetColor(200, 200, 200);
-
-	// 所持コイン表示 (右上)
+	// 所持コイン表示
 	unsigned int coinColor = GetColor(255, 215, 0);
-	DrawFormatStringToHandle(WINDOW_WIDTH - 280, 60, coinColor, MainFont, "COINS: %d", playerCoins);
+	DrawFormatStringToHandle(WINDOW_WIDTH - 280, (int)(WINDOW_HEIGHT * 0.075f), coinColor, MainFont, "COINS: %d", playerCoins);
 
 	for (int i = 0; i < (int)stats.size(); i++) {
 		int x = gaugeStartX;
-		int y = baseY + i * 110;
-		int jo = 1;
+		int y = baseY + i * itemGap;
 
-		// 選択カーソル (y方向のオフセット微調整)
+		// 選択カーソル
 		if (i == selectedIndex) {
 			int animX = (int)(sin(GetNowCount() / 150.0f) * 5.0f);
 			DrawString(x - 175 + animX, y + 15, "->", GetColor(255, 255, 255));
 		}
 
-		// 項目名・レベル・ボーナス (ゲージの左側)
+		// 項目名・レベル・ボーナス
 		DrawStringToHandle(x - 140, y + 5, stats[i].name.c_str(), GetColor(255, 255, 255), MainFont);
 		DrawFormatStringToHandle(x - 140, y + 32, (stats[i].level >= 50 ? GetColor(255, 215, 0) : GetColor(150, 150, 150)), MainFont, "Lv.%d", stats[i].level);
 		if (stats[i].name == "会心ダメ")
-			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d%%", (int)stats[i].totalBonus / 100);
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150), MainFont, "+%d%%", (int)stats[i].totalBonus / 100);
 		else if (stats[i].name == "会心率")
 			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150), MainFont, "+%.1f%%", stats[i].totalBonus);
 		else
-			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150),MainFont, "+%d", (int)stats[i].totalBonus);
+			DrawFormatStringToHandle(x - 140, y + 62, GetColor(0, 255, 150), MainFont, "+%d", (int)stats[i].totalBonus);
 
-		// ゲージ描画 (ここで大きいサイズが適用される)
+		// ゲージ描画
 		DrawParallelGauge(x, y, stats[i].level, stats[i].color);
 
-		// コスト表示 (ゲージが大きくなった分、xのオフセットを 640 -> 750 に拡大)
+		// コスト表示
+		int costX = x + totalGaugeWidth + 20;
 		if (stats[i].level < 50) {
 			int cost = 3 + (stats[i].level * 4);
 			unsigned int cCol = (playerCoins >= cost) ? GetColor(255, 255, 255) : GetColor(255, 50, 50);
-			DrawFormatStringToHandle(x + 750, y + 15, cCol, MainFont,"COST: %d", cost);
+			DrawFormatStringToHandle(costX, y + 15, cCol, MainFont, "COST: %d", cost);
 		}
 		else {
-			DrawStringToHandle(x + 750, y + 15, "MAX", GetColor(255, 215, 0), MainFont);
+			DrawStringToHandle(costX, y + 15, "MAX", GetColor(255, 215, 0), MainFont);
 		}
 	}
 
@@ -327,11 +337,11 @@ void StatusEnhancement::Render() {
 }
 
 void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int baseColor) {
-	// --- ゲージのサイズ設定（拡大版） ---
-	int w = 65;    // 1コマの幅
-	int h = 45;    // 1コマの高さ
-	int skew = 18; // 斜めの傾き
-	int gap = 7;   // コマ同士の隙間
+	// 【1200x800基準でサイズ計算】
+	int w = (int)(WINDOW_WIDTH * 0.0541f);    // 1200で65
+	int h = (int)(WINDOW_HEIGHT * 0.05625f); // 800で45
+	int skew = (int)(w * 0.276f);             // w=65で18
+	int gap = (int)(WINDOW_WIDTH * 0.0058f);  // 1200で7
 
 	float systemTime = GetNowCount() / 1000.0f;
 
@@ -341,40 +351,26 @@ void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int 
 	if (currentLoopLevel == 0 && level > 0) currentLoopLevel = 10;
 
 	unsigned int loopColors[] = {
-		GetColor(180, 180, 180), // 1周目：シルバー
-		GetColor(0, 110, 220),   // 2周目：ブルー
-		GetColor(220, 180, 0),   // 3周目：イエロー
-		GetColor(140, 0, 230),   // 4周目：パープル
-		GetColor(200, 0, 50)     // 5周目：レッド
+		GetColor(180, 180, 180), GetColor(0, 110, 220), GetColor(220, 180, 0),
+		GetColor(140, 0, 230), GetColor(200, 0, 50)
 	};
 
 	for (int i = 0; i < 10; i++) {
 		float offsetY = allMax ? sin(systemTime * 4.0f - (i * 0.5f)) * 12.0f : 0.0f;
 		int curY = y + (int)offsetY;
 
-		unsigned int contentCol;
-		unsigned int outerBorder;
-		unsigned int innerLight;
-
+		unsigned int contentCol, outerBorder, innerLight;
 		bool isFilled = (i < currentLoopLevel);
 
 		if (allMax) {
 			float h_val = systemTime * 3.0f - (i * 0.4f);
-			contentCol = GetColor(
-				(int)(128 + 127 * sin(h_val)),
-				(int)(128 + 127 * sin(h_val + 2.09f)),
-				(int)(128 + 127 * sin(h_val + 4.18f))
-			);
+			contentCol = GetColor((int)(128 + 127 * sin(h_val)), (int)(128 + 127 * sin(h_val + 2.09f)), (int)(128 + 127 * sin(h_val + 4.18f)));
 			outerBorder = GetColor(255, 215, 0);
 			innerLight = GetColor(220, 220, 180);
 		}
 		else {
-			if (loopCount >= 1) {
-				contentCol = isFilled ? loopColors[loopCount] : loopColors[loopCount - 1];
-			}
-			else {
-				contentCol = isFilled ? loopColors[0] : GetColor(30, 30, 35);
-			}
+			if (loopCount >= 1) contentCol = isFilled ? loopColors[loopCount] : loopColors[loopCount - 1];
+			else contentCol = isFilled ? loopColors[0] : GetColor(30, 30, 35);
 
 			int effectiveLoop = isFilled ? loopCount : (loopCount - 1);
 			if (effectiveLoop < 0) effectiveLoop = -1;
@@ -392,18 +388,14 @@ void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int 
 			}
 		}
 
-		// 四角形の4頂点を計算
 		int x1 = x + i * (w + gap) + skew; int y1 = curY;
 		int x2 = x1 + w;                   int y2 = curY;
 		int x3 = x + i * (w + gap) + w;    int y3 = curY + h;
 		int x4 = x + i * (w + gap);        int y4 = curY + h;
 
-		// 塗りつぶし描画
 		DrawQuadrangle(x1, y1, x2, y2, x3, y3, x4, y4, contentCol, TRUE);
-		// 枠線描画
 		DrawQuadrangle(x1, y1, x2, y2, x3, y3, x4, y4, outerBorder, FALSE);
 
-		// 光沢・エフェクト
 		if (allMax || loopCount > 0 || isFilled || (i == (level % 10) && level < 50)) {
 			float shineIdx = sin(systemTime * 3.5f - (i * 0.4f));
 			unsigned int finalLight = innerLight;
@@ -414,71 +406,31 @@ void StatusEnhancement::DrawParallelGauge(int x, int y, int level, unsigned int 
 }
 
 void StatusEnhancement::SaveTo(BinaryWriter& w) {
-	// g_instance がない場合は空データを書いておく（互換性維持）
 	if (!g_instance) {
-		uint32_t zero = 0;
-		w.WritePOD(zero);
-		// allMax, selectedIndex を書いておく
-		bool am = false;
-		int si = 0;
-		w.WritePOD(am);
-		w.WritePOD(si);
+		uint32_t zero = 0; w.WritePOD(zero);
+		bool am = false; int si = 0; w.WritePOD(am); w.WritePOD(si);
 		return;
 	}
-
-	// stats の数
 	uint32_t count = static_cast<uint32_t>(g_instance->stats.size());
 	w.WritePOD(count);
 	for (const auto& s : g_instance->stats) {
-		w.WriteString(s.name);
-		w.WritePOD(s.level);
-		w.WritePOD(s.totalBonus);
-		w.WritePOD(s.color);
+		w.WriteString(s.name); w.WritePOD(s.level); w.WritePOD(s.totalBonus); w.WritePOD(s.color);
 	}
-	w.WritePOD(g_instance->allMax);
-	w.WritePOD(g_instance->selectedIndex);
+	w.WritePOD(g_instance->allMax); w.WritePOD(g_instance->selectedIndex);
 }
 
 void StatusEnhancement::LoadFrom(BinaryReader& r, uint32_t ver) {
-	// バージョン分岐が必要になったら ver を使って対応する
-	uint32_t count = 0;
-	r.ReadPOD(count);
+	uint32_t count = 0; r.ReadPOD(count);
 	g_instance->stats.clear();
 	for (uint32_t i = 0; i < count; ++i) {
-		StatData sd;
-		sd.name = r.ReadString();
-		r.ReadPOD(sd.level);
-		r.ReadPOD(sd.totalBonus);
-		r.ReadPOD(sd.color);
+		StatData sd; sd.name = r.ReadString();
+		r.ReadPOD(sd.level); r.ReadPOD(sd.totalBonus); r.ReadPOD(sd.color);
 		g_instance->stats.push_back(sd);
 	}
-	r.ReadPOD(g_instance->allMax);
-	r.ReadPOD(g_instance->selectedIndex);
-
-	// 確保されているデータを元に必要なら Player へ反映（HPやATK等）
-	//Player* player = Player::GetInstance();
-	//if (player && !g_instance->stats.empty()) {
-	//	// HP
-	//	player->SetMaxHp(100 + g_instance->stats[0].totalBonus);
-	//	player->SetHp(player->GetMaxHp());
-	//	// 攻撃
-	//	player->SetAtk(10 + g_instance->stats[1].totalBonus);
-	//	// 防御
-	//	player->SetDef(g_instance->stats[2].totalBonus);
-	//	// 会心率
-	//	player->SetCriticalHitRate((float)(5 + g_instance->stats[3].totalBonus));
-	//	// 会心ダメ
-	//	player->SetCriticalDamage(1.5f + (g_instance->stats[4].totalBonus / 100.0f));
-	//}
-
+	r.ReadPOD(g_instance->allMax); r.ReadPOD(g_instance->selectedIndex);
 }
 
 void StatusEnhancement::StatusSetUp() {
-	// 1. UI用データの初期化
-	for (auto& s : stats) {
-		s.level = 0;
-		s.totalBonus = 0;
-	}
-	allMax = false;
-	selectedIndex = 0;
+	for (auto& s : stats) { s.level = 0; s.totalBonus = 0; }
+	allMax = false; selectedIndex = 0;
 }
