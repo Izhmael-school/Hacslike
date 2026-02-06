@@ -189,32 +189,32 @@ void ItemFactory::InitializeDefaultItems()
         });
 
     RegisterItem("Sword_Iron", []() {
-        int effectValue = GenerateEffectValueSeed("Sword_Iron", 10, 5);
+        int effectValue = GenerateEffectValueSeed("Sword_Iron", 10, 2);
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
-        "剣", "普通の剣", 150, effectValue,"MeleeWeapon");
+        "剣", "普通の剣\n量産型", 150, effectValue,"MeleeWeapon");
         });
 
     RegisterItem("Axe", []() {
-        int effectValue = GenerateEffectValueSeed("Axe", 15, 8);
+        int effectValue = GenerateEffectValueSeed("Axe", 13, 5);
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
-        "斧", "普通の斧", 200, effectValue, "MeleeWeapon");
+        "斧", "普通の斧\n重くて切れ味がいい", 200, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Stick", []() {
         return std::make_unique<ItemStick>(VGet(0, 0, 0),
-        "木の棒", "そこら辺に落ちてる木の棒", 0, 5, "MeleeWeapon");
+        "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 0, 5, "MeleeWeapon");
         });
 
     RegisterItem("Greatsword", []() {
-        int effectValue = GenerateEffectValueSeed("Greatsword", 90, 25);
+        int effectValue = GenerateEffectValueSeed("Greatsword", 80, 10);
         return std::make_unique<Greatsword>(VGet(0, 0, 0),
-        "グレートソード", "重い！強い！かっこいい！", 500, effectValue, "MeleeWeapon");
+        "グレートソード", "グレートな剣\nため攻撃が可能", 500, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Spear", []() {
-        int effectValue = GenerateEffectValueSeed("Greatsword", 50,20 );
+        int effectValue = GenerateEffectValueSeed("Greatsword", 60,10 );
         return std::make_unique<Spear>(VGet(0, 0, 0),
-        "槍", "槍", 230, effectValue, "MeleeWeapon");
+        "槍", "槍\nダッシュ攻撃で一網打尽", 230, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Hammer", []() {
@@ -232,7 +232,7 @@ void ItemFactory::InitializeDefaultItems()
     RegisterItem("FangSword", []() {
         int effectValue = 150;
         return std::make_unique<FangSword>(VGet(0, 0, 0),
-            "呪われた牙剣", "でかい犬戦の戦利品\n高い攻撃力を得られるが自身の傷つける", 300, effectValue, "MeleeWeapon");
+            "呪われた牙剣", "ヘルハウンド戦の戦利品\n高い攻撃力を得られるが自身の傷つける", 300, effectValue, "MeleeWeapon");
         });
     RegisterItem("DuraHammmer", []() {
         int effectValue = 200;

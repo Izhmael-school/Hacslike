@@ -62,6 +62,10 @@ void StageObject::OnTriggerEnter(Collider* _pOther) {
 	isHitPlayer = true;
 }
 
+void StageObject::OnTriggerExit(Collider* _pOther)
+{
+}
+
 void StageObject::OpenExecute() {
 	GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop); // ƒQ[ƒ€’âŽ~
 	menuOpenState = Open;
@@ -79,8 +83,8 @@ void StageObject::Setup() {}
 
 void StageObject::Teardown() {}
 
-void StageObject::OnTriggerEnter(Collider* _pOther) {
-	if (_pOther->GetCharacter()->GetTag() != "Player") return;
-
-	isHitPlayer = false;
-}
+//void StageObject::OnTriggerEnter(Collider* _pOther) {
+//	if (_pOther->GetCharacter()->GetTag() != "Player") return;
+//
+//	isHitPlayer = false;
+//}
