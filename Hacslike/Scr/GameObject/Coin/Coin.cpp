@@ -163,7 +163,7 @@ void Coin::SpawnCoin(VECTOR _pos)
             coin->position = _pos;
             coin->rotation = VGet(0, 0, 0);
             coin->startTime = 0;
-            coin->coinValue = GetRand(10) + 1;
+            coin->coinValue = GetRand(4) + 1;
             coin->active = true;
 
             // 行列・コライダー再設定
