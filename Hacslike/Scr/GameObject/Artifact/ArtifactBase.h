@@ -47,10 +47,10 @@ public:
 /// HP‚ªˆê’è’lˆÈã‚¾‚ÆUŒ‚—Íã¸
 /// </summary>
 class conditional_attack_power_raise_HP : public ArtifactBase {
-	float attackBoost;
+	int attackBoost;
 	bool isBoosted;
 public:
-	conditional_attack_power_raise_HP(float boost = 2.0f);
+	conditional_attack_power_raise_HP(int boost = 2);
 	void Update(Player* player) override;
 	void Apply(Player* player) override;
 	void Remove(Player* player) override;

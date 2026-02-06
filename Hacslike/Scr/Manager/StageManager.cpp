@@ -238,7 +238,13 @@ void StageManager::GenerateStage(int stageID) {
 		// 位置は StageGenerator 側のセル座標（generator->SetGameObject がスケール変換してくれる）
 		generator->SetGameObject(so, sd.saveObjectPos);
 		generator->pSaveObject = so;
-		generator->pSaveObject->SetVisible(true);
+		// 宝箱の位置が(0,0,0)の場合は非表示にする（ボスフロアでは宝箱を出さない）
+		if (sd.saveObjectPos.x <= 0 && sd.saveObjectPos.z <= 0) {
+			generator->pSaveObject->SetVisible(false);
+		}
+		else {
+			generator->pSaveObject->SetVisible(true);
+		}
 
 	}
 
