@@ -7,6 +7,8 @@
 #include "../../Component/Collider/Collider.h"
 #include "../../GameSystem/GameSystem.h"
 #include "../../Manager/SalesManager.h"
+#include "../Enhancement/EnhancementStone.h"
+#include "../SaveObject/SaveObject.h"
 
 ItemShop::ItemShop()
 	:isTouch(false)
@@ -151,7 +153,7 @@ void ItemShop::Update() {
 	}
 
 	// 戻るボタンを押したら
-	if (isTouch && state != Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A)))
+	if (isTouch && state != Invalid && (InputManager::GetInstance().IsKeyDown(KEY_INPUT_ESCAPE) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_A) || InputManager::GetInstance().IsMouseDown(MOUSE_INPUT_RIGHT)))
 		if (state != Menu)
 			state = Menu;
 		else {
@@ -239,7 +241,7 @@ void ItemShop::Update() {
 		}
 
 		// 決定
-		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B)) {
+		if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_F) || InputManager::GetInstance().IsButtonDown(XINPUT_GAMEPAD_B)) {
 			Player* pP = Player::GetInstance();
 			BuyItemData& buy = buyItem[selectBuyCommand];
 			if (buy.prace <= pP->GetCoinValue() && !buy.isSell) {
@@ -267,7 +269,8 @@ void ItemShop::Update() {
 }
 
 void ItemShop::Render() {
-	if (!isVisible) return;
+	if (!isVisible || EnhancementStone::GetInstance()->GetIsOpenMenu() == true
+		|| SaveObject::GetInstance()->GetIsOpenSaveMenu() == true) return;
 
 	MV1SetMatrix(modelHandle, matrix);
 	MV1DrawModel(modelHandle);
@@ -347,6 +350,8 @@ void ItemShop::Render() {
 		SalesManager::GetInstance().Render();
 		break;
 	}
+
+	DrawStringToHandle(0, WINDOW_HEIGHT - 20, "左クリック/Fキー/Bボタン : 決定 | 右クリック/Escキー/Aボタン : 戻る", GetColor(100, 100, 100), MainFont);
 
 #if _DEBUG
 	if (pCollider)
