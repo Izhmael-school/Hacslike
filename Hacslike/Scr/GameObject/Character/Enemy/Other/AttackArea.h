@@ -58,7 +58,7 @@ public:
 		else
 			c = green;
 
-		DrawSphere3D(position, radius, 16, c, c, true);
+		DrawSphere3D(position, radius, 16, c, c, false);
 
 	}
 };
