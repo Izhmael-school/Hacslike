@@ -88,16 +88,16 @@ void ItemShop::OpenExecute() {
 		ChoiceItem(weaponIDList, 2);
 		ChoiceItem(allItemIDList, 1);
 		SetPrace();
-	}
 
-	if (buyItem.size() > 0) {
-		int col = 3;
+		if (buyItem.size() > 0) {
+			int col = 3;
 
-		for (int i = 0; i < buyItem.size(); i++) {
-			int x = i % col;
-			int y = i / col;
-			VECTOR pos = VMult(buyItemIconOffSet, VGet(x + 1, y + 1, 0));
-			MathDrawPos(&buyItem[i], pos);
+			for (int i = 0; i < buyItem.size(); i++) {
+				int x = i % col;
+				int y = i / col;
+				VECTOR pos = VMult(buyItemIconOffSet, VGet(x + 1, y + 1, 0));
+				MathDrawPos(&buyItem[i], pos);
+			}
 		}
 	}
 }

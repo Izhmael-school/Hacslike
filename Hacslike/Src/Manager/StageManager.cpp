@@ -280,6 +280,7 @@ void StageManager::GenerateStage(int stageID) {
 		generator->SetGameObject(&shop, sd.itemShopPos);
 		generator->pItemShop = &shop;
 		generator->pItemShop->SetVisible(true);
+		shop.Setup();
 	}
 
 	// ボスの配置

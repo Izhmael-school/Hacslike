@@ -91,13 +91,13 @@ private:
 
 	void DeadExecute() override;
 	void OpenExecute();
-	void Setup();
 public:
 	void Start() override;
 	void Update() override;
 	void Render() override;
 	void OnTriggerEnter(Collider* _pOhter) override;
 	void OnTriggerExit(Collider* _pOhter) override;
+	void Setup();
 	ShopState GetState() { return state; }
 };
 
