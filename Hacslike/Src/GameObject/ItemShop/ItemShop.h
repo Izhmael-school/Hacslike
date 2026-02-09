@@ -36,6 +36,7 @@ public:
 	ItemShop();
 	~ItemShop();
 
+	void DeleteData();
 private:
 	// ƒAƒCƒeƒ€‚ÌID
 	const std::string potion_small_ID = "Potion_Small";

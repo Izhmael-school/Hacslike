@@ -27,11 +27,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ウィンドウのサイズを変更する
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	// 起動時のウィンドウのモードの設定
-//#if _DEBUG
-//	ChangeWindowMode(FALSE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
-//#else 
+#if _DEBUG
 	ChangeWindowMode(TRUE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
-//#endif
+#else 
+	ChangeWindowMode(FALSE);	// TRUE : ウィンドウモード FALSE : フルスクリーン
+#endif
 
 
 
@@ -130,6 +130,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	Coin::DestroyInstance();
+	AudioManager::GetInstance().DeleteData();
+	EffectManager::GetInstance().DeleteData();
+	EnemyManager::GetInstance().DeleteAllEnemy();
+	FontManager::GetInstance().DeleteFont();
+	SceneManager::GetInstance().DeleteScene();
+	StageManager::GetInstance().DeleteStage();
+
 	Effkseer_End();
 	// DxLibの終了
 	DxLib_End();

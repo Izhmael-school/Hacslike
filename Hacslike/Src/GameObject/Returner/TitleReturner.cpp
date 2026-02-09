@@ -37,6 +37,7 @@ TitleReturner::TitleReturner() : GameObject() {
 }
 
 TitleReturner::~TitleReturner() {
+	MV1DeleteModel(modelHandle);
 	if (pCollider) {
 		CollisionManager::GetInstance().UnRegister(pCollider);
 		delete pCollider;

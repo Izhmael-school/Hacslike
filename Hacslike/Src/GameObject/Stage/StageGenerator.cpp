@@ -104,6 +104,10 @@ StageGenerator::~StageGenerator() {
 	MV1DeleteModel(roadModel);
 	MV1DeleteModel(stairModel);
 
+	SaveObject::GetInstance()->DestroyInstance();
+	EnhancementStone::GetInstance()->DestroyInstance();
+	TitleReturner::GetInstance()->DestroyInstance();
+	pItemShop->DeleteData();
 }
 
 void StageGenerator::Update() {

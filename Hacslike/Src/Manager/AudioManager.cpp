@@ -7,9 +7,7 @@ AudioManager::AudioManager()
 {}
 
 AudioManager::~AudioManager() {
-	for (auto itr : audioResourceMap) {
-		DeleteSoundMem(itr.second);
-	}
+	
 
 	for (auto pA : pAudioList) {
 		if (pA != nullptr) {
@@ -121,4 +119,10 @@ void AudioManager::Update() {
 	// isVisible = false のものを消す
 	// プロパティのC/C++の全般から変更できる
 	std::erase_if(pAudioList, [](Audio* _pE) {return !_pE->IsVisible(); });
+}
+
+void AudioManager::DeleteData() {
+	for (auto itr : audioResourceMap) {
+		DeleteSoundMem(itr.second);
+	}
 }

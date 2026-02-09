@@ -17,7 +17,13 @@ ItemShop::ItemShop()
 	Start();
 }
 
-ItemShop::~ItemShop() {}
+ItemShop::~ItemShop() {
+
+}
+
+void ItemShop::DeleteData() {
+	MV1DeleteModel(modelHandle);
+}
 
 void ItemShop::ChoiceItem(std::vector<std::string> _itemIDList, int _choiceCount) {
 	for (int i = 0; i < _choiceCount; i++) {

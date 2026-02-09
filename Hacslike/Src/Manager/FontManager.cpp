@@ -9,12 +9,6 @@ FontManager::FontManager() {
 
 FontManager::~FontManager() {
 
-	for (auto f : fontDataArray) {
-		DeleteFontToHandle(f.fontHandle);
-	}
-
-	fontDataArray.clear();
-	fontDataArray.shrink_to_fit();
 }
 
 
@@ -46,4 +40,14 @@ int FontManager::UseFontHandle(string _fontName) {
 	}
 
 	return -1;
+}
+
+void FontManager::DeleteFont() {
+
+	for (auto f : fontDataArray) {
+		DeleteFontToHandle(f.fontHandle);
+	}
+
+	fontDataArray.clear();
+	fontDataArray.shrink_to_fit();
 }

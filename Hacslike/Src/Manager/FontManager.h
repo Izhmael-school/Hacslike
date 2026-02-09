@@ -28,6 +28,8 @@ public:
 	void CreateFontData(string fontName,int size,int thick,int fontType,string anyFontName = "");
 	int UseFontHandle(string _fontName);
 
+	void DeleteFont();
+
 public:
 	vector<FontData> fontDataArray;
 

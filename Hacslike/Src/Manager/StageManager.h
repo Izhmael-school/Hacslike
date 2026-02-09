@@ -86,6 +86,7 @@ public:
 
 	inline void SetisBossSpawn(bool _s) { isLoadBossSpawn = _s; }
 
+	void DeleteStage();
 private:
 	void GenerateStage();
 	void GenerateStage(int stageID);

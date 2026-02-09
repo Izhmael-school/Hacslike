@@ -22,15 +22,7 @@ StageManager::StageManager() {
 }
 
 StageManager::~StageManager() {
-	delete generator;
-	generator = nullptr;
-	for (auto t : floorDifTexture) {
-		DeleteGraph(t);
-	}
 
-	for (auto t : floorNormalTexture) {
-		DeleteGraph(t);
-	}
 }
 
 void StageManager::Start() {
@@ -353,6 +345,18 @@ void StageManager::SetGameObject(VECTOR pos, GameObject* obj) {
 
 void StageManager::ChangeTexture(int num, ObjectType changeObject) {
 	generator->ChangeObjectTexture(num, changeObject);
+}
+
+void StageManager::DeleteStage() {
+	delete generator;
+	generator = nullptr;
+	for (auto t : floorDifTexture) {
+		DeleteGraph(t);
+	}
+
+	for (auto t : floorNormalTexture) {
+		DeleteGraph(t);
+	}
 }
 
 void StageManager::SaveTo(BinaryWriter& w) {

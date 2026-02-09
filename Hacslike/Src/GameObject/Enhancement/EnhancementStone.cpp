@@ -40,6 +40,7 @@ EnhancementStone::EnhancementStone() : GameObject() {
 }
 
 EnhancementStone::~EnhancementStone() {
+    MV1DeleteModel(modelHandle);
     if (pCollider) {
         CollisionManager::GetInstance().UnRegister(pCollider);
         delete pCollider;

@@ -10,12 +10,7 @@ SceneManager::SceneManager()
 }
 
 SceneManager::~SceneManager() {
-	pCurrentScene = nullptr;
 
-	for (auto scene : pSceneList) {
-		delete scene;
-		scene = nullptr;
-	}
 }
 
 void SceneManager::Start() {
@@ -46,4 +41,13 @@ void SceneManager::ChangeScene(SceneType _next) {
 	pCurrentScene = pSceneList[(int)_next];
 	pCurrentScene->Setup();
 	FadeManager::GetInstance().FadeIn(0.5f);
+}
+
+void SceneManager::DeleteScene() {
+	pCurrentScene = nullptr;
+
+	for (auto scene : pSceneList) {
+		delete scene;
+		scene = nullptr;
+	}
 }

@@ -9,10 +9,7 @@ EffectManager::EffectManager()
 }
 
 EffectManager::~EffectManager() {
-	for (auto itr : effectResourceMap) {
-		DeleteEffekseerEffect(itr.second);
-	}
-	effectResourceMap.clear();
+
 
 	for (auto pEffe : pEffectList) {
 		if (pEffe != nullptr) {
@@ -86,5 +83,12 @@ void EffectManager::Render() {
 		pEffe->Render();
 	}
 	DrawEffekseer3D();
+}
+
+void EffectManager::DeleteData() {
+	for (auto itr : effectResourceMap) {
+		DeleteEffekseerEffect(itr.second);
+	}
+	effectResourceMap.clear();
 }
 

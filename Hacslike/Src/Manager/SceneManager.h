@@ -35,5 +35,8 @@ public:
 	inline bool GetEnd() const { return isEnd; }
 
 	inline void SetEnd(bool _End) { isEnd = _End; }
+
+	void DeleteScene();
+
 };
 

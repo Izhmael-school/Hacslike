@@ -46,5 +46,7 @@ public:
 
 	void Render();
 
+	void DeleteData();
+
 };
 

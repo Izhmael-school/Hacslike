@@ -34,6 +34,8 @@ public:
 	void Stop(std::string _name);
 
 	void Update();
+	
+	void DeleteData();
 
 };
 

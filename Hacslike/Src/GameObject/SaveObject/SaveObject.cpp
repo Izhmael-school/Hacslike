@@ -17,6 +17,7 @@ SaveObject::SaveObject(VECTOR _pos)
 
 SaveObject::~SaveObject()
 {
+	MV1DeleteModel(modelHandle);
 	if (pCol) {
 		CollisionManager::GetInstance().UnRegister(pCol);
 		delete pCol;
