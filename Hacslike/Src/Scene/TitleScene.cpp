@@ -178,19 +178,18 @@ void TitleScene::Render() {
 
 	DrawExtendGraph(WINDOW_WIDTH - 140, WINDOW_HEIGHT - 50, WINDOW_WIDTH, WINDOW_HEIGHT, logoHandle,true);
 	if (!inLoadMenu) {
-		// Title menu
-		DrawStringToHandle(550, 400, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white, fontHandle);
-		DrawStringToHandle(550, 440, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white,fontHandle);
-		DrawStringToHandle(550, 480, (titleMenuIndex == 2) ? "> 終了" : "  終了", white,fontHandle);
+		DrawStringToHandle(860, 600, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white, fontHandle);
+		DrawStringToHandle(860, 640, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white, fontHandle);
+		DrawStringToHandle(860, 680, (titleMenuIndex == 2) ? "> 終了" : "  終了", white, fontHandle);
 
 		// Hint
-		DrawFormatStringToHandle(550, 540, white, fontHandle, "A: 決定  /  上下: 選択");
+		DrawFormatStringToHandle(800, 740, white, fontHandle, "A/Enter/左クリック: 決定  /  ↑↓: 選択");
 	}
 	else {
 		// Load menu - display 10 slots
-		DrawStringToHandle(500, 120, "ロードメニュー", white,fontHandle);
+		DrawStringToHandle(860, 500, "ロードメニュー", white, fontHandle);
 		const auto& slots = SaveManager::GetInstance().GetSlots();
-		int startY = 180;
+		int startY = 560;
 		for (int i = 0; i < 10; ++i) {
 			int y = startY + i * 36;
 			char buf[256];
@@ -210,16 +209,16 @@ void TitleScene::Render() {
 
 			// highlight selected
 			if (i == selectedSlot) {
-				DrawStringToHandle(460, y, ">", yellow,fontHandle);
-				DrawStringToHandle(480, y, buf, white,fontHandle);
+				DrawStringToHandle(840, y, ">", yellow, fontHandle);
+				DrawStringToHandle(860, y, buf, white, fontHandle);
 			}
 			else {
-				DrawStringToHandle(480, y, buf, gray,fontHandle);
+				DrawStringToHandle(860, y, buf, gray, fontHandle);
 			}
 		}
 
 		// Instructions
-		DrawFormatStringToHandle(480, startY + 10 * 36 + 20, white,fontHandle, "A: ロード   X: 削除   B: 戻る");
+		DrawFormatStringToHandle(800, startY + 10 * 36 + 20, white, fontHandle, "A/Enter: ロード   X/DEL: 削除   B/ESC: 戻る");
 	}
 
 	// Message area

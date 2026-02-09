@@ -31,8 +31,8 @@ void BossBase::Start() {
 	pAnimator->SetModelHandle(modelHandle);
 	// アニメーションのロード
 	LoadAnimation();
-	hpBar = new Gauge(hp,maxHp, WINDOW_WIDTH / 4, 700.0f, WINDOW_WIDTH / 2, 15.0f);
-	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 715.0f, WINDOW_WIDTH / 2, 5.0f,false);
+	hpBar = new Gauge(hp,maxHp, WINDOW_WIDTH / 4, 800.0f, WINDOW_WIDTH / 2, 15.0f);
+	attackSpanBar = new Gauge(atkTime, atkSpan, WINDOW_WIDTH / 4, 815.0f, WINDOW_WIDTH / 2, 5.0f,false);
 	attackSpanBar->ChangeColor(cyan, blue, black, blue);
 	StageData data = StageManager::GetInstance().generator->GetStageData();
 	SetAppearPos(data.stairSpawnPos);
@@ -114,7 +114,7 @@ void BossBase::Render() {
 	if (!isDead && rayAnswer) {
 		hpBar->Render();
 		attackSpanBar->Render();
-		DrawStringToHandle(WINDOW_WIDTH / 4, 700.0f - 20, name.c_str(), white,MainFont);
+		DrawStringToHandle(WINDOW_WIDTH / 4, 800.0f - 20, name.c_str(), white,MainFont);
 		
 	}
 	if(isDead) BossSlainUI::GetInstance()->Draw();

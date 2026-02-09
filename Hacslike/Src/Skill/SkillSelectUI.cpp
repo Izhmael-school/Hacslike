@@ -21,10 +21,10 @@ void SkillSelectUI::StartSelection()
     fireworks.clear();
     for (int i = 0; i < 5; ++i) {
         FireworkParticle fw;
-        fw.x = 300 + i * 250; // スキルカードの下あたり
-        fw.y = 600;           // 画面下
+        fw.x = 500 + i * 350; // スキルカードの横に散らす
+        fw.y = 900;           // 画面下
         fw.vx = 0;
-        fw.vy = -6.0f - i;    // 上方向へ打ち上げ
+        fw.vy = -6.0f - i;    // 上方向に打ち上げ
         fw.color = GetColor(255, 200 - i * 30, 100 + i * 20);
         fw.life = 0;
         fw.maxLife = 60 + i * 10;
@@ -74,8 +74,8 @@ int SkillSelectUI::UpdateSelection(const std::vector<std::shared_ptr<Skill>>& sk
 
     for (int i = 0; i < 3; i++)
     {
-        const int centerX = 640; // 画面中央（解像度1280x720の場合）
-        const int centerY = 180;
+        const int centerX = 960; // 画面中央（解像度1280x720の場合）
+        const int centerY = 270;
         // index = 0 を中央、1を左、2を右にする
         int offsetX = 0;
         if (i == 0) offsetX = 0;
@@ -169,8 +169,8 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
     if (!isActive) return;
     if (skills.empty()) return;
 
-    const int centerX = 640; // 画面中央（解像度1280x720の場合）
-    const int centerY = 180;
+    const int centerX = 960; // 画面中央（解像度1280x720の場合）
+    const int centerY = 270;
     const int gap = 300;
 
     // 出現アニメ補間
@@ -223,7 +223,7 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
  //-------------------------------------
  //  花火の上限チェック
  //-------------------------------------
-    // 花火の継続生成処理
+     // 花火の継続的生成
     static int fireworkTimer = 0;
     fireworkTimer++;
     const int MAX_FIREWORK = 250;
@@ -231,8 +231,8 @@ void SkillSelectUI::Render(const std::vector<std::shared_ptr<Skill>>& skills)
         if (fireworkTimer > 40) {
             fireworkTimer = 0;
             FireworkParticle fw;
-            fw.x = 300 + GetRand(600);
-            fw.y = 600;
+            fw.x = 300 + GetRand(1320); // 1920の範囲に調整
+            fw.y = 900;
             fw.vx = 0;
             fw.vy = -6.0f - GetRand(4);
             fw.color = GetColor(255, 200 - GetRand(50), 100 + GetRand(100));
