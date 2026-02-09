@@ -1,39 +1,39 @@
-#pragma once
+Ôªø#pragma once
 #include "DxLib.h"
 #include "../Definition.h"
 
 struct GameEndUI {
 private:
-    // ÉRÉìÉXÉgÉâÉNÉ^ÇprivateÇ…ÇµÇƒÅAèüéËÇ…ÉCÉìÉXÉ^ÉìÉXâªÇ≈Ç´Ç»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
+    // „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Çíprivate„Å´„Åó„Å¶„ÄÅÂãùÊâã„Å´„Ç§„É≥„Çπ„Çø„É≥„ÇπÂåñ„Åß„Åç„Å™„ÅÑ„Çà„ÅÜ„Å´„Åô„Çã
     GameEndUI() = default;
 
 public:
-    // óBàÍÇÃÉCÉìÉXÉ^ÉìÉXÇéÊìæÇ∑ÇÈä÷êî
+    // ÂîØ‰∏Ä„ÅÆ„Ç§„É≥„Çπ„Çø„É≥„Çπ„ÇíÂèñÂæó„Åô„ÇãÈñ¢Êï∞
     static GameEndUI* GetInstance() {
-        static GameEndUI instance; // staticÇ»ÉçÅ[ÉJÉãïœêîÇ∆ÇµÇƒé¿ëÃÇï€éù
+        static GameEndUI instance; // static„Å™„É≠„Éº„Ç´„É´Â§âÊï∞„Å®„Åó„Å¶ÂÆü‰Ωì„Çí‰øùÊåÅ
         return &instance;
     }
 
-    // ÉRÉsÅ[ã÷é~ÅiÉVÉìÉOÉãÉgÉìÇÃà¿ëSê´ÇçÇÇﬂÇÈÅj
+    // „Ç≥„Éî„ÉºÁ¶ÅÊ≠¢Ôºà„Ç∑„É≥„Ç∞„É´„Éà„É≥„ÅÆÂÆâÂÖ®ÊÄß„ÇíÈ´ò„ÇÅ„ÇãÔºâ
     GameEndUI(const GameEndUI&) = delete;
     void operator=(const GameEndUI&) = delete;
 
     int alpha = 0;
-    int step = 0;  // 0:ë“ã@, 1:è„è∏, 2:â∫ç~
+    int step = 0;  // 0:ÂæÖÊ©ü, 1:‰∏äÊòá, 2:‰∏ãÈôç
 
     void Start() {
         if (step == 0) step = 1;
     }
 
     inline void Update() {
-        if (step == 1) { // è„è∏
+        if (step == 1) { // ‰∏äÊòá
             alpha += 2;
             if (alpha >= 255) {
                 alpha = 255;
                 step = 2;
             }
         }
-        else if (step == 2) { // â∫ç~
+        else if (step == 2) { // ‰∏ãÈôç
             alpha -= 2;
             if (alpha <= 0) {
                 alpha = 0;
@@ -45,9 +45,20 @@ public:
     inline void Draw() {
         if (step == 0 && alpha == 0) return;
 
+        // ÁîªÈù¢„ÅÆ‰∏≠ÂøÉ„ÇíË®àÁÆó
+        int centerX = WINDOW_WIDTH / 2;
+        int centerY = WINDOW_HEIGHT / 2;
+
+        // ÊèèÁîªË®≠ÂÆö
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-        DrawBox(0, 200, WINDOW_WIDTH, 350, GetColor(5, 0, 0), TRUE);
-        DrawExtendString(400, 260, 5, 5, "YOU DIED", GetColor(255, 30, 30));
+
+        //  ËÉåÊôØÂ∏Ø
+        int halfRectHeight = 75;
+        DrawBox(0, centerY - halfRectHeight, WINDOW_WIDTH, centerY + halfRectHeight, GetColor(5, 0, 0), TRUE);
+
+        DrawExtendString(centerX - 200, centerY - 40, 5, 5, "YOU DIED", GetColor(255, 30, 30));
+
+        // 4. Ë®≠ÂÆö„ÇíÊàª„Åô
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
 };

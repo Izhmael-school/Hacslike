@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include "../Definition.h"
 #include "../GameObject/Stage/StageGenerator.h"
@@ -18,7 +18,7 @@ struct BossSlainUI {
 private:
     BossSlainUI() = default;
     int fireworkTimer = 0;
-    int stayTimer = 0; // •\¦‚ğˆÛ‚·‚é‚½‚ß‚Ìƒ^ƒCƒ}[
+    int stayTimer = 0; // è¡¨ç¤ºã‚’ç¶­æŒã™ã‚‹ãŸã‚ã®ã‚¿ã‚¤ãƒãƒ¼
 
 public:
     static BossSlainUI* GetInstance() {
@@ -30,9 +30,9 @@ public:
     void operator=(const BossSlainUI&) = delete;
 
     int alpha = 0;
-    int step = 0;  // 0:‘Ò‹@, 1:ƒtƒF[ƒhƒCƒ“, 2:ˆÛ, 3:ƒtƒF[ƒhƒAƒEƒg
+    int step = 0;  // 0:å¾…æ©Ÿ, 1:ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³, 2:ç¶­æŒ, 3:ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
     std::vector<FireworkParticle> fireworks;
-    const int MAX_FIREWORK = 500; // ”š”­•ª‚ğŠÜ‚ß‚Ä­‚µ—]—T‚ğ‚½‚¹‚é
+    const int MAX_FIREWORK = 500; // çˆ†ç™ºåˆ†ã‚’å«ã‚ã¦å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
 
     void Start() {
         step = 1;
@@ -41,7 +41,7 @@ public:
         stayTimer = 0;
         fireworks.clear();
 
-        // ‰”­‚Ì‘Å‚¿ã‚°
+        // åˆç™ºã®æ‰“ã¡ä¸Šã’
         for (int i = 0; i < 5; ++i) {
             AddFirework(300 + i * 250, 600, -6.0f - (float)i);
         }
@@ -62,37 +62,37 @@ public:
     }
 
     inline void Update() {
-        // ƒQ[ƒ€’â~’†A‚Ü‚½‚Í‘Ò‹@ó‘Ô‚È‚ç‰½‚à‚µ‚È‚¢
+        // ã‚²ãƒ¼ãƒ åœæ­¢ä¸­ã€ã¾ãŸã¯å¾…æ©ŸçŠ¶æ…‹ãªã‚‰ä½•ã‚‚ã—ãªã„
         if (GameSystem::GetInstance()->GetGameStatus() == GameStatus::Stop || step == 0) {
             return;
         }
 
-        // --- ó‘Ô‘JˆÚƒƒWƒbƒN ---
-        if (step == 1) { // ƒtƒF[ƒhƒCƒ“
-            alpha += 10; // ­‚µ‘¬‚ß‚é
+        // --- çŠ¶æ…‹é·ç§»ãƒ­ã‚¸ãƒƒã‚¯ ---
+        if (step == 1) { // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+            alpha += 10; // å°‘ã—é€Ÿã‚ã‚‹
             if (alpha >= 255) {
                 alpha = 255;
                 step = 2;
                 stayTimer = 0;
             }
         }
-        else if (step == 2) { // ˆÛi‚±‚±‚ª’·‚¢‚Æ~‚Ü‚Á‚ÄŒ©‚¦‚éj
+        else if (step == 2) { // ç¶­æŒï¼ˆã“ã“ãŒé•·ã„ã¨æ­¢ã¾ã£ã¦è¦‹ãˆã‚‹ï¼‰
             stayTimer++;
-            // 120‚Í’·‚¢‚©‚à‚µ‚ê‚È‚¢‚Ì‚ÅA60i1•bj’ö“x‚É’Zk
+            // 120ã¯é•·ã„ã‹ã‚‚ã—ã‚Œãªã„ã®ã§ã€60ï¼ˆ1ç§’ï¼‰ç¨‹åº¦ã«çŸ­ç¸®
             if (stayTimer > 60) {
                 step = 3;
             }
         }
-        else if (step == 3) { // ƒtƒF[ƒhƒAƒEƒg
+        else if (step == 3) { // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
             alpha -= 5;
             if (alpha <= 0) {
                 alpha = 0;
-                step = 0; // ‚±‚±‚ÅŠ®‘S‚ÉI—¹
+                step = 0; // ã“ã“ã§å®Œå…¨ã«çµ‚äº†
                 fireworks.clear();
             }
         }
 
-        // --- ‰Ô‰Î‚Ì¶¬ƒƒWƒbƒN ---
+        // --- èŠ±ç«ã®ç”Ÿæˆãƒ­ã‚¸ãƒƒã‚¯ ---
         if (StageManager::GetInstance().floorCount > 50) {
             fireworkTimer++;
             if (fireworks.size() < 100 && fireworkTimer > 30) {
@@ -101,19 +101,19 @@ public:
             }
         }
 
-        // --- ƒp[ƒeƒBƒNƒ‹‚ÌXV (’Ç‰Á—p‚Ìƒeƒ“ƒ|ƒ‰ƒŠƒoƒbƒtƒ@‚ğ—pˆÓ‚µ‚ÄˆÀ‘S‚Éƒ‹[ƒv) ---
+        // --- ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æ›´æ–° (è¿½åŠ ç”¨ã®ãƒ†ãƒ³ãƒãƒ©ãƒªãƒãƒƒãƒ•ã‚¡ã‚’ç”¨æ„ã—ã¦å®‰å…¨ã«ãƒ«ãƒ¼ãƒ—) ---
         std::vector<FireworkParticle> nextParticles;
         for (auto it = fireworks.begin(); it != fireworks.end(); ) {
             it->life++;
 
             if (!it->exploded) {
                 it->y += it->vy;
-                it->vy += 0.15f; // d—Í
+                it->vy += 0.15f; // é‡åŠ›
 
-                // ’¸“_•t‹ß‚Å”š”­
+                // é ‚ç‚¹ä»˜è¿‘ã§çˆ†ç™º
                 if (it->vy >= -1.0f || it->life > it->maxLife) {
                     it->exploded = true;
-                    // ”š”­‰Î‰Ô‚Ì’Ç‰Á
+                    // çˆ†ç™ºç«èŠ±ã®è¿½åŠ 
                     for (int j = 0; j < 12; ++j) {
                         FireworkParticle p;
                         p.x = it->x; p.y = it->y;
@@ -132,11 +132,11 @@ public:
             else {
                 it->x += it->vx;
                 it->y += it->vy;
-                it->vy += 0.05f; // d—Í
-                it->vx *= 0.98f; // ‹ó‹C’ïR
+                it->vy += 0.05f; // é‡åŠ›
+                it->vx *= 0.98f; // ç©ºæ°—æŠµæŠ—
             }
 
-            // õ–½‚ª—ˆ‚½ƒp[ƒeƒBƒNƒ‹‚ğíœ
+            // å¯¿å‘½ãŒæ¥ãŸãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å‰Šé™¤
             if (it->life > it->maxLife) {
                 it = fireworks.erase(it);
             }
@@ -144,7 +144,7 @@ public:
                 ++it;
             }
         }
-        // V‚µ‚­¶¬‚³‚ê‚½”š”­ƒp[ƒeƒBƒNƒ‹‚ğ‡—¬‚³‚¹‚é
+        // æ–°ã—ãç”Ÿæˆã•ã‚ŒãŸçˆ†ç™ºãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’åˆæµã•ã›ã‚‹
         for (const auto& p : nextParticles) {
             if (fireworks.size() < MAX_FIREWORK) fireworks.push_back(p);
         }
@@ -153,34 +153,45 @@ public:
     inline void Draw() {
         if (step == 0 && alpha == 0) return;
 
-        // •`‰æİ’èi’â~’†‚à‚±‚±‚Ü‚Å‚Í’Ê‚éj
+        // 1. ä¸­å¤®åº§æ¨™ã‚’è¨ˆç®—ã—ã¦ãŠãã¨ä¾¿åˆ©
+        int centerX = WINDOW_WIDTH / 2;
+        int centerY = WINDOW_HEIGHT / 2;
+
+        // --- æç”»è¨­å®š ---
         SetUseZBuffer3D(FALSE);
         SetWriteZBuffer3D(FALSE);
         SetUseLighting(FALSE);
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-        // ”wŒi‘Ñ
-        DrawBox(0, 240, WINDOW_WIDTH, 360, GetColor(0, 0, 0), TRUE);
+        // 2. èƒŒæ™¯å¸¯ï¼ˆç”»é¢ä¸­å¤®ã«é«˜ã•ã‚’åˆã‚ã›ã¦æç”»ï¼‰
+        // ä»¥å‰ã® 240ã€œ360ï¼ˆé«˜ã•120ï¼‰ã‚’ç¶­æŒã™ã‚‹å ´åˆ
+        int rectHalfHeight = 60;
+        DrawBox(0, centerY - rectHalfHeight, WINDOW_WIDTH, centerY + rectHalfHeight, GetColor(0, 0, 0), TRUE);
 
-        // ƒeƒLƒXƒg•\¦
+        // 3. ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤º
+        // DrawExtendStringã®åº§æ¨™ã¯ã€Œå·¦ä¸Šã€ãªã®ã§ã€æ–‡å­—åˆ—ã®å¹…ã‚’è€ƒæ…®ã—ã¦ä¸­å¿ƒã«å¯„ã›ã¾ã™
+        // â€»æ–‡å­—ã‚µã‚¤ã‚º5å€ã€ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å ´åˆã®æ¦‚ç®—
         if (StageManager::GetInstance().floorCount > 50) {
-            DrawExtendString(360, 270, 5, 5, "GOD SLAIN", yellow);
+            // "GOD SLAIN" ã¯ 9æ–‡å­—
+            DrawExtendString(centerX - 225, centerY - 30, 5, 5, "GOD SLAIN", yellow);
         }
         else {
-            DrawExtendString(380, 270, 5, 5, "BOSS SLAIN", yellow);
+            // "BOSS SLAIN" ã¯ 10æ–‡å­—
+            DrawExtendString(centerX - 250, centerY - 30, 5, 5, "BOSS SLAIN", yellow);
         }
 
-        // ‰Ô‰Î‚Ì•`‰æ
+        // 4. èŠ±ç«ã®æç”»
+        // (fireworksã®x, yãŒç”Ÿæˆæ™‚ã«WINDOW_WIDTHç­‰ã‚’ä½¿ã£ã¦è¨ˆç®—ã•ã‚Œã¦ã„ã‚Œã°ã€ã“ã“ã¯å¤‰æ›´ä¸è¦ã§ã™)
         for (const auto& fw : fireworks) {
             int drawAlpha = alpha;
             if (fw.exploded) {
-                // ”š”­Œã‚Íõ–½‚É‰‚¶‚Ä‚³‚ç‚ÉƒtƒF[ƒhƒAƒEƒg
                 drawAlpha = (int)(alpha * (1.0f - (fw.life / fw.maxLife)));
             }
             SetDrawBlendMode(DX_BLENDMODE_ALPHA, drawAlpha);
             DrawCircle((int)fw.x, (int)fw.y, fw.exploded ? 2 : 3, fw.color, TRUE);
         }
 
+        // --- è¨­å®šæˆ»ã— ---
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
         SetUseLighting(TRUE);
         SetUseZBuffer3D(TRUE);
