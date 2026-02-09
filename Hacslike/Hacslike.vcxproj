@@ -198,6 +198,13 @@
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\Data\EnemyData.json" />
+    <None Include="Src\Data\FloorData.json" />
+    <None Include="Src\Data\SkillTreeData.json" />
+    <None Include="Src\Data\StageData.json" />
+    <None Include="Src\Data\WeaponsData.json" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
