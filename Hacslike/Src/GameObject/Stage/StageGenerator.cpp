@@ -19,7 +19,7 @@ StageGenerator::StageGenerator()
 	, roomCount(0)
 	, line(0)
 	, mapSize(4)
-	, mapOffset(VGet(950, 0, WINDOW_HEIGHT - mapSize))
+	, mapOffset(VGet(1660, 0, WINDOW_HEIGHT - mapSize))
 	, stage() {
 	wallModel = MV1LoadModel("Res/Model/Stage/Wall.mv1");
 	groundModel = MV1LoadModel("Res/Model/Stage/Room.mv1");
@@ -745,9 +745,11 @@ StageCell* StageGenerator::GetStageObjectFromPos(VECTOR _dataPos) {
 void StageGenerator::DrawMap() {
 	if (Character::player == nullptr) return;
 
-	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);
-	DrawBox(950 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, white, false);
-	DrawFormatStringToHandle(950 + ((WINDOW_WIDTH - 950) / 3), WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 25, red, MainFont, "‘æ %d ŠK‘w", StageManager::GetInstance().floorCount - 1);
+	
+
+	DrawBox(1660 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, black, true);
+	DrawBox(1660 - MAP_SIZE, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE), WINDOW_WIDTH, WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 30, white, false);
+	DrawFormatStringToHandle(1450 + ((WINDOW_WIDTH - 950) / 3), WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 25, red, MainFont, "‘æ %d ŠK‘w", StageManager::GetInstance().floorCount - 1);
 
 	// ƒvƒŒƒCƒ„[‚Ìƒ|ƒWƒVƒ‡ƒ“Žæ“¾
 	VECTOR playerPos = Character::player->GetPosition();
