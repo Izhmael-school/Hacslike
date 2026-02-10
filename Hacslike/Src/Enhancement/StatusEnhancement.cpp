@@ -2,7 +2,6 @@
 #include "DxLib.h"
 #include <cmath>
 #include "../Manager/InputManager.h"
-#include "../GameObject/Character/Player/Player.h"
 #include"../Save/SaveIO.h"
 
 // グローバル参照用ポインタ定義（クラス内 static の定義）
@@ -134,7 +133,7 @@ bool StatusEnhancement::Update() {
 			if (stats[i].level >= 50) continue;
 
 			int remainingLevels = 50 - stats[i].level;
-			float boostValue = 0;
+			boostValue = 0;
 
 			// インデックス(i)に応じて上昇値を設定
 			switch (i) {
@@ -183,7 +182,7 @@ bool StatusEnhancement::Update() {
 		if (!stats.empty() && stats[selectedIndex].level < 50) {
 
 			// コスト計算
-			int cost = 3 + (stats[selectedIndex].level * 4);
+			int cost = 3 + (stats[selectedIndex].level * 5);
 
 			// コインが足りるかチェック
 			if (playerCoins >= cost) {
@@ -433,4 +432,33 @@ void StatusEnhancement::LoadFrom(BinaryReader& r, uint32_t ver) {
 void StatusEnhancement::StatusSetUp() {
 	for (auto& s : stats) { s.level = 0; s.totalBonus = 0; }
 	allMax = false; selectedIndex = 0;
+}
+
+void StatusEnhancement::ApplyAllStatsToPlayer(Player* player) {
+	if (!player || stats.empty()) return;
+
+	for (int i = 0; i < (int)stats.size(); i++) {
+		float bonus = stats[i].totalBonus;
+		if (bonus <= 0 && stats[i].level == 0) continue;
+
+		switch (i) {
+		case 0: // HP
+			player->SetMaxHp(player->GetMaxHp() + bonus);
+			player->SetHp(player->GetMaxHp()); // 全回復させる場合
+			break;
+		case 1: // 攻撃力
+			player->SetBaseAtk(player->GetBaseAtk() + (int)bonus);
+			player->UpdateAtkFromEquipment();
+			break;
+		case 2: // 防御力
+			player->SetDef(player->GetDef() + bonus);
+			break;
+		case 3: // 会心率
+			player->SetCriticalHitRate(player->GetCriticalHitRate() + bonus);
+			break;
+		case 4: // 会心ダメ
+			player->SetCriticalDamage(player->GetCriticalDamage() + (bonus / 100.0f));
+			break;
+		}
+	}
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include"../Manager/SaveManager.h"
+#include "../GameObject/Character/Player/Player.h"
 
 // ステータス個別のデータ構造
 struct StatData {
@@ -19,6 +20,8 @@ private:
     float timer;        // 演出用タイマー
     bool allMax;        // 全MAXフラグ
     int selectedIndex;  // 現在選択中のインデックス
+
+    float boostValue = 0;
 
     // グローバル参照用（セーブ/ロードで参照）
     static StatusEnhancement* g_instance;
@@ -47,6 +50,8 @@ public:
     /// 描画処理
     /// </summary>
     void Render();
+
+    void ApplyAllStatsToPlayer(Player* player);
     
     /// <summary>
     /// セットアップ
@@ -61,6 +66,8 @@ public:
     /// <param name="level">現在のレベル</param>
     /// <param name="baseColor">基本色</param>
     void DrawParallelGauge(int x, int y, int level, unsigned int baseColor);
+
+    inline float GetBoostValue() const { return boostValue; };
 
     // セーブ / ロード
     // StatusEnhancement の実インスタンスが存在する場合はその状態を保存 / 復元する
