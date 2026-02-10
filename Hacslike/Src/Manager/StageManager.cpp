@@ -26,19 +26,19 @@ StageManager::~StageManager() {
 }
 
 void StageManager::Start() {
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/10f.mp3", "floor10", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/20f.mp3", "floor20", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/30f.mp3", "floor30", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/40f.mp3", "floor40", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/50f.mp3", "floor50", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/PlayerDeath.mp3", "PlayerDeath", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Durahan.mp3", "Durahan", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ketbleperz.mp3", "Ketbleperz", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ouger.mp3", "Ouger", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/HellHound.mp3", "HellHound", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Goblin.mp3", "Goblin", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/FirstFloor.mp3", "FirstFloor", false);
-	AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/BossKill.mp3", "BossKill", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/10f.mp3", "floor10", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/20f.mp3", "floor20", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/30f.mp3", "floor30", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/40f.mp3", "floor40", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/50f.mp3", "floor50", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Floor/PlayerDeath.mp3", "PlayerDeath", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Durahan.mp3", "Durahan", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ketbleperz.mp3", "Ketbleperz", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Ouger.mp3", "Ouger", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/HellHound.mp3", "HellHound", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/Goblin.mp3", "Goblin", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/FirstFloor.mp3", "FirstFloor", false);
+	//AudioManager::GetInstance().Load("Res/Audio/BGM/MainGame/Boss/BossKill.mp3", "BossKill", false);
 
 }
 
@@ -199,7 +199,7 @@ void StageManager::GenerateStage() {
 
 	}
 
-	AudioManager::GetInstance().PlayBGM(floorData.bgmName);
+	AudioManager::GetInstance().LoadPlay("Res/Audio/BGM/MainGame/Floor/" + floorData.bgmName + +".mp3", floorData.bgmName, false);
 }
 
 void StageManager::GenerateStage(int stageID) {
@@ -279,7 +279,7 @@ void StageManager::GenerateStage(int stageID) {
 	VECTOR pos = generator->GetStageData().bossSpawnPos;
 
 	int enemyType = generator->GetStageData().bossType;
-	AudioManager::GetInstance().PlayBGM(sd.bgmName);
+	AudioManager::GetInstance().LoadPlay("Res/Audio/BGM/MainGame/Boss/" + sd.bgmName + +".mp3", sd.bgmName, false);
 	if (enemyType == -1) return;
 
 	if (!isLoadBossSpawn) {

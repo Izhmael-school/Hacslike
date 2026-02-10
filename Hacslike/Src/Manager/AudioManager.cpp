@@ -126,3 +126,14 @@ void AudioManager::DeleteData() {
 		DeleteSoundMem(itr.second);
 	}
 }
+
+void AudioManager::LoadPlay(std::string _filePath, std::string _name, bool _is3D, float volume) {
+	auto a = audioResourceMap.find(_name);
+	if (a == audioResourceMap.end()) {
+		Load(_filePath, _name, _is3D);
+		PlayBGM(_name, volume);
+	}
+	else {
+		PlayBGM(_name, volume);
+	}
+}

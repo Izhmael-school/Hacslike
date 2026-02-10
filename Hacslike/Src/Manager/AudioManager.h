@@ -37,5 +37,6 @@ public:
 	
 	void DeleteData();
 
+	void LoadPlay(std::string _filePath, std::string _name, bool _is3D, float volume = 1.0f);
 };
 

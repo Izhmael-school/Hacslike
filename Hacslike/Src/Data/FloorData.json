@@ -10,35 +10,35 @@
     "startFloor": 1,
     "endFloor": 10,
     "floorTextureName": "1",
-    "floorBGMName": "floor10",
+    "floorBGMName": "10f",
     "spawnEnemyID": [ 0, 2, 3 ]
   },
   {
     "startFloor": 11,
     "endFloor": 20,
     "floorTextureName": "1",
-    "floorBGMName": "floor20",
+    "floorBGMName": "20f",
     "spawnEnemyID": [ 3, 4, 5 ]
   },
   {
     "startFloor": 21,
     "endFloor": 30,
     "floorTextureName": "2",
-    "floorBGMName": "floor30",
+    "floorBGMName": "30f",
     "spawnEnemyID": [ 10, 5, 6 ]
   },
   {
     "startFloor": 31,
     "endFloor": 40,
     "floorTextureName": "2",
-    "floorBGMName": "floor40",
+    "floorBGMName": "40f",
     "spawnEnemyID": [ 6, 7, 8 ]
   },
   {
     "startFloor": 41,
     "endFloor": 50,
     "floorTextureName": "3",
-    "floorBGMName": "floor50",
+    "floorBGMName": "50f",
     "spawnEnemyID": [ 7, 8, 9 ]
   },
   {
