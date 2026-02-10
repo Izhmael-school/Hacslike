@@ -259,6 +259,8 @@ public:		//	メンバ関数
 	/// </summary>
 	void PlayerSetUp();
 
+	void NewPlayerSetUp();
+
 	// 強化可能フラグの状態を返す (GameSceneで使用)
 	bool GetCanEnhance() const { return canEnhance; }
 

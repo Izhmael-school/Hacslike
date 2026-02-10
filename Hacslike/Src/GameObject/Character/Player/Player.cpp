@@ -20,6 +20,7 @@
 #include <math.h>
 #include <cmath>
 #include "../../../UI/GameEndUI.h"
+#include "../../../Enhancement/StatusEnhancement.h"
 
 
 // シングルトンインスタンスの初期化
@@ -973,6 +974,58 @@ void Player::PlayerSetUp() {
 	isSelectArtifact = false;
 	isTitleUI = false;
 	isMenuUI = false;        // メニュー画面
+
+	StatusEnhancement* se = StatusEnhancement::GetInstance();
+	if (se) {
+		se->ApplyAllStatsToPlayer(this);
+	}
+
+	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
+	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
+		VZero, "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 0, 5, "Res/ItemIcon/stick.png"
+	);
+
+	// インベントリに追加
+	GetInventory()->AddItem(std::move(stick));
+	Inventory::InventoryItem* lastItem = GetInventory()->GetLastItem();
+
+	// 装備（GetLastItem が nullptr でないことを確認してから）
+	if (lastItem != nullptr && lastItem->item) {
+		GetInventory()->EquipItem(lastItem->item.get());
+		lastItem->item->Use();
+		// 装備処理後に確実に攻撃力を再計算して反映する
+		UpdateAtkFromEquipment();
+	}
+}
+
+void Player::NewPlayerSetUp() {
+	// 全ての宝箱を元に戻す
+	// インベントリのクリア
+	GetInventory()->Clear();
+
+	// スキルのクリア（Player ポインタを渡して個別解除）
+	SkillManager::GetInstance().ClearSkills(this);
+
+	// アーティファクトのクリア
+	ArtifactManager::GetInstance().ClearArtifact(this);
+
+	maxHp = 100;
+	hp = maxHp;
+	baseAttack = 5;
+	def = 2;
+	exp = 0;
+	maxExp = 100;
+	Lv = 1;
+	criticalHitRate = 10;
+	criticalDamage = 100;
+	SetSpeed(1);
+	CollisionManager::GetInstance().CheckRegister(pCollider);
+	isDead = false;
+	hitChest = false;
+	isSelectArtifact = false;
+	isTitleUI = false;
+	isMenuUI = false;        // メニュー画面
+	coinValue = 0;
 
 	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(

@@ -198,7 +198,7 @@ void GameScene::Setup() {
 	else {
 		// 新規開始 / ロード無し の通常フロー
 		Player::GetInstance()->PlayerSetUp();
-		StatusEnhancement::GetInstance()->StatusSetUp();
+		//StatusEnhancement::GetInstance()->StatusSetUp();
 		StageManager::GetInstance().ResetFloorCount();
 		StageManager::GetInstance().NoFadeGenerate();
 	}
