@@ -196,12 +196,30 @@ void GameScene::Setup() {
 		SaveManager::GetInstance().ClearLoadedFlag();
 	}
 	else {
-		// 新規開始 / ロード無し の通常フロー
-		Player::GetInstance()->PlayerSetUp();
-		//StatusEnhancement::GetInstance()->StatusSetUp();
+		// ニューゲームまたは強くてニューゲーム
+		// ※TitleSceneからフラグを渡す必要があるため、以下の方法を推奨：
+
+		// 方法1: グローバルフラグまたはGameSystemに追加
+		// 方法2: SceneManagerに情報を持たせる
+		// 方法3: Playerクラスに「完全リセット要求フラグ」を追加
+
+		// ここでは方法3を採用（Playerクラスに静的フラグを追加する想定）
+
+		if (Player::GetInstance() && Player::GetInstance()->IsFullResetRequested()) {
+			// 完全なるニューゲーム
+			Player::GetInstance()->NewPlayerSetUp();
+			StatusEnhancement::GetInstance()->StatusSetUp();
+			Player::GetInstance()->ClearFullResetFlag();
+		}
+		else {
+			// 強くてニューゲーム（ステータス引き継ぎ）
+			Player::GetInstance()->PlayerSetUp();
+		}
+
 		StageManager::GetInstance().ResetFloorCount();
 		StageManager::GetInstance().NoFadeGenerate();
 	}
+		
 }
 
 void GameScene::Teardown() {

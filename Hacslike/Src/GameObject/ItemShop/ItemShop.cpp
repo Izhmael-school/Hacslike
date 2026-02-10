@@ -22,7 +22,9 @@ ItemShop::~ItemShop() {
 }
 
 void ItemShop::DeleteData() {
-	MV1DeleteModel(modelHandle);
+	if (this != nullptr) {
+		MV1DeleteModel(modelHandle);
+	}
 }
 
 void ItemShop::ChoiceItem(std::vector<std::string> _itemIDList, int _choiceCount) {

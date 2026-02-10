@@ -29,6 +29,7 @@ class StartTreasureChest;
 class Player : public Character {
 private:
 	static Player* instance; // シングルトン用
+	static bool fullResetRequested; // 完全リセットフラグ（追加）
 #pragma region メンバ変数
 private:	//	メンバ変数
 
@@ -272,6 +273,10 @@ public:		//	メンバ関数
 
 	void ResetUIStates();
 
+	// 追加: 完全リセットフラグの操作
+	static void RequestFullReset() { fullResetRequested = true; }
+	static bool IsFullResetRequested() { return fullResetRequested; }
+	static void ClearFullResetFlag() { fullResetRequested = false; }
 	
 #pragma endregion
 

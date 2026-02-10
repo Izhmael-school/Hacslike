@@ -41,6 +41,49 @@ void TitleScene::Start() {
 	memset(messageBuf, 0, sizeof(messageBuf));
 	fontHandle = FontManager::GetInstance().UseFontHandle("MainFont");
 	logoHandle = LoadGraph("Res/Title/TeamLogo.png");
+	// ★修正: descFontHandle を別途取得するか、fontHandle をコピー
+	descFontHandle = FontManager::GetInstance().UseFontHandle("MainFont");
+	descriptionAlpha = 255.0f;  // ★変更: 最初から255にして即座に表示
+	pendingStartMode = GameStartMode::None;
+
+	// メニュー説明文の初期化
+	InitializeMenuDescriptions();
+}
+
+
+void TitleScene::InitializeMenuDescriptions()
+{
+	// ニューゲーム
+	menuDescriptions[0].title = "【 ニューゲーム 】";
+	menuDescriptions[0].description[0] = "最初から冒険を始めます。";
+	menuDescriptions[0].description[1] = "全てのステータスが初期値にリセットされ、";
+	menuDescriptions[0].description[2] = "新たな挑戦が待ち受けています。";
+	menuDescriptions[0].description[3] = "初めてプレイする方はこちらを選択してください。";
+	menuDescriptions[0].lineCount = 4;
+
+	// 強くてニューゲーム
+	menuDescriptions[1].title = "【 強くてニューゲーム 】";
+	menuDescriptions[1].description[0] = "これまでの強化を引き継いで冒険を始めます。";
+	menuDescriptions[1].description[1] = "コイン、ステータス強化";
+	menuDescriptions[1].description[2] = "進行状況を保持したまま1階層から再挑戦できます。";
+	menuDescriptions[1].description[3] = "アイテム、スキル、アーティファクトは無くなり。";
+	menuDescriptions[1].lineCount = 4;
+
+	// ロード
+	menuDescriptions[2].title = "【 ロード 】";
+	menuDescriptions[2].description[0] = "セーブデータから冒険を再開します。";
+	menuDescriptions[2].description[1] = "最大10個のセーブスロットから選択できます。";
+	menuDescriptions[2].description[2] = "中断した階層、レベル、アイテムなどが";
+	menuDescriptions[2].description[3] = "そのまま復元されます。";
+	menuDescriptions[2].lineCount = 4;
+
+	// 終了
+	menuDescriptions[3].title = "【 ゲーム終了 】";
+	menuDescriptions[3].description[0] = "ゲームを終了します。";
+	menuDescriptions[3].description[1] = "セーブした内容はセーブデータに保存されています。";
+	menuDescriptions[3].description[2] = "またのご来訪をお待ちしております。";
+	menuDescriptions[3].description[3] = "";
+	menuDescriptions[3].lineCount = 3;
 }
 
 void TitleScene::Update() {
@@ -59,34 +102,54 @@ void TitleScene::Update() {
 
 	// Show title menu
 	if (!inLoadMenu) {
-		// Navigate menu
+		// Navigate menu - メニュー項目が4つに増えたので範囲を変更
 		if (input.IsButtonDown(XINPUT_GAMEPAD_DPAD_DOWN) || input.IsKeyDown(KEY_INPUT_DOWN)) {
-			titleMenuIndex = (titleMenuIndex + 1) % 3;
+			titleMenuIndex = (titleMenuIndex + 1) % 4;
 			AudioManager::GetInstance().PlayOneShot("Select");
+			// ★追加: メニュー変更時にアルファ値をリセット
+			descriptionAlpha = 0.0f;
 		}
 		if (input.IsButtonDown(XINPUT_GAMEPAD_DPAD_UP) || input.IsKeyDown(KEY_INPUT_UP)) {
-			titleMenuIndex = (titleMenuIndex + 2) % 3;
+			titleMenuIndex = (titleMenuIndex + 3) % 4;
 			AudioManager::GetInstance().PlayOneShot("Select");
+			// ★追加: メニュー変更時にアルファ値をリセット
+			descriptionAlpha = 0.0f;
+		}
+
+		// ★追加: フェードイン効果
+		if (descriptionAlpha < 255.0f) {
+			descriptionAlpha += 15.0f;
+			if (descriptionAlpha > 255.0f) descriptionAlpha = 255.0f;
 		}
 
 		// Select
 		if (input.IsButtonDown(XINPUT_GAMEPAD_A) || input.IsMouseDown(MOUSE_INPUT_LEFT) || input.IsKeyDown(KEY_INPUT_RETURN)) {
 			AudioManager::GetInstance().PlayOneShot("Decision");
 			if (titleMenuIndex == 0) {
-				// ゲームシーンに戻る前にフラグリセット
+				// ニューゲーム（完全リセット）
+				Player::RequestFullReset(); // フラグを立てる
 				if (Player::GetInstance()) {
 					Player::GetInstance()->ResetUIStates();
 					GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 				}
-				// Change to game scene
 				SceneManager::GetInstance().ChangeScene(SceneType::Game);
 			}
 			else if (titleMenuIndex == 1) {
-				// Open load menu
+				// 強くてニューゲーム（ステータス引き継ぎ）
+				Player::ClearFullResetFlag(); // フラグを下ろす
+				if (Player::GetInstance()) {
+					Player::GetInstance()->ResetUIStates();
+					GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
+				}
+				SceneManager::GetInstance().ChangeScene(SceneType::Game);
+			}
+			else if (titleMenuIndex == 2) {
+				// ロードメニューを開く
 				inLoadMenu = true;
 				selectedSlot = 0;
 			}
-			else if (titleMenuIndex == 2) {
+			else if (titleMenuIndex == 3) {
+				// 終了
 				SceneManager::GetInstance().SetEnd(true);
 			}
 		}
@@ -113,21 +176,17 @@ void TitleScene::Update() {
 				AudioManager::GetInstance().PlayOneShot("Select");
 			}
 			else {
-				// Ensure Player instance exists before load handlers run
-				/*Player::DestroyInstance();
-				*//*Player* p = Player::CreateInstance(VZero);*/
-				/*if (p) {*/
-					// Load into managers and player
-					if (SaveManager::GetInstance().Load(selectedSlot)) {
-						Player::GetInstance()->ResetUIStates();
-						// After successful load, go to game scene
-						SceneManager::GetInstance().ChangeScene(SceneType::Game);
-						return;
-					}
-					else {
-						snprintf(messageBuf, sizeof(messageBuf), "ロードに失敗しました (Slot %02d)", selectedSlot + 1);
-						messageFramesLeft = 120;
-				/*	}*/
+				// Load into managers and player
+				if (SaveManager::GetInstance().Load(selectedSlot)) {
+					Player::GetInstance()->ResetUIStates();
+					pendingStartMode = GameStartMode::Load;
+					// After successful load, go to game scene
+					SceneManager::GetInstance().ChangeScene(SceneType::Game);
+					return;
+				}
+				else {
+					snprintf(messageBuf, sizeof(messageBuf), "ロードに失敗しました (Slot %02d)", selectedSlot + 1);
+					messageFramesLeft = 120;
 				}
 			}
 		}
@@ -156,8 +215,6 @@ void TitleScene::Update() {
 
 	// Message timer decrement
 	if (messageFramesLeft > 0) --messageFramesLeft;
-
-
 }
 
 static std::string FormatTime(std::time_t t) {
@@ -172,18 +229,81 @@ static std::string FormatTime(std::time_t t) {
 	return ss.str();
 }
 
+void TitleScene::RenderMenuDescription()
+{
+	if (titleMenuIndex < 0 || titleMenuIndex >= 4) return;
+
+	const MenuDescription& desc = menuDescriptions[titleMenuIndex];
+
+	// メニュー項目の位置に合わせて説明ボックスを配置
+	int menuStartY = 520;
+	int menuItemHeight = 40;
+	int selectedMenuY = menuStartY + titleMenuIndex * menuItemHeight;
+
+	// 説明文ボックスの位置とサイズ（メニューの右側に配置）
+	int boxX = 1100;  // メニューの左側に配置
+	int boxY = selectedMenuY - 10;  // 選択中のメニュー項目に合わせる
+	int boxWidth = 460;
+	int boxHeight = 180;
+
+	// ★変更: アルファ値を固定で255に
+	int alpha = 255;
+
+	// 背景ボックス（半透明の黒）
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);  // 0.8f * 255 = 204 -> 200に固定
+	DrawBox(boxX, boxY, boxX + boxWidth, boxY + boxHeight, GetColor(0, 0, 0), TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// 外枠（選択中の色で光らせる）
+	int frameColor = GetColor(100, 200, 255);
+	if (titleMenuIndex == 1) frameColor = GetColor(255, 200, 100); // 強くてニューゲームは金色
+	else if (titleMenuIndex == 2) frameColor = GetColor(100, 255, 100); // ロードは緑色
+	else if (titleMenuIndex == 3) frameColor = GetColor(255, 100, 100); // 終了は赤色
+
+	// ★変更: 外枠は透明度なしで描画
+	DrawBox(boxX - 2, boxY - 2, boxX + boxWidth + 2, boxY + boxHeight + 2, frameColor, FALSE);
+	DrawBox(boxX - 3, boxY - 3, boxX + boxWidth + 3, boxY + boxHeight + 3, frameColor, FALSE);
+
+	// タイトル（見出し）
+	DrawStringToHandle(boxX + 20, boxY + 15, desc.title, GetColor(255, 255, 100), fontHandle);
+
+	// 区切り線
+	DrawLine(boxX + 20, boxY + 45, boxX + boxWidth - 20, boxY + 45, GetColor(150, 150, 150));
+
+	// 説明文（各行）
+	int lineY = boxY + 55;
+	int lineHeight = 28;
+	for (int i = 0; i < desc.lineCount; ++i) {
+		if (desc.description[i] && strlen(desc.description[i]) > 0) {
+			DrawStringToHandle(boxX + 20, lineY + i * lineHeight, desc.description[i], white, descFontHandle);
+		}
+	}
+}
+
+
 void TitleScene::Render() {
 	// Title
 	DrawGraph(0, 0, titleHandle, TRUE);
 
-	DrawExtendGraph(WINDOW_WIDTH - 140, WINDOW_HEIGHT - 50, WINDOW_WIDTH, WINDOW_HEIGHT, logoHandle,true);
-	if (!inLoadMenu) {
-		DrawStringToHandle(860, 600, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム", white, fontHandle);
-		DrawStringToHandle(860, 640, (titleMenuIndex == 1) ? "> ロード" : "  ロード", white, fontHandle);
-		DrawStringToHandle(860, 680, (titleMenuIndex == 2) ? "> 終了" : "  終了", white, fontHandle);
+	DrawExtendGraph(WINDOW_WIDTH - 140, WINDOW_HEIGHT - 50, WINDOW_WIDTH, WINDOW_HEIGHT, logoHandle, true);
 
-		// Hint
-		DrawFormatStringToHandle(800, 740, white, fontHandle, "A/Enter/左クリック: 決定  /  ↑↓: 選択");
+	if (!inLoadMenu) {
+		// メニュー項目
+		int menuStartY = 520;
+		int menuItemHeight = 40;
+		DrawStringToHandle(860, menuStartY + 0 * menuItemHeight, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム",
+			titleMenuIndex == 0 ? GetColor(255, 255, 100) : white, fontHandle);
+		DrawStringToHandle(860, menuStartY + 1 * menuItemHeight, (titleMenuIndex == 1) ? "> 強くてニューゲーム" : "  強くてニューゲーム",
+			titleMenuIndex == 1 ? GetColor(255, 200, 100) : white, fontHandle);
+		DrawStringToHandle(860, menuStartY + 2 * menuItemHeight, (titleMenuIndex == 2) ? "> ロード" : "  ロード",
+			titleMenuIndex == 2 ? GetColor(100, 255, 100) : white, fontHandle);
+		DrawStringToHandle(860, menuStartY + 3 * menuItemHeight, (titleMenuIndex == 3) ? "> 終了" : "  終了",
+			titleMenuIndex == 3 ? GetColor(255, 100, 100) : white, fontHandle);
+
+		// 操作説明
+		DrawFormatStringToHandle(800, 740, GetColor(200, 200, 200), descFontHandle, "A/Enter/左クリック: 決定  /  ↑↓: 選択");
+		// メニュー説明文の描画
+		RenderMenuDescription();
 	}
 	else {
 		// Load menu - display 10 slots
@@ -200,7 +320,7 @@ void TitleScene::Render() {
 					snprintf(buf, sizeof(buf), "%02d: %s  (%s)", i + 1, slots[i].desc, tmStr.c_str());
 				}
 				else {
-					snprintf(buf, sizeof(buf), "%02d: Lv%d 階層:%d  %s", i + 1, slots[i].playerLevel, slots[i].floor -1, tmStr.c_str());
+					snprintf(buf, sizeof(buf), "%02d: Lv%d 階層:%d  %s", i + 1, slots[i].playerLevel, slots[i].floor - 1, tmStr.c_str());
 				}
 			}
 			else {
@@ -226,17 +346,17 @@ void TitleScene::Render() {
 		int alpha = 255;
 		DrawBox(400, 820, 1200, 880, black, TRUE);
 		DrawBox(402, 822, 1198, 878, white, FALSE);
-		DrawFormatStringToHandle(420, 830, white,fontHandle,"%s", messageBuf);
+		DrawFormatStringToHandle(420, 830, white, fontHandle, "%s", messageBuf);
 	}
-	/*DrawString(600,200,"Hacslike",red);
-	DrawString(600, 600, "左クリックかAボタン",red);*/
 }
 
 void TitleScene::Setup() {
 	AudioManager::GetInstance().PlayBGM("Title");
-	
 }
 
 void TitleScene::Teardown() {
 	AudioManager::GetInstance().Stop("Title");
 }
+
+
+

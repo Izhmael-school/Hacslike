@@ -16,6 +16,30 @@ class TitleScene : public BaseScene {
 	int logoHandle;
 
 	int fontHandle;
+
+	int descFontHandle;  // 追加: 説明文用フォント
+
+	// 追加: メニュー項目の説明文
+	struct MenuDescription {
+		const char* title;
+		const char* description[4];  // 最大4行の説明
+		int lineCount;
+	};
+	MenuDescription menuDescriptions[4];
+
+	// 追加: 説明文の表示アニメーション用
+	float descriptionAlpha;
+	int previousMenuIndex;
+
+	// 追加: ゲーム開始モードを保持するフラグ
+	enum class GameStartMode {
+		None,
+		NewGame,
+		StrongNewGame,
+		Load
+	};
+	GameStartMode pendingStartMode = GameStartMode::None;
+
 public:
 	TitleScene();
 	~TitleScene();
@@ -26,6 +50,14 @@ public:
 	void Setup() override;
 	void Teardown() override;
 
+	// 追加: ゲーム開始モードを取得
+	GameStartMode GetPendingStartMode() const { return pendingStartMode; }
+	void ClearPendingStartMode() { pendingStartMode = GameStartMode::None; }
 	
+private:
+	// 追加: 説明文の初期化
+	void InitializeMenuDescriptions();
+	// 追加: 説明文の描画
+	void RenderMenuDescription();
 };
 

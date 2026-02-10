@@ -25,6 +25,7 @@
 
 // シングルトンインスタンスの初期化
 Player* Player::instance = nullptr;
+bool Player::fullResetRequested = false; // 追加
 
 /// <summary>
 /// コンストラクタ
