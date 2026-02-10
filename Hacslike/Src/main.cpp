@@ -24,6 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 #else
 	SetOutApplicationLogValidFlag(FALSE);
 #endif
+	//SetWindowStyleMode(2);
 	// ウィンドウのサイズを変更する
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	// 起動時のウィンドウのモードの設定
@@ -97,7 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager::GetInstance().ChangeScene(SceneType::Title);
 	// ゲームのメインループ
 	while (true) {
-		if (SceneManager::GetInstance().GetEnd() == true) {
+		if (SceneManager::GetInstance().GetEnd() == true || ProcessMessage() == -1) {
 			break;
 		}
 		//DxLibのカメラとEffekseerのカメラを同期する
@@ -131,8 +132,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Coin::DestroyInstance();
 	Effkseer_End();
+
 	// DxLibの終了
 	DxLib_End();
-
 	return 0;
 }
