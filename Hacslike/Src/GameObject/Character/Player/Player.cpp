@@ -332,10 +332,13 @@ void Player::Update() {
 
 	ArtifactManager::GetInstance().Update(this);
 
-	if (!hitChest) {
-		GetBossArtifact();
-	}
 
+	GetBossArtifact();
+	
+
+	if (hitChest && !isSelectBossArtifact) {  // ボス報酬選択中は宝箱処理をスキップ
+		GetArtifact();
+	}
 
 #pragma region スキル選択
 	if (exp >= maxExp && !isSelectingSkill && !isSelectBossArtifact) {
@@ -369,10 +372,6 @@ void Player::Update() {
 	OpenMenu();
 
 	inventory.Update(this);
-	if (GameSystem::GetInstance()->IsPlayable()) {
-		
-
-	}
 
 	float currentHP = GetHp();
 
@@ -826,16 +825,23 @@ void Player::AddItemRender() {
 /// </summary>
 void Player::GetArtifact() {
 	if (hitChest) {
-		if (!isSelectArtifact) {
+		if (!isSelectArtifact && !isSelectBossArtifact) {  // ボス報酬選択中は開始しない
 			if (input->IsKeyDown(KEY_INPUT_F) || input->IsButtonDown(XINPUT_GAMEPAD_B)) {
 				SetMouseDispFlag(TRUE);
 				artifactChioces = ArtifactManager::GetInstance().ApplyArtifact();
+
+				// 選択肢がない場合は処理を中断
+				if (artifactChioces.empty()) {
+					isSelectArtifact = false;
+					return;
+				}
+
 				artifactSelectUI.StartSelection();
 				isSelectArtifact = true;
 				GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 			}
 		}
-		else {
+		else if (isSelectArtifact && !isSelectBossArtifact) {  // ボス報酬選択中は更新しない
 			int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
 			if (Selected != -1) {
 
@@ -854,13 +860,22 @@ void Player::GetArtifact() {
 
 void Player::GetBossArtifact() {
 	if (ArtifactManager::GetInstance().GetBossDesiegen() == true) {
-		SetMouseDispFlag(TRUE);
 		bossArtifactChioces = ArtifactManager::GetInstance().GenerateArtifactChoices();
+
+		// 選択肢がない場合は処理を中断
+		if (bossArtifactChioces.empty()) {
+			ArtifactManager::GetInstance().SetBossDesiegen(false);
+			isSelectBossArtifact = false;
+			return;
+		}
+
+		SetMouseDispFlag(TRUE);
 		artifactSelectUI.StartSelection();
 		ArtifactManager::GetInstance().SetBossDesiegen(false);
 		isSelectBossArtifact = true;
+		GameSystem::GetInstance()->SetGameStatus(GameStatus::Stop);
 	}
-	else {
+	else if (isSelectBossArtifact) {  // elseではなくelse ifに変更
 		int bossSelected = artifactSelectUI.UpdateSelection(bossArtifactChioces);
 		if (bossSelected != -1) {
 
@@ -1149,7 +1164,7 @@ void Player::OnTriggerStay(Collider* _pCol) {
 		hitChest = true;
 		// 接触中の宝箱インスタンスを保持（nullptr チェックのため dynamic_cast）
 		hitChestObj = dynamic_cast<StartTreasureChest*>(_pCol->GetGameObject());
-		GetArtifact();
+	
 
 	}
 }
