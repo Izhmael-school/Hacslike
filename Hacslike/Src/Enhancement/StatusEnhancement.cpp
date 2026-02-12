@@ -444,7 +444,7 @@ void StatusEnhancement::ApplyAllStatsToPlayer(Player* player) {
 		switch (i) {
 		case 0: // HP
 			player->SetMaxHp(player->GetMaxHp() + bonus);
-			player->SetHp(player->GetMaxHp()); // 全回復させる場合
+			player->SetHp(player->GetMaxHp()); 
 			break;
 		case 1: // 攻撃力
 			player->SetBaseAtk(player->GetBaseAtk() + (int)bonus);
