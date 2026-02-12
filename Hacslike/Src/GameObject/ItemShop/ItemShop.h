@@ -64,7 +64,7 @@ private:
 
 	// 店頭に並ぶアイテムのリスト
 	std::vector<BuyItemData> buyItem;
-	std::vector<unique_ptr<ItemBase>> buyItemData;
+	std::vector<std::unique_ptr<ItemBase>> buyItemData;
 
 	// ショップの状態
 	ShopState state;

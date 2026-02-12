@@ -71,12 +71,12 @@ void GameScene::Update() {
 #if _DEBUG アイテムドロップテスト
 	// --- アイテムドロップテスト ---
 	if (input->IsKeyDown(KEY_INPUT_E) || input->IsButtonDown(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-		VECTOR spawnPos = Character::player->GetPosition();
+		VECTOR spawnPos = Player::GetInstance()->GetPosition();
 		ItemDropManager::GetInstance().TryDropItem(10, VGet(spawnPos.x, 5.0f, spawnPos.z));
 	}
 	// --- アイテムドロップテスト ---
 	if (input->IsKeyDown(KEY_INPUT_Q)) {
-		VECTOR spawnPos = Character::player->GetPosition();
+		VECTOR spawnPos = Player::GetInstance()->GetPosition();
 
 		// コインを生成
 		Coin::GetInstance()->SpawnCoin(VGet(spawnPos.x + 70, 5.0f, spawnPos.z + 70));

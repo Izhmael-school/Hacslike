@@ -13,7 +13,7 @@ struct FloorData {
 	int startFloor;
 	int endFloor;
 	std::vector<int> spawnEnemyID;
-	string bgmName;
+	std::string bgmName;
 };
 
 struct EnemyData {

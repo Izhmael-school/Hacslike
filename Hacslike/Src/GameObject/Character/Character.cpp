@@ -127,6 +127,3 @@ VECTOR Character::CheckWallToWallRubbing(VECTOR dir) {
 
 	return finalPos;
 }
-
-
-Character* Character::player;

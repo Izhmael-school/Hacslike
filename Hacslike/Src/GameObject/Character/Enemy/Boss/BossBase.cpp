@@ -6,18 +6,13 @@
 #include "../../../../UI/BossSlainUI.h"
 #include "../../../Returner/TitleReturner.h"
 
-BossBase* BossBase::instance = nullptr;
-
 BossBase::BossBase(VECTOR _appearPos)
 	:appearPos(_appearPos) {
-	instance = this;   // ê∂ê¨éûÇ…ìoò^
 }
 
 BossBase::~BossBase() {
 	delete hpBar;
 	delete attackSpanBar;
-	if (instance == this)
-		instance = nullptr; // îjä¸éûÇ…âèú
 }
 
 
@@ -87,7 +82,7 @@ void BossBase::Update() {
 	if (isAttack()) return;
 
 	// ÉåÉCÇÃçXêV
-	WallDetectionVision_Fan(GetPlayer()->GetPosition());
+	WallDetectionVision_Fan(Player::GetInstance()->GetPosition());
 	// í«ê’çsìÆ
 	Tracking();
 
@@ -151,6 +146,3 @@ bool BossBase::WallDetectionVision_Fan(VECTOR targetPos) {
 
 	return hit;
 }
-
-
-

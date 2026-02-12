@@ -61,14 +61,14 @@ void ItemShop::MathDrawPos(BuyItemData* data, VECTOR drawOffset) {
 	VECTOR p = VGet(0, 40, 0);
 	VECTOR namePos = VSub(imagePos, p);
 	namePos.x = drawOffset.x;
-	string name = data->item->GetName();
+	std::string name = data->item->GetName();
 	namePos = StringCenterPos(name.c_str(), MainFont, namePos.x, namePos.y);
 	data->namePos = namePos;
 	// 価格の座標
 	p = VGet(0, 180, 0);
 	VECTOR pracePos = VAdd(imagePos, p);
 	pracePos.x = drawOffset.x;
-	string praceString = MergeString(std::to_string(data->prace), "コイン");
+	std::string praceString = MergeString(std::to_string(data->prace), "コイン");
 	pracePos = StringCenterPos(praceString.c_str(), MainFont, pracePos.x, pracePos.y);
 	data->pracePos = pracePos;
 }
@@ -308,10 +308,10 @@ void ItemShop::Render() {
 
 	DrawFillBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, black);
 
-	string titleStr;
+	std::string titleStr;
 	VECTOR strPos;
-	string buyTitle = "購入";
-	string sellTitle = "売却";
+	std::string buyTitle = "購入";
+	std::string sellTitle = "売却";
 	switch (state) {
 	case Menu:
 		titleStr = "ショップ";
@@ -341,7 +341,7 @@ void ItemShop::Render() {
 			DrawBuyItem(item);
 			// 購入済みじゃないなら
 			if (!item.isSell) continue;
-			string sold = "SOLD OUT!";
+			std::string sold = "SOLD OUT!";
 			int col = 3;
 			int x = i % col;
 			int y = i / col;

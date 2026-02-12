@@ -29,9 +29,6 @@ public:
 
 	void DeadExecute() override;
 
-	// Œ»İ‘¶İ‚µ‚Ä‚¢‚éƒ{ƒX‚ğæ“¾
-	static BossBase* GetInstance() { return instance; }
-
 	bool WallDetectionVision_Fan(VECTOR targetPos);
 
 private:
@@ -48,7 +45,5 @@ protected:
 public:
 	inline void SetAppearPos(VECTOR pos) { appearPos = pos; }
 	inline void SetReturnerPos(VECTOR pos) { circlePos = pos; }
-private:
-	static BossBase* instance;
 };
 

@@ -12,7 +12,7 @@ FontManager::~FontManager() {
 }
 
 
-void FontManager::CreateFontData(string fontName, int size, int thick, int fontType, string anyFontName) {
+void FontManager::CreateFontData(std::string fontName, int size, int thick, int fontType, std::string anyFontName) {
 	FontData data;
 
 	// ƒnƒ“ƒhƒ‹‚Ìì¬
@@ -32,7 +32,7 @@ void FontManager::CreateFontData(string fontName, int size, int thick, int fontT
 	fontDataArray.push_back(data);
 }
 
-int FontManager::UseFontHandle(string _fontName) {
+int FontManager::UseFontHandle(std::string _fontName) {
 	for (auto f : fontDataArray) {
 		if (f.fontName != _fontName) continue;
 

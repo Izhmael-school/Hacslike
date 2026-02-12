@@ -112,6 +112,7 @@
     <ClInclude Include="Src\UI\TitleUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\CommonModule.cpp" />
     <ClCompile Include="Src\Component\Animator.cpp" />
     <ClCompile Include="Src\Component\Collider\CapsuleHitBox.cpp" />
     <ClCompile Include="Src\Component\Collider\Collider.cpp" />
@@ -124,7 +125,10 @@
     <ClCompile Include="Src\GameObject\Bullet\BulletPool.cpp" />
     <ClCompile Include="Src\GameObject\Camera\Camera.cpp" />
     <ClCompile Include="Src\GameObject\Character\Character.cpp" />
-    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\BossBase.cpp" />
+    <ClCompile Include="Src\GameObject\Character\Enemy\Boss\BossBase.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)/Dxlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)/Dxlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="Src\GameObject\Character\Enemy\Boss\Durahan\BossDurahan.cpp" />
     <ClCompile Include="Src\GameObject\Character\Enemy\Boss\Goblin\BossGoblin.cpp" />
     <ClCompile Include="Src\GameObject\Character\Enemy\Boss\HellHound\BossHellHound.cpp" />
@@ -263,14 +267,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;C:\Users\i372O\OneDrive\ドキュメント\GitHub\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;C:\Users\i372O\OneDrive\ドキュメント\GitHub\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -282,7 +286,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -291,7 +295,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -301,14 +305,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;C:\Users\i372O\OneDrive\ドキュメント\GitHub\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;C:\Users\i372O\OneDrive\ドキュメント\GitHub\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -320,7 +324,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -329,7 +333,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\new\Hacslike\DxLib;C:\Users\student2\Desktop\LastBB\Hacslike\DxLib;C:\Users\student1\Desktop\課題制作Ⅲ\Hacslike\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

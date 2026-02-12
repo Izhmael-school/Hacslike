@@ -25,7 +25,7 @@ void ItemHeal::Render()
 void ItemHeal::Use()
 {
 
-	Character::player->AddHp(healValue);
+	Player::GetInstance()->AddHp(healValue);
 }
 void ItemHeal::SaveTo(BinaryWriter& w)
 {
@@ -73,9 +73,10 @@ void SmallHealItem::LoadFrom(BinaryReader& r)
 
 void SmallHealItem::Use()
 {
-	Character::player->AddHp(healValue);
-	if(Character::player->GetHp()>= Character::player->GetMaxHp()){
-		Character::player->SetHp(Character::player->GetMaxHp());
+	Player* p =Player::GetInstance();
+	p->AddHp(healValue);
+	if(p->GetHp()>= p->GetMaxHp()){
+		p->SetHp(p->GetMaxHp());
 	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
@@ -123,9 +124,10 @@ void MiddleHealItem::LoadFrom(BinaryReader& r)
 
 void MiddleHealItem::Use()
 {
-	Character::player->AddHp(healValue);
-	if (Character::player->GetHp() >= Character::player->GetMaxHp()) {
-		Character::player->SetHp(Character::player->GetMaxHp());
+	Player* p = Player::GetInstance();
+	p->AddHp(healValue);
+	if (p->GetHp() >= p->GetMaxHp()) {
+		p->SetHp(p->GetMaxHp());
 	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
@@ -173,9 +175,10 @@ void LargeHealItem::LoadFrom(BinaryReader& r)
 
 void LargeHealItem::Use()
 {
-	Character::player->AddHp(healValue);
-	if (Character::player->GetHp() >= Character::player->GetMaxHp()) {
-		Character::player->SetHp(Character::player->GetMaxHp());
+	Player* p = Player::GetInstance();
+	p->AddHp(healValue);
+	if (p->GetHp() >= p->GetMaxHp()) {
+		p->SetHp(p->GetMaxHp());
 	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
@@ -212,10 +215,11 @@ void Elixir::LoadFrom(BinaryReader& r)
 
 void Elixir::Use()
 {
-	healValue = Character::player->GetMaxHp();
-	Character::player->AddHp(healValue);
-	if (Character::player->GetHp() >= Character::player->GetMaxHp()) {
-		Character::player->SetHp(Character::player->GetMaxHp());
+	Player* p = Player::GetInstance();
+	healValue = p->GetMaxHp();
+	p->AddHp(healValue);
+	if (p->GetHp() >= p->GetMaxHp()) {
+		p->SetHp(p->GetMaxHp());
 	}
 	AudioManager::GetInstance().PlayOneShot("Heal");
 	isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
@@ -256,7 +260,7 @@ void AttactPotion::Update()
 	timer -= time->deltaTime;  // Œo‰ßŽžŠÔ‚ðŒ¸‚ç‚·
 	if (timer <= 0.0f) {
 		// Œø‰ÊI—¹
-		Character::player->SetAtk(originAttack);
+		Player::GetInstance()->SetAtk(originAttack);
 		isBoost = false;
 		timer = 0.0f;
 		isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
@@ -281,8 +285,10 @@ void AttactPotion::Use()
 		timer = duration;
 		return;
 	}
-	originAttack = Character::player->GetAtk();
-	Character::player->SetAtk(originAttack + attactValue);
+	Player* p = Player::GetInstance();
+
+	originAttack = p->GetAtk();
+	p->SetAtk(originAttack + attactValue);
 	timer = duration;
 	isEffectFinished = false;
 	isBoost = true;
@@ -321,7 +327,7 @@ void DefensePotion::Update()
 
 	if (timer <= 0.0f) {
 		// Œø‰ÊI—¹
-		Character::player->SetDef(originDefense);
+		Player::GetInstance()->SetDef(originDefense);
 		isBoost = false;
 		timer = 0.0f;
 		isEffectFinished = true;  // šPlayer‚ªíœ‚Å‚«‚é‚æ‚¤‚É
@@ -347,8 +353,11 @@ void DefensePotion::Use()
 		timer = duration;
 		return;
 	}
-	originDefense = Character::player->GetDef();
-	Character::player->SetDef(originDefense + defenseValue);
+
+	Player* p = Player::GetInstance();
+
+	originDefense = p->GetDef();
+	p->SetDef(originDefense + defenseValue);
 	timer = duration;
 	isEffectFinished = false;
 	isBoost = true;

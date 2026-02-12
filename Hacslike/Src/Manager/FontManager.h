@@ -4,11 +4,9 @@
 #include <string>
 #include "DxLib.h"
 
-using namespace std;
-
 struct FontData {
 	int fontHandle;
-	string fontName;
+	std::string fontName;
 };
 
 class FontManager : public Singleton<FontManager> {
@@ -25,13 +23,13 @@ public:
 	/// <param name="thick">太さ</param>
 	/// <param name="fontType">フォントタイプ</param>
 	/// <param name="anyFontName">任意で付けるフォントの名前</param>
-	void CreateFontData(string fontName,int size,int thick,int fontType,string anyFontName = "");
-	int UseFontHandle(string _fontName);
+	void CreateFontData(std::string fontName,int size,int thick,int fontType,std::string anyFontName = "");
+	int UseFontHandle(std::string _fontName);
 
 	void DeleteFont();
 
-public:
-	vector<FontData> fontDataArray;
+private:
+	std::vector<FontData> fontDataArray;
 
 };
 

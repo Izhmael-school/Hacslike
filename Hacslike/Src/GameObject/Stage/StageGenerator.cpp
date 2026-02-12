@@ -107,6 +107,7 @@ StageGenerator::~StageGenerator() {
 	SaveObject::GetInstance()->DestroyInstance();
 	EnhancementStone::GetInstance()->DestroyInstance();
 	TitleReturner::GetInstance()->DestroyInstance();
+	if(pItemShop)
 	pItemShop->DeleteData();
 }
 
@@ -747,7 +748,9 @@ StageCell* StageGenerator::GetStageObjectFromPos(VECTOR _dataPos) {
 }
 
 void StageGenerator::DrawMap() {
-	if (Character::player == nullptr) return;
+	Player* p = Player::GetInstance();
+
+	if (p == nullptr) return;
 
 	
 
@@ -756,7 +759,7 @@ void StageGenerator::DrawMap() {
 	DrawFormatStringToHandle(1450 + ((WINDOW_WIDTH - 950) / 3), WINDOW_HEIGHT - (mapHeight_Large * MAP_SIZE) - 25, red, MainFont, "第 %d 階層", StageManager::GetInstance().floorCount - 1);
 
 	// プレイヤーのポジション取得
-	VECTOR playerPos = Character::player->GetPosition();
+	VECTOR playerPos = p->GetPosition();
 	int x = (int)std::round(playerPos.x / CellSize);
 	int z = (int)std::round(playerPos.z / CellSize);
 
@@ -815,7 +818,7 @@ void StageGenerator::DrawMap() {
 bool StageGenerator::TransparencyWall(StageCell* cell) {
 	if (cell->GetObjectType() == Wall) {
 		VECTOR pos = cell->GetPosition();
-		VECTOR playerPos = Character::player->GetPosition();
+		VECTOR playerPos = Player::GetInstance()->GetPosition();
 		int x = (int)std::round(playerPos.x / CellSize);
 		int z = (int)std::round(playerPos.z / CellSize);
 

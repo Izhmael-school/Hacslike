@@ -151,7 +151,7 @@ void StageManager::GenerateStage() {
 	// テクスチャの張替え
 	ChangeTexture(texNum, Room);
 	// プレイヤーの設置
-	SetGameObjectRandomPos(Character::player);
+	SetGameObjectRandomPos(Player::GetInstance());
 	int canSpawnNum = 0;
 	for (int i = 0; i < RoomMax_Large; i++) {
 		int w = generator->roomStatus[rw][i];
@@ -220,7 +220,7 @@ void StageManager::GenerateStage(int stageID) {
 	// テクスチャの張替え
 	ChangeTexture(std::floor((floorCount - 1) / textureChangeFloor), Room);
 	// プレイヤーの配置
-	generator->SetGameObject(Character::player, generator->GetStageData().playerSpawnPos);
+	generator->SetGameObject(Player::GetInstance(), generator->GetStageData().playerSpawnPos);
 	// JSON に書かれた saveObjectPos があれば SaveObject を生成して配置する
 	StageData sd = generator->GetStageData();
 

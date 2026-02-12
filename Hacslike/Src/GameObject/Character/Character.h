@@ -30,10 +30,6 @@ protected:	// メンバ変数
 	float rangedCorrection;		//	遠距離攻撃力補正
 	bool isDead;
 
-public:
-	static Character* player;
-
-
 public:	// コンストラクタとデストラクタ
 
 	Character(VECTOR _pos = VZero, std::string tag = "", int _Lv = 1, int _Exp = 5, int _speed = 0);
@@ -169,10 +165,6 @@ public:	// ゲッターとセッター
 			Lv += _Lv;
 	}
 #pragma endregion
-
-	inline Character* GetPlayer() const { return Character::player; }
-
-	inline void SetPlayer(Character* _player) { Character::player = _player; }
 
 	// 壁判定の計算
 	void CheckWall();

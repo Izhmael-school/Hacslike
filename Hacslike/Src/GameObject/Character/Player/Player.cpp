@@ -181,8 +181,6 @@ void Player::Start() {
 
 	pAnimator->SetModelHandle(modelHandle);
 
-	SetPlayer(this);
-
 	maxHp = 100;
 	hp = maxHp;
 	baseAttack = 5;
@@ -357,7 +355,7 @@ void Player::Update() {
 		int selected = skillUI.UpdateSelection(skillChoices);
 		if (selected != -1) {
 
-			if (player && selected >= 0 && selected < (int)skillChoices.size()) {
+			if (GetInstance() && selected >= 0 && selected < (int)skillChoices.size()) {
 				SkillManager::GetInstance().ApplySelectedSkill(this, skillChoices[selected]);
 			}
 			isSelectingSkill = false;
@@ -525,7 +523,7 @@ void Player::Render() {
 	DrawStringToHandle(lX, lY, "レベル", white, MainFont);
 	VECTOR uPos = StringCenterPos(std::to_string(Lv).c_str(), MainFont_Bold, uX, uY);
 	DrawFormatStringToHandle(uPos.x, uPos.y, white, MainFont_Bold, "%d", Lv);
-	string hpString = MergeString(std::to_string(hp), " / ", std::to_string(maxHp));
+	std::string hpString = MergeString(std::to_string(hp), " / ", std::to_string(maxHp));
 	int hpValueUIPos = StringRightPos(hpString.c_str(),MainFont, hpBarPosX + hpBarWidth + 3);
 	DrawStringToHandle(hpValueUIPos, hpBarPosY - 3 - 20, hpString.c_str(), white,MainFont);
 #pragma region アイテムのインベントリ表示
@@ -845,7 +843,7 @@ void Player::GetArtifact() {
 			int Selected = artifactSelectUI.UpdateSelection(artifactChioces);
 			if (Selected != -1) {
 
-				if (player && Selected >= 0 && Selected < (int)artifactChioces.size()) {
+				if (GetInstance() && Selected >= 0 && Selected < (int)artifactChioces.size()) {
 					ArtifactManager::GetInstance().ApplySelectedArtifact(this, artifactChioces[Selected]);
 
 				}
@@ -879,7 +877,7 @@ void Player::GetBossArtifact() {
 		int bossSelected = artifactSelectUI.UpdateSelection(bossArtifactChioces);
 		if (bossSelected != -1) {
 
-			if (player && bossSelected >= 0 && bossSelected < (int)bossArtifactChioces.size()) {
+			if (GetInstance() && bossSelected >= 0 && bossSelected < (int)bossArtifactChioces.size()) {
 				ArtifactManager::GetInstance().ApplySelectedArtifact(this, bossArtifactChioces[bossSelected]);
 			}
 

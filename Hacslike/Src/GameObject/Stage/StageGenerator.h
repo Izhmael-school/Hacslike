@@ -26,9 +26,9 @@ struct StageData {
 	VECTOR bossSpawnPos;
 	VECTOR stairSpawnPos;
 	VECTOR returnerSpawnPos;
-	vector<VECTOR> closePosArray;
+	std::vector<VECTOR> closePosArray;
 	int bossType;
-	string bgmName;
+	std::string bgmName;
 };
 
 class StageGenerator {

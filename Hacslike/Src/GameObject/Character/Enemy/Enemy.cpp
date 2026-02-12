@@ -8,6 +8,7 @@
 #include "../../../Manager/ItemDropManager.h"
 #include "../../../GameSystem/GameSystem.h"
 #include "../../Coin/Coin.h"
+#include "../Player/Player.h"
 
 Enemy::Enemy()
 	: moveSpeed(1)
@@ -146,7 +147,7 @@ void Enemy::Update() {
 	if (isAttack()) return;
 
 	// レイの更新
-	WallDetectionVision_Fan(GetPlayer()->GetPosition());
+	WallDetectionVision_Fan(Player::GetInstance()->GetPosition());
 	// 追跡行動
 	Tracking();
 	// 徘徊行動
@@ -250,7 +251,7 @@ void Enemy::DeadExecute() {
 	isDead = true;
 
 	// 経験値の増加
-	Character::player->AddExp(exp);
+	Player::GetInstance()->AddExp(exp);
 	// アイテムのドロップ
 	ItemDropManager* manager = &ItemDropManager::GetInstance();
 	manager->TryDropItem(manager->GetItemDropRate(), position);
@@ -539,7 +540,7 @@ void Enemy::LookTarget(VECTOR targetPos, VECTOR axis) {
 void Enemy::Tracking() {
 	// レイに引っかかってない、プレイヤーに触れている、攻撃中は処理しない
 	if (!rayAnswer || isTouch || isAttack()) return;
-	VECTOR targetPos = GetPlayer()->GetPosition();
+	VECTOR targetPos = Player::GetInstance()->GetPosition();
 
 	LookTarget(targetPos);
 
