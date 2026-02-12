@@ -74,6 +74,9 @@ void Enemy::Start() {
 }
 
 void Enemy::Setup() {
+	if (modelHandle == -1) {
+		EnemyManager::GetInstance().UnuseEnemy(this);
+	}
 	hp = maxHp;
 	rotation.y = Random(0, 359);
 	isTouch = false;
