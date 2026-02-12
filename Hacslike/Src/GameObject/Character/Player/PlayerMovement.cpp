@@ -231,7 +231,7 @@ void PlayerMovement::Evasion() {
 		pPlayer->SetRotation(rot);
 	}
 	else {
-		// 入力がない場合は正面に進む（または回避をキャンセルする等の処理）
+		// 回避をキャンセルする処理
 		blinkDirection = pPlayer->GetForward();
 	}
 

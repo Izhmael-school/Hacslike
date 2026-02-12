@@ -56,7 +56,7 @@ void CapsuleHitBox::Update() {
 	position = VAdd(position, velocity); // SphereHitBox ‚ÌÀ•WXV
 
 	if (pCollider && pCollider->IsEnable()) {
-		pCollider->GetGameObject()->SetPosition(position); // ©’Ç‰Á
+		pCollider->GetGameObject()->SetPosition(position);
 		pCollider->Update();
 	}
 

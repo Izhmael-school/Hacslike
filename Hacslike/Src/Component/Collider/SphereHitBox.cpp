@@ -83,7 +83,7 @@ void SphereHitBox::Update() {
 		return;
 	}
 
-	// --- 跳ね返り巡回ロジック ---
+	//	跳ね返り巡回ロジック
 	if (!targetPoints.empty() && currentTargetIndex < targetPoints.size()) {
 		VECTOR targetPos = targetPoints[currentTargetIndex];
 
