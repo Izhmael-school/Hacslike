@@ -304,7 +304,7 @@ void StatusEnhancement::Render() {
 		// コスト表示
 		int costX = x + totalGaugeWidth + 20;
 		if (stats[i].level < 50) {
-			int cost = 3 + (stats[i].level * 4);
+			int cost = 3 + (stats[i].level * 5);
 			unsigned int cCol = (playerCoins >= cost) ? GetColor(255, 255, 255) : GetColor(255, 50, 50);
 			DrawFormatStringToHandle(costX, y + 15, cCol, MainFont, "COST: %d", cost);
 		}
