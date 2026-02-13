@@ -19,8 +19,8 @@ BossBase::~BossBase() {
 
 void BossBase::Start() {
 	isBoss = true;
-	Enemy::Start();
 	SetModelHandleDup(MV1LoadModel(MergeString(mPath, "boss.mv1").c_str()));
+	Enemy::Start();
 	SetScale(VGet(0.2f, 0.2f, 0.2f));
 	// アニメーションの設定
 	pAnimator->SetModelHandle(modelHandle);
