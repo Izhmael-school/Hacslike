@@ -62,7 +62,7 @@ void TitleScene::InitializeMenuDescriptions()
 	menuDescriptions[0].lineCount = 4;
 
 	// 強くてニューゲーム
-	menuDescriptions[1].title = "【 強くてニューゲーム 】";
+	menuDescriptions[1].title = "【 継承ニューゲーム 】";
 	menuDescriptions[1].description[0] = "これまでの強化を引き継いで冒険を始めます。";
 	menuDescriptions[1].description[1] = "コイン、ステータス強化";
 	menuDescriptions[1].description[2] = "進行状況を保持したまま1階層から再挑戦できます。";
@@ -293,7 +293,7 @@ void TitleScene::Render() {
 		int menuItemHeight = 40;
 		DrawStringToHandle(860, menuStartY + 0 * menuItemHeight, (titleMenuIndex == 0) ? "> ニューゲーム" : "  ニューゲーム",
 			titleMenuIndex == 0 ? GetColor(255, 255, 100) : white, fontHandle);
-		DrawStringToHandle(860, menuStartY + 1 * menuItemHeight, (titleMenuIndex == 1) ? "> 強くてニューゲーム" : "  強くてニューゲーム",
+		DrawStringToHandle(860, menuStartY + 1 * menuItemHeight, (titleMenuIndex == 1) ? "> 継承ニューゲーム" : "  継承ニューゲーム",
 			titleMenuIndex == 1 ? GetColor(255, 200, 100) : white, fontHandle);
 		DrawStringToHandle(860, menuStartY + 2 * menuItemHeight, (titleMenuIndex == 2) ? "> ロード" : "  ロード",
 			titleMenuIndex == 2 ? GetColor(100, 255, 100) : white, fontHandle);
