@@ -67,36 +67,36 @@ std::unique_ptr<ItemBase> ItemFactory::CreateItemForLoad(const std::string& _id)
     }
     else if (_id == "AttactPotion") {
         return std::make_unique<AttactPotion>(VGet(0, 0, 0),
-            "攻撃のポーション", "2分間攻撃力が上がる", 110, 5, 120.0f);
+            "攻撃のポーション", "2分間攻撃力が上がる", 60, 5, 120.0f);
     }
     else if (_id == "DefensePotion") {
         return std::make_unique<DefensePotion>(VGet(0, 0, 0),
-            "防御のポーション", "2分間防御力が上がる", 110, 5, 120.0f);
+            "防御のポーション", "2分間防御力が上がる", 60, 5, 120.0f);
     }
     else if (_id == "Grenade") {
         return std::make_unique<Grenade>(VGet(0, 0, 0),
-            "グレネード", "3秒後に爆発する", 110, 80);
+            "グレネード", "3秒後に爆発する", 70, 80);
     }
     // 武器: ロード時はダミー値0で生成（LoadFromで上書きされる）
     else if (_id == "Sword_Iron") {
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
-            "剣", "普通の剣", 150, 0, "MeleeWeapon");
+            "剣", "普通の剣", 90, 0, "MeleeWeapon");
     }
     else if (_id == "Axe") {
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
-            "斧", "普通の斧", 200, 0, "MeleeWeapon");
+            "斧", "普通の斧", 100, 0, "MeleeWeapon");
     }
     else if (_id == "Stick") {
         return std::make_unique<ItemStick>(VGet(0, 0, 0),
-            "木の棒", "その辺に落ちている木の棒", 0, 0, "MeleeWeapon");
+            "木の棒", "その辺に落ちている木の棒", 10, 0, "MeleeWeapon");
     }
     else if (_id == "Greatsword") {
         return std::make_unique<Greatsword>(VGet(0, 0, 0),
-            "グレートソード", "重い!痛い!強い!最高!", 500, 0, "MeleeWeapon");
+            "グレートソード", "重い!痛い!強い!最高!", 150, 0, "MeleeWeapon");
     }
     else if (_id == "Spear") {
         return std::make_unique<Spear>(VGet(0, 0, 0),
-            "槍", "槍", 230, 0, "MeleeWeapon");
+            "槍", "槍", 110, 0, "MeleeWeapon");
     }
     else if (_id == "Hammer") {
         return std::make_unique<Hammer>(VGet(0, 0, 0),
@@ -175,46 +175,46 @@ void ItemFactory::InitializeDefaultItems()
 
     RegisterItem("AttactPotion", []() {
         return std::make_unique<AttactPotion>(VGet(0, 0, 0),
-        "攻撃のポーション", "2分間攻撃力を上げる", 110, 5,120.0f);
+        "攻撃のポーション", "2分間攻撃力を上げる", 60, 5,120.0f);
         });
 
     RegisterItem("DefensePotion", []() {
         return std::make_unique<DefensePotion>(VGet(0, 0, 0),
-        "防御のポーション", "2分間防御力を上げる", 110, 5, 120.0f);
+        "防御のポーション", "2分間防御力を上げる", 60, 5, 120.0f);
         });
 
     RegisterItem("Grenade", []() {
         return std::make_unique<Grenade>(VGet(0, 0, 0),
-        "グレネード", "3秒後に爆発する", 110, 80);
+        "グレネード", "3秒後に爆発する", 70, 80);
         });
 
     RegisterItem("Sword_Iron", []() {
         int effectValue = GenerateEffectValueSeed("Sword_Iron", 10, 2);
         return std::make_unique<ItemSword>(VGet(0, 0, 0),
-        "剣", "普通の剣\n量産型", 150, effectValue,"MeleeWeapon");
+        "剣", "普通の剣\n量産型", 90, effectValue,"MeleeWeapon");
         });
 
     RegisterItem("Axe", []() {
         int effectValue = GenerateEffectValueSeed("Axe", 13, 5);
         return std::make_unique<ItemAxe>(VGet(0, 0, 0),
-        "斧", "普通の斧\n重くて切れ味がいい", 200, effectValue, "MeleeWeapon");
+        "斧", "普通の斧\n重くて切れ味がいい", 100, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Stick", []() {
         return std::make_unique<ItemStick>(VGet(0, 0, 0),
-        "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 0, 5, "MeleeWeapon");
+        "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 10, 5, "MeleeWeapon");
         });
 
     RegisterItem("Greatsword", []() {
         int effectValue = GenerateEffectValueSeed("Greatsword", 80, 10);
         return std::make_unique<Greatsword>(VGet(0, 0, 0),
-        "グレートソード", "グレートな剣\nため攻撃が可能", 500, effectValue, "MeleeWeapon");
+        "グレートソード", "グレートな剣\nため攻撃が可能", 150, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Spear", []() {
         int effectValue = GenerateEffectValueSeed("Greatsword", 60,10 );
         return std::make_unique<Spear>(VGet(0, 0, 0),
-        "槍", "槍\nダッシュ攻撃で一網打尽", 230, effectValue, "MeleeWeapon");
+        "槍", "槍\nダッシュ攻撃で一網打尽", 110, effectValue, "MeleeWeapon");
         });
 
     RegisterItem("Hammer", []() {

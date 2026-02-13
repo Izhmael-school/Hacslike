@@ -54,13 +54,13 @@ void TitleUI::Update() {
             static bool wasKeyReleased = false;
 
             // 前回のフレームでキーが離されていて、今回押されたら実行
-            if (wasKeyReleased && (input->IsKey(KEY_INPUT_Y) || input->IsKey(XINPUT_GAMEPAD_B))) {
+            if (wasKeyReleased && (input->IsKey(KEY_INPUT_Y) || input->IsButton(XINPUT_GAMEPAD_B))) {
                 isConfirmedExit = true;
                 isConfirmingExit = false;
                 SceneManager::GetInstance().ChangeScene(SceneType::Title);
                 wasKeyReleased = false;
             }
-            else if (!input->IsKey(KEY_INPUT_Y) && !input->IsKey(XINPUT_GAMEPAD_B)) {
+            else if (!input->IsKey(KEY_INPUT_Y) && !input->IsButton(XINPUT_GAMEPAD_B)) {
                 wasKeyReleased = true;
             }
         }

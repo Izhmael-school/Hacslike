@@ -976,7 +976,7 @@ void Player::PlayerSetUp() {
 
 	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
-		VZero, "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 0, 5, "Res/ItemIcon/stick.png"
+		VZero, "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 10, 5, "Res/ItemIcon/stick.png"
 	);
 
 	// インベントリに追加
@@ -1023,7 +1023,7 @@ void Player::NewPlayerSetUp() {
 
 	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
-		VZero, "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 0, 5, "Res/ItemIcon/stick.png"
+		VZero, "木の棒", "そこら辺に落ちてる木の棒\n世界で一つの木の棒", 10, 5, "Res/ItemIcon/stick.png"
 	);
 
 	// インベントリに追加
