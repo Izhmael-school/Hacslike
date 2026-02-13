@@ -108,6 +108,8 @@ public:
 
 	StageCell* GetStageObjectFromPos(VECTOR _deltaPos);
 
+	void DrawStairMap();
+
 	// ƒ}ƒbƒv‚Ì•`‰æ
 	void DrawMap();
 	// •Ç‚Ì“§‰ß‚ð‚·‚é‚©‚Ç‚¤‚©

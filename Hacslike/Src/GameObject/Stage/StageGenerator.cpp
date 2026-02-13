@@ -747,6 +747,18 @@ StageCell* StageGenerator::GetStageObjectFromPos(VECTOR _dataPos) {
 	return nullptr;
 }
 
+void StageGenerator::DrawStairMap() {
+	// ínê}ÇÃï`âÊ
+	for (int w = 0; w < mapWidth_Large; w++) {
+		for (int h = 0; h < mapHeight_Large; h++) {
+			
+			if (map[w][h] != Stair) continue;
+			
+			stageMap[w][h] = true;
+		}
+	}
+}
+
 void StageGenerator::DrawMap() {
 	Player* p = Player::GetInstance();
 
