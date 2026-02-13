@@ -1019,7 +1019,7 @@ void Player::NewPlayerSetUp() {
 	isSelectArtifact = false;
 	isTitleUI = false;
 	isMenuUI = false;        // メニュー画面
-	coinValue = 0;
+	coinValue = 100;
 
 	// 木の棒アイテムを生成（ItemFactory を使う場合は CreateItem でも可）
 	std::unique_ptr<ItemBase> stick = std::make_unique<ItemStick>(
