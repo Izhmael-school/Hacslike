@@ -16,11 +16,10 @@
 #include "../../../Save/SaveFormat.h"
 #include"../../../Save/SaveIO.h"
 #include"../../../Manager/SaveManager.h"
-#include"../../../Manager/SaveManager.h"
-#include <math.h>
-#include <cmath>
 #include "../../../UI/GameEndUI.h"
 #include "../../../Enhancement/StatusEnhancement.h"
+#include <math.h>
+#include <cmath>
 
 
 // シングルトンインスタンスの初期化
@@ -35,7 +34,6 @@ Player::Player(VECTOR _pos)
 	: Character(_pos, "Player", Lv, exp, speed)
 	, pWeapon(nullptr)
 	, input(&InputManager::GetInstance())
-	//, slashes()								//	斬撃
 	, currentWeaponId()
 	, changeWeaponButtonPressed(false)
 	, isItemUI(false)
@@ -101,7 +99,7 @@ void Player::DeadExecute() {
 	if (hp > 0 || isDead) return;
 	isDead = true;
 	GameEndUI::GetInstance()->Start();
-	pAnimator->Play("Down1", 0.9);
+	pAnimator->Play("Down1", 0.9f);
 	AudioManager::GetInstance().Stop("all");
 
 	AudioManager::GetInstance().PlayOneShot("PlayerDeath");
@@ -175,7 +173,6 @@ void Player::Start() {
 		return;
 	SetCollider(new CapsuleCollider(this, VZero, VScale(VUp, 200), 50.0f));
 	CollisionManager::GetInstance().UnRegister(pCollider);
-	//CollisionManager::GetInstance().Register(pCollider);
 
 	modelHandle = PLAYER_MODEL_HANDLE;
 
@@ -208,7 +205,7 @@ void Player::Start() {
 	}
 
 #if _DEBUG
-	SetCoinValue(10000000000);
+	SetCoinValue(1000000000);
 #endif
 
 	//	アニメーションの読み込み
@@ -371,7 +368,7 @@ void Player::Update() {
 
 	inventory.Update(this);
 
-	float currentHP = GetHp();
+	int currentHP = GetHp();
 
 	// HPが変化したか？
 	if (currentHP != prevHP) {
@@ -573,24 +570,6 @@ void Player::Render() {
 	}
 
 }
-
-///// <summary>
-///// 斬撃更新
-///// </summary>
-//void Player::UpdateSlash() {
-//	for (auto it = slashes.begin(); it != slashes.end();) {
-//		Slash* s = *it;
-//		s->Update();
-//
-//		if (s->IsDead()) {
-//			delete s;
-//			it = slashes.erase(it);
-//		}
-//		else {
-//			++it;
-//		}
-//	}
-//}
 
 /// <summary>
 /// 武器切り替え

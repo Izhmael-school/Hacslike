@@ -13,7 +13,7 @@ protected:	// メンバ変数
 	bool atking;			// 攻撃フラグ
 	int def = 0;				// 防御力
 	bool blocking;			// 防御フラグ
-	float speed;
+	int speed;
 
 	float criticalHitRate;
 	float criticalDamage;
@@ -89,10 +89,9 @@ public:	// ゲッターとセッター
 	inline int GetAtk() const { return atk; }
 	//	クリティカル込みの攻撃力の取得
 	inline int GetCriticalAtk() {
-		isCritical = false; // ★まずリセット！
+		isCritical = false; 
 		if (GetRand(99) < criticalHitRate) {
 			isCritical = true;
-			// 1.5f などの計算のために 100.0f (float) で割る
 			return (int)(atk * (1.0f + (criticalDamage / 100.0f)));
 		}
 		return atk;

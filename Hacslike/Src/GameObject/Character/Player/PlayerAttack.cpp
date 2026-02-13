@@ -22,7 +22,6 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, canNextAttack(false)
 	, attackButtonPressed(false)
 	, hasGeneratedHitbox(false)
-	, CapsuleHitboxes()
 	, SphereHitboxes()
 	, playerMovement(_playerMovement)
 	, isDashAttack(false)
@@ -30,14 +29,12 @@ PlayerAttack::PlayerAttack(Player* _player, Weapon* _weapon, PlayerMovement* _pl
 	, chargeTime(0.0f)
 	, maxChargeTime(3.0f)
 	, pSpherePool(nullptr)
-	, pCapsulePool(nullptr)
 	, addRadius()
 	, currentChainCount()
 	, maxChainCount()
 	, animName()
 	, magnification(1){
 	pSpherePool = &BulletPool::GetInstance();
-	pCapsulePool = &CapsuleHitPool::GetInstance();
 	Start();
 }
 
@@ -68,7 +65,7 @@ void PlayerAttack::Update() {
 	}
 
 	pSpherePool->Update();
-	pCapsulePool->Update();
+	/*pCapsulePool->Update();*/
 }
 
 /// <summary>
@@ -295,32 +292,32 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.3f) {
-					magnification = 1;
+					magnification = 1.0f;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.45f) {
-					magnification = 1.1;
+					magnification = 1.1f;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
-					magnification = 1.5;
+					magnification = 1.5f;
 					HitBoxReset();
 				}
 
 				if (attackIndex == 4 && attackTimer > 0.9f && attackTimer < 1.9f) {
-					magnification = 1.3;
+					magnification = 1.3f;
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2)); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
 				// 溜め攻撃(中)の判定タイミング
 				if (attackIndex == 5 && attackTimer > 0.9f && attackTimer < 1.9f) {
-					magnification = 1.6;
+					magnification = 1.6f;
 					CreateAttackHitbox(pWeapon->GetColLength(2) * 1.2f, pWeapon->GetColRadius(2) * 1.2f); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
 				// 溜め攻撃(強)の判定タイミング
 				if (attackIndex == 6 && attackTimer > 0.9f && attackTimer < 1.9f) {
-					magnification = 2;
+					magnification = 2.0f;
 					CreateAttackHitbox(pWeapon->GetColLength(2) * 1.8f, pWeapon->GetColRadius(2) * 1.8f); // 判定を大きくする例
 					hasGeneratedHitbox = true;
 				}
@@ -333,19 +330,19 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f) {
-					magnification = 1;
+					magnification = 1.0f;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f) {
-					magnification = 1.2;
+					magnification = 1.2f;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.35f && attackTimer < 0.50f) {
-					magnification = 1.6;
+					magnification = 1.6f;
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.36f && attackTimer < 0.48f) {
-					magnification = 1.5;
+					magnification = 1.5f;
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
 					hasGeneratedHitbox = true;
 				}
@@ -358,19 +355,19 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.6f && attackTimer < 1.0f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.25f && attackTimer < 0.30f) {
-					magnification = 1;
+					magnification = 1.0f;
 					HitBoxReset();
 				}
 				if (attackIndex == 2 && attackTimer > 0.35f && attackTimer < 0.40f) {
-					magnification = 1.2;
+					magnification = 1.2f;
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 1.3f && attackTimer < 2.2f) {
-					magnification = 1.5;
+					magnification = 1.5f;
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.32f && attackTimer < 0.5f) {
-					magnification = 1.7;
+					magnification = 1.7f;
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
 					hasGeneratedHitbox = true;
 				}
@@ -382,7 +379,7 @@ void PlayerAttack::AttackInput() {
 			if (attackTimer > 0.2f && attackTimer < 0.6f) canNextAttack = true;
 			if (!hasGeneratedHitbox) { // ★追加
 				if (attackIndex == 1 && attackTimer > 0.18f && attackTimer < 0.22f) {
-					magnification = 1;
+					magnification = 1.0f;
 					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
 					HitBoxReset();
 				}
@@ -392,14 +389,13 @@ void PlayerAttack::AttackInput() {
 					HitBoxReset();
 				}
 				if (attackIndex == 3 && attackTimer > 0.25f && attackTimer < 0.33f) {
-					magnification = 1.5;
+					magnification = 1.5f;
 					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
 					HitBoxReset();
 				}
 				if (attackIndex == 4 && attackTimer > 0.28f && attackTimer < 0.33f) {
 					CreateAttackHitbox(pWeapon->GetColLength(2), pWeapon->GetColRadius(2));
 					pPlayer->SubHp(pPlayer->GetMaxHp() * 0.02f + pPlayer->GetDef());
-					//Effect* pEffe = EffectManager::GetInstance().Instantiate("DA", pPlayer->GetPosition());
 					hasGeneratedHitbox = true;
 				}
 			}
@@ -421,12 +417,6 @@ void PlayerAttack::AttackInput() {
 #pragma endregion
 
 #pragma region ヒットボックス更新
-	for (auto it = CapsuleHitboxes.begin(); it != CapsuleHitboxes.end();) {
-		CapsuleHitBox* h = *it;
-		h->Update();
-		if (h->IsDead()) { delete h; it = CapsuleHitboxes.erase(it); }
-		else ++it;
-	}
 	for (auto it = SphereHitboxes.begin(); it != SphereHitboxes.end();) {
 		SphereHitBox* h = *it;
 		h->Update();

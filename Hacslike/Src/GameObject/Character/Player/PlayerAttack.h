@@ -23,7 +23,7 @@ private:	//	変数
 	PlayerMovement* playerMovement;	//	プレイヤーの移動処理
 	AudioManager* audio;			//	音
 	BulletPool* pSpherePool;		//	Sphereのプール
-	CapsuleHitPool* pCapsulePool;	//	Capsuleのプール	
+	//CapsuleHitPool* pCapsulePool;	//	Capsuleのプール	
 
 
 	//	通常攻撃関連
@@ -49,7 +49,7 @@ private:	//	変数
 	const float maxChargeTime ;	//	最大溜め
 
 	//	当たり判定関連
-	std::vector<CapsuleHitBox*> CapsuleHitboxes;	//	当たり判定(カプセル)
+	//std::vector<CapsuleHitBox*> CapsuleHitboxes;	//	当たり判定(カプセル)
 	std::vector<SphereHitBox*> SphereHitboxes;		//	当たり判定(スフィア)
 	
 	//	遠距離武器関連	
