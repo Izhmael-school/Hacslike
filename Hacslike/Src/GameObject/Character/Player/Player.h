@@ -36,8 +36,8 @@ private:	//	メンバ変数
 #pragma region クラス関連
 	Weapon* pWeapon;		//	武器
 	InputManager* input;	//	入力
-	PlayerAttack* playerAttack;		//	プレイヤーの攻撃
-	PlayerMovement* playerMovement;	//	プレイヤーの移動
+	PlayerAttack* playerAttack;		//	Playerの攻撃
+	PlayerMovement* playerMovement;	//	Playerの移動
 	WeaponData* weaponData;			//	武器データ
 #pragma endregion
 
@@ -48,12 +48,10 @@ private:	//	メンバ変数
 
 #pragma region プレイヤーステータス関連
 	float hpRate;	//	HP量
-	int coinValue;			//	コイン枚数
-	//float criticalHitRate;	//	会心率
-	//float criticalDamage;	//	会心ダメ
-	int expValue;			//	Exp量
-	int maxExp;
-	int remainExp;
+	int coinValue;	//	コイン枚数
+	int expValue;	//	Exp量
+	int maxExp;		//	最大経験値
+	int remainExp;	//	経験値の超過数
 
 	bool canEnhance = false; // 強化可能フラグ
 #pragma endregion
@@ -256,17 +254,16 @@ public:		//	メンバ関数
 	void PlayerStatusRender();
 
 	/// <summary>
-	/// プレイヤーのセットアップ
+	/// 強くてニューゲーム用のセットアップ
 	/// </summary>
 	void PlayerSetUp();
 
+	/// <summary>
+	/// ニューゲーム用のせセットアップ
+	/// </summary>
 	void NewPlayerSetUp();
 
-	// 強化可能フラグの状態を返す (GameSceneで使用)
-	bool GetCanEnhance() const { return canEnhance; }
-
-	// 強化可能フラグを書き換える (CapsuleHitBoxで使用)
-	void SetCanEnhance(bool _flag) { canEnhance = _flag; }
+	
 
 	// 装備の効果を考慮して atk を再計算して適用する
 	void UpdateAtkFromEquipment();
@@ -400,6 +397,18 @@ public:		//	Getter と Setter
 	inline PlayerMovement* GetPlayerMovement() const { return playerMovement; }
 
 	inline int GetPlayerLevel() { return Lv; }
+
+	/// <summary>
+	/// 強化可能フラグ
+	/// </summary>
+	/// <returns></returns>
+	bool GetCanEnhance() const { return canEnhance; }
+
+	/// <summary>
+	/// 強化可能フラグの変更
+	/// </summary>
+	/// <param name="_flag"></param>
+	void SetCanEnhance(bool _flag) { canEnhance = _flag; }
 
 	/// <summary>
 	/// 死んでるかどうか
