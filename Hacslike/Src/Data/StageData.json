@@ -40,7 +40,7 @@
     ],
     "playerSpawnPos": [ 4, 3 ],
     "saveObjectPos": [ 2, 3 ],
-    "ChestObjectPos": [ -1, -1 ],
+    "ChestObjectPos": [ 0, 0 ],
     "enhancementStonePos": [ 2, 4 ],
     "itemShopPos": [ 6, 3 ],
     "bossSpawnPos": [ 4, 15 ],

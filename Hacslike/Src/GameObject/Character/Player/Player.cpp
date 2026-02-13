@@ -664,6 +664,7 @@ void Player::OpenMenu() {
 			isSaveUI = false;
 			isTitleUI = false;
 			isMenuSelected = false; // 閉じたときにリセット
+			titleUI.ResetConfirmation();
 			AudioManager::GetInstance().PlayOneShot("Decision");
 			GameSystem::GetInstance()->SetGameStatus(GameStatus::Playing);
 
@@ -1113,6 +1114,8 @@ void Player::ResetUIStates()
 	blinkTime = 0.0f;        // 選択の点滅状態
 	blinkVisible = true;
 	isOpenMenu = false;
+	titleUI.ResetConfirmation();
+
 }
 
 float Player::RuneCost(int L) {
