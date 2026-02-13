@@ -22,6 +22,7 @@ ArtifactManager::ArtifactManager()
         std::make_shared<itemDropRateUpwardOnCoinAcquisition>(),
         std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>(),
         std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>(),
+        std::make_shared<Map>(),
 
     };
     Start();
@@ -273,6 +274,7 @@ std::shared_ptr<ArtifactBase> ArtifactManager::CreateArtifactByID(int id)
     case 6: return std::make_shared<itemDropRateUpwardOnCoinAcquisition>();
     case 7: return std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>();
     case 8: return std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>();
+    case 9: return std::make_shared<Map>();
     default:
         return nullptr;
     }
@@ -289,6 +291,7 @@ std::vector<std::shared_ptr<ArtifactBase>> ArtifactManager::MakeInitialPool()
        std::make_shared<itemDropRateUpwardOnCoinAcquisition>(),
        std::make_shared<AttackincreasesforSeveralSecondsAfterEvasion>(),
        std::make_shared<CriticalHitRateIncreasesForSeveralSecondsAfterEvasion>(),
+       std::make_shared<Map>(),
     };
 }
 

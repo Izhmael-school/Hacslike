@@ -507,3 +507,36 @@ void CriticalHitRateIncreasesForSeveralSecondsAfterEvasion::Load(BinaryReader& r
     r.ReadPOD(originalAtk);
 }
 #pragma endregion
+
+Map::Map()
+    :ArtifactBase(9, "ƒS[ƒ‹‚Ì“¹•W", "ŠK’i‚ÌˆÊ’u‚ªŒ©‚¦‚é", "Res/ArtifactIcon/Stair_Map.png")
+    ,isDrawMap(false) {
+}
+
+void Map::Update(Player* player)
+{
+    if (isDrawMap) {
+        StageManager::GetInstance().generator->DrawStairMap();
+    }
+    else return;
+}
+
+void Map::Apply(Player* player)
+{
+    isDrawMap = true;
+}
+
+void Map::Remove(Player* player)
+{
+    isDrawMap = false;
+}
+
+void Map::Save(BinaryWriter& w)
+{
+    w.WritePOD(isDrawMap);
+}
+
+void Map::Load(BinaryReader& r, uint32_t version)
+{
+    r.ReadPOD(isDrawMap);
+}

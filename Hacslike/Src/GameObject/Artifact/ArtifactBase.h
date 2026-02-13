@@ -184,4 +184,18 @@ public:
 	void Load(BinaryReader& r, uint32_t version) override;
 };
 
+
+class Map : public ArtifactBase {
+private:
+	bool isDrawMap = false;
+public:
+	Map();
+	void Update(Player* player)override;
+	void Apply(Player* player) override;
+	void Remove(Player* player) override;
+	void Save(BinaryWriter& w) override;
+	void Load(BinaryReader& r, uint32_t version) override;
+
+
+};
 #pragma endregion
